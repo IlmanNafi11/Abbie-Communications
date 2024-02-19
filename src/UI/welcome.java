@@ -10,6 +10,7 @@ public class welcome extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        desktopPane = new javax.swing.JDesktopPane();
         btnStarted = new javax.swing.JButton();
         btnSignUp = new javax.swing.JButton();
         btnLogin = new javax.swing.JButton();
@@ -21,7 +22,7 @@ public class welcome extends javax.swing.JFrame {
         setForeground(new java.awt.Color(0, 0, 0));
         setPreferredSize(new java.awt.Dimension(1440, 1024));
         setResizable(false);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        getContentPane().setLayout(null);
 
         btnStarted.setBorder(null);
         btnStarted.setContentAreaFilled(false);
@@ -30,7 +31,8 @@ public class welcome extends javax.swing.JFrame {
                 btnStartedActionPerformed(evt);
             }
         });
-        getContentPane().add(btnStarted, new org.netbeans.lib.awtextra.AbsoluteConstraints(173, 637, 158, 50));
+        desktopPane.add(btnStarted);
+        btnStarted.setBounds(173, 637, 158, 50);
 
         btnSignUp.setBorder(null);
         btnSignUp.setContentAreaFilled(false);
@@ -39,7 +41,8 @@ public class welcome extends javax.swing.JFrame {
                 btnSignUpActionPerformed(evt);
             }
         });
-        getContentPane().add(btnSignUp, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 43, 133, 45));
+        desktopPane.add(btnSignUp);
+        btnSignUp.setBounds(1110, 43, 133, 45);
 
         btnLogin.setBorder(null);
         btnLogin.setContentAreaFilled(false);
@@ -48,11 +51,15 @@ public class welcome extends javax.swing.JFrame {
                 btnLoginActionPerformed(evt);
             }
         });
-        getContentPane().add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(1270, 43, 133, 45));
+        desktopPane.add(btnLogin);
+        btnLogin.setBounds(1270, 43, 133, 45);
 
-        bg.setBackground(new java.awt.Color(0, 0, 0));
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Welcome-Page.png"))); // NOI18N
-        getContentPane().add(bg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1440, 1024));
+        desktopPane.add(bg);
+        bg.setBounds(0, 0, 1440, 1024);
+
+        getContentPane().add(desktopPane);
+        desktopPane.setBounds(0, 0, 1440, 1024);
 
         pack();
         setLocationRelativeTo(null);
@@ -67,7 +74,9 @@ public class welcome extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSignUpActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        
+        login lg = new login();
+        desktopPane.add(lg);
+        lg.setVisible(true);
     }//GEN-LAST:event_btnLoginActionPerformed
 
     public static void main(String args[]) {
@@ -107,5 +116,6 @@ public class welcome extends javax.swing.JFrame {
     private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnSignUp;
     private javax.swing.JButton btnStarted;
+    private javax.swing.JDesktopPane desktopPane;
     // End of variables declaration//GEN-END:variables
 }
