@@ -1,5 +1,6 @@
 package UI;
 
+import java.awt.Panel;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 public class login extends javax.swing.JInternalFrame {
@@ -27,7 +28,7 @@ public class login extends javax.swing.JInternalFrame {
 
         setBorder(null);
 
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel1.setLayout(null);
 
         btnLogin.setBorder(null);
         btnLogin.setContentAreaFilled(false);
@@ -36,13 +37,18 @@ public class login extends javax.swing.JInternalFrame {
                 btnLoginActionPerformed(evt);
             }
         });
-        jPanel1.add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(196, 530, 364, 52));
+        jPanel1.add(btnLogin);
+        btnLogin.setBounds(196, 530, 364, 52);
 
+        txtUsername.setBackground(new java.awt.Color(242, 242, 242));
         txtUsername.setBorder(null);
-        jPanel1.add(txtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 382, 300, 44));
+        jPanel1.add(txtUsername);
+        txtUsername.setBounds(250, 382, 300, 44);
 
+        txtPassword.setBackground(new java.awt.Color(242, 242, 242));
         txtPassword.setBorder(null);
-        jPanel1.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 458, 300, 44));
+        jPanel1.add(txtPassword);
+        txtPassword.setBounds(250, 458, 300, 44);
 
         btnRfid.setBorder(null);
         btnRfid.setContentAreaFilled(false);
@@ -51,31 +57,36 @@ public class login extends javax.swing.JInternalFrame {
                 btnRfidActionPerformed(evt);
             }
         });
-        jPanel1.add(btnRfid, new org.netbeans.lib.awtextra.AbsoluteConstraints(196, 692, 364, 52));
+        jPanel1.add(btnRfid);
+        btnRfid.setBounds(196, 692, 364, 52);
 
         lblBack.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblBackMouseClicked(evt);
             }
         });
-        jPanel1.add(lblBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 172, 60, 25));
+        jPanel1.add(lblBack);
+        lblBack.setBounds(78, 172, 60, 25);
 
         lblRegister.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblRegisterMouseClicked(evt);
             }
         });
-        jPanel1.add(lblRegister, new org.netbeans.lib.awtextra.AbsoluteConstraints(435, 773, 115, 20));
+        jPanel1.add(lblRegister);
+        lblRegister.setBounds(435, 773, 115, 20);
 
         lblForgot.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblForgotMouseClicked(evt);
             }
         });
-        jPanel1.add(lblForgot, new org.netbeans.lib.awtextra.AbsoluteConstraints(418, 600, 144, 20));
+        jPanel1.add(lblForgot);
+        lblForgot.setBounds(418, 600, 144, 20);
 
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Login.png"))); // NOI18N
-        jPanel1.add(bg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        jPanel1.add(bg);
+        bg.setBounds(0, 0, 1440, 1024);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -92,7 +103,7 @@ public class login extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblBackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBackMouseClicked
-        
+        this.dispose();
     }//GEN-LAST:event_lblBackMouseClicked
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
@@ -108,7 +119,10 @@ public class login extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnRfidActionPerformed
 
     private void lblRegisterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegisterMouseClicked
-        
+        register_1 rg = new register_1();
+        this.getDesktopPane().add(rg);
+        rg.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_lblRegisterMouseClicked
 
 

@@ -66,11 +66,15 @@ public class welcome extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnStartedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartedActionPerformed
-        
+        register_1 rg = new register_1();
+        desktopPane.add(rg);
+        rg.setVisible(true);
     }//GEN-LAST:event_btnStartedActionPerformed
 
     private void btnSignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignUpActionPerformed
-        
+        register_1 rg = new register_1();
+        desktopPane.add(rg);
+        rg.setVisible(true);
     }//GEN-LAST:event_btnSignUpActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
