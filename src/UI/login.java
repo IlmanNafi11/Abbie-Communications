@@ -111,7 +111,10 @@ public class login extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void lblForgotMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblForgotMouseClicked
-        
+        forgotPassword_1 rg = new forgotPassword_1();
+        this.getDesktopPane().add(rg);
+        rg.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_lblForgotMouseClicked
 
     private void btnRfidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRfidActionPerformed
