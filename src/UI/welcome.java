@@ -24,8 +24,23 @@ public class welcome extends javax.swing.JFrame {
         setResizable(false);
         getContentPane().setLayout(null);
 
+        btnStarted.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Started-Default.png"))); // NOI18N
         btnStarted.setBorder(null);
         btnStarted.setContentAreaFilled(false);
+        btnStarted.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnStartedMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnStartedMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnStartedMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnStartedMousePressed(evt);
+            }
+        });
         btnStarted.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnStartedActionPerformed(evt);
@@ -34,25 +49,55 @@ public class welcome extends javax.swing.JFrame {
         desktopPane.add(btnStarted);
         btnStarted.setBounds(173, 637, 158, 50);
 
+        btnSignUp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Sign-Up-Default.png"))); // NOI18N
         btnSignUp.setBorder(null);
         btnSignUp.setContentAreaFilled(false);
+        btnSignUp.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSignUpMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnSignUpMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnSignUpMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnSignUpMousePressed(evt);
+            }
+        });
         btnSignUp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSignUpActionPerformed(evt);
             }
         });
         desktopPane.add(btnSignUp);
-        btnSignUp.setBounds(1110, 43, 133, 45);
+        btnSignUp.setBounds(1100, 43, 133, 45);
 
+        btnLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Login-Default.png"))); // NOI18N
         btnLogin.setBorder(null);
         btnLogin.setContentAreaFilled(false);
+        btnLogin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnLoginMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnLoginMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnLoginMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnLoginMousePressed(evt);
+            }
+        });
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLoginActionPerformed(evt);
             }
         });
         desktopPane.add(btnLogin);
-        btnLogin.setBounds(1270, 43, 133, 45);
+        btnLogin.setBounds(1262, 43, 133, 45);
 
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Welcome-Page.png"))); // NOI18N
         desktopPane.add(bg);
@@ -82,6 +127,54 @@ public class welcome extends javax.swing.JFrame {
         desktopPane.add(lg);
         lg.setVisible(true);
     }//GEN-LAST:event_btnLoginActionPerformed
+
+    private void btnStartedMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStartedMouseEntered
+        btnStarted.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Started-Hover.png")));
+    }//GEN-LAST:event_btnStartedMouseEntered
+
+    private void btnStartedMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStartedMouseExited
+        btnStarted.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Started-Default.png")));
+    }//GEN-LAST:event_btnStartedMouseExited
+
+    private void btnStartedMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStartedMouseClicked
+        btnStarted.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Started-Click.png")));
+    }//GEN-LAST:event_btnStartedMouseClicked
+
+    private void btnStartedMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStartedMousePressed
+        btnStarted.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Started-Click.png")));
+    }//GEN-LAST:event_btnStartedMousePressed
+
+    private void btnSignUpMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSignUpMouseEntered
+        btnSignUp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Sign-Up-Hover.png")));
+    }//GEN-LAST:event_btnSignUpMouseEntered
+
+    private void btnLoginMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseEntered
+        btnLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Login-Hover.png")));
+    }//GEN-LAST:event_btnLoginMouseEntered
+
+    private void btnSignUpMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSignUpMouseExited
+        btnSignUp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Sign-Up-Default.png")));
+    }//GEN-LAST:event_btnSignUpMouseExited
+
+    private void btnSignUpMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSignUpMousePressed
+        btnSignUp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Sign-Up-Click.png")));
+    }//GEN-LAST:event_btnSignUpMousePressed
+
+    private void btnSignUpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSignUpMouseClicked
+        btnSignUp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Sign-Up-Click.png")));
+    }//GEN-LAST:event_btnSignUpMouseClicked
+
+    private void btnLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseClicked
+        btnLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Login-Click.png")));
+    }//GEN-LAST:event_btnLoginMouseClicked
+
+    private void btnLoginMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseExited
+        btnLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Login-Default.png")));
+    }//GEN-LAST:event_btnLoginMouseExited
+
+    private void btnLoginMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMousePressed
+        btnLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Login-Click.png")));
+    }//GEN-LAST:event_btnLoginMousePressed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
