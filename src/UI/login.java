@@ -1,17 +1,14 @@
 package UI;
-
-import java.awt.Panel;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
-
 public class login extends javax.swing.JInternalFrame {
-
     public login() {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
         BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
         bui.setNorthPane(null);
+        jPanel1.setFocusable(true);
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -56,12 +53,31 @@ public class login extends javax.swing.JInternalFrame {
         btnLogin.setBounds(196, 531, 364, 52);
 
         txtUsername.setBackground(new java.awt.Color(242, 242, 242));
+        txtUsername.setText("Username");
         txtUsername.setBorder(null);
+        txtUsername.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtUsernameFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtUsernameFocusLost(evt);
+            }
+        });
         jPanel1.add(txtUsername);
         txtUsername.setBounds(250, 382, 300, 44);
 
         txtPassword.setBackground(new java.awt.Color(242, 242, 242));
+        txtPassword.setText("Password");
         txtPassword.setBorder(null);
+        txtPassword.setEchoChar('\u0000');
+        txtPassword.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtPasswordFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtPasswordFocusLost(evt);
+            }
+        });
         jPanel1.add(txtPassword);
         txtPassword.setBounds(250, 458, 300, 44);
 
@@ -152,13 +168,14 @@ public class login extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void lblBackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBackMouseClicked
         this.dispose();
     }//GEN-LAST:event_lblBackMouseClicked
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        
+        String pas = txtPassword.getText();
+        System.out.println(pas);
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void lblForgotMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblForgotMouseClicked
@@ -170,7 +187,8 @@ public class login extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_lblForgotMouseClicked
 
     private void btnRfidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRfidActionPerformed
-        
+        Rfid rfid = new Rfid(this, true);
+        rfid.setVisible(true);
     }//GEN-LAST:event_btnRfidActionPerformed
 
     private void lblRegisterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegisterMouseClicked
@@ -235,6 +253,32 @@ public class login extends javax.swing.JInternalFrame {
     private void lblRegisterMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegisterMouseExited
         lblRegister.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Label-Register-Default.png")));
     }//GEN-LAST:event_lblRegisterMouseExited
+
+    private void txtUsernameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUsernameFocusGained
+        if (txtUsername.getText().equals("Username")) {
+            txtUsername.setText("");
+        }
+    }//GEN-LAST:event_txtUsernameFocusGained
+
+    private void txtUsernameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUsernameFocusLost
+        if (txtUsername.getText().equals("")|| txtUsername.getText().length() == 0) {
+            txtUsername.setText("Username");
+        }
+    }//GEN-LAST:event_txtUsernameFocusLost
+
+    private void txtPasswordFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPasswordFocusGained
+        if(txtPassword.getText().equals("Password")) {
+            txtPassword.setText("");
+            txtPassword.setEchoChar('*');
+        }
+    }//GEN-LAST:event_txtPasswordFocusGained
+
+    private void txtPasswordFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPasswordFocusLost
+        if(txtPassword.getText().equals("") || txtPassword.getText().length()==0) {
+            txtPassword.setText("Password");
+            txtPassword.setEchoChar((char)0);
+        }
+    }//GEN-LAST:event_txtPasswordFocusLost
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
