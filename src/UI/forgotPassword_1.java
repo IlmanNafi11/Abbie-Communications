@@ -1,5 +1,6 @@
 package UI;
 
+import java.awt.Color;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 public class forgotPassword_1 extends javax.swing.JInternalFrame {
@@ -28,12 +29,34 @@ public class forgotPassword_1 extends javax.swing.JInternalFrame {
         panel.setLayout(null);
 
         txtNik.setBackground(new java.awt.Color(242, 242, 242));
+        txtNik.setForeground(new java.awt.Color(153, 153, 153));
+        txtNik.setText("NIK");
         txtNik.setBorder(null);
+        txtNik.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtNikFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtNikFocusLost(evt);
+            }
+        });
         panel.add(txtNik);
         txtNik.setBounds(935, 399, 298, 44);
 
+        btnNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Next-Primary-Default.png"))); // NOI18N
         btnNext.setBorder(null);
         btnNext.setContentAreaFilled(false);
+        btnNext.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnNextMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnNextMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnNextMousePressed(evt);
+            }
+        });
         btnNext.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNextActionPerformed(evt);
@@ -42,13 +65,20 @@ public class forgotPassword_1 extends javax.swing.JInternalFrame {
         panel.add(btnNext);
         btnNext.setBounds(879, 470, 364, 52);
 
+        lblBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Label-Back-Default.png"))); // NOI18N
         lblBack.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblBackMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblBackMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblBackMouseExited(evt);
+            }
         });
         panel.add(lblBack);
-        lblBack.setBounds(780, 207, 60, 25);
+        lblBack.setBounds(779, 208, 60, 25);
 
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Forgot Password.png"))); // NOI18N
         panel.add(bg);
@@ -70,11 +100,45 @@ public class forgotPassword_1 extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_lblBackMouseClicked
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
+        btnNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Next-Primary-Default.png")));
         forgotPassword_2 forgotPass = new forgotPassword_2();
         desktopPane.add(forgotPass);
         forgotPass.setVisible(true);
-        this.dispose();
     }//GEN-LAST:event_btnNextActionPerformed
+
+    private void lblBackMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBackMouseEntered
+        lblBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Label-Back-Hover.png")));
+    }//GEN-LAST:event_lblBackMouseEntered
+
+    private void lblBackMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBackMouseExited
+        lblBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Label-Back-Default.png")));
+    }//GEN-LAST:event_lblBackMouseExited
+
+    private void btnNextMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNextMouseEntered
+        btnNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Next-Primary-Hover.png")));
+    }//GEN-LAST:event_btnNextMouseEntered
+
+    private void btnNextMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNextMouseExited
+        btnNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Next-Primary-Default.png")));
+    }//GEN-LAST:event_btnNextMouseExited
+
+    private void btnNextMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNextMousePressed
+        btnNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Next-Primary-Click.png")));
+    }//GEN-LAST:event_btnNextMousePressed
+
+    private void txtNikFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNikFocusGained
+        if (txtNik.getText().equals("NIK")){
+            txtNik.setText("");
+            txtNik.setForeground(Color.BLACK);
+        }
+    }//GEN-LAST:event_txtNikFocusGained
+
+    private void txtNikFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNikFocusLost
+        if (txtNik.getText().trim().equals("") || txtNik.getText().length() == 0) {
+            txtNik.setText("NIK");
+            txtNik.setForeground(new Color(153,153,153));
+        }
+    }//GEN-LAST:event_txtNikFocusLost
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
