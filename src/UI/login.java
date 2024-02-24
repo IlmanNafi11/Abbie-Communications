@@ -1,4 +1,5 @@
 package UI;
+import java.awt.Color;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 public class login extends javax.swing.JInternalFrame {
     public login() {
@@ -53,6 +54,7 @@ public class login extends javax.swing.JInternalFrame {
         btnLogin.setBounds(196, 531, 364, 52);
 
         txtUsername.setBackground(new java.awt.Color(242, 242, 242));
+        txtUsername.setForeground(new java.awt.Color(153, 153, 153));
         txtUsername.setText("Username");
         txtUsername.setBorder(null);
         txtUsername.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -67,6 +69,7 @@ public class login extends javax.swing.JInternalFrame {
         txtUsername.setBounds(250, 382, 300, 44);
 
         txtPassword.setBackground(new java.awt.Color(242, 242, 242));
+        txtPassword.setForeground(new java.awt.Color(153, 153, 153));
         txtPassword.setText("Password");
         txtPassword.setBorder(null);
         txtPassword.setEchoChar('\u0000');
@@ -187,6 +190,7 @@ public class login extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_lblForgotMouseClicked
 
     private void btnRfidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRfidActionPerformed
+        btnRfid.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-RFID-Primary-Default.png")));
         Rfid rfid = new Rfid(this, true);
         rfid.setVisible(true);
     }//GEN-LAST:event_btnRfidActionPerformed
@@ -257,12 +261,14 @@ public class login extends javax.swing.JInternalFrame {
     private void txtUsernameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUsernameFocusGained
         if (txtUsername.getText().equals("Username")) {
             txtUsername.setText("");
+            txtUsername.setForeground(Color.BLACK);
         }
     }//GEN-LAST:event_txtUsernameFocusGained
 
     private void txtUsernameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUsernameFocusLost
-        if (txtUsername.getText().equals("")|| txtUsername.getText().length() == 0) {
+        if (txtUsername.getText().trim().equals("")|| txtUsername.getText().length() == 0) {
             txtUsername.setText("Username");
+            txtUsername.setForeground(new Color(153,153,153));
         }
     }//GEN-LAST:event_txtUsernameFocusLost
 
@@ -270,13 +276,15 @@ public class login extends javax.swing.JInternalFrame {
         if(txtPassword.getText().equals("Password")) {
             txtPassword.setText("");
             txtPassword.setEchoChar('*');
+            txtPassword.setForeground(Color.BLACK);
         }
     }//GEN-LAST:event_txtPasswordFocusGained
 
     private void txtPasswordFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPasswordFocusLost
-        if(txtPassword.getText().equals("") || txtPassword.getText().length()==0) {
+        if(txtPassword.getText().trim().equals("") || txtPassword.getText().length()==0) {
             txtPassword.setText("Password");
             txtPassword.setEchoChar((char)0);
+            txtPassword.setForeground(new Color(153,153,153));
         }
     }//GEN-LAST:event_txtPasswordFocusLost
 
