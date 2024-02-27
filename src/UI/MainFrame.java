@@ -7,7 +7,7 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() {
         initComponents();
         DisplayMenu();
-        Dashboard ds = new Dashboard();
+        Product ds = new Product();
         DesktopPaneBody.add(ds);
         ds.setVisible(true);
     }

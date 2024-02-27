@@ -1,5 +1,6 @@
 package UI;
 
+import java.awt.Color;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 public class MenuOwner extends javax.swing.JInternalFrame {
@@ -222,7 +223,7 @@ public class MenuOwner extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnDashboardMouseEntered
 
     private void btnDashboardMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDashboardMouseExited
-        btnDashboard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Menu-Default.png")));
+        btnDashboard.setIcon(null);
     }//GEN-LAST:event_btnDashboardMouseExited
 
     private void btnProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductActionPerformed
