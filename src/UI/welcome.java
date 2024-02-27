@@ -20,9 +20,8 @@ public class welcome extends javax.swing.JFrame {
         setTitle("Abbie Communications Apps");
         setBackground(new java.awt.Color(0, 0, 0));
         setForeground(new java.awt.Color(0, 0, 0));
-        setPreferredSize(new java.awt.Dimension(1440, 1024));
         setResizable(false);
-        getContentPane().setLayout(null);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnStarted.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Started-Default.png"))); // NOI18N
         btnStarted.setBorder(null);
@@ -103,8 +102,7 @@ public class welcome extends javax.swing.JFrame {
         desktopPane.add(bg);
         bg.setBounds(0, 0, 1440, 1024);
 
-        getContentPane().add(desktopPane);
-        desktopPane.setBounds(0, 0, 1440, 1024);
+        getContentPane().add(desktopPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1440, 1024));
 
         pack();
         setLocationRelativeTo(null);
