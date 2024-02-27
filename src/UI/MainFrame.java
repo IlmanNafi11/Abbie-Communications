@@ -7,7 +7,7 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() {
         initComponents();
         DisplayMenu();
-        Product ds = new Product();
+        Dashboard ds = new Dashboard();
         DesktopPaneBody.add(ds);
         ds.setVisible(true);
     }
@@ -22,9 +22,13 @@ public class MainFrame extends javax.swing.JFrame {
             DesktopPaneMenu.add(menu);
             menu.setVisible(true);
         } else if (role.equalsIgnoreCase("admin")) {
-            
+            MenuAdmin menu = new MenuAdmin();
+            DesktopPaneMenu.add(menu);
+            menu.setVisible(true);
         } else {
-            
+            MenuTeknisi menu = new MenuTeknisi();
+            DesktopPaneMenu.add(menu);
+            menu.setVisible(true);
         }
     }
 

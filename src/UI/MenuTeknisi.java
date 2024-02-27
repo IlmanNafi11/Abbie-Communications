@@ -83,8 +83,21 @@ public class MenuTeknisi extends javax.swing.JInternalFrame {
         btnSignOut.setBackground(new java.awt.Color(255, 51, 255));
         btnSignOut.setBorder(null);
         btnSignOut.setContentAreaFilled(false);
+        btnSignOut.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnSignOutMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnSignOutMouseExited(evt);
+            }
+        });
+        btnSignOut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSignOutActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnSignOut);
-        btnSignOut.setBounds(46, 960, 252, 64);
+        btnSignOut.setBounds(101, 961, 140, 40);
 
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Main-Menu-Teknisi.png"))); // NOI18N
         getContentPane().add(bg);
@@ -94,40 +107,52 @@ public class MenuTeknisi extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDashboardActionPerformed
-        // TODO add your handling code here:
+        btnDashboard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Menu-Dashboard-Click.png")));
     }//GEN-LAST:event_btnDashboardActionPerformed
 
     private void btnDashboardMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDashboardMouseEntered
-        btnDashboard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Menu-Hover.png")));
+        btnDashboard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Menu-Dashboard-Hover.png")));
     }//GEN-LAST:event_btnDashboardMouseEntered
 
     private void btnDashboardMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDashboardMouseExited
-        btnDashboard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Menu-Default.png")));
+        btnDashboard.setIcon(null);
     }//GEN-LAST:event_btnDashboardMouseExited
 
     private void btnProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductActionPerformed
-        // TODO add your handling code here:
+        btnProduct.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Menu-Product-Click.png")));
     }//GEN-LAST:event_btnProductActionPerformed
 
     private void btnProductMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProductMouseEntered
-        btnProduct.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Menu-Hover.png")));
+        btnProduct.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Menu-Product-Hover.png")));
     }//GEN-LAST:event_btnProductMouseEntered
 
     private void btnProductMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProductMouseExited
-        // TODO add your handling code here:
+        btnProduct.setIcon(null);
     }//GEN-LAST:event_btnProductMouseExited
 
     private void btnServiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnServiceActionPerformed
-        // TODO add your handling code here:
+        btnService.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Menu-Service-Transaction-Click.png")));
     }//GEN-LAST:event_btnServiceActionPerformed
 
     private void btnServiceMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnServiceMouseEntered
-        btnService.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Menu-Hover.png")));
+        btnService.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Menu-Service-Transaction-Hover.png")));
     }//GEN-LAST:event_btnServiceMouseEntered
 
     private void btnServiceMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnServiceMouseExited
-        // TODO add your handling code here:
+        btnService.setIcon(null);
     }//GEN-LAST:event_btnServiceMouseExited
+
+    private void btnSignOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignOutActionPerformed
+        btnSignOut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Label-Sign-Out-Click.png")));
+    }//GEN-LAST:event_btnSignOutActionPerformed
+
+    private void btnSignOutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSignOutMouseEntered
+        btnSignOut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Label-Sign-Out-Hover.png")));
+    }//GEN-LAST:event_btnSignOutMouseEntered
+
+    private void btnSignOutMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSignOutMouseExited
+        btnSignOut.setIcon(null);
+    }//GEN-LAST:event_btnSignOutMouseExited
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
