@@ -1,11 +1,17 @@
 package UI;
 
-public class welcome extends javax.swing.JFrame {
+public class welcome extends javax.swing.JFrame{
 
     public welcome() {
         initComponents();
+        getContentPane().add(desktopPane);
     }
 
+    public void bukaLogin(){
+        login login = new login();
+        desktopPane.add(login);
+        login.setVisible(true);
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -21,7 +27,6 @@ public class welcome extends javax.swing.JFrame {
         setBackground(new java.awt.Color(0, 0, 0));
         setForeground(new java.awt.Color(0, 0, 0));
         setResizable(false);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnStarted.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Started-Default.png"))); // NOI18N
         btnStarted.setBorder(null);
@@ -102,7 +107,16 @@ public class welcome extends javax.swing.JFrame {
         desktopPane.add(bg);
         bg.setBounds(0, 0, 1440, 1024);
 
-        getContentPane().add(desktopPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1440, 1024));
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(desktopPane, javax.swing.GroupLayout.PREFERRED_SIZE, 1440, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(desktopPane, javax.swing.GroupLayout.PREFERRED_SIZE, 1024, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
 
         pack();
         setLocationRelativeTo(null);
@@ -211,6 +225,6 @@ public class welcome extends javax.swing.JFrame {
     private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnSignUp;
     private javax.swing.JButton btnStarted;
-    private javax.swing.JDesktopPane desktopPane;
+    public javax.swing.JDesktopPane desktopPane;
     // End of variables declaration//GEN-END:variables
 }

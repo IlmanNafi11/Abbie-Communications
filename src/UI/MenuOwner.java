@@ -1,8 +1,9 @@
 package UI;
 
-import java.awt.Color;
+import java.awt.Window;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
-
 public class MenuOwner extends javax.swing.JInternalFrame {
     public MenuOwner() {
         initComponents();
@@ -229,6 +230,9 @@ public class MenuOwner extends javax.swing.JInternalFrame {
 
     private void btnDashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDashboardActionPerformed
         btnDashboard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Menu-Dashboard-Click.png")));
+        Dashboard ds = new Dashboard();
+        MainFrame main = (MainFrame) SwingUtilities.getWindowAncestor(this);
+        main.gantiKonten(ds);
     }//GEN-LAST:event_btnDashboardActionPerformed
 
     private void btnDashboardMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDashboardMouseEntered
@@ -241,6 +245,9 @@ public class MenuOwner extends javax.swing.JInternalFrame {
 
     private void btnProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductActionPerformed
         btnProduct.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Menu-Product-Click.png")));
+        Product prod = new Product();
+        MainFrame main = (MainFrame) SwingUtilities.getWindowAncestor(this);
+        main.gantiKonten(prod);
     }//GEN-LAST:event_btnProductActionPerformed
 
     private void btnProductMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProductMouseEntered
@@ -253,6 +260,9 @@ public class MenuOwner extends javax.swing.JInternalFrame {
 
     private void btnPenjualanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPenjualanActionPerformed
         btnPenjualan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Menu-Sales-Transaction-Click.png")));
+        TransaksiPenjualan tranP = new TransaksiPenjualan();
+        MainFrame main = (MainFrame) SwingUtilities.getWindowAncestor(this);
+        main.gantiKonten(tranP);
     }//GEN-LAST:event_btnPenjualanActionPerformed
 
     private void btnPenjualanMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPenjualanMouseEntered
@@ -265,6 +275,9 @@ public class MenuOwner extends javax.swing.JInternalFrame {
 
     private void btnServiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnServiceActionPerformed
         btnService.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Menu-Service-Transaction-Click.png")));
+        TransaksiService transS = new TransaksiService();
+        MainFrame main = (MainFrame) SwingUtilities.getWindowAncestor(this);
+        main.gantiKonten(transS);
     }//GEN-LAST:event_btnServiceActionPerformed
 
     private void btnServiceMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnServiceMouseEntered
@@ -277,6 +290,9 @@ public class MenuOwner extends javax.swing.JInternalFrame {
 
     private void btnMemberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMemberActionPerformed
         btnMember.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Menu-Member-Click.png")));
+        Member member = new Member();
+        MainFrame main = (MainFrame) SwingUtilities.getWindowAncestor(this);
+        main.gantiKonten(member);
     }//GEN-LAST:event_btnMemberActionPerformed
 
     private void btnMemberMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMemberMouseEntered
@@ -289,6 +305,9 @@ public class MenuOwner extends javax.swing.JInternalFrame {
 
     private void btnSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSupplierActionPerformed
         btnSupplier.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Menu-Supplier-Click.png")));
+        Supplier supplier = new Supplier();
+        MainFrame main = (MainFrame) SwingUtilities.getWindowAncestor(this);
+        main.gantiKonten(supplier);
     }//GEN-LAST:event_btnSupplierActionPerformed
 
     private void btnSupplierMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSupplierMouseEntered
@@ -301,6 +320,9 @@ public class MenuOwner extends javax.swing.JInternalFrame {
 
     private void btnRestockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestockActionPerformed
         btnRestock.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Menu-Restock-Click.png")));
+        Restock restock = new Restock();
+        MainFrame main = (MainFrame) SwingUtilities.getWindowAncestor(this);
+        main.gantiKonten(restock);
     }//GEN-LAST:event_btnRestockActionPerformed
 
     private void btnRestockMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRestockMouseEntered
@@ -313,6 +335,9 @@ public class MenuOwner extends javax.swing.JInternalFrame {
 
     private void btnUserDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserDataActionPerformed
         btnUserData.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Menu-User-Data-Click.png")));
+         UserData userData= new UserData();
+        MainFrame main = (MainFrame) SwingUtilities.getWindowAncestor(this);
+        main.gantiKonten(userData);
     }//GEN-LAST:event_btnUserDataActionPerformed
 
     private void btnUserDataMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUserDataMouseEntered
@@ -325,6 +350,9 @@ public class MenuOwner extends javax.swing.JInternalFrame {
 
     private void btnReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportActionPerformed
         btnReport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Menu-Report-Click.png")));
+        Report report = new Report();
+        MainFrame main = (MainFrame) SwingUtilities.getWindowAncestor(this);
+        main.gantiKonten(report);
     }//GEN-LAST:event_btnReportActionPerformed
 
     private void btnReportMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReportMouseEntered
@@ -337,6 +365,8 @@ public class MenuOwner extends javax.swing.JInternalFrame {
 
     private void btnSignOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignOutActionPerformed
         btnSignOut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Label-Sign-Out-Click.png")));
+        tutupMainFrame();
+        bukaWelcomeFrame();
     }//GEN-LAST:event_btnSignOutActionPerformed
 
     private void btnSignOutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSignOutMouseEntered
@@ -347,6 +377,18 @@ public class MenuOwner extends javax.swing.JInternalFrame {
         btnSignOut.setIcon(null);
     }//GEN-LAST:event_btnSignOutMouseExited
 
+    private void tutupMainFrame(){
+        Window window = SwingUtilities.getWindowAncestor(this);
+        if(window instanceof JFrame){
+            ((JFrame)window).dispose();
+        }
+    }
+    
+    private void bukaWelcomeFrame(){
+        welcome welcome = new welcome();
+        welcome.bukaLogin();
+        welcome.setVisible(true);     
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDashboard;

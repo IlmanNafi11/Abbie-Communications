@@ -1,5 +1,6 @@
 package UI;
 
+import java.awt.Color;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 public class Product extends javax.swing.JInternalFrame {
@@ -27,7 +28,17 @@ public class Product extends javax.swing.JInternalFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtSearch.setBackground(new java.awt.Color(249, 250, 251));
+        txtSearch.setForeground(new java.awt.Color(153, 153, 153));
+        txtSearch.setText("Input ID Product or Product Name");
         txtSearch.setBorder(null);
+        txtSearch.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtSearchFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtSearchFocusLost(evt);
+            }
+        });
         getContentPane().add(txtSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 34, 255, 45));
 
         btnPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Print-Default.png"))); // NOI18N
@@ -139,7 +150,7 @@ public class Product extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
-        // TODO add your handling code here:
+        btnPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Print-Click.png")));
     }//GEN-LAST:event_btnPrintActionPerformed
 
     private void btnPrintMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPrintMouseEntered
@@ -155,7 +166,7 @@ public class Product extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnPrintMousePressed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        // TODO add your handling code here:
+        btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Add-Plus-Click.png")));
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnAddMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMouseEntered
@@ -171,7 +182,7 @@ public class Product extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnAddMousePressed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        // TODO add your handling code here:
+        btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Edit-Click.png")));
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnEditMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseEntered
@@ -187,19 +198,19 @@ public class Product extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnEditMousePressed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Print-Default.png")));
+        btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Icon-Search-Click")));
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void btnSearchMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSearchMouseEntered
-        // TODO add your handling code here:
+        btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Icon-Search-Hover")));
     }//GEN-LAST:event_btnSearchMouseEntered
 
     private void btnSearchMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSearchMouseExited
-        // TODO add your handling code here:
+        btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Icon-Search")));
     }//GEN-LAST:event_btnSearchMouseExited
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        // TODO add your handling code here:
+        btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Delete-Click.png")));
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnDeleteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteMousePressed
@@ -213,6 +224,20 @@ public class Product extends javax.swing.JInternalFrame {
     private void btnDeleteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteMouseEntered
         btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Delete-Hover.png")));
     }//GEN-LAST:event_btnDeleteMouseEntered
+
+    private void txtSearchFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearchFocusGained
+        if (txtSearch.getText().equals("Input ID Product or Product Name")) {
+            txtSearch.setText("");
+            txtSearch.setForeground(Color.BLACK);
+        }
+    }//GEN-LAST:event_txtSearchFocusGained
+
+    private void txtSearchFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearchFocusLost
+        if (txtSearch.getText().trim().equals("")|| txtSearch.getText().length() == 0) {
+            txtSearch.setText("Input ID Product or Product Name");
+            txtSearch.setForeground(new Color(153,153,153));
+        }
+    }//GEN-LAST:event_txtSearchFocusLost
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

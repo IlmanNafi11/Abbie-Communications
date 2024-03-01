@@ -240,7 +240,6 @@ public class Register2 extends javax.swing.JInternalFrame {
 
     private void lblLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLoginMouseClicked
         lblLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Label-Login-Hover.png")));
-        lblLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Label-Login-Hover.png")));
         login lg = new login();
         this.getDesktopPane().add(lg);
         lg.setVisible(true);

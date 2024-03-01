@@ -1,7 +1,8 @@
 package UI;
 
-public class MainFrame extends javax.swing.JFrame {
+import javax.swing.JInternalFrame;
 
+public class MainFrame extends javax.swing.JFrame {
     private String role = "owner";
 
     public MainFrame() {
@@ -15,7 +16,7 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame(String role) {
         this.role = role;
     }
-
+    
     public void DisplayMenu() {
         if (role.equalsIgnoreCase("owner")) {
             MenuOwner menu = new MenuOwner();
@@ -32,6 +33,11 @@ public class MainFrame extends javax.swing.JFrame {
         }
     }
 
+    public void gantiKonten(JInternalFrame kontenBaru){
+        DesktopPaneBody.removeAll();
+        DesktopPaneBody.add(kontenBaru);
+        kontenBaru.setVisible(true);
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -96,7 +102,7 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JDesktopPane DesktopPaneBody;
+    public javax.swing.JDesktopPane DesktopPaneBody;
     private javax.swing.JDesktopPane DesktopPaneMenu;
     // End of variables declaration//GEN-END:variables
 }
