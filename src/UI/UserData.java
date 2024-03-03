@@ -28,7 +28,7 @@ public class UserData extends javax.swing.JInternalFrame {
 
         txtSearch.setBackground(new java.awt.Color(249, 250, 251));
         txtSearch.setForeground(new java.awt.Color(153, 153, 153));
-        txtSearch.setText("Search Supplier here...");
+        txtSearch.setText("Search User here...");
         txtSearch.setBorder(null);
         txtSearch.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -142,7 +142,7 @@ public class UserData extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtSearchFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearchFocusGained
-        if (txtSearch.getText().equals("Search Supplier here...")) {
+        if (txtSearch.getText().equals("Search User here...")) {
             txtSearch.setText("");
             txtSearch.setForeground(Color.BLACK);
         }
@@ -150,7 +150,7 @@ public class UserData extends javax.swing.JInternalFrame {
 
     private void txtSearchFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearchFocusLost
         if (txtSearch.getText().trim().equals("")|| txtSearch.getText().length() == 0) {
-            txtSearch.setText("Search Supplier here...");
+            txtSearch.setText("Search User here...");
             txtSearch.setForeground(new Color(153,153,153));
         }
     }//GEN-LAST:event_txtSearchFocusLost
