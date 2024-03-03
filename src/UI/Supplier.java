@@ -25,6 +25,7 @@ public class Supplier extends javax.swing.JInternalFrame {
         table = new javax.swing.JTable();
         bg = new javax.swing.JLabel();
 
+        setPreferredSize(new java.awt.Dimension(1095, 1024));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtSearch.setBackground(new java.awt.Color(249, 250, 251));
