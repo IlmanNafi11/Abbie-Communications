@@ -277,6 +277,8 @@ public class Member extends javax.swing.JInternalFrame {
 
     private void btnAddPromoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPromoActionPerformed
         btnAddPromo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Add-Plus-Click.png")));
+        AddDiscount addDiscount = new AddDiscount(this, true);
+        addDiscount.setVisible(true);
     }//GEN-LAST:event_btnAddPromoActionPerformed
 
     private void btnAddPromoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddPromoMouseEntered
@@ -293,6 +295,8 @@ public class Member extends javax.swing.JInternalFrame {
 
     private void btnEditPromoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditPromoActionPerformed
         btnEditPromo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Edit-Click.png")));
+        ChangeDiscount changeDiscount = new ChangeDiscount(this, true);
+        changeDiscount.setVisible(true);
     }//GEN-LAST:event_btnEditPromoActionPerformed
 
     private void btnEditPromoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditPromoMouseEntered
@@ -325,6 +329,8 @@ public class Member extends javax.swing.JInternalFrame {
 
     private void btnAddMemberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddMemberActionPerformed
         btnAddMember.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Add-Plus-Click.png")));
+        AddMember addMember = new AddMember(this, true);
+        addMember.setVisible(true);
     }//GEN-LAST:event_btnAddMemberActionPerformed
 
     private void btnAddMemberMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMemberMouseEntered
@@ -341,6 +347,8 @@ public class Member extends javax.swing.JInternalFrame {
 
     private void btnEditMemberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditMemberActionPerformed
         btnEditMember.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Edit-Click.png")));
+        ChangeMember changeMember = new ChangeMember(this, true);
+        changeMember.setVisible(true);
     }//GEN-LAST:event_btnEditMemberActionPerformed
 
     private void btnEditMemberMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMemberMouseEntered
