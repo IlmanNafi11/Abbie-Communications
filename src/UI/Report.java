@@ -1,6 +1,7 @@
 
 package UI;
 
+import java.awt.Color;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 public class Report extends javax.swing.JInternalFrame {
@@ -22,6 +23,9 @@ public class Report extends javax.swing.JInternalFrame {
         jMonthChooser1 = new com.toedter.calendar.JMonthChooser();
         jYearChooser1 = new com.toedter.calendar.JYearChooser();
         jButton1 = new javax.swing.JButton();
+        lblPosisiUser = new javax.swing.JLabel();
+        IconProfil = new javax.swing.JLabel();
+        lblNamaUser = new javax.swing.JLabel();
         bg = new javax.swing.JLabel();
 
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -64,6 +68,49 @@ public class Report extends javax.swing.JInternalFrame {
         });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(937, 912, 92, 50));
 
+        lblPosisiUser.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblPosisiUser.setText("Admin");
+        lblPosisiUser.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblPosisiUser.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblPosisiUserMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblPosisiUserMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblPosisiUserMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                lblPosisiUserMousePressed(evt);
+            }
+        });
+        getContentPane().add(lblPosisiUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 50, -1, -1));
+
+        IconProfil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon Profile.png"))); // NOI18N
+        getContentPane().add(IconProfil, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 20, -1, -1));
+
+        lblNamaUser.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        lblNamaUser.setText("Muhammad Ali");
+        lblNamaUser.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblNamaUser.setPreferredSize(new java.awt.Dimension(130, 22));
+        lblNamaUser.setRequestFocusEnabled(false);
+        lblNamaUser.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblNamaUserMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblNamaUserMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblNamaUserMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                lblNamaUserMousePressed(evt);
+            }
+        });
+        getContentPane().add(lblNamaUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 20, -1, -1));
+
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Report.png"))); // NOI18N
         getContentPane().add(bg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1095, 1024));
 
@@ -86,13 +133,48 @@ public class Report extends javax.swing.JInternalFrame {
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Button-Print-Primary-click.png")));
     }//GEN-LAST:event_jButton1MousePressed
 
+    private void lblPosisiUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPosisiUserMouseClicked
+        lblPosisiUser.setForeground(new Color(28,119,255));
+    }//GEN-LAST:event_lblPosisiUserMouseClicked
+
+    private void lblPosisiUserMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPosisiUserMouseEntered
+        lblPosisiUser.setForeground(new Color(95,196,244));
+    }//GEN-LAST:event_lblPosisiUserMouseEntered
+
+    private void lblPosisiUserMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPosisiUserMouseExited
+        lblPosisiUser.setForeground(new Color(0,0,0));
+    }//GEN-LAST:event_lblPosisiUserMouseExited
+
+    private void lblPosisiUserMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPosisiUserMousePressed
+        lblPosisiUser.setForeground(new Color(28,119,255));
+    }//GEN-LAST:event_lblPosisiUserMousePressed
+
+    private void lblNamaUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNamaUserMouseClicked
+        lblNamaUser.setForeground(new Color(28,119,255));
+    }//GEN-LAST:event_lblNamaUserMouseClicked
+
+    private void lblNamaUserMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNamaUserMouseEntered
+        lblNamaUser.setForeground(new Color(95,196,244));
+    }//GEN-LAST:event_lblNamaUserMouseEntered
+
+    private void lblNamaUserMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNamaUserMouseExited
+        lblNamaUser.setForeground(new Color(0,0,0));
+    }//GEN-LAST:event_lblNamaUserMouseExited
+
+    private void lblNamaUserMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNamaUserMousePressed
+        lblNamaUser.setForeground(new Color(28,119,255));
+    }//GEN-LAST:event_lblNamaUserMousePressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel IconProfil;
     private javax.swing.JLabel bg;
     private javax.swing.JButton jButton1;
     private com.toedter.calendar.JMonthChooser jMonthChooser1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private com.toedter.calendar.JYearChooser jYearChooser1;
+    private javax.swing.JLabel lblNamaUser;
+    private javax.swing.JLabel lblPosisiUser;
     // End of variables declaration//GEN-END:variables
 }
