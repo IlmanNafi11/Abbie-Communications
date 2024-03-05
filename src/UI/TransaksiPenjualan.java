@@ -323,6 +323,8 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
 
     private void btnAddMemberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddMemberActionPerformed
         btnAddMember.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Button-Add-Member-Primary-Click.png")));
+        AddMember addMember = new AddMember(this, true);
+        addMember.setVisible(true);
     }//GEN-LAST:event_btnAddMemberActionPerformed
 
     private void btnAddMemberMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMemberMouseEntered
@@ -513,6 +515,8 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
 
     private void lblPosisiUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPosisiUserMouseClicked
         lblPosisiUser.setForeground(new Color(28,119,255));
+        Profile profile = new Profile(this, true);
+        profile.setVisible(true);
     }//GEN-LAST:event_lblPosisiUserMouseClicked
 
     private void lblPosisiUserMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPosisiUserMouseEntered
@@ -529,6 +533,8 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
 
     private void lblNamaUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNamaUserMouseClicked
         lblNamaUser.setForeground(new Color(28,119,255));
+        Profile profile = new Profile(this, true);
+        profile.setVisible(true);
     }//GEN-LAST:event_lblNamaUserMouseClicked
 
     private void lblNamaUserMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNamaUserMouseEntered
