@@ -1,7 +1,6 @@
 package UI;
 
 import java.awt.Color;
-import java.awt.Container;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 public class Rfid extends javax.swing.JDialog {
