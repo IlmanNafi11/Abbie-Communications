@@ -1,5 +1,7 @@
 package UI;
+import Logic.AkunManager;
 import java.awt.Color;
+import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 public class login extends javax.swing.JInternalFrame {
     public login() {
@@ -177,8 +179,18 @@ public class login extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_lblBackMouseClicked
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        String username = txtUsername.getText();
         String pas = txtPassword.getText();
-        System.out.println(pas);
+        boolean statusLogin = new AkunManager().login(username, pas);
+        try {
+           if(statusLogin){
+            JOptionPane.showMessageDialog(null, "berhasil");
+        }
+        } catch (Exception e) {
+            e.getMessage();
+        }
+         
+        
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void lblForgotMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblForgotMouseClicked
