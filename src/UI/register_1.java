@@ -1,10 +1,10 @@
 
 package UI;
+import Logic.*;
 import java.awt.Color;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 public class register_1 extends javax.swing.JInternalFrame {
-
     public register_1() {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
@@ -168,9 +168,13 @@ public class register_1 extends javax.swing.JInternalFrame {
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
         btnNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Next-Primary-Click.png")));
         Register2 rg2 = new Register2();
+        String nik = txtNik.getText();
+        String nama = txtName.getText();
+        String noHp = txtTlp.getText();
+        String alamat = txtAddress.getText();
+        rg2.getBio(nik, nama, noHp, alamat);
         desktopPane.add(rg2);
-        rg2.setVisible(true);
-//        this.dispose();
+        rg2.setVisible(true);     
     }//GEN-LAST:event_btnNextActionPerformed
 
     private void lblLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLoginMouseClicked

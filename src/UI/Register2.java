@@ -2,9 +2,12 @@ package UI;
 
 import java.awt.Color;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
-
+import Logic.*;
 public class Register2 extends javax.swing.JInternalFrame {
-
+    private String nik;
+    private String nama;
+    private String noHp;
+    private String alamat;
     public Register2() {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
@@ -12,7 +15,13 @@ public class Register2 extends javax.swing.JInternalFrame {
         bui.setNorthPane(null);
         Pane.setFocusable(true);
     }
-
+    
+    public void getBio(String nik, String nama, String noHp, String alamat){
+        this.nik = nik;
+        this.nama = nama;
+        this.noHp = noHp;
+        this.alamat = alamat;
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -224,6 +233,16 @@ public class Register2 extends javax.swing.JInternalFrame {
 
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
         btnRegister.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Register-Primary-Click.png")));
+        String status;
+        if(rdAdmin.isSelected()){
+            status = "admin";
+        } else if(rdTeknisi.isSelected()){
+            status = "teknisi";
+        } else {
+            status = "owner";
+        }
+        RegisterControler registrasi = new RegisterControler(nik, nama, noHp, alamat, txtUsername.getText(), txtPassword.getText(), status);
+        registrasi.display();
     }//GEN-LAST:event_btnRegisterActionPerformed
 
     private void btnRegisterMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegisterMouseEntered
