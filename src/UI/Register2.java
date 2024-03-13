@@ -3,25 +3,30 @@ package UI;
 import java.awt.Color;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import Logic.*;
+
 public class Register2 extends javax.swing.JInternalFrame {
+
     private String nik;
     private String nama;
     private String noHp;
     private String alamat;
+    private VerifikasiField verifikasi;
+    
     public Register2() {
         initComponents();
-        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
+        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
         bui.setNorthPane(null);
         Pane.setFocusable(true);
     }
-    
-    public void getBio(String nik, String nama, String noHp, String alamat){
+
+    public void getBio(String nik, String nama, String noHp, String alamat) {
         this.nik = nik;
         this.nama = nama;
         this.noHp = noHp;
         this.alamat = alamat;
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -234,15 +239,24 @@ public class Register2 extends javax.swing.JInternalFrame {
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
         btnRegister.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Register-Primary-Click.png")));
         String status;
-        if(rdAdmin.isSelected()){
+        String password = txtPassword.getText();
+        String repas = txtRepassword.getText();
+        if (rdAdmin.isSelected()) {
             status = "admin";
-        } else if(rdTeknisi.isSelected()){
+        } else if (rdTeknisi.isSelected()) {
             status = "teknisi";
         } else {
             status = "owner";
         }
-        RegisterControler registrasi = new RegisterControler(nik, nama, noHp, alamat, txtUsername.getText(), txtPassword.getText(), status);
-        registrasi.display();
+        verifikasi = new VerifikasiField(nik, nama, noHp, alamat, txtUsername.getText(), txtPassword.getText(),txtRepassword.getText(), status);
+            boolean verif = verifikasi.verifFieldAkun();
+            if (verif) {
+                RegisterControler registrasi = new RegisterControler(verifikasi);
+                registrasi.display();
+            }
+        
+
+
     }//GEN-LAST:event_btnRegisterActionPerformed
 
     private void btnRegisterMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegisterMouseEntered
@@ -277,18 +291,18 @@ public class Register2 extends javax.swing.JInternalFrame {
         if (txtUsername.getText().equals("Username")) {
             txtUsername.setText("");
             txtUsername.setForeground(Color.BLACK);
-        } 
+        }
     }//GEN-LAST:event_txtUsernameFocusGained
 
     private void txtUsernameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUsernameFocusLost
-        if (txtUsername.getText().trim().equals("")|| txtUsername.getText().length() == 0) {
+        if (txtUsername.getText().trim().equals("") || txtUsername.getText().length() == 0) {
             txtUsername.setText("Username");
-            txtUsername.setForeground(new Color(153,153,153));
+            txtUsername.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtUsernameFocusLost
 
     private void txtPasswordFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPasswordFocusGained
-        if(txtPassword.getText().equals("Password")) {
+        if (txtPassword.getText().equals("Password")) {
             txtPassword.setText("");
             txtPassword.setEchoChar('*');
             txtPassword.setForeground(Color.BLACK);
@@ -296,15 +310,15 @@ public class Register2 extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtPasswordFocusGained
 
     private void txtPasswordFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPasswordFocusLost
-        if(txtPassword.getText().trim().equals("") || txtPassword.getText().length()==0) {
+        if (txtPassword.getText().trim().equals("") || txtPassword.getText().length() == 0) {
             txtPassword.setText("Password");
-            txtPassword.setEchoChar((char)0);
-            txtPassword.setForeground(new Color(153,153,153));
+            txtPassword.setEchoChar((char) 0);
+            txtPassword.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtPasswordFocusLost
 
     private void txtRepasswordFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtRepasswordFocusGained
-        if(txtRepassword.getText().equals("Re-Enter Password")) {
+        if (txtRepassword.getText().equals("Re-Enter Password")) {
             txtRepassword.setText("");
             txtRepassword.setEchoChar('*');
             txtRepassword.setForeground(Color.BLACK);
@@ -312,10 +326,10 @@ public class Register2 extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtRepasswordFocusGained
 
     private void txtRepasswordFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtRepasswordFocusLost
-        if(txtRepassword.getText().trim().equals("") || txtRepassword.getText().length()==0) {
+        if (txtRepassword.getText().trim().equals("") || txtRepassword.getText().length() == 0) {
             txtRepassword.setText("Re-Enter Password");
-            txtRepassword.setEchoChar((char)0);
-            txtRepassword.setForeground(new Color(153,153,153));
+            txtRepassword.setEchoChar((char) 0);
+            txtRepassword.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtRepasswordFocusLost
 

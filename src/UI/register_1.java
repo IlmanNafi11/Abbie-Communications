@@ -1,13 +1,14 @@
-
 package UI;
+
 import Logic.*;
 import java.awt.Color;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 public class register_1 extends javax.swing.JInternalFrame {
+
     public register_1() {
         initComponents();
-        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
+        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
         bui.setNorthPane(null);
     }
@@ -167,14 +168,19 @@ public class register_1 extends javax.swing.JInternalFrame {
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
         btnNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Next-Primary-Click.png")));
-        Register2 rg2 = new Register2();
         String nik = txtNik.getText();
         String nama = txtName.getText();
         String noHp = txtTlp.getText();
         String alamat = txtAddress.getText();
-        rg2.getBio(nik, nama, noHp, alamat);
-        desktopPane.add(rg2);
-        rg2.setVisible(true);     
+        VerifikasiField verifikasi = new VerifikasiField(nik, nama, noHp, alamat, null, null, null, null);
+        boolean verif = verifikasi.verifBio();
+        if (verif) {
+            Register2 rg2 = new Register2();
+            rg2.getBio(nik, nama, noHp, alamat);
+            desktopPane.add(rg2);
+            rg2.setVisible(true);
+        }
+
     }//GEN-LAST:event_btnNextActionPerformed
 
     private void lblLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLoginMouseClicked
@@ -214,7 +220,7 @@ public class register_1 extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_lblLoginMouseExited
 
     private void txtNikFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNikFocusGained
-        if (txtNik.getText().equals("NIK")){
+        if (txtNik.getText().equals("NIK")) {
             txtNik.setText("");
             txtNik.setForeground(Color.BLACK);
         }
@@ -223,49 +229,49 @@ public class register_1 extends javax.swing.JInternalFrame {
     private void txtNikFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNikFocusLost
         if (txtNik.getText().trim().equals("") || txtNik.getText().length() == 0) {
             txtNik.setText("NIK");
-            txtNik.setForeground(new Color(153,153,153));
+            txtNik.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtNikFocusLost
 
     private void txtNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNameFocusGained
-        if (txtName.getText().equals("Name")){
+        if (txtName.getText().equals("Name")) {
             txtName.setText("");
             txtName.setForeground(Color.BLACK);
         }
     }//GEN-LAST:event_txtNameFocusGained
 
     private void txtNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNameFocusLost
-        if (txtName.getText().trim().equals("")|| txtName.getText().length()==0){
+        if (txtName.getText().trim().equals("") || txtName.getText().length() == 0) {
             txtName.setText("Name");
-            txtName.setForeground(new Color(153,153,153));
+            txtName.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtNameFocusLost
 
     private void txtTlpFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTlpFocusGained
-        if (txtTlp.getText().equals("Phone Number")){
+        if (txtTlp.getText().equals("Phone Number")) {
             txtTlp.setText("");
             txtTlp.setForeground(Color.BLACK);
         }
     }//GEN-LAST:event_txtTlpFocusGained
 
     private void txtTlpFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTlpFocusLost
-        if (txtTlp.getText().trim().equals("")|| txtTlp.getText().length()==0){
+        if (txtTlp.getText().trim().equals("") || txtTlp.getText().length() == 0) {
             txtTlp.setText("Phone Number");
-            txtTlp.setForeground(new Color(153,153,153));
+            txtTlp.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtTlpFocusLost
 
     private void txtAddressFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAddressFocusGained
-        if (txtAddress.getText().equals("Address")){
+        if (txtAddress.getText().equals("Address")) {
             txtAddress.setText("");
             txtAddress.setForeground(Color.BLACK);
         }
     }//GEN-LAST:event_txtAddressFocusGained
 
     private void txtAddressFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAddressFocusLost
-        if (txtAddress.getText().trim().equals("")|| txtAddress.getText().length()==0){
+        if (txtAddress.getText().trim().equals("") || txtAddress.getText().length() == 0) {
             txtAddress.setText("Address");
-            txtAddress.setForeground(new Color(153,153,153));
+            txtAddress.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtAddressFocusLost
 
