@@ -10,8 +10,8 @@ public class Register2 extends javax.swing.JInternalFrame {
     private String nama;
     private String noHp;
     private String alamat;
-    private VerifikasiField verifikasi;
-    
+    private AuthRegister verifikasi;
+
     public Register2() {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
@@ -248,15 +248,17 @@ public class Register2 extends javax.swing.JInternalFrame {
         } else {
             status = "owner";
         }
-        verifikasi = new VerifikasiField(nik, nama, noHp, alamat, txtUsername.getText(), txtPassword.getText(),txtRepassword.getText(), status);
-            boolean verif = verifikasi.verifFieldAkun();
-            if (verif) {
-                RegisterControler registrasi = new RegisterControler(verifikasi);
-                registrasi.display();
+        verifikasi = new AuthRegister(nik, nama, noHp, alamat, txtUsername.getText(), txtPassword.getText(), txtRepassword.getText(), status);
+        boolean verif = verifikasi.verifFieldAkun();
+        if (verif) {
+            RegisterControler registrasi = new RegisterControler(verifikasi);
+            if (registrasi.InsertData()) {
+                login lg = new login();
+                this.getDesktopPane().add(lg);
+                lg.setVisible(true);
+                this.dispose();
             }
-        
-
-
+        }
     }//GEN-LAST:event_btnRegisterActionPerformed
 
     private void btnRegisterMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegisterMouseEntered
