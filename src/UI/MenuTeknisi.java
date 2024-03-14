@@ -1,14 +1,19 @@
 package UI;
 
+import java.awt.Window;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 public class MenuTeknisi extends javax.swing.JInternalFrame {
+
     public MenuTeknisi() {
         initComponents();
-        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
+        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
         bui.setNorthPane(null);
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -144,6 +149,8 @@ public class MenuTeknisi extends javax.swing.JInternalFrame {
 
     private void btnSignOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignOutActionPerformed
         btnSignOut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Label-Sign-Out-Click.png")));
+        tutupMainFrame();
+        bukaWelcomeFrame();
     }//GEN-LAST:event_btnSignOutActionPerformed
 
     private void btnSignOutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSignOutMouseEntered
@@ -154,6 +161,18 @@ public class MenuTeknisi extends javax.swing.JInternalFrame {
         btnSignOut.setIcon(null);
     }//GEN-LAST:event_btnSignOutMouseExited
 
+    private void tutupMainFrame() {
+        Window window = SwingUtilities.getWindowAncestor(this);
+        if (window instanceof JFrame) {
+            ((JFrame) window).dispose();
+        }
+    }
+
+    private void bukaWelcomeFrame() {
+        welcome welcome = new welcome();
+        welcome.bukaLogin();
+        welcome.setVisible(true);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bg;
