@@ -1,6 +1,6 @@
 package Logic;
 
-import Data_Acces.DbRegisterHandler;
+import Data_Acces.DbUserManager;
 import javax.swing.JOptionPane;
 
 public class AuthRegister {
@@ -13,7 +13,7 @@ public class AuthRegister {
     private String password;
     private String Repas;
     private String role;
-    private ErrorHandler error;
+    private ExceptionHandler error;
 
     public AuthRegister(String nik, String nama, String noHp, String alamat, String username, String password, String rePass, String role) {
         this.nik = nik;
@@ -24,7 +24,7 @@ public class AuthRegister {
         this.password = password;
         this.Repas = rePass;
         this.role = role;
-        error = new ErrorHandler();
+        error = new ExceptionHandler();
     }
 
     public String getNik() {
@@ -71,7 +71,7 @@ public class AuthRegister {
     public boolean verifNik() {
         if (nik.matches("\\d+")) {
             if (nik.length() == 16) {
-                DbRegisterHandler dbRegisterHandler = new DbRegisterHandler();
+                DbUserManager dbRegisterHandler = new DbUserManager();
                 if (!dbRegisterHandler.cekNik(nik)) {
                     return true;
                 } else {
@@ -122,7 +122,7 @@ public class AuthRegister {
     }
 
     private boolean cekUsername() {
-        DbRegisterHandler dbRegisterHandler = new DbRegisterHandler();
+        DbUserManager dbRegisterHandler = new DbUserManager();
         if (!dbRegisterHandler.cekUsername(username)) {
             return true;
         } else {

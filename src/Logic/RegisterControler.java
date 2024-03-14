@@ -1,6 +1,6 @@
 package Logic;
 
-import Data_Acces.DbRegisterHandler;
+import Data_Acces.DbUserManager;
 import java.security.MessageDigest;
 import java.util.Random;
 import javax.swing.JOptionPane;
@@ -15,7 +15,7 @@ public class RegisterControler {
     private String username;
     private String password;
     private String role;
-    private ErrorHandler error;
+    private ExceptionHandler error;
     
     public RegisterControler(AuthRegister verif) {
         this.verifikasi = verif;
@@ -26,7 +26,7 @@ public class RegisterControler {
         this.username = verifikasi.getUsername();
         this.password = verifikasi.getPassword();
         this.role = verifikasi.getRole();
-        error = new ErrorHandler();
+        error = new ExceptionHandler();
     }
     
     public String generateIdUser() {
@@ -67,7 +67,7 @@ public class RegisterControler {
     }
 
     public boolean InsertData() {        
-        DbRegisterHandler insert = new DbRegisterHandler();
+        DbUserManager insert = new DbUserManager();
         String HashPassword = HashSandi(password);
         if (error.confirmSave("Save Account?")){
             insert.add(generateIdUser(), generateIdAkun(), nik, nama, noHp, alamat, username, HashPassword, role);

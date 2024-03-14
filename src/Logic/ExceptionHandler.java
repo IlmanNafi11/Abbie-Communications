@@ -3,7 +3,7 @@ package Logic;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-public class ErrorHandler {
+public class ExceptionHandler {
 
     ImageIcon error = new ImageIcon(getClass().getResource("/images/IconError/Icon-Error.png"));
     ImageIcon berhasilTersimpan = new ImageIcon(getClass().getResource("/images/IconError/Icon-Berhasil-Save-Data.png"));

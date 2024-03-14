@@ -6,12 +6,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import Logic.*;
 
-public class DbRegisterHandler {
+public class DbUserManager {
 
-    private ErrorHandler error;
+    private ExceptionHandler error;
 
     public boolean cekNik(String nik) {
-        error = new ErrorHandler();
+        error = new ExceptionHandler();
         String sqlNik = "SELECT COUNT(*) FROM data_pengguna WHERE nik=?";
         try {
             Connection koneksi = ClassKoneksi.GetConnection();
@@ -28,7 +28,7 @@ public class DbRegisterHandler {
     }
 
     public boolean cekUsername(String username) {
-        error = new ErrorHandler();
+        error = new ExceptionHandler();
         String sqlUsername = "SELECT COUNT(*) FROM akun WHERE LOWER(username)= LOWER(?)";
         try {
             Connection koneksi = ClassKoneksi.GetConnection();
@@ -45,7 +45,7 @@ public class DbRegisterHandler {
     }
 
     public void add(String id_user, String id_akun, String nik, String nama, String noHp, String alamat, String username, String password, String role) {
-        error = new ErrorHandler();
+        error = new ExceptionHandler();
         try {
             Connection koneksi = ClassKoneksi.GetConnection();
             String sqlBio = "INSERT INTO data_pengguna (id_user, nik, nama, noHp, alamat, posisi) VALUES (?,?,?,?,?,?)";
@@ -67,6 +67,34 @@ public class DbRegisterHandler {
             stAkun.executeUpdate();
         } catch (Exception e) {
             error.getErrorKesalahan("gagal" + e.getMessage());
+        } 
+    }
+    
+    public String authLogin(String username, String password){
+        error = new ExceptionHandler();
+        String sqlGetUser = "SELECT * FROM akun WHERE username = ? AND password = ?";
+        String sqlGetRole = "SELECT * FROM data_pengguna WHERE id_user =?";
+        try {
+            Connection koneksi = ClassKoneksi.GetConnection();
+            PreparedStatement stAuthLogin = koneksi.prepareStatement(sqlGetUser);
+            stAuthLogin.setString(1, username);
+            stAuthLogin.setString(2, password);
+            ResultSet rs = stAuthLogin.executeQuery();
+            if(rs.next()){
+                String getId = rs.getString("id_user");
+                PreparedStatement stGetRole = koneksi.prepareStatement(sqlGetRole);
+                stGetRole.setString(1, getId);
+                ResultSet rsGetRole = stGetRole.executeQuery();
+                if(rsGetRole.next()){
+                        String getRole = rsGetRole.getString("posisi");
+                        return getRole;
+                }
+            } else {
+                error.getErrorKesalahan("Username/Kata sandi salah");
+            }
+        } catch (Exception e) {
+            error.getErrorKesalahan("Gagal melakukan authentikasi akun " + e);
         }
+        return null;
     }
 }

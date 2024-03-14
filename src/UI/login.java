@@ -1,6 +1,9 @@
 package UI;
 import java.awt.Color;
-import javax.swing.JOptionPane;
+import Logic.*;
+import java.awt.Window;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 public class login extends javax.swing.JInternalFrame {
     public login() {
@@ -11,6 +14,12 @@ public class login extends javax.swing.JInternalFrame {
         jPanel1.setFocusable(true);
     }
     
+    private void tutupFrame(){
+        Window window = SwingUtilities.getWindowAncestor(this);
+        if(window instanceof JFrame){
+            ((JFrame)window).dispose();
+        }
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -179,10 +188,15 @@ public class login extends javax.swing.JInternalFrame {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         String username = txtUsername.getText();
-        String pas = txtPassword.getText();
-        
-         
-        
+        String password = txtPassword.getText();
+        LoginControler login = new LoginControler(username, password);
+        String getRole = login.authLogin();
+        if(getRole != null){
+            tutupFrame();
+            MainFrame mainFrame = new MainFrame();
+            mainFrame.DisplayMenu(getRole);
+            mainFrame.setVisible(true);
+        }
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void lblForgotMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblForgotMouseClicked

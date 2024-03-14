@@ -5,21 +5,14 @@ import javax.swing.UIManager;
 import javax.swing.JInternalFrame;
 
 public class MainFrame extends javax.swing.JFrame {
-    private String role = "owner";
-
     public MainFrame() {
         initComponents();
-        DisplayMenu();
         Dashboard ds = new Dashboard();
         DesktopPaneBody.add(ds);
         ds.setVisible(true);
     }
-
-    public MainFrame(String role) {
-        this.role = role;
-    }
     
-    public void DisplayMenu() {
+    public void DisplayMenu(String role) {
         if (role.equalsIgnoreCase("owner")) {
             MenuOwner menu = new MenuOwner();
             DesktopPaneMenu.add(menu);
@@ -28,7 +21,7 @@ public class MainFrame extends javax.swing.JFrame {
             MenuAdmin menu = new MenuAdmin();
             DesktopPaneMenu.add(menu);
             menu.setVisible(true);
-        } else {
+        } else if (role.equalsIgnoreCase("teknisi")){
             MenuTeknisi menu = new MenuTeknisi();
             DesktopPaneMenu.add(menu);
             menu.setVisible(true);
@@ -48,6 +41,7 @@ public class MainFrame extends javax.swing.JFrame {
         DesktopPaneBody = new javax.swing.JDesktopPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Dashboard");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         getContentPane().add(DesktopPaneMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 345, 1024));
 
