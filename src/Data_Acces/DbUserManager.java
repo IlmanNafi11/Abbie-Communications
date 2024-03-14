@@ -97,4 +97,50 @@ public class DbUserManager {
         }
         return null;
     }
+    
+    public String authResetPassword(String nik){
+        error = new ExceptionHandler();
+        String sqlNik = "SELECT * FROM data_pengguna WHERE nik = ?";
+        try {
+            Connection koneksi = ClassKoneksi.GetConnection();
+            PreparedStatement stCek = koneksi.prepareStatement(sqlNik);
+            stCek.setString(1, nik);
+            ResultSet rs = stCek.executeQuery();
+            if(rs.next()) {
+                String getName = rs.getString("nama");
+                return getName;
+            } else {
+                error.getErrorKesalahan("NIK tidak ditemukan");
+            }
+        } catch (Exception e) {
+            error.getErrorKesalahan("Gagal saat mencoba mencari nik");
+        }
+        return null;
+    }
+    
+    public boolean resetPassword(String nik, String password){
+        error = new ExceptionHandler();
+        String sqlGetId = "SELECT * FROM data_pengguna WHERE nik = ?";
+        String sqlReset = "UPDATE akun SET password = ? WHERE id_user = ?";
+        try {
+            Connection koneksi = ClassKoneksi.GetConnection();
+            PreparedStatement stGetId = koneksi.prepareStatement(sqlGetId);
+            stGetId.setString(1, nik);
+            ResultSet rsGetId = stGetId.executeQuery();
+            if(rsGetId.next()){
+            String getId = rsGetId.getString("id_user");
+             PreparedStatement stReset = koneksi.prepareStatement(sqlReset);
+            stReset.setString(1, password);
+            stReset.setString(2, getId);
+            stReset.executeUpdate();
+            return true;               
+            } else {
+                error.getErrorKesalahan("gagal saat mengambil nik");
+            }
+
+        } catch (Exception e) {
+            error.getErrorKesalahan("gagal saat mencoba merubah sandi" + e);
+        }
+        return false;
+    }
 }

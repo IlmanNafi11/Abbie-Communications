@@ -1,9 +1,11 @@
 package UI;
 
 import java.awt.Color;
+import Logic.*;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 public class forgotPassword_1 extends javax.swing.JInternalFrame {
+private ChangeUserDataControler changeUserDataControler;
 
     public forgotPassword_1() {
         initComponents();
@@ -101,9 +103,17 @@ public class forgotPassword_1 extends javax.swing.JInternalFrame {
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
         btnNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Next-Primary-Default.png")));
-        forgotPassword_2 forgotPass = new forgotPassword_2();
-        desktopPane.add(forgotPass);
-        forgotPass.setVisible(true);
+        String nik = txtNik.getText();
+        changeUserDataControler = new ChangeUserDataControler(nik);
+        String verif = changeUserDataControler.cekNik();
+        if(verif != null){
+            forgotPassword_2 forgotPass = new forgotPassword_2();
+            forgotPass.getUser(nik, verif);
+            forgotPass.setSapaan();
+            desktopPane.add(forgotPass);
+            forgotPass.setVisible(true);
+        }
+        
     }//GEN-LAST:event_btnNextActionPerformed
 
     private void lblBackMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBackMouseEntered

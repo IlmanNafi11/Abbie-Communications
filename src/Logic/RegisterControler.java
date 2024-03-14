@@ -3,7 +3,6 @@ package Logic;
 import Data_Acces.DbUserManager;
 import java.security.MessageDigest;
 import java.util.Random;
-import javax.swing.JOptionPane;
 
 public class RegisterControler {
 
