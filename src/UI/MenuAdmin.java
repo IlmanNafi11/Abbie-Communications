@@ -173,6 +173,9 @@ public class MenuAdmin extends javax.swing.JInternalFrame {
 
     private void btnDashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDashboardActionPerformed
         btnDashboard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Menu-Dashboard-Click.png")));
+        Dashboard ds = new Dashboard();
+        MainFrame main = (MainFrame) SwingUtilities.getWindowAncestor(this);
+        main.gantiKonten(ds);
     }//GEN-LAST:event_btnDashboardActionPerformed
 
     private void btnDashboardMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDashboardMouseEntered
@@ -185,6 +188,9 @@ public class MenuAdmin extends javax.swing.JInternalFrame {
 
     private void btnProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductActionPerformed
         btnProduct.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Menu-Product-Click.png")));
+        Product prod = new Product();
+        MainFrame main = (MainFrame) SwingUtilities.getWindowAncestor(this);
+        main.gantiKonten(prod);
     }//GEN-LAST:event_btnProductActionPerformed
 
     private void btnProductMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProductMouseEntered
@@ -197,6 +203,9 @@ public class MenuAdmin extends javax.swing.JInternalFrame {
 
     private void btnPenjualanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPenjualanActionPerformed
         btnPenjualan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Menu-Sales-Transaction-Click.png")));
+        TransaksiPenjualan tranP = new TransaksiPenjualan();
+        MainFrame main = (MainFrame) SwingUtilities.getWindowAncestor(this);
+        main.gantiKonten(tranP);
     }//GEN-LAST:event_btnPenjualanActionPerformed
 
     private void btnPenjualanMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPenjualanMouseEntered
@@ -209,6 +218,9 @@ public class MenuAdmin extends javax.swing.JInternalFrame {
 
     private void btnMemberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMemberActionPerformed
         btnMember.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Menu-Member-Click.png")));
+        Member member = new Member();
+        MainFrame main = (MainFrame) SwingUtilities.getWindowAncestor(this);
+        main.gantiKonten(member);
     }//GEN-LAST:event_btnMemberActionPerformed
 
     private void btnMemberMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMemberMouseEntered
@@ -221,6 +233,9 @@ public class MenuAdmin extends javax.swing.JInternalFrame {
 
     private void btnSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSupplierActionPerformed
         btnSupplier.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Menu-Supplier-Click.png")));
+        Supplier supplier = new Supplier();
+        MainFrame main = (MainFrame) SwingUtilities.getWindowAncestor(this);
+        main.gantiKonten(supplier);
     }//GEN-LAST:event_btnSupplierActionPerformed
 
     private void btnSupplierMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSupplierMouseEntered
@@ -233,6 +248,9 @@ public class MenuAdmin extends javax.swing.JInternalFrame {
 
     private void btnRestockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestockActionPerformed
         btnRestock.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Menu-Restock-Click.png")));
+        Restock restock = new Restock();
+        MainFrame main = (MainFrame) SwingUtilities.getWindowAncestor(this);
+        main.gantiKonten(restock);
     }//GEN-LAST:event_btnRestockActionPerformed
 
     private void btnRestockMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRestockMouseEntered

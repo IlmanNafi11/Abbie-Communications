@@ -113,6 +113,9 @@ public class MenuTeknisi extends javax.swing.JInternalFrame {
 
     private void btnDashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDashboardActionPerformed
         btnDashboard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Menu-Dashboard-Click.png")));
+        Dashboard ds = new Dashboard();
+        MainFrame main = (MainFrame) SwingUtilities.getWindowAncestor(this);
+        main.gantiKonten(ds);
     }//GEN-LAST:event_btnDashboardActionPerformed
 
     private void btnDashboardMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDashboardMouseEntered
@@ -125,6 +128,9 @@ public class MenuTeknisi extends javax.swing.JInternalFrame {
 
     private void btnProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductActionPerformed
         btnProduct.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Menu-Product-Click.png")));
+        Product prod = new Product();
+        MainFrame main = (MainFrame) SwingUtilities.getWindowAncestor(this);
+        main.gantiKonten(prod);
     }//GEN-LAST:event_btnProductActionPerformed
 
     private void btnProductMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProductMouseEntered
@@ -137,6 +143,9 @@ public class MenuTeknisi extends javax.swing.JInternalFrame {
 
     private void btnServiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnServiceActionPerformed
         btnService.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Menu-Service-Transaction-Click.png")));
+        TransaksiService transS = new TransaksiService();
+        MainFrame main = (MainFrame) SwingUtilities.getWindowAncestor(this);
+        main.gantiKonten(transS);
     }//GEN-LAST:event_btnServiceActionPerformed
 
     private void btnServiceMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnServiceMouseEntered
