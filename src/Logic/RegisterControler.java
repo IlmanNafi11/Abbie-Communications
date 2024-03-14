@@ -15,7 +15,7 @@ public class RegisterControler {
     private String password;
     private String role;
     private ExceptionHandler error;
-    
+
     public RegisterControler(AuthRegister verif) {
         this.verifikasi = verif;
         this.nik = verifikasi.getNik();
@@ -27,19 +27,19 @@ public class RegisterControler {
         this.role = verifikasi.getRole();
         error = new ExceptionHandler();
     }
-    
+
     public String generateIdUser() {
         String defaultValue = "USR";
         String userId = defaultValue + generateRandom(4);
         return userId;
     }
-    
+
     public String generateIdAkun() {
         String defaultValue = "ACN";
         String userId = defaultValue + generateRandom(4);
         return userId;
     }
-    
+
     public String generateRandom(int angka) {
         Random random = new Random();
         StringBuilder stringBuilder = new StringBuilder();
@@ -48,7 +48,7 @@ public class RegisterControler {
         }
         return stringBuilder.toString();
     }
-    
+
     public String HashSandi(String password) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA");
@@ -65,10 +65,10 @@ public class RegisterControler {
         return null;
     }
 
-    public boolean InsertData() {        
+    public boolean InsertData() {
         DbUserManager insert = new DbUserManager();
         String HashPassword = HashSandi(password);
-        if (error.confirmSave("Save Account?")){
+        if (error.confirmSave("Save Account?")) {
             insert.add(generateIdUser(), generateIdAkun(), nik, nama, noHp, alamat, username, HashPassword, role);
             error.getSucces("Succes");
             return true;

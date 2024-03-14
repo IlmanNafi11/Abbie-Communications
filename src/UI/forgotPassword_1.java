@@ -5,11 +5,12 @@ import Logic.*;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 public class forgotPassword_1 extends javax.swing.JInternalFrame {
-private ChangeUserDataControler changeUserDataControler;
+
+    private ChangeUserDataControler changeUserDataControler;
 
     public forgotPassword_1() {
         initComponents();
-        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
+        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
         bui.setNorthPane(null);
     }
@@ -106,14 +107,14 @@ private ChangeUserDataControler changeUserDataControler;
         String nik = txtNik.getText();
         changeUserDataControler = new ChangeUserDataControler(nik);
         String verif = changeUserDataControler.cekNik();
-        if(verif != null){
+        if (verif != null) {
             forgotPassword_2 forgotPass = new forgotPassword_2();
             forgotPass.getUser(nik, verif);
             forgotPass.setSapaan();
             desktopPane.add(forgotPass);
             forgotPass.setVisible(true);
         }
-        
+
     }//GEN-LAST:event_btnNextActionPerformed
 
     private void lblBackMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBackMouseEntered
@@ -137,7 +138,7 @@ private ChangeUserDataControler changeUserDataControler;
     }//GEN-LAST:event_btnNextMousePressed
 
     private void txtNikFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNikFocusGained
-        if (txtNik.getText().equals("NIK")){
+        if (txtNik.getText().equals("NIK")) {
             txtNik.setText("");
             txtNik.setForeground(Color.BLACK);
         }
@@ -146,7 +147,7 @@ private ChangeUserDataControler changeUserDataControler;
     private void txtNikFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNikFocusLost
         if (txtNik.getText().trim().equals("") || txtNik.getText().length() == 0) {
             txtNik.setText("NIK");
-            txtNik.setForeground(new Color(153,153,153));
+            txtNik.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtNikFocusLost
 

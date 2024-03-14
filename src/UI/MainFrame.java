@@ -5,6 +5,7 @@ import javax.swing.UIManager;
 import javax.swing.JInternalFrame;
 
 public class MainFrame extends javax.swing.JFrame {
+
     public MainFrame() {
         initComponents();
         Dashboard ds = new Dashboard();
@@ -21,18 +22,19 @@ public class MainFrame extends javax.swing.JFrame {
             MenuAdmin menu = new MenuAdmin();
             DesktopPaneMenu.add(menu);
             menu.setVisible(true);
-        } else if (role.equalsIgnoreCase("teknisi")){
+        } else if (role.equalsIgnoreCase("teknisi")) {
             MenuTeknisi menu = new MenuTeknisi();
             DesktopPaneMenu.add(menu);
             menu.setVisible(true);
         }
     }
-
-    public void gantiKonten(JInternalFrame kontenBaru){
+    
+    public void gantiKonten(JInternalFrame kontenBaru) {
         DesktopPaneBody.removeAll();
         DesktopPaneBody.add(kontenBaru);
         kontenBaru.setVisible(true);
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -79,7 +81,7 @@ public class MainFrame extends javax.swing.JFrame {
 //                    break;
 //                }
 //            }
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 //        } catch (ClassNotFoundException ex) {

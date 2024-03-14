@@ -4,6 +4,7 @@ import Data_Acces.DbUserManager;
 import java.security.MessageDigest;
 
 public class ChangeUserDataControler {
+
     private String username;
     private String password;
     private String repassword;
@@ -24,19 +25,19 @@ public class ChangeUserDataControler {
         this.nik = nik;
     }
 
-    public String cekNik(){
+    public String cekNik() {
         DbUserManager dbUserManager = new DbUserManager();
-        if(!nik.equalsIgnoreCase("NIK") && !nik.equals("")){    
+        if (!nik.equalsIgnoreCase("NIK") && !nik.equals("")) {
             return dbUserManager.authResetPassword(nik);
         }
         return null;
     }
-    
-    private boolean verifPassword(){
+
+    private boolean verifPassword() {
         error = new ExceptionHandler();
-        if (!password.equalsIgnoreCase("Enter New Password") && !password.equals("") &&
-            !repassword.equalsIgnoreCase("Re-Enter New Password") && !repassword.equals("")){
-            if(password.equalsIgnoreCase(repassword)){
+        if (!password.equalsIgnoreCase("Enter New Password") && !password.equals("")
+                && !repassword.equalsIgnoreCase("Re-Enter New Password") && !repassword.equals("")) {
+            if (password.equalsIgnoreCase(repassword)) {
                 return true;
             } else {
                 error.getErrorKesalahan("Password harus sama");
@@ -46,7 +47,7 @@ public class ChangeUserDataControler {
         }
         return false;
     }
-    
+
     private String HashSandi(String password) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA");
@@ -62,12 +63,12 @@ public class ChangeUserDataControler {
         }
         return null;
     }
-    
-    public boolean resetPassword(){
+
+    public boolean resetPassword() {
         error = new ExceptionHandler();
         DbUserManager dbUserManager = new DbUserManager();
         String hashPassword = HashSandi(password);
-        if(verifPassword()){
+        if (verifPassword()) {
             dbUserManager.resetPassword(nik, hashPassword);
             error.getSucces("UPDATE SUCCES");
             return true;

@@ -67,10 +67,10 @@ public class DbUserManager {
             stAkun.executeUpdate();
         } catch (Exception e) {
             error.getErrorKesalahan("gagal" + e.getMessage());
-        } 
+        }
     }
-    
-    public String authLogin(String username, String password){
+
+    public String authLogin(String username, String password) {
         error = new ExceptionHandler();
         String sqlGetUser = "SELECT * FROM akun WHERE username = ? AND password = ?";
         String sqlGetRole = "SELECT * FROM data_pengguna WHERE id_user =?";
@@ -80,14 +80,14 @@ public class DbUserManager {
             stAuthLogin.setString(1, username);
             stAuthLogin.setString(2, password);
             ResultSet rs = stAuthLogin.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 String getId = rs.getString("id_user");
                 PreparedStatement stGetRole = koneksi.prepareStatement(sqlGetRole);
                 stGetRole.setString(1, getId);
                 ResultSet rsGetRole = stGetRole.executeQuery();
-                if(rsGetRole.next()){
-                        String getRole = rsGetRole.getString("posisi");
-                        return getRole;
+                if (rsGetRole.next()) {
+                    String getRole = rsGetRole.getString("posisi");
+                    return getRole;
                 }
             } else {
                 error.getErrorKesalahan("Username/Kata sandi salah");
@@ -97,8 +97,8 @@ public class DbUserManager {
         }
         return null;
     }
-    
-    public String authResetPassword(String nik){
+
+    public String authResetPassword(String nik) {
         error = new ExceptionHandler();
         String sqlNik = "SELECT * FROM data_pengguna WHERE nik = ?";
         try {
@@ -106,7 +106,7 @@ public class DbUserManager {
             PreparedStatement stCek = koneksi.prepareStatement(sqlNik);
             stCek.setString(1, nik);
             ResultSet rs = stCek.executeQuery();
-            if(rs.next()) {
+            if (rs.next()) {
                 String getName = rs.getString("nama");
                 return getName;
             } else {
@@ -117,8 +117,8 @@ public class DbUserManager {
         }
         return null;
     }
-    
-    public boolean resetPassword(String nik, String password){
+
+    public boolean resetPassword(String nik, String password) {
         error = new ExceptionHandler();
         String sqlGetId = "SELECT * FROM data_pengguna WHERE nik = ?";
         String sqlReset = "UPDATE akun SET password = ? WHERE id_user = ?";
@@ -127,13 +127,13 @@ public class DbUserManager {
             PreparedStatement stGetId = koneksi.prepareStatement(sqlGetId);
             stGetId.setString(1, nik);
             ResultSet rsGetId = stGetId.executeQuery();
-            if(rsGetId.next()){
-            String getId = rsGetId.getString("id_user");
-             PreparedStatement stReset = koneksi.prepareStatement(sqlReset);
-            stReset.setString(1, password);
-            stReset.setString(2, getId);
-            stReset.executeUpdate();
-            return true;               
+            if (rsGetId.next()) {
+                String getId = rsGetId.getString("id_user");
+                PreparedStatement stReset = koneksi.prepareStatement(sqlReset);
+                stReset.setString(1, password);
+                stReset.setString(2, getId);
+                stReset.executeUpdate();
+                return true;
             } else {
                 error.getErrorKesalahan("gagal saat mengambil nik");
             }
