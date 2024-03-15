@@ -54,6 +54,6 @@ public class ExceptionHandler {
 
     // pesan konfirmasi delete
     public void confirmDelete(String pesan) {
-        JOptionPane.showMessageDialog(null, pesan, "Confirm", JOptionPane.QUESTION_MESSAGE, confirmSave);
+        JOptionPane.showMessageDialog(null, pesan, "Confirm", JOptionPane.QUESTION_MESSAGE, confirmDelete);
     }
 }

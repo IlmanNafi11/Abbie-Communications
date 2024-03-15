@@ -3,14 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Abbie%20Communications/src/UI/login.java</file>
-            <file>file:/D:/Abbie%20Communications/src/Logic/ErrorHandler.java</file>
-            <file>file:/D:/Abbie%20Communications/src/UI/register_1.java</file>
-            <file>file:/D:/Abbie%20Communications/src/UI/MainFrame.java</file>
-            <file>file:/D:/Abbie%20Communications/src/UI/Register2.java</file>
-            <file>file:/D:/Abbie%20Communications/src/Data_Acces/DbRegisterHandler.java</file>
+            <file>file:/D:/Abbie%20Communications/src/Logic/ProductControler.java</file>
+            <file>file:/D:/Abbie%20Communications/src/UI/Product.java</file>
+            <file>file:/D:/Abbie%20Communications/src/Data_Acces/DbProduct.java</file>
+            <file>file:/D:/Abbie%20Communications/src/Data_Acces/DbUserManager.java</file>
             <file>file:/D:/Abbie%20Communications/src/UI/welcome.java</file>
-            <file>file:/D:/Abbie%20Communications/src/Logic/LoginControler.java</file>
         </group>
     </open-files>
 </project-private>

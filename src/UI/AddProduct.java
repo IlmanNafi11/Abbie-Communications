@@ -1,15 +1,20 @@
 package UI;
 
+import Data_Acces.DbProduct;
 import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
+import Logic.*;
+import java.util.ArrayList;
+import javax.swing.JComboBox;
+
 public class AddProduct extends javax.swing.JDialog {
 
     public AddProduct(JInternalFrame parent, boolean modal) {
         super((JFrame) parent.getTopLevelAncestor(), modal);
         initComponents();
         this.setUndecorated(false);
-        getContentPane().setBackground(new Color(255,255,255,150));
+        getContentPane().setBackground(new Color(255, 255, 255, 150));
     }
 
     @SuppressWarnings("unchecked")
@@ -32,6 +37,7 @@ public class AddProduct extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
 
+        txtIdProduct.setEditable(false);
         txtIdProduct.setForeground(new java.awt.Color(153, 153, 153));
         txtIdProduct.setText("Product ID");
         txtIdProduct.setBorder(null);
@@ -74,6 +80,7 @@ public class AddProduct extends javax.swing.JDialog {
         getContentPane().add(txtQuantity);
         txtQuantity.setBounds(47, 373, 488, 50);
 
+        txtNamaSupplier.setEditable(false);
         txtNamaSupplier.setForeground(new java.awt.Color(153, 153, 153));
         txtNamaSupplier.setText("Supplier Name");
         txtNamaSupplier.setBorder(null);
@@ -151,11 +158,21 @@ public class AddProduct extends javax.swing.JDialog {
         getContentPane().add(btnSave);
         btnSave.setBounds(982, 503, 96, 55);
 
-        cmbKategori.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aksesoris", "Pulsa", "Elektronik", "Suku Cadang" }));
+        cmbKategori.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Category", "Aksesoris", "Pulsa", "Elektronik", "Suku Cadang" }));
+        cmbKategori.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbKategoriActionPerformed(evt);
+            }
+        });
         getContentPane().add(cmbKategori);
         cmbKategori.setBounds(38, 145, 506, 50);
 
-        cmbIdSupplier.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbIdSupplier.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Supplier ID" }));
+        cmbIdSupplier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbIdSupplierActionPerformed(evt);
+            }
+        });
         getContentPane().add(cmbIdSupplier);
         cmbIdSupplier.setBounds(568, 145, 506, 50);
 
@@ -201,17 +218,18 @@ public class AddProduct extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSaveMousePressed
 
     private void txtIdProductFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtIdProductFocusGained
-        if (txtIdProduct.getText().equals("Product ID")) {
-            txtIdProduct.setText("");
-            txtIdProduct.setForeground(Color.BLACK);
-        }
+//        if (txtIdProduct.getText().equals("Product ID")) {
+//            txtIdProduct.setText("");
+//            txtIdProduct.setForeground(Color.BLACK);
+//        }
     }//GEN-LAST:event_txtIdProductFocusGained
 
     private void txtIdProductFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtIdProductFocusLost
-        if (txtIdProduct.getText().trim().equals("")|| txtIdProduct.getText().length() == 0) {
-            txtIdProduct.setText("Product ID");
-            txtIdProduct.setForeground(new Color(153,153,153));
-        }
+//        if (txtIdProduct.getText().trim().equals("") || txtIdProduct.getText().length() == 0) {
+//            txtIdProduct.setText("Product ID");
+//            txtIdProduct.setForeground(new Color(153, 153, 153));
+//        }
+
     }//GEN-LAST:event_txtIdProductFocusLost
 
     private void txtNamaProdukFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNamaProdukFocusGained
@@ -222,9 +240,9 @@ public class AddProduct extends javax.swing.JDialog {
     }//GEN-LAST:event_txtNamaProdukFocusGained
 
     private void txtNamaProdukFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNamaProdukFocusLost
-        if (txtNamaProduk.getText().trim().equals("")|| txtNamaProduk.getText().length() == 0) {
+        if (txtNamaProduk.getText().trim().equals("") || txtNamaProduk.getText().length() == 0) {
             txtNamaProduk.setText("Product Name");
-            txtNamaProduk.setForeground(new Color(153,153,153));
+            txtNamaProduk.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtNamaProdukFocusLost
 
@@ -236,9 +254,9 @@ public class AddProduct extends javax.swing.JDialog {
     }//GEN-LAST:event_txtQuantityFocusGained
 
     private void txtQuantityFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtQuantityFocusLost
-        if (txtQuantity.getText().trim().equals("")|| txtQuantity.getText().length() == 0) {
+        if (txtQuantity.getText().trim().equals("") || txtQuantity.getText().length() == 0) {
             txtQuantity.setText("Quantity");
-            txtQuantity.setForeground(new Color(153,153,153));
+            txtQuantity.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtQuantityFocusLost
 
@@ -250,9 +268,9 @@ public class AddProduct extends javax.swing.JDialog {
     }//GEN-LAST:event_txtNamaSupplierFocusGained
 
     private void txtNamaSupplierFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNamaSupplierFocusLost
-        if (txtNamaSupplier.getText().trim().equals("")|| txtNamaSupplier.getText().length() == 0) {
+        if (txtNamaSupplier.getText().trim().equals("") || txtNamaSupplier.getText().length() == 0) {
             txtNamaSupplier.setText("Supplier Name");
-            txtNamaSupplier.setForeground(new Color(153,153,153));
+            txtNamaSupplier.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtNamaSupplierFocusLost
 
@@ -264,12 +282,33 @@ public class AddProduct extends javax.swing.JDialog {
     }//GEN-LAST:event_txtPriceFocusGained
 
     private void txtPriceFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPriceFocusLost
-        if (txtPrice.getText().trim().equals("")|| txtNamaSupplier.getText().length() == 0) {
+        if (txtPrice.getText().trim().equals("") || txtNamaSupplier.getText().length() == 0) {
             txtPrice.setText("Price");
-            txtPrice.setForeground(new Color(153,153,153));
+            txtPrice.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtPriceFocusLost
 
+    private void cmbKategoriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbKategoriActionPerformed
+        String kategori = (String) cmbKategori.getSelectedItem();
+        int index = cmbKategori.getSelectedIndex();
+        ProductControler controler = new ProductControler(null, kategori, null, null, 0, 0);
+        if(kategori != null){      
+            controler.getIdSupplier(cmbIdSupplier);           
+            cmbIdSupplier.addItem("Supplier ID");
+            cmbIdSupplier.setSelectedItem("Supplier ID");
+        }
+    }//GEN-LAST:event_cmbKategoriActionPerformed
+
+    private void cmbIdSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbIdSupplierActionPerformed
+        String idSupplier = (String) cmbIdSupplier.getSelectedItem();
+        String kategori = (String) cmbIdSupplier.getSelectedItem();
+        int index = cmbKategori.getSelectedIndex();
+        ProductControler controler = new ProductControler(null, kategori , null, idSupplier, 0, 0);
+        if(idSupplier != null){
+            String namaSupplier = controler.getSupplierName();
+            txtNamaSupplier.setText(namaSupplier);  
+        }
+    }//GEN-LAST:event_cmbIdSupplierActionPerformed
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

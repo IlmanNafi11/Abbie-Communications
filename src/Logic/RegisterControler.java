@@ -68,7 +68,8 @@ public class RegisterControler {
     public boolean InsertData() {
         DbUserManager insert = new DbUserManager();
         String HashPassword = HashSandi(password);
-        if (error.confirmSave("Save Account?")) {
+        boolean confirm = error.confirmSave("Save Account?");
+        if (confirm) {
             insert.add(generateIdUser(), generateIdAkun(), nik, nama, noHp, alamat, username, HashPassword, role);
             error.getSucces("Succes");
             return true;
