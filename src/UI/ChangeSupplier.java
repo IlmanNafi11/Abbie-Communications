@@ -21,6 +21,7 @@ public class ChangeSupplier extends javax.swing.JDialog {
         txtAddress = new javax.swing.JTextField();
         btnCancel = new javax.swing.JButton();
         btnChange = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
         bg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -38,7 +39,7 @@ public class ChangeSupplier extends javax.swing.JDialog {
             }
         });
         getContentPane().add(txtName);
-        txtName.setBounds(46, 155, 310, 50);
+        txtName.setBounds(388, 155, 312, 50);
 
         txtNoHp.setForeground(new java.awt.Color(153, 153, 153));
         txtNoHp.setText("Telephone Number");
@@ -52,11 +53,13 @@ public class ChangeSupplier extends javax.swing.JDialog {
             }
         });
         getContentPane().add(txtNoHp);
-        txtNoHp.setBounds(46, 231, 310, 50);
+        txtNoHp.setBounds(388, 231, 312, 50);
 
         txtAddress.setForeground(new java.awt.Color(153, 153, 153));
         txtAddress.setText("Category");
         txtAddress.setBorder(null);
+        txtAddress.setSelectionEnd(11);
+        txtAddress.setSelectionStart(11);
         txtAddress.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtAddressFocusGained(evt);
@@ -66,7 +69,7 @@ public class ChangeSupplier extends javax.swing.JDialog {
             }
         });
         getContentPane().add(txtAddress);
-        txtAddress.setBounds(46, 307, 310, 50);
+        txtAddress.setBounds(40, 231, 312, 50);
 
         btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Cancel-Primary-Default.png"))); // NOI18N
         btnCancel.setBorder(null);
@@ -88,7 +91,7 @@ public class ChangeSupplier extends javax.swing.JDialog {
             }
         });
         getContentPane().add(btnCancel);
-        btnCancel.setBounds(159, 390, 95, 50);
+        btnCancel.setBounds(505, 314, 95, 50);
 
         btnChange.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Change-Default.png"))); // NOI18N
         btnChange.setBorder(null);
@@ -110,13 +113,17 @@ public class ChangeSupplier extends javax.swing.JDialog {
             }
         });
         getContentPane().add(btnChange);
-        btnChange.setBounds(270, 390, 95, 50);
+        btnChange.setBounds(613, 309, 100, 60);
 
-        bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Change-Supplier.png"))); // NOI18N
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Category", "Aksesoris", "Pulsa", "Elektronik", "Suku Cadang" }));
+        getContentPane().add(jComboBox1);
+        jComboBox1.setBounds(35, 155, 322, 50);
+
+        bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Change-Supllier.png"))); // NOI18N
         getContentPane().add(bg);
-        bg.setBounds(0, 0, 401, 507);
+        bg.setBounds(0, 0, 749, 415);
 
-        setSize(new java.awt.Dimension(417, 515));
+        setSize(new java.awt.Dimension(765, 455));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -244,6 +251,7 @@ public class ChangeSupplier extends javax.swing.JDialog {
     private javax.swing.JLabel bg;
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnChange;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JTextField txtAddress;
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtNoHp;
