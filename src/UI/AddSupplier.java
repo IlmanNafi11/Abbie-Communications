@@ -16,29 +16,32 @@ public class AddSupplier extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        txtName = new javax.swing.JTextField();
+        txtIdSupplier = new javax.swing.JTextField();
         txtNoHp = new javax.swing.JTextField();
-        txtAddress = new javax.swing.JTextField();
         btnCancel = new javax.swing.JButton();
         btnAdd = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        txtName = new javax.swing.JTextField();
         bg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Add New Supplier");
+        setResizable(false);
         getContentPane().setLayout(null);
 
-        txtName.setForeground(new java.awt.Color(153, 153, 153));
-        txtName.setText("Supplier Name");
-        txtName.setBorder(null);
-        txtName.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtIdSupplier.setForeground(new java.awt.Color(153, 153, 153));
+        txtIdSupplier.setText("Supplier ID");
+        txtIdSupplier.setBorder(null);
+        txtIdSupplier.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                txtNameFocusGained(evt);
+                txtIdSupplierFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                txtNameFocusLost(evt);
+                txtIdSupplierFocusLost(evt);
             }
         });
-        getContentPane().add(txtName);
-        txtName.setBounds(46, 155, 310, 50);
+        getContentPane().add(txtIdSupplier);
+        txtIdSupplier.setBounds(40, 231, 312, 50);
 
         txtNoHp.setForeground(new java.awt.Color(153, 153, 153));
         txtNoHp.setText("Telephone Number");
@@ -52,21 +55,7 @@ public class AddSupplier extends javax.swing.JDialog {
             }
         });
         getContentPane().add(txtNoHp);
-        txtNoHp.setBounds(46, 231, 310, 50);
-
-        txtAddress.setForeground(new java.awt.Color(153, 153, 153));
-        txtAddress.setText("Category");
-        txtAddress.setBorder(null);
-        txtAddress.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtAddressFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtAddressFocusLost(evt);
-            }
-        });
-        getContentPane().add(txtAddress);
-        txtAddress.setBounds(46, 307, 310, 50);
+        txtNoHp.setBounds(388, 231, 312, 50);
 
         btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Cancel-Primary-Default.png"))); // NOI18N
         btnCancel.setBorder(null);
@@ -88,7 +77,7 @@ public class AddSupplier extends javax.swing.JDialog {
             }
         });
         getContentPane().add(btnCancel);
-        btnCancel.setBounds(159, 390, 95, 50);
+        btnCancel.setBounds(505, 314, 95, 50);
 
         btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Add-Default.png"))); // NOI18N
         btnAdd.setBorder(null);
@@ -110,13 +99,31 @@ public class AddSupplier extends javax.swing.JDialog {
             }
         });
         getContentPane().add(btnAdd);
-        btnAdd.setBounds(270, 390, 95, 50);
+        btnAdd.setBounds(613, 309, 100, 60);
 
-        bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Add-Supplier.png"))); // NOI18N
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Category", "Aksesoris", "Pulsa", "Elektronik", "Suku Cadang" }));
+        getContentPane().add(jComboBox1);
+        jComboBox1.setBounds(35, 155, 322, 50);
+
+        txtName.setForeground(new java.awt.Color(153, 153, 153));
+        txtName.setText("Supplier Name");
+        txtName.setBorder(null);
+        txtName.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtNameFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtNameFocusLost(evt);
+            }
+        });
+        getContentPane().add(txtName);
+        txtName.setBounds(388, 155, 312, 50);
+
+        bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Add-Supllier.png"))); // NOI18N
         getContentPane().add(bg);
-        bg.setBounds(0, 0, 401, 507);
+        bg.setBounds(0, 0, 749, 415);
 
-        setSize(new java.awt.Dimension(417, 515));
+        setSize(new java.awt.Dimension(765, 455));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -153,19 +160,19 @@ public class AddSupplier extends javax.swing.JDialog {
         btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Add-Click.png")));
     }//GEN-LAST:event_btnAddMousePressed
 
-    private void txtNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNameFocusGained
-        if (txtName.getText().equals("Supplier Name")) {
-            txtName.setText("");
-            txtName.setForeground(Color.BLACK);
+    private void txtIdSupplierFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtIdSupplierFocusGained
+        if (txtIdSupplier.getText().equals("Supplier ID")) {
+            txtIdSupplier.setText("");
+            txtIdSupplier.setForeground(Color.BLACK);
         }
-    }//GEN-LAST:event_txtNameFocusGained
+    }//GEN-LAST:event_txtIdSupplierFocusGained
 
-    private void txtNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNameFocusLost
-        if (txtName.getText().trim().equals("")|| txtName.getText().length() == 0) {
-            txtName.setText("Supplier Name");
-            txtName.setForeground(new Color(153,153,153));
+    private void txtIdSupplierFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtIdSupplierFocusLost
+        if (txtIdSupplier.getText().trim().equals("")|| txtIdSupplier.getText().length() == 0) {
+            txtIdSupplier.setText("Supplier ID");
+            txtIdSupplier.setForeground(new Color(153,153,153));
         }
-    }//GEN-LAST:event_txtNameFocusLost
+    }//GEN-LAST:event_txtIdSupplierFocusLost
 
     private void txtNoHpFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNoHpFocusGained
         if (txtNoHp.getText().equals("Telephone Number")) {
@@ -181,19 +188,19 @@ public class AddSupplier extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_txtNoHpFocusLost
 
-    private void txtAddressFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAddressFocusLost
-        if (txtAddress.getText().trim().equals("")|| txtNoHp.getText().length() == 0) {
-            txtAddress.setText("Category");
-            txtAddress.setForeground(new Color(153,153,153));
+    private void txtNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNameFocusGained
+        if (txtName.getText().equals("Supplier Name")) {
+            txtName.setText("");
+            txtName.setForeground(Color.BLACK);
         }
-    }//GEN-LAST:event_txtAddressFocusLost
+    }//GEN-LAST:event_txtNameFocusGained
 
-    private void txtAddressFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAddressFocusGained
-        if (txtAddress.getText().equals("Category")) {
-            txtAddress.setText("");
-            txtAddress.setForeground(Color.BLACK);
+    private void txtNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNameFocusLost
+        if (txtName.getText().trim().equals("")|| txtName.getText().length() == 0) {
+            txtName.setText("Supplier Name");
+            txtName.setForeground(new Color(153,153,153));
         }
-    }//GEN-LAST:event_txtAddressFocusGained
+    }//GEN-LAST:event_txtNameFocusLost
 
     /**
      * @param args the command line arguments
@@ -242,7 +249,8 @@ public class AddSupplier extends javax.swing.JDialog {
     private javax.swing.JLabel bg;
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnCancel;
-    private javax.swing.JTextField txtAddress;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JTextField txtIdSupplier;
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtNoHp;
     // End of variables declaration//GEN-END:variables
