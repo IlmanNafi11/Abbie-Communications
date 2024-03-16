@@ -31,9 +31,9 @@ public class Member extends javax.swing.JInternalFrame implements UpdateTable {
     }
 
     public void ViewTableDiskon() {
-//        MemberControler controler = new MemberControler(null);
-//        ConfigTable Tabel = controler.GetAllData();
-//        tableDiskon.setModel(Tabel);
+        PromoContoler controler = new PromoContoler(null, null, 0, 0, null);
+        ConfigTable Tabel = controler.GetAllData();
+        tableDiskon.setModel(Tabel);
     }
 
     @SuppressWarnings("unchecked")
@@ -378,13 +378,24 @@ public class Member extends javax.swing.JInternalFrame implements UpdateTable {
     private void btnEditPromoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditPromoActionPerformed
         btnEditPromo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Edit-Click.png")));
         ChangeDiscount changeDiscount = new ChangeDiscount(this, true);
-        changeDiscount.setDiskon(new UpdateTable() {
-            @Override
-            public void perbarui() {
-                ViewTableDiskon();
-            }
-        });
-        changeDiscount.setVisible(true);
+        PromoContoler controler = new PromoContoler(null, null, 0, 0, null);
+        ArrayList<String> dataString = new ArrayList<>();
+        ArrayList<Integer> dataInteger = new ArrayList<>();
+        int row = tableDiskon.getSelectedRow();
+        boolean validasi = controler.ValidateRow(row, tableDiskon);
+        if (validasi) {
+            changeDiscount.setDiskon(new UpdateTable() {
+                @Override
+                public void perbarui() {
+                    ViewTableDiskon();
+                }
+            });
+            dataString = controler.IsiStringField(row, tableDiskon);
+            dataInteger = controler.IsiIntField(row, tableDiskon);
+            changeDiscount.setField(dataString.get(0), dataString.get(1), dataInteger.get(0), dataInteger.get(1), dataString.get(2));
+            changeDiscount.setVisible(true);
+        }
+        
     }//GEN-LAST:event_btnEditPromoActionPerformed
 
     private void btnEditPromoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditPromoMouseEntered
@@ -401,6 +412,10 @@ public class Member extends javax.swing.JInternalFrame implements UpdateTable {
 
     private void btnHapusPromoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusPromoActionPerformed
         btnHapusPromo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Delete-Click.png")));
+        int getRow = tableDiskon.getSelectedRow();
+        PromoContoler contoler = new PromoContoler(null, null, 0, 0, null);
+        contoler.DeleteDiskon(getRow, tableDiskon);
+        ViewTableDiskon();
     }//GEN-LAST:event_btnHapusPromoActionPerformed
 
     private void btnHapusPromoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHapusPromoMouseEntered

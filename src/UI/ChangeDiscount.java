@@ -1,26 +1,36 @@
 package UI;
 
+import Logic.PromoContoler;
 import Logic.UpdateTable;
 import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 
 public class ChangeDiscount extends javax.swing.JDialog {
-    
+
     private UpdateTable update;
-    
+    private String kodeDiskon;
+
     public ChangeDiscount(JInternalFrame parent, boolean modal) {
         super((JFrame) parent.getTopLevelAncestor(), modal);
         initComponents();
         this.setUndecorated(false);
-        getContentPane().setBackground(new Color(255,255,255,150));
+        getContentPane().setBackground(new Color(255, 255, 255, 150));
         bg.setFocusable(true);
     }
-    
+
     public void setDiskon(UpdateTable update) {
         this.update = update;
     }
-    
+
+    public void setField(String kodeDiskon, String kategori, int minumumPurchase, int amount, String status) {
+        this.kodeDiskon = kodeDiskon;
+        cmbKategori.setSelectedItem(kategori);
+        txtMinimum.setText(String.valueOf(minumumPurchase));
+        txtAmount.setText(String.valueOf(amount));
+        cmbStatus.setSelectedItem(status);
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -37,7 +47,7 @@ public class ChangeDiscount extends javax.swing.JDialog {
         getContentPane().setLayout(null);
 
         txtMinimum.setForeground(new java.awt.Color(153, 153, 153));
-        txtMinimum.setText("Minimum Purchase");
+        txtMinimum.setText("Minimum amount");
         txtMinimum.setBorder(null);
         txtMinimum.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -108,11 +118,11 @@ public class ChangeDiscount extends javax.swing.JDialog {
         getContentPane().add(btnChange);
         btnChange.setBounds(270, 466, 95, 50);
 
-        cmbKategori.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Minimum Belanja", "Minimum Pembelian" }));
+        cmbKategori.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Category", "Minimum item purchase", "Minimum total expenditure" }));
         getContentPane().add(cmbKategori);
         cmbKategori.setBounds(40, 155, 322, 50);
 
-        cmbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Active", "Non Active", " " }));
+        cmbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Status", "Active", "Non Active" }));
         getContentPane().add(cmbStatus);
         cmbStatus.setBounds(40, 380, 320, 50);
 
@@ -143,6 +153,20 @@ public class ChangeDiscount extends javax.swing.JDialog {
 
     private void btnChangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeActionPerformed
         btnChange.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Change-Click.png")));
+        String kategori = (String) cmbKategori.getSelectedItem();
+        int minimumBelanja = Integer.parseInt(txtMinimum.getText());
+        int jumlahDiskon = Integer.parseInt(txtAmount.getText());
+        String status = (String) cmbStatus.getSelectedItem();
+        PromoContoler controler = new PromoContoler(kodeDiskon, kategori, minimumBelanja, jumlahDiskon, status);
+        int minimum = controler.ValidateMinPurchase(txtMinimum);
+        int amount = controler.ValidateValue(txtAmount);
+        if (minimum != 0 && amount != 0) {
+            boolean succes = controler.ChangeDiskon();
+            if (succes) {
+                update.perbarui();
+                dispose();
+            }
+        }
     }//GEN-LAST:event_btnChangeActionPerformed
 
     private void btnChangeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChangeMouseEntered
@@ -165,21 +189,21 @@ public class ChangeDiscount extends javax.swing.JDialog {
     }//GEN-LAST:event_txtAmountFocusGained
 
     private void txtAmountFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAmountFocusLost
-        if (txtAmount.getText().trim().equals("")|| txtAmount.getText().length() == 0) {
+        if (txtAmount.getText().trim().equals("") || txtAmount.getText().length() == 0) {
             txtAmount.setText("Amount");
-            txtAmount.setForeground(new Color(153,153,153));
+            txtAmount.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtAmountFocusLost
 
     private void txtMinimumFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtMinimumFocusLost
-        if (txtMinimum.getText().trim().equals("")|| txtMinimum.getText().length() == 0) {
-            txtMinimum.setText("Minimum Purchase");
-            txtMinimum.setForeground(new Color(153,153,153));
+        if (txtMinimum.getText().trim().equals("") || txtMinimum.getText().length() == 0) {
+            txtMinimum.setText("Minimum amount");
+            txtMinimum.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtMinimumFocusLost
 
     private void txtMinimumFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtMinimumFocusGained
-        if (txtMinimum.getText().equals("Minimum Purchase")) {
+        if (txtMinimum.getText().equals("Minimum amount")) {
             txtMinimum.setText("");
             txtMinimum.setForeground(Color.BLACK);
         }

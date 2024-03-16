@@ -46,8 +46,8 @@ public class MemberControler {
         }
         return false;
     }
-
-    private boolean cekNoHp() {
+    
+    private boolean cekNoHp(){
         DbMember dbMember = new DbMember(noHp);
         boolean cek = dbMember.cekMember();
         if (!cek) {
@@ -62,7 +62,7 @@ public class MemberControler {
         DbMember dbMember = new DbMember(noHp);
         if (noHp.matches("\\d+") && noHp.length() > 11 && noHp.length() < 14) {
             boolean cekNoHp = dbMember.cekMember();
-            return true;
+                return true;
         } else {
             exceptionHandler.getErrorKesalahan("Invalid cellphone number !");
         }
@@ -112,12 +112,12 @@ public class MemberControler {
         }
         return false;
     }
-
-    public void DeleteMember(int row, JTable table) {
-        if (row != -1) {
-            this.idMember = table.getValueAt(row, 0).toString();
-            DbMember dbMember = new DbMember(idMember, noHp, namaMember, alamatMember);
-            dbMember.DeleteMember();
+    
+    public void DeleteMember(int row, JTable table){
+        if(row != -1){
+        this.idMember = table.getValueAt(row, 0).toString();
+        DbMember dbMember = new DbMember(idMember, noHp, namaMember, alamatMember);
+        dbMember.DeleteMember();
         } else {
             exceptionHandler.getErrorKesalahan("Select the data you want to delete!");
         }
