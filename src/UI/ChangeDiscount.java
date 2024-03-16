@@ -1,10 +1,14 @@
 package UI;
 
+import Logic.UpdateTable;
 import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 
 public class ChangeDiscount extends javax.swing.JDialog {
+    
+    private UpdateTable update;
+    
     public ChangeDiscount(JInternalFrame parent, boolean modal) {
         super((JFrame) parent.getTopLevelAncestor(), modal);
         initComponents();
@@ -12,6 +16,11 @@ public class ChangeDiscount extends javax.swing.JDialog {
         getContentPane().setBackground(new Color(255,255,255,150));
         bg.setFocusable(true);
     }
+    
+    public void setDiskon(UpdateTable update) {
+        this.update = update;
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

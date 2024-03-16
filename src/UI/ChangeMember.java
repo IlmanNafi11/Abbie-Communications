@@ -1,17 +1,35 @@
 package UI;
 
+import Logic.UpdateTable;
 import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
+import Logic.*;
 
 public class ChangeMember extends javax.swing.JDialog {
+
+    private UpdateTable update;
+    private String idMember;
+
     public ChangeMember(JInternalFrame parent, boolean modal) {
         super((JFrame) parent.getTopLevelAncestor(), modal);
         initComponents();
         this.setUndecorated(false);
-        getContentPane().setBackground(new Color(255,255,255,150));
+        getContentPane().setBackground(new Color(255, 255, 255, 150));
         bg.setFocusable(true);
     }
+
+    public void setField(String idMember, String namaMember, String noHp, String alamat) {
+        this.idMember = idMember;
+        txtName.setText(namaMember);
+        txtNoHp.setText(noHp);
+        txtAddress.setText(alamat);
+    }
+
+    public void setMember(UpdateTable update) {
+        this.update = update;
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -26,7 +44,6 @@ public class ChangeMember extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
 
-        txtName.setForeground(new java.awt.Color(153, 153, 153));
         txtName.setText("Member Name");
         txtName.setBorder(null);
         txtName.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -40,7 +57,6 @@ public class ChangeMember extends javax.swing.JDialog {
         getContentPane().add(txtName);
         txtName.setBounds(46, 155, 310, 50);
 
-        txtNoHp.setForeground(new java.awt.Color(153, 153, 153));
         txtNoHp.setText("Telephone Number");
         txtNoHp.setBorder(null);
         txtNoHp.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -54,7 +70,6 @@ public class ChangeMember extends javax.swing.JDialog {
         getContentPane().add(txtNoHp);
         txtNoHp.setBounds(46, 231, 310, 50);
 
-        txtAddress.setForeground(new java.awt.Color(153, 153, 153));
         txtAddress.setText("Address");
         txtAddress.setBorder(null);
         txtAddress.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -139,6 +154,15 @@ public class ChangeMember extends javax.swing.JDialog {
 
     private void btnChangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeActionPerformed
         btnChange.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Change-Click.png")));
+        String nama = txtName.getText();
+        String noHp = txtNoHp.getText();
+        String alamat = txtAddress.getText();
+        MemberControler controler = new MemberControler(idMember, noHp, nama, alamat);
+        boolean succes = controler.ChangeMember();
+        if (succes) {
+            update.perbarui();
+            dispose();
+        }
     }//GEN-LAST:event_btnChangeActionPerformed
 
     private void btnChangeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChangeMouseEntered
@@ -161,9 +185,9 @@ public class ChangeMember extends javax.swing.JDialog {
     }//GEN-LAST:event_txtNameFocusGained
 
     private void txtNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNameFocusLost
-        if (txtName.getText().trim().equals("")|| txtName.getText().length() == 0) {
+        if (txtName.getText().trim().equals("") || txtName.getText().length() == 0) {
             txtName.setText("Member Name");
-            txtName.setForeground(new Color(153,153,153));
+            txtName.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtNameFocusLost
 
@@ -175,9 +199,9 @@ public class ChangeMember extends javax.swing.JDialog {
     }//GEN-LAST:event_txtNoHpFocusGained
 
     private void txtNoHpFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNoHpFocusLost
-        if (txtNoHp.getText().trim().equals("")|| txtNoHp.getText().length() == 0) {
+        if (txtNoHp.getText().trim().equals("") || txtNoHp.getText().length() == 0) {
             txtNoHp.setText("Telephone Number");
-            txtNoHp.setForeground(new Color(153,153,153));
+            txtNoHp.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtNoHpFocusLost
 
@@ -189,9 +213,9 @@ public class ChangeMember extends javax.swing.JDialog {
     }//GEN-LAST:event_txtAddressFocusGained
 
     private void txtAddressFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAddressFocusLost
-        if (txtAddress.getText().trim().equals("")|| txtNoHp.getText().length() == 0) {
+        if (txtAddress.getText().trim().equals("") || txtNoHp.getText().length() == 0) {
             txtAddress.setText("Address");
-            txtAddress.setForeground(new Color(153,153,153));
+            txtAddress.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtAddressFocusLost
 

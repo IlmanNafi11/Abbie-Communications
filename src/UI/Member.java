@@ -2,16 +2,39 @@ package UI;
 
 import java.awt.Color;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+import Logic.*;
+import java.util.ArrayList;
 
-public class Member extends javax.swing.JInternalFrame {
+public class Member extends javax.swing.JInternalFrame implements UpdateTable {
+
+    private ExceptionHandler exceptionHandler;
 
     public Member() {
         initComponents();
-        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
+        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
         bui.setNorthPane(null);
+        ViewTableDiskon();
+        ViewTableMember();
     }
 
+    @Override
+    public void perbarui() {
+        ViewTableDiskon();
+        ViewTableMember();
+    }
+
+    public void ViewTableMember() {
+        MemberControler controler = new MemberControler(null, null, null, null);
+        ConfigTable Tabel = controler.GetAllData();
+        tableMember.setModel(Tabel);
+    }
+
+    public void ViewTableDiskon() {
+//        MemberControler controler = new MemberControler(null);
+//        ConfigTable Tabel = controler.GetAllData();
+//        tableDiskon.setModel(Tabel);
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -26,9 +49,9 @@ public class Member extends javax.swing.JInternalFrame {
         btnEditMember = new javax.swing.JButton();
         btnHapusMember = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tableDiskon = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tableMember = new javax.swing.JTable();
         lblPosisiUser = new javax.swing.JLabel();
         IconProfil = new javax.swing.JLabel();
         lblNamaUser = new javax.swing.JLabel();
@@ -198,7 +221,7 @@ public class Member extends javax.swing.JInternalFrame {
         });
         getContentPane().add(btnHapusMember, new org.netbeans.lib.awtextra.AbsoluteConstraints(948, 392, 81, 40));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tableDiskon.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -217,17 +240,21 @@ public class Member extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
+        tableDiskon.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tableDiskon.setShowGrid(false);
+        tableDiskon.setShowVerticalLines(true);
+        tableDiskon.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(tableDiskon);
+        if (tableDiskon.getColumnModel().getColumnCount() > 0) {
+            tableDiskon.getColumnModel().getColumn(0).setResizable(false);
+            tableDiskon.getColumnModel().getColumn(1).setResizable(false);
+            tableDiskon.getColumnModel().getColumn(2).setResizable(false);
+            tableDiskon.getColumnModel().getColumn(3).setResizable(false);
         }
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(67, 230, 962, 142));
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tableMember.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -246,12 +273,15 @@ public class Member extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable2);
-        if (jTable2.getColumnModel().getColumnCount() > 0) {
-            jTable2.getColumnModel().getColumn(0).setResizable(false);
-            jTable2.getColumnModel().getColumn(1).setResizable(false);
-            jTable2.getColumnModel().getColumn(2).setResizable(false);
-            jTable2.getColumnModel().getColumn(3).setResizable(false);
+        tableMember.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tableMember.setShowVerticalLines(true);
+        tableMember.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(tableMember);
+        if (tableMember.getColumnModel().getColumnCount() > 0) {
+            tableMember.getColumnModel().getColumn(0).setResizable(false);
+            tableMember.getColumnModel().getColumn(1).setResizable(false);
+            tableMember.getColumnModel().getColumn(2).setResizable(false);
+            tableMember.getColumnModel().getColumn(3).setResizable(false);
         }
 
         getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(67, 450, 962, 510));
@@ -324,6 +354,12 @@ public class Member extends javax.swing.JInternalFrame {
     private void btnAddPromoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPromoActionPerformed
         btnAddPromo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Add-Plus-Click.png")));
         AddDiscount addDiscount = new AddDiscount(this, true);
+        addDiscount.setDiskon(new UpdateTable() {
+            @Override
+            public void perbarui() {
+                ViewTableDiskon();
+            }
+        });
         addDiscount.setVisible(true);
     }//GEN-LAST:event_btnAddPromoActionPerformed
 
@@ -342,6 +378,12 @@ public class Member extends javax.swing.JInternalFrame {
     private void btnEditPromoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditPromoActionPerformed
         btnEditPromo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Edit-Click.png")));
         ChangeDiscount changeDiscount = new ChangeDiscount(this, true);
+        changeDiscount.setDiskon(new UpdateTable() {
+            @Override
+            public void perbarui() {
+                ViewTableDiskon();
+            }
+        });
         changeDiscount.setVisible(true);
     }//GEN-LAST:event_btnEditPromoActionPerformed
 
@@ -376,6 +418,12 @@ public class Member extends javax.swing.JInternalFrame {
     private void btnAddMemberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddMemberActionPerformed
         btnAddMember.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Add-Plus-Click.png")));
         AddMember addMember = new AddMember(this, true);
+        addMember.setMember(new UpdateTable() {
+            @Override
+            public void perbarui() {
+                ViewTableMember();
+            }
+        });
         addMember.setVisible(true);
     }//GEN-LAST:event_btnAddMemberActionPerformed
 
@@ -393,8 +441,24 @@ public class Member extends javax.swing.JInternalFrame {
 
     private void btnEditMemberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditMemberActionPerformed
         btnEditMember.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Edit-Click.png")));
-        ChangeMember changeMember = new ChangeMember(this, true);
-        changeMember.setVisible(true);
+        int row = tableMember.getSelectedRow();
+        ArrayList<String> data = new ArrayList<>();
+        if (row != -1) {
+            MemberControler controler = new MemberControler(null, null, null, null);
+            data = controler.IsiField(row, tableMember);
+            ChangeMember changeMember = new ChangeMember(this, true);
+            changeMember.setMember(new UpdateTable() {
+                @Override
+                public void perbarui() {
+                    ViewTableMember();
+                }
+            });
+            changeMember.setField(data.get(0), data.get(1), data.get(2), data.get(3));
+            changeMember.setVisible(true);
+        } else {
+            exceptionHandler = new ExceptionHandler();
+            exceptionHandler.getErrorKesalahan("Select the data you want to change!");
+        }
     }//GEN-LAST:event_btnEditMemberActionPerformed
 
     private void btnEditMemberMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMemberMouseEntered
@@ -411,6 +475,10 @@ public class Member extends javax.swing.JInternalFrame {
 
     private void btnHapusMemberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusMemberActionPerformed
         btnHapusMember.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Delete-Click.png")));
+        int row = tableMember.getSelectedRow();
+        MemberControler controler = new MemberControler(null, null, null, null);
+        controler.DeleteMember(row, tableMember);
+        ViewTableMember();
     }//GEN-LAST:event_btnHapusMemberActionPerformed
 
     private void btnHapusMemberMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHapusMemberMouseEntered
@@ -433,46 +501,46 @@ public class Member extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtSearchFocusGained
 
     private void txtSearchFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearchFocusLost
-        if (txtSearch.getText().trim().equals("")|| txtSearch.getText().length() == 0) {
+        if (txtSearch.getText().trim().equals("") || txtSearch.getText().length() == 0) {
             txtSearch.setText("Search Member here...");
-            txtSearch.setForeground(new Color(153,153,153));
+            txtSearch.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtSearchFocusLost
 
     private void lblPosisiUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPosisiUserMouseClicked
-        lblPosisiUser.setForeground(new Color(28,119,255));
+        lblPosisiUser.setForeground(new Color(28, 119, 255));
         Profile profile = new Profile(this, true);
         profile.setVisible(true);
     }//GEN-LAST:event_lblPosisiUserMouseClicked
 
     private void lblPosisiUserMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPosisiUserMouseEntered
-        lblPosisiUser.setForeground(new Color(95,196,244));
+        lblPosisiUser.setForeground(new Color(95, 196, 244));
     }//GEN-LAST:event_lblPosisiUserMouseEntered
 
     private void lblPosisiUserMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPosisiUserMouseExited
-        lblPosisiUser.setForeground(new Color(0,0,0));
+        lblPosisiUser.setForeground(new Color(0, 0, 0));
     }//GEN-LAST:event_lblPosisiUserMouseExited
 
     private void lblPosisiUserMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPosisiUserMousePressed
-        lblPosisiUser.setForeground(new Color(28,119,255));
+        lblPosisiUser.setForeground(new Color(28, 119, 255));
     }//GEN-LAST:event_lblPosisiUserMousePressed
 
     private void lblNamaUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNamaUserMouseClicked
-        lblNamaUser.setForeground(new Color(28,119,255));
+        lblNamaUser.setForeground(new Color(28, 119, 255));
         Profile profile = new Profile(this, true);
         profile.setVisible(true);
     }//GEN-LAST:event_lblNamaUserMouseClicked
 
     private void lblNamaUserMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNamaUserMouseEntered
-        lblNamaUser.setForeground(new Color(95,196,244));
+        lblNamaUser.setForeground(new Color(95, 196, 244));
     }//GEN-LAST:event_lblNamaUserMouseEntered
 
     private void lblNamaUserMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNamaUserMouseExited
-        lblNamaUser.setForeground(new Color(0,0,0));
+        lblNamaUser.setForeground(new Color(0, 0, 0));
     }//GEN-LAST:event_lblNamaUserMouseExited
 
     private void lblNamaUserMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNamaUserMousePressed
-        lblNamaUser.setForeground(new Color(28,119,255));
+        lblNamaUser.setForeground(new Color(28, 119, 255));
     }//GEN-LAST:event_lblNamaUserMousePressed
 
 
@@ -488,10 +556,10 @@ public class Member extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnSearch;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JLabel lblNamaUser;
     private javax.swing.JLabel lblPosisiUser;
+    private javax.swing.JTable tableDiskon;
+    private javax.swing.JTable tableMember;
     private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,16 +1,25 @@
 package UI;
 
+import Logic.UpdateTable;
 import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
+import Logic.*;
 
 public class AddMember extends javax.swing.JDialog {
+    
+    private UpdateTable update;
+    
     public AddMember(JInternalFrame parent, boolean modal) {
         super((JFrame) parent.getTopLevelAncestor(), modal);
         initComponents();
         this.setUndecorated(false);
         getContentPane().setBackground(new Color(255,255,255,150));
         bg.setFocusable(true);
+    }
+    
+    public void setMember(UpdateTable update) {
+        this.update = update;
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -139,6 +148,15 @@ public class AddMember extends javax.swing.JDialog {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Add-Click.png")));
+        String nama = txtName.getText();
+        String noHp = txtNoHp.getText();
+        String alamat = txtAddress.getText();
+        MemberControler controler = new MemberControler(null,noHp, nama, alamat);
+        boolean succes = controler.InsertMember();
+        if (succes) {
+            update.perbarui();
+        dispose();
+        }
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnAddMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMouseEntered

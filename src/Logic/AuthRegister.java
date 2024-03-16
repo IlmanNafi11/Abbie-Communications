@@ -1,7 +1,6 @@
 package Logic;
 
 import Data_Acces.DbUserManager;
-import javax.swing.JOptionPane;
 
 public class AuthRegister {
 
@@ -87,7 +86,7 @@ public class AuthRegister {
     }
 
     public boolean verifNama() {
-        if (nama.matches("[a-zA-Z]+")) {
+        if (nama.matches("[a-zA-Z .]+")) {
             if (nama.length() <= 25) {
                 return true;
             } else {
