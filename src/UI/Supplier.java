@@ -2,14 +2,29 @@ package UI;
 
 import java.awt.Color;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+import Logic.*;
+import java.util.ArrayList;
 
-public class Supplier extends javax.swing.JInternalFrame {
-
+public class Supplier extends javax.swing.JInternalFrame implements UpdateTable {
+private ExceptionHandler exceptionHandler;
     public Supplier() {
         initComponents();
-        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
+        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
         bui.setNorthPane(null);
+        exceptionHandler = new ExceptionHandler();
+        ViewTable();
+    }
+
+    @Override
+    public void perbarui() {
+        ViewTable();
+    }
+
+    public void ViewTable() {
+        SupplierControler controler = new SupplierControler(null, null, null, null);
+        ConfigTable Tabel = controler.GetAllData();
+        table.setModel(Tabel);
     }
 
     @SuppressWarnings("unchecked")
@@ -148,6 +163,9 @@ public class Supplier extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        table.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        table.setShowVerticalLines(true);
+        table.getTableHeader().setReorderingAllowed(false);
         JScrollPane.setViewportView(table);
         if (table.getColumnModel().getColumnCount() > 0) {
             table.getColumnModel().getColumn(0).setResizable(false);
@@ -224,9 +242,15 @@ public class Supplier extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnSearchMousePressed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-         btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Add-Plus-Click.png")));
-         AddSupplier addSupplier = new AddSupplier(this, true);
-         addSupplier.setVisible(true);
+        btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Add-Plus-Click.png")));
+        AddSupplier addSupplier = new AddSupplier(this, true);
+        addSupplier.setSupplier(new UpdateTable() {
+            @Override
+            public void perbarui() {
+                ViewTable();
+            }
+        });
+        addSupplier.setVisible(true);
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnAddMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMouseEntered
@@ -244,7 +268,21 @@ public class Supplier extends javax.swing.JInternalFrame {
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Edit-Click.png")));
         ChangeSupplier changeSupplier = new ChangeSupplier(this, true);
-        changeSupplier.setVisible(true);
+        int row = table.getSelectedRow();
+        if(row != -1){
+             changeSupplier.setSupplier(new UpdateTable() {
+                @Override
+                public void perbarui() {
+                    ViewTable();
+                }
+            });
+            SupplierControler controler = new SupplierControler(null, null, null, null);
+            ArrayList<String> data = controler.IsiField(row, table);
+            changeSupplier.setField(data.get(0), data.get(1), data.get(2), data.get(3));
+            changeSupplier.setVisible(true);
+        } else {
+            exceptionHandler.getErrorKesalahan("Select one of the data you want to change !");
+        }
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnEditMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseEntered
@@ -261,6 +299,11 @@ public class Supplier extends javax.swing.JInternalFrame {
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Delete-Click.png")));
+        SupplierControler controler = new SupplierControler(null, null, null, null);
+        boolean succes = controler.DeleteDataSupplier(table);
+        if (succes) {
+            ViewTable();
+        }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnDeleteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteMouseEntered
@@ -283,46 +326,46 @@ public class Supplier extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtSearchFocusGained
 
     private void txtSearchFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearchFocusLost
-        if (txtSearch.getText().trim().equals("")|| txtSearch.getText().length() == 0) {
+        if (txtSearch.getText().trim().equals("") || txtSearch.getText().length() == 0) {
             txtSearch.setText("Search Supplier here...");
-            txtSearch.setForeground(new Color(153,153,153));
+            txtSearch.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtSearchFocusLost
 
     private void lblPosisiUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPosisiUserMouseClicked
-        lblPosisiUser.setForeground(new Color(28,119,255));
+        lblPosisiUser.setForeground(new Color(28, 119, 255));
         Profile profile = new Profile(this, true);
         profile.setVisible(true);
     }//GEN-LAST:event_lblPosisiUserMouseClicked
 
     private void lblPosisiUserMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPosisiUserMouseEntered
-        lblPosisiUser.setForeground(new Color(95,196,244));
+        lblPosisiUser.setForeground(new Color(95, 196, 244));
     }//GEN-LAST:event_lblPosisiUserMouseEntered
 
     private void lblPosisiUserMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPosisiUserMouseExited
-        lblPosisiUser.setForeground(new Color(0,0,0));
+        lblPosisiUser.setForeground(new Color(0, 0, 0));
     }//GEN-LAST:event_lblPosisiUserMouseExited
 
     private void lblPosisiUserMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPosisiUserMousePressed
-        lblPosisiUser.setForeground(new Color(28,119,255));
+        lblPosisiUser.setForeground(new Color(28, 119, 255));
     }//GEN-LAST:event_lblPosisiUserMousePressed
 
     private void lblNamaUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNamaUserMouseClicked
-        lblNamaUser.setForeground(new Color(28,119,255));
+        lblNamaUser.setForeground(new Color(28, 119, 255));
         Profile profile = new Profile(this, true);
         profile.setVisible(true);
     }//GEN-LAST:event_lblNamaUserMouseClicked
 
     private void lblNamaUserMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNamaUserMouseEntered
-        lblNamaUser.setForeground(new Color(95,196,244));
+        lblNamaUser.setForeground(new Color(95, 196, 244));
     }//GEN-LAST:event_lblNamaUserMouseEntered
 
     private void lblNamaUserMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNamaUserMouseExited
-        lblNamaUser.setForeground(new Color(0,0,0));
+        lblNamaUser.setForeground(new Color(0, 0, 0));
     }//GEN-LAST:event_lblNamaUserMouseExited
 
     private void lblNamaUserMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNamaUserMousePressed
-        lblNamaUser.setForeground(new Color(28,119,255));
+        lblNamaUser.setForeground(new Color(28, 119, 255));
     }//GEN-LAST:event_lblNamaUserMousePressed
 
 

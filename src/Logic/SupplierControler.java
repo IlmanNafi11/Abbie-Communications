@@ -2,6 +2,11 @@ package Logic;
 
 import Data_Acces.DbSupplier;
 import java.util.Random;
+import javax.swing.JTable;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import javax.swing.JComboBox;
+import javax.swing.JTextField;
 
 public class SupplierControler {
 
@@ -11,7 +16,7 @@ public class SupplierControler {
     private String kategori;
     private ExceptionHandler exceptionHandler;
 
-    public SupplierControler(String idSupplier,String namaSupplier, String noHp, String kategori) {
+    public SupplierControler(String idSupplier, String namaSupplier, String noHp, String kategori) {
         this.idSupplier = idSupplier;
         this.namaSupplier = namaSupplier;
         this.noHp = noHp;
@@ -28,21 +33,38 @@ public class SupplierControler {
         return stringBuilder.toString();
     }
 
-    private String GenerateIdSupplier() {
-        String defaultValue = "SUP";
-        String supplierId = defaultValue + GenerateRandom(4);
+    // generate and set text field id supplier
+    public String GenerateIdSupplier() {
+        String supplierId = null;
+        if (kategori.equalsIgnoreCase("Accessories")) {
+            supplierId = "SPA" + GenerateRandom(4);
+        } else if (kategori.equalsIgnoreCase("Phone credit/Internet credit")) {
+            supplierId = "SPC" + GenerateRandom(4);
+        } else if (kategori.equalsIgnoreCase("Electronic")) {
+            supplierId = "SPE" + GenerateRandom(4);
+        } else if (kategori.equalsIgnoreCase("Part")) {
+            supplierId = "SPP" + GenerateRandom(4);
+        }
         return supplierId;
+    }
+
+    private boolean CategoryValidation() {
+        if (!kategori.equalsIgnoreCase("Category")) {
+            return true;
+        } else {
+            exceptionHandler.getErrorKesalahan("Select an available category");
+        }
+        return false;
     }
 
     private boolean ValueValidation() {
         if (!namaSupplier.equalsIgnoreCase("Supplier Name") && !namaSupplier.equals("") && !noHp.equalsIgnoreCase("Telephone Number") && !noHp.equals("")) {
-            if (NameValidation() && PhoneNumberValidation()) {
+            if (CategoryValidation() && NameValidation() && PhoneNumberValidation()) {
                 return true;
             }
         } else {
-        exceptionHandler.getErrorKesalahan("All columns is must be filled in");
+            exceptionHandler.getErrorKesalahan("All columns is must be filled in");
         }
-        
         return false;
     }
 
@@ -60,21 +82,67 @@ public class SupplierControler {
     }
 
     private boolean PhoneNumberValidation() {
-        if (noHp.matches("\\d+") && noHp.length() <= 13) {
+        if (noHp.matches("\\d+") && noHp.length() < 14 && noHp.length() > 11) {
             return true;
         } else {
             exceptionHandler.getErrorKesalahan("Telephone Number is invalid");
         }
         return false;
     }
-    
-    public void InsertSupplierData(){
-        DbSupplier dbSupplier = new DbSupplier(idSupplier, namaSupplier, noHp, kategori);
-        dbSupplier.InsertSupplierData();
+
+    public boolean InsertSupplierData() {
+        if (ValueValidation()) {
+            DbSupplier dbSupplier = new DbSupplier(idSupplier, namaSupplier, noHp, kategori);
+            boolean succes = dbSupplier.InsertSupplierData();
+            if (succes) {
+                return true;
+            }
+        }
+        return false;
     }
-    
-    public void ChangeSupplierData(){
+
+    public boolean ChangeSupplierData() {
+            if (ValueValidation()) {
+                DbSupplier dbSupplier = new DbSupplier(idSupplier, namaSupplier, noHp, kategori);
+                boolean succes = dbSupplier.ChangeSupplierData();
+                if (succes) {
+                    return true;
+                }
+            }
+        return false;
+    }
+
+    public ConfigTable GetAllData() {
         DbSupplier dbSupplier = new DbSupplier(idSupplier, namaSupplier, noHp, kategori);
-        dbSupplier.ChangeSupplierData();
+        return dbSupplier.GetAllDataSupplier();
+    }
+
+    public ArrayList<String> IsiField(int row, JTable table) {
+        int getRow = table.getSelectedRow();
+        ArrayList<String> data = new ArrayList<>();
+        String supplierId = table.getValueAt(row, 0).toString();
+        String namaSupplier = table.getValueAt(row, 1).toString();
+        String noHp = table.getValueAt(row, 2).toString();
+        String getKategori = table.getValueAt(row, 3).toString();
+        data.add(supplierId);
+        data.add(namaSupplier);
+        data.add(noHp);
+        data.add(getKategori);
+        return data;
+    }
+
+    public boolean DeleteDataSupplier(JTable tabel) {
+        int getRow = tabel.getSelectedRow();
+        if (getRow != -1) {
+            idSupplier = tabel.getValueAt(getRow, 0).toString();
+            DbSupplier dbSupplier = new DbSupplier(idSupplier, null, null, null);
+            boolean succes = dbSupplier.DeleteDataSupplier();
+            if (succes) {
+                return true;
+            }
+        } else {
+            exceptionHandler.getErrorKesalahan("Select one of the data you want to delete !");
+        }
+        return false;
     }
 }

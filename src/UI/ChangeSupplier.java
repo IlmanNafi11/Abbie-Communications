@@ -1,33 +1,56 @@
 package UI;
 
+import Logic.SupplierControler;
+import Logic.UpdateTable;
 import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
+import javax.swing.JTable;
 
 public class ChangeSupplier extends javax.swing.JDialog {
+
+    private UpdateTable update;
+private JTable tabel;
+
     public ChangeSupplier(JInternalFrame parent, boolean modal) {
         super((JFrame) parent.getTopLevelAncestor(), modal);
         initComponents();
         this.setUndecorated(false);
-        getContentPane().setBackground(new Color(255,255,255,150));
+        getContentPane().setBackground(new Color(255, 255, 255, 150));
         bg.setFocusable(true);
     }
+
+    public void setSupplier(UpdateTable update) {
+        this.update = update;
+    }
+    
+    public void getTabel(JTable table){
+        this.tabel = table;
+    }
+
+    public void setField(String idSupplier, String namaSupplier, String noHp, String kategori) {
+        this.txtIdSupplier.setText(idSupplier);
+        this.txtName.setText(namaSupplier);
+        this.txtNoHp.setText(noHp);
+        this.cmbCategory.setSelectedItem(kategori);
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         txtName = new javax.swing.JTextField();
         txtNoHp = new javax.swing.JTextField();
-        txtAddress = new javax.swing.JTextField();
+        txtIdSupplier = new javax.swing.JTextField();
         btnCancel = new javax.swing.JButton();
         btnChange = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cmbCategory = new javax.swing.JComboBox<>();
         bg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Change Supplier Data");
         getContentPane().setLayout(null);
 
-        txtName.setForeground(new java.awt.Color(153, 153, 153));
         txtName.setText("Supplier Name");
         txtName.setBorder(null);
         txtName.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -41,7 +64,6 @@ public class ChangeSupplier extends javax.swing.JDialog {
         getContentPane().add(txtName);
         txtName.setBounds(388, 155, 312, 50);
 
-        txtNoHp.setForeground(new java.awt.Color(153, 153, 153));
         txtNoHp.setText("Telephone Number");
         txtNoHp.setBorder(null);
         txtNoHp.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -55,21 +77,12 @@ public class ChangeSupplier extends javax.swing.JDialog {
         getContentPane().add(txtNoHp);
         txtNoHp.setBounds(388, 231, 312, 50);
 
-        txtAddress.setForeground(new java.awt.Color(153, 153, 153));
-        txtAddress.setText("Category");
-        txtAddress.setBorder(null);
-        txtAddress.setSelectionEnd(11);
-        txtAddress.setSelectionStart(11);
-        txtAddress.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtAddressFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtAddressFocusLost(evt);
-            }
-        });
-        getContentPane().add(txtAddress);
-        txtAddress.setBounds(40, 231, 312, 50);
+        txtIdSupplier.setEditable(false);
+        txtIdSupplier.setBackground(new java.awt.Color(255, 255, 255));
+        txtIdSupplier.setText("Supplier ID");
+        txtIdSupplier.setBorder(null);
+        getContentPane().add(txtIdSupplier);
+        txtIdSupplier.setBounds(40, 231, 312, 50);
 
         btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Cancel-Primary-Default.png"))); // NOI18N
         btnCancel.setBorder(null);
@@ -115,9 +128,9 @@ public class ChangeSupplier extends javax.swing.JDialog {
         getContentPane().add(btnChange);
         btnChange.setBounds(613, 309, 100, 60);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Category", "Aksesoris", "Pulsa", "Elektronik", "Suku Cadang" }));
-        getContentPane().add(jComboBox1);
-        jComboBox1.setBounds(35, 155, 322, 50);
+        cmbCategory.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Category", "Accessories", "Phone credit/Internet credit", "Electronic", "Part" }));
+        getContentPane().add(cmbCategory);
+        cmbCategory.setBounds(35, 155, 322, 50);
 
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Change-Supllier.png"))); // NOI18N
         getContentPane().add(bg);
@@ -146,6 +159,16 @@ public class ChangeSupplier extends javax.swing.JDialog {
 
     private void btnChangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeActionPerformed
         btnChange.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Change-Click.png")));
+        String kategori = (String) cmbCategory.getSelectedItem();
+        String idSupplier = txtIdSupplier.getText();
+        String namaSupplier = txtName.getText();
+        String noHp = txtNoHp.getText();
+        SupplierControler controler = new SupplierControler(idSupplier, namaSupplier, noHp, kategori);
+        boolean succes = controler.ChangeSupplierData();
+        if (succes) {
+            update.perbarui();
+            dispose();
+        }
     }//GEN-LAST:event_btnChangeActionPerformed
 
     private void btnChangeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChangeMouseEntered
@@ -168,9 +191,9 @@ public class ChangeSupplier extends javax.swing.JDialog {
     }//GEN-LAST:event_txtNameFocusGained
 
     private void txtNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNameFocusLost
-        if (txtName.getText().trim().equals("")|| txtName.getText().length() == 0) {
+        if (txtName.getText().trim().equals("") || txtName.getText().length() == 0) {
             txtName.setText("Supplier Name");
-            txtName.setForeground(new Color(153,153,153));
+            txtName.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtNameFocusLost
 
@@ -182,25 +205,11 @@ public class ChangeSupplier extends javax.swing.JDialog {
     }//GEN-LAST:event_txtNoHpFocusGained
 
     private void txtNoHpFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNoHpFocusLost
-        if (txtNoHp.getText().trim().equals("")|| txtNoHp.getText().length() == 0) {
+        if (txtNoHp.getText().trim().equals("") || txtNoHp.getText().length() == 0) {
             txtNoHp.setText("Telephone Number");
-            txtNoHp.setForeground(new Color(153,153,153));
+            txtNoHp.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtNoHpFocusLost
-
-    private void txtAddressFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAddressFocusLost
-        if (txtAddress.getText().trim().equals("")|| txtNoHp.getText().length() == 0) {
-            txtAddress.setText("Category");
-            txtAddress.setForeground(new Color(153,153,153));
-        }
-    }//GEN-LAST:event_txtAddressFocusLost
-
-    private void txtAddressFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAddressFocusGained
-        if (txtAddress.getText().equals("Category")) {
-            txtAddress.setText("");
-            txtAddress.setForeground(Color.BLACK);
-        }
-    }//GEN-LAST:event_txtAddressFocusGained
 
     /**
      * @param args the command line arguments
@@ -251,8 +260,8 @@ public class ChangeSupplier extends javax.swing.JDialog {
     private javax.swing.JLabel bg;
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnChange;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JTextField txtAddress;
+    private javax.swing.JComboBox<String> cmbCategory;
+    private javax.swing.JTextField txtIdSupplier;
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtNoHp;
     // End of variables declaration//GEN-END:variables

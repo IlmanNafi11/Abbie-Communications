@@ -1,17 +1,26 @@
 package UI;
 
+import Logic.*;
 import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 
 public class AddSupplier extends javax.swing.JDialog {
+
+    private UpdateTable update;
+
     public AddSupplier(JInternalFrame parent, boolean modal) {
         super((JFrame) parent.getTopLevelAncestor(), modal);
         initComponents();
         this.setUndecorated(false);
-        getContentPane().setBackground(new Color(255,255,255,150));
+        getContentPane().setBackground(new Color(255, 255, 255, 150));
         bg.setFocusable(true);
     }
+
+    public void setSupplier(UpdateTable update) {
+        this.update = update;
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -20,7 +29,7 @@ public class AddSupplier extends javax.swing.JDialog {
         txtNoHp = new javax.swing.JTextField();
         btnCancel = new javax.swing.JButton();
         btnAdd = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cmbCategory = new javax.swing.JComboBox<>();
         txtName = new javax.swing.JTextField();
         bg = new javax.swing.JLabel();
 
@@ -29,17 +38,11 @@ public class AddSupplier extends javax.swing.JDialog {
         setResizable(false);
         getContentPane().setLayout(null);
 
+        txtIdSupplier.setEditable(false);
+        txtIdSupplier.setBackground(new java.awt.Color(255, 255, 255));
         txtIdSupplier.setForeground(new java.awt.Color(153, 153, 153));
         txtIdSupplier.setText("Supplier ID");
         txtIdSupplier.setBorder(null);
-        txtIdSupplier.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtIdSupplierFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtIdSupplierFocusLost(evt);
-            }
-        });
         getContentPane().add(txtIdSupplier);
         txtIdSupplier.setBounds(40, 231, 312, 50);
 
@@ -101,9 +104,14 @@ public class AddSupplier extends javax.swing.JDialog {
         getContentPane().add(btnAdd);
         btnAdd.setBounds(613, 309, 100, 60);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Category", "Aksesoris", "Pulsa", "Elektronik", "Suku Cadang" }));
-        getContentPane().add(jComboBox1);
-        jComboBox1.setBounds(35, 155, 322, 50);
+        cmbCategory.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Category", "Accessories", "Phone credit/Internet credit", "Electronic", "Part" }));
+        cmbCategory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbCategoryActionPerformed(evt);
+            }
+        });
+        getContentPane().add(cmbCategory);
+        cmbCategory.setBounds(35, 155, 322, 50);
 
         txtName.setForeground(new java.awt.Color(153, 153, 153));
         txtName.setText("Supplier Name");
@@ -146,6 +154,16 @@ public class AddSupplier extends javax.swing.JDialog {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Add-Click.png")));
+        String kategori = (String) cmbCategory.getSelectedItem();
+        String idSupplier = txtIdSupplier.getText();
+        String namaSupplier = txtName.getText();
+        String noHp = txtNoHp.getText();
+        SupplierControler controler = new SupplierControler(idSupplier, namaSupplier, noHp, kategori);
+        boolean succes = controler.InsertSupplierData();
+        if (succes) {
+            update.perbarui();
+            dispose();
+        }
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnAddMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMouseEntered
@@ -160,20 +178,6 @@ public class AddSupplier extends javax.swing.JDialog {
         btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Add-Click.png")));
     }//GEN-LAST:event_btnAddMousePressed
 
-    private void txtIdSupplierFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtIdSupplierFocusGained
-        if (txtIdSupplier.getText().equals("Supplier ID")) {
-            txtIdSupplier.setText("");
-            txtIdSupplier.setForeground(Color.BLACK);
-        }
-    }//GEN-LAST:event_txtIdSupplierFocusGained
-
-    private void txtIdSupplierFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtIdSupplierFocusLost
-        if (txtIdSupplier.getText().trim().equals("")|| txtIdSupplier.getText().length() == 0) {
-            txtIdSupplier.setText("Supplier ID");
-            txtIdSupplier.setForeground(new Color(153,153,153));
-        }
-    }//GEN-LAST:event_txtIdSupplierFocusLost
-
     private void txtNoHpFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNoHpFocusGained
         if (txtNoHp.getText().equals("Telephone Number")) {
             txtNoHp.setText("");
@@ -182,9 +186,9 @@ public class AddSupplier extends javax.swing.JDialog {
     }//GEN-LAST:event_txtNoHpFocusGained
 
     private void txtNoHpFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNoHpFocusLost
-        if (txtNoHp.getText().trim().equals("")|| txtNoHp.getText().length() == 0) {
+        if (txtNoHp.getText().trim().equals("") || txtNoHp.getText().length() == 0) {
             txtNoHp.setText("Telephone Number");
-            txtNoHp.setForeground(new Color(153,153,153));
+            txtNoHp.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtNoHpFocusLost
 
@@ -196,11 +200,18 @@ public class AddSupplier extends javax.swing.JDialog {
     }//GEN-LAST:event_txtNameFocusGained
 
     private void txtNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNameFocusLost
-        if (txtName.getText().trim().equals("")|| txtName.getText().length() == 0) {
+        if (txtName.getText().trim().equals("") || txtName.getText().length() == 0) {
             txtName.setText("Supplier Name");
-            txtName.setForeground(new Color(153,153,153));
+            txtName.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtNameFocusLost
+
+    private void cmbCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCategoryActionPerformed
+        String kategori = (String) cmbCategory.getSelectedItem();
+        SupplierControler controler = new SupplierControler(null, null, null, kategori);
+        String getIdSupplier = controler.GenerateIdSupplier();
+        txtIdSupplier.setText(getIdSupplier);
+    }//GEN-LAST:event_cmbCategoryActionPerformed
 
     /**
      * @param args the command line arguments
@@ -249,7 +260,7 @@ public class AddSupplier extends javax.swing.JDialog {
     private javax.swing.JLabel bg;
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnCancel;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> cmbCategory;
     private javax.swing.JTextField txtIdSupplier;
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtNoHp;
