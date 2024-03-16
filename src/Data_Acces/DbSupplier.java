@@ -91,26 +91,6 @@ public class DbSupplier {
         return dataTable;
     }
 
-    public ArrayList<String> GetDataSupplier() {
-        ArrayList<String> data = new ArrayList<>();
-        String sqlGetData = "SELECT * FROM supplier WHERE id_supplier = ?";
-        try {
-            Connection koneksi = ClassKoneksi.GetConnection();
-            PreparedStatement stGetData = koneksi.prepareStatement(sqlGetData);
-            stGetData.setString(1, idSupplier);
-            ResultSet rs = stGetData.executeQuery();
-            while (rs.next()) {
-                data.add(rs.getString("kategori"));
-                data.add(rs.getString("id_supplier"));
-                data.add(rs.getString("nama_supplier"));
-                data.add(rs.getString("tlp_supplier"));
-            }
-        } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("Failed when trying to get data");
-        }
-        return data;
-    }
-
     public boolean DeleteDataSupplier() {
         String sqlDelete = "DELETE FROM supplier WHERE id_supplier = ?";
         try {

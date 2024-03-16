@@ -3,10 +3,7 @@ package Logic;
 import Data_Acces.DbSupplier;
 import java.util.Random;
 import javax.swing.JTable;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import javax.swing.JComboBox;
-import javax.swing.JTextField;
 
 public class SupplierControler {
 
@@ -33,7 +30,6 @@ public class SupplierControler {
         return stringBuilder.toString();
     }
 
-    // generate and set text field id supplier
     public String GenerateIdSupplier() {
         String supplierId = null;
         if (kategori.equalsIgnoreCase("Accessories")) {
