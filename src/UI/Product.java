@@ -2,14 +2,28 @@ package UI;
 
 import java.awt.Color;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+import Logic.*;
+import java.util.ArrayList;
 
-public class Product extends javax.swing.JInternalFrame {
+public class Product extends javax.swing.JInternalFrame implements UpdateTable {
 
     public Product() {
         initComponents();
-        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
+        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
         bui.setNorthPane(null);
+        ViewTable();
+    }
+
+    @Override
+    public void perbarui() {
+        ViewTable();
+    }
+
+    public void ViewTable() {
+        ProductControler controler = new ProductControler(null, null, null, null, 0, 0);
+        ConfigTable Tabel = controler.GetAllData();
+        table.setModel(Tabel);
     }
 
     @SuppressWarnings("unchecked")
@@ -23,7 +37,7 @@ public class Product extends javax.swing.JInternalFrame {
         btnDelete = new javax.swing.JButton();
         btnSearch = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        table = new javax.swing.JTable();
         lblPosisiUser = new javax.swing.JLabel();
         IconProfil = new javax.swing.JLabel();
         lblNamaUser = new javax.swing.JLabel();
@@ -148,7 +162,7 @@ public class Product extends javax.swing.JInternalFrame {
         });
         getContentPane().add(btnSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(505, 37, 45, 40));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -167,14 +181,14 @@ public class Product extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
-            jTable1.getColumnModel().getColumn(4).setResizable(false);
+        table.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(table);
+        if (table.getColumnModel().getColumnCount() > 0) {
+            table.getColumnModel().getColumn(0).setResizable(false);
+            table.getColumnModel().getColumn(1).setResizable(false);
+            table.getColumnModel().getColumn(2).setResizable(false);
+            table.getColumnModel().getColumn(3).setResizable(false);
+            table.getColumnModel().getColumn(4).setResizable(false);
         }
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 216, 971, 752));
@@ -249,6 +263,12 @@ public class Product extends javax.swing.JInternalFrame {
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Add-Plus-Click.png")));
         AddProduct addProduk = new AddProduct(this, true);
+        addProduk.setProduk(new UpdateTable() {
+            @Override
+            public void perbarui() {
+                ViewTable();
+            }
+        });
         addProduk.setVisible(true);
     }//GEN-LAST:event_btnAddActionPerformed
 
@@ -267,7 +287,24 @@ public class Product extends javax.swing.JInternalFrame {
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Edit-Click.png")));
         ChangeProduk changeProduct = new ChangeProduk(this, true);
-        changeProduct.setVisible(true);
+        ProductControler controler = new ProductControler(null, null, null, null, 0, 0);
+        int row = table.getSelectedRow();
+        boolean validasi = controler.ValidateRow(row, table);
+        if (validasi) {
+            changeProduct.setProduk(new UpdateTable() {
+                @Override
+                public void perbarui() {
+                    ViewTable();
+                }
+            });
+            ArrayList<String> dataString = controler.IsiStringField(row, table);
+            ArrayList<Integer> dataInteger = controler.IsiIntField(row, table);
+            String idProduk = dataString.get(0);
+            String IdSupplier = controler.SetSupplierId(idProduk);
+            String namaSupplier = controler.GetSupplierName();
+            changeProduct.SetField(dataString.get(2), dataString.get(0), dataString.get(1), dataInteger.get(1), dataInteger.get(0), IdSupplier, namaSupplier);
+            changeProduct.setVisible(true);
+        }
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnEditMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseEntered
@@ -296,6 +333,9 @@ public class Product extends javax.swing.JInternalFrame {
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Delete-Click.png")));
+        ProductControler controler = new ProductControler(null, null, null, null, 0, 0);
+        controler.DeleteDataProduk(table);
+        ViewTable();
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnDeleteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteMousePressed
@@ -318,46 +358,46 @@ public class Product extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtSearchFocusGained
 
     private void txtSearchFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearchFocusLost
-        if (txtSearch.getText().trim().equals("")|| txtSearch.getText().length() == 0) {
+        if (txtSearch.getText().trim().equals("") || txtSearch.getText().length() == 0) {
             txtSearch.setText("Input ID Product or Product Name");
-            txtSearch.setForeground(new Color(153,153,153));
+            txtSearch.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtSearchFocusLost
 
     private void lblPosisiUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPosisiUserMouseClicked
-        lblPosisiUser.setForeground(new Color(28,119,255));
+        lblPosisiUser.setForeground(new Color(28, 119, 255));
         Profile profile = new Profile(this, true);
         profile.setVisible(true);
     }//GEN-LAST:event_lblPosisiUserMouseClicked
 
     private void lblPosisiUserMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPosisiUserMouseEntered
-        lblPosisiUser.setForeground(new Color(95,196,244));
+        lblPosisiUser.setForeground(new Color(95, 196, 244));
     }//GEN-LAST:event_lblPosisiUserMouseEntered
 
     private void lblPosisiUserMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPosisiUserMouseExited
-        lblPosisiUser.setForeground(new Color(0,0,0));
+        lblPosisiUser.setForeground(new Color(0, 0, 0));
     }//GEN-LAST:event_lblPosisiUserMouseExited
 
     private void lblPosisiUserMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPosisiUserMousePressed
-        lblPosisiUser.setForeground(new Color(28,119,255));
+        lblPosisiUser.setForeground(new Color(28, 119, 255));
     }//GEN-LAST:event_lblPosisiUserMousePressed
 
     private void lblNamaUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNamaUserMouseClicked
-        lblNamaUser.setForeground(new Color(28,119,255));
+        lblNamaUser.setForeground(new Color(28, 119, 255));
         Profile profile = new Profile(this, true);
         profile.setVisible(true);
     }//GEN-LAST:event_lblNamaUserMouseClicked
 
     private void lblNamaUserMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNamaUserMouseEntered
-        lblNamaUser.setForeground(new Color(95,196,244));
+        lblNamaUser.setForeground(new Color(95, 196, 244));
     }//GEN-LAST:event_lblNamaUserMouseEntered
 
     private void lblNamaUserMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNamaUserMouseExited
-        lblNamaUser.setForeground(new Color(0,0,0));
+        lblNamaUser.setForeground(new Color(0, 0, 0));
     }//GEN-LAST:event_lblNamaUserMouseExited
 
     private void lblNamaUserMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNamaUserMousePressed
-        lblNamaUser.setForeground(new Color(28,119,255));
+        lblNamaUser.setForeground(new Color(28, 119, 255));
     }//GEN-LAST:event_lblNamaUserMousePressed
 
 
@@ -370,9 +410,9 @@ public class Product extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnPrint;
     private javax.swing.JButton btnSearch;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblNamaUser;
     private javax.swing.JLabel lblPosisiUser;
+    private javax.swing.JTable table;
     private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
 }

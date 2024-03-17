@@ -5,16 +5,20 @@ import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import Logic.*;
-import java.util.ArrayList;
-import javax.swing.JComboBox;
 
 public class AddProduct extends javax.swing.JDialog {
+
+    private UpdateTable update;
 
     public AddProduct(JInternalFrame parent, boolean modal) {
         super((JFrame) parent.getTopLevelAncestor(), modal);
         initComponents();
         this.setUndecorated(false);
         getContentPane().setBackground(new Color(255, 255, 255, 150));
+    }
+
+    public void setProduk(UpdateTable update) {
+        this.update = update;
     }
 
     @SuppressWarnings("unchecked")
@@ -38,6 +42,7 @@ public class AddProduct extends javax.swing.JDialog {
         getContentPane().setLayout(null);
 
         txtIdProduct.setEditable(false);
+        txtIdProduct.setBackground(new java.awt.Color(255, 255, 255));
         txtIdProduct.setForeground(new java.awt.Color(153, 153, 153));
         txtIdProduct.setText("Product ID");
         txtIdProduct.setBorder(null);
@@ -81,6 +86,7 @@ public class AddProduct extends javax.swing.JDialog {
         txtQuantity.setBounds(47, 373, 488, 50);
 
         txtNamaSupplier.setEditable(false);
+        txtNamaSupplier.setBackground(new java.awt.Color(255, 255, 255));
         txtNamaSupplier.setForeground(new java.awt.Color(153, 153, 153));
         txtNamaSupplier.setText("Supplier Name");
         txtNamaSupplier.setBorder(null);
@@ -158,7 +164,7 @@ public class AddProduct extends javax.swing.JDialog {
         getContentPane().add(btnSave);
         btnSave.setBounds(982, 503, 96, 55);
 
-        cmbKategori.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Category", "Aksesoris", "Pulsa", "Elektronik", "Suku Cadang" }));
+        cmbKategori.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Category", "Accessories", "Phone credit/Internet credit", "Electronic", "Part" }));
         cmbKategori.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbKategoriActionPerformed(evt);
@@ -203,6 +209,18 @@ public class AddProduct extends javax.swing.JDialog {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Save-Primary-Click.png")));
+        String kategori = (String) cmbKategori.getSelectedItem();
+        String idProduk = txtIdProduct.getText();
+        String namaProduk = txtNamaProduk.getText();
+        String idSupplier = (String) cmbIdSupplier.getSelectedItem();
+        ProductControler controler = new ProductControler(namaProduk, kategori, idProduk, idSupplier, 0, 0);
+        controler.ValidasiStok(txtQuantity);
+        controler.ValidasiHarga(txtPrice);
+        boolean succes = controler.InsertProduct();
+        if (succes) {
+            update.perbarui();
+            dispose();
+        }
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnSaveMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSaveMouseEntered
@@ -261,17 +279,17 @@ public class AddProduct extends javax.swing.JDialog {
     }//GEN-LAST:event_txtQuantityFocusLost
 
     private void txtNamaSupplierFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNamaSupplierFocusGained
-        if (txtNamaSupplier.getText().equals("Supplier Name")) {
-            txtNamaSupplier.setText("");
-            txtNamaSupplier.setForeground(Color.BLACK);
-        }
+//        if (txtNamaSupplier.getText().equals("Supplier Name")) {
+//            txtNamaSupplier.setText("");
+//            txtNamaSupplier.setForeground(Color.BLACK);
+//        }
     }//GEN-LAST:event_txtNamaSupplierFocusGained
 
     private void txtNamaSupplierFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNamaSupplierFocusLost
-        if (txtNamaSupplier.getText().trim().equals("") || txtNamaSupplier.getText().length() == 0) {
-            txtNamaSupplier.setText("Supplier Name");
-            txtNamaSupplier.setForeground(new Color(153, 153, 153));
-        }
+//        if (txtNamaSupplier.getText().trim().equals("") || txtNamaSupplier.getText().length() == 0) {
+//            txtNamaSupplier.setText("Supplier Name");
+//            txtNamaSupplier.setForeground(new Color(153, 153, 153));
+//        }
     }//GEN-LAST:event_txtNamaSupplierFocusLost
 
     private void txtPriceFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPriceFocusGained
@@ -290,10 +308,11 @@ public class AddProduct extends javax.swing.JDialog {
 
     private void cmbKategoriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbKategoriActionPerformed
         String kategori = (String) cmbKategori.getSelectedItem();
-        int index = cmbKategori.getSelectedIndex();
         ProductControler controler = new ProductControler(null, kategori, null, null, 0, 0);
-        if(kategori != null){      
-            controler.getIdSupplier(cmbIdSupplier);           
+        String idProduk = controler.GenerateIdProduct();
+        txtIdProduct.setText(idProduk);
+        if (kategori != null) {
+            controler.SetIdSupplier(cmbIdSupplier);
             cmbIdSupplier.addItem("Supplier ID");
             cmbIdSupplier.setSelectedItem("Supplier ID");
         }
@@ -302,11 +321,10 @@ public class AddProduct extends javax.swing.JDialog {
     private void cmbIdSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbIdSupplierActionPerformed
         String idSupplier = (String) cmbIdSupplier.getSelectedItem();
         String kategori = (String) cmbIdSupplier.getSelectedItem();
-        int index = cmbKategori.getSelectedIndex();
-        ProductControler controler = new ProductControler(null, kategori , null, idSupplier, 0, 0);
-        if(idSupplier != null){
-            String namaSupplier = controler.getSupplierName();
-            txtNamaSupplier.setText(namaSupplier);  
+        ProductControler controler = new ProductControler(null, kategori, null, idSupplier, 0, 0);
+        if (idSupplier != null) {
+            String namaSupplier = controler.GetSupplierName();
+            txtNamaSupplier.setText(namaSupplier);
         }
     }//GEN-LAST:event_cmbIdSupplierActionPerformed
     public static void main(String args[]) {

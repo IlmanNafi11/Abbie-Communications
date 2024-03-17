@@ -1,16 +1,35 @@
 package UI;
 
+import Logic.*;
 import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 
 public class ChangeProduk extends javax.swing.JDialog {
 
+    private String produkNameBeforeUpdate;
+    private UpdateTable update;
+
     public ChangeProduk(JInternalFrame parent, boolean modal) {
         super((JFrame) parent.getTopLevelAncestor(), modal);
         initComponents();
         this.setUndecorated(false);
-        getContentPane().setBackground(new Color(255,255,255,150));
+        getContentPane().setBackground(new Color(255, 255, 255, 150));
+    }
+
+    public void setProduk(UpdateTable update) {
+        this.update = update;
+    }
+
+    public void SetField(String kategori, String idProduk, String namaProduk, int stok, int harga, String idSupplier, String namaSupplier) {
+        cmbKategori.setSelectedItem(kategori);
+        txtIdProduct.setText(idProduk);
+        txtNamaProduk.setText(namaProduk);
+        txtQuantity.setText(String.valueOf(stok));
+        txtPrice.setText(String.valueOf(harga));
+        txtNamaSupplier.setText(namaSupplier);
+        cmbIdSupplier.setSelectedItem(idSupplier);
+        this.produkNameBeforeUpdate = namaProduk;
     }
 
     @SuppressWarnings("unchecked")
@@ -152,11 +171,21 @@ public class ChangeProduk extends javax.swing.JDialog {
         getContentPane().add(btnSave);
         btnSave.setBounds(982, 503, 96, 55);
 
-        cmbKategori.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aksesoris", "Pulsa", "Elektronik", "Suku Cadang" }));
+        cmbKategori.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Category", "Accessories", "Phone credit/Internet credit", "Electronic", "Part" }));
+        cmbKategori.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbKategoriActionPerformed(evt);
+            }
+        });
         getContentPane().add(cmbKategori);
         cmbKategori.setBounds(38, 145, 506, 50);
 
-        cmbIdSupplier.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbIdSupplier.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Product ID" }));
+        cmbIdSupplier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbIdSupplierActionPerformed(evt);
+            }
+        });
         getContentPane().add(cmbIdSupplier);
         cmbIdSupplier.setBounds(568, 145, 506, 50);
 
@@ -176,9 +205,9 @@ public class ChangeProduk extends javax.swing.JDialog {
     }//GEN-LAST:event_txtIdProductFocusGained
 
     private void txtIdProductFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtIdProductFocusLost
-        if (txtIdProduct.getText().trim().equals("")|| txtIdProduct.getText().length() == 0) {
+        if (txtIdProduct.getText().trim().equals("") || txtIdProduct.getText().length() == 0) {
             txtIdProduct.setText("Product ID");
-            txtIdProduct.setForeground(new Color(153,153,153));
+            txtIdProduct.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtIdProductFocusLost
 
@@ -190,9 +219,9 @@ public class ChangeProduk extends javax.swing.JDialog {
     }//GEN-LAST:event_txtNamaProdukFocusGained
 
     private void txtNamaProdukFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNamaProdukFocusLost
-        if (txtNamaProduk.getText().trim().equals("")|| txtNamaProduk.getText().length() == 0) {
+        if (txtNamaProduk.getText().trim().equals("") || txtNamaProduk.getText().length() == 0) {
             txtNamaProduk.setText("Product Name");
-            txtNamaProduk.setForeground(new Color(153,153,153));
+            txtNamaProduk.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtNamaProdukFocusLost
 
@@ -204,9 +233,9 @@ public class ChangeProduk extends javax.swing.JDialog {
     }//GEN-LAST:event_txtQuantityFocusGained
 
     private void txtQuantityFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtQuantityFocusLost
-        if (txtQuantity.getText().trim().equals("")|| txtQuantity.getText().length() == 0) {
+        if (txtQuantity.getText().trim().equals("") || txtQuantity.getText().length() == 0) {
             txtQuantity.setText("Quantity");
-            txtQuantity.setForeground(new Color(153,153,153));
+            txtQuantity.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtQuantityFocusLost
 
@@ -218,9 +247,9 @@ public class ChangeProduk extends javax.swing.JDialog {
     }//GEN-LAST:event_txtNamaSupplierFocusGained
 
     private void txtNamaSupplierFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNamaSupplierFocusLost
-        if (txtNamaSupplier.getText().trim().equals("")|| txtNamaSupplier.getText().length() == 0) {
+        if (txtNamaSupplier.getText().trim().equals("") || txtNamaSupplier.getText().length() == 0) {
             txtNamaSupplier.setText("Supplier Name");
-            txtNamaSupplier.setForeground(new Color(153,153,153));
+            txtNamaSupplier.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtNamaSupplierFocusLost
 
@@ -232,9 +261,9 @@ public class ChangeProduk extends javax.swing.JDialog {
     }//GEN-LAST:event_txtPriceFocusGained
 
     private void txtPriceFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPriceFocusLost
-        if (txtPrice.getText().trim().equals("")|| txtNamaSupplier.getText().length() == 0) {
+        if (txtPrice.getText().trim().equals("") || txtNamaSupplier.getText().length() == 0) {
             txtPrice.setText("Price");
-            txtPrice.setForeground(new Color(153,153,153));
+            txtPrice.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtPriceFocusLost
 
@@ -269,7 +298,41 @@ public class ChangeProduk extends javax.swing.JDialog {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Save-Primary-Click.png")));
+        String kategori = (String) cmbKategori.getSelectedItem();
+        String idProduk = txtIdProduct.getText();
+        String namaProduk = txtNamaProduk.getText();
+        String idSupplier = (String) cmbIdSupplier.getSelectedItem();
+        ProductControler controler = new ProductControler(namaProduk, kategori, idProduk, idSupplier, 0, 0);
+        controler.SetNamaLama(produkNameBeforeUpdate);
+        controler.ValidasiStok(txtQuantity);
+        controler.ValidasiHarga(txtPrice);
+        boolean succes = controler.ChangeProductData();
+        if (succes) {
+            update.perbarui();
+            dispose();
+        }
     }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void cmbKategoriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbKategoriActionPerformed
+        String kategori = (String) cmbKategori.getSelectedItem();
+        ProductControler controler = new ProductControler(null, kategori, null, null, 0, 0);
+        String idProduk = controler.GenerateIdProduct();
+        txtIdProduct.setText(idProduk);
+        if (kategori != null) {
+            controler.SetIdSupplier(cmbIdSupplier);
+            cmbIdSupplier.addItem("Supplier ID");
+        }
+    }//GEN-LAST:event_cmbKategoriActionPerformed
+
+    private void cmbIdSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbIdSupplierActionPerformed
+        String idSupplier = (String) cmbIdSupplier.getSelectedItem();
+        String kategori = (String) cmbIdSupplier.getSelectedItem();
+        ProductControler controler = new ProductControler(null, kategori, null, idSupplier, 0, 0);
+        if (idSupplier != null) {
+            String namaSupplier = controler.GetSupplierName();
+            txtNamaSupplier.setText(namaSupplier);
+        }
+    }//GEN-LAST:event_cmbIdSupplierActionPerformed
 
     /**
      * @param args the command line arguments

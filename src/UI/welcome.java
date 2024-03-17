@@ -104,7 +104,7 @@ public class welcome extends javax.swing.JFrame{
             }
         });
         desktopPane.add(btnLogin);
-        btnLogin.setBounds(1262, 43, 133, 45);
+        btnLogin.setBounds(1262, 43, 135, 45);
 
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Welcome-Page.png"))); // NOI18N
         desktopPane.add(bg);
