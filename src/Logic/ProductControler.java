@@ -20,6 +20,7 @@ public class ProductControler {
     private String namaLama;
     private ExceptionHandler exception;
     private DbProduct dbProduct;
+    private DbSupplier dbSupplier;
 
     public ProductControler(String namaProduct, String kategori, String idProduct, String idSupplier, float harga, int jumlahStock) {
         this.namaProduct = namaProduct;
@@ -30,6 +31,7 @@ public class ProductControler {
         this.jumlahStock = jumlahStock;
         exception = new ExceptionHandler();
         dbProduct = new DbProduct();
+        dbSupplier = new DbSupplier(null, null, null, null);
     }
 
     // set nama lama untuk melacak perubahan nama produk saat update data produk
@@ -66,7 +68,7 @@ public class ProductControler {
     //set item combo box id supplier berdasarkan kategori produk
     public void SetIdSupplier(JComboBox<String> comboBox) {
         try {
-            ArrayList<String> getIdSupplier = dbProduct.GetIdSupplier(kategori);
+            ArrayList<String> getIdSupplier = dbSupplier.GetIdSupplier(kategori); // change to db supplier
             comboBox.removeAllItems();
             for (String idSupplier : getIdSupplier) {
                 comboBox.addItem(idSupplier);
@@ -78,7 +80,7 @@ public class ProductControler {
 
     // set id supplier berdasarkan id produk saat update data
     public String SetSupplierId(String produkId) {
-        this.idSupplier = dbProduct.GetSupplier(produkId);
+        this.idSupplier = dbProduct.GetSupplierByIdProduk(produkId);
         return idSupplier;
     }
 
@@ -97,7 +99,7 @@ public class ProductControler {
 
     // get nama supplier berdasarkan id supplier yang dipilih di combo box
     public String GetSupplierName() {
-        namaSuppplier = dbProduct.GetSupplierName(idSupplier);
+        namaSuppplier = dbSupplier.GetSupplierName(idSupplier);
         if (namaSuppplier != null) {
             return namaSuppplier;
         }

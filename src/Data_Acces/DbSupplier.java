@@ -108,4 +108,60 @@ public class DbSupplier {
         }
         return false;
     }
+
+    // get id supplier berdasarkan kategori produk
+    public ArrayList<String> GetIdSupplier(String kategori) {
+        String sqlGetProduct = "SELECT id_supplier FROM supplier WHERE kategori = ?";
+        ArrayList<String> idSupplier = new ArrayList<>();
+        exceptionHandler = new ExceptionHandler();
+        Connection koneksi = null;
+        try {
+            koneksi = ClassKoneksi.GetConnection();
+            PreparedStatement stGetId = koneksi.prepareStatement(sqlGetProduct);
+            stGetId.setString(1, kategori);
+            ResultSet rs = stGetId.executeQuery();
+            while (rs.next()) {
+                idSupplier.add(rs.getString("id_supplier"));
+            }
+        } catch (Exception e) {
+            exceptionHandler.getErrorKesalahan("gagal saat mencoba mengambil id_supplier" + e.getMessage());
+        } finally {
+            if (koneksi != null) {
+                try {
+                    koneksi.close();
+                } catch (Exception e) {
+                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection! " + e.getMessage());
+                }
+            }
+        }
+        return idSupplier;
+    }
+
+    // get nama supplier berdasarkan id supplier
+    public String GetSupplierName(String supplierId) {
+        String sqlGetName = "SELECT nama_supplier FROM supplier WHERE id_supplier = ?";
+        String namaSupplier = null;
+        exceptionHandler = new ExceptionHandler();
+        Connection koneksi = null;
+        try {
+            koneksi = ClassKoneksi.GetConnection();
+            PreparedStatement stGetName = koneksi.prepareStatement(sqlGetName);
+            stGetName.setString(1, supplierId);
+            ResultSet rs = stGetName.executeQuery();
+            while (rs.next()) {
+                namaSupplier = rs.getString("nama_supplier");
+            }
+        } catch (Exception e) {
+            exceptionHandler.getErrorKesalahan("gagal saat mengambil nama supplier" + e.getMessage());
+        } finally {
+            if (koneksi != null) {
+                try {
+                    koneksi.close();
+                } catch (Exception e) {
+                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection! " + e.getMessage());
+                }
+            }
+        }
+        return namaSupplier;
+    }
 }

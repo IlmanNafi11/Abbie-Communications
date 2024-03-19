@@ -8,10 +8,10 @@ import Logic.*;
 
 public class DbUserManager {
 
-    private ExceptionHandler error;
+    private ExceptionHandler exceptionHandler;
 
     public boolean cekNik(String nik) {
-        error = new ExceptionHandler();
+        exceptionHandler = new ExceptionHandler();
         String sqlNik = "SELECT COUNT(*) FROM data_pengguna WHERE nik=?";
         try {
             Connection koneksi = ClassKoneksi.GetConnection();
@@ -22,13 +22,14 @@ public class DbUserManager {
                 return rs.getInt(1) > 0;
             }
         } catch (Exception e) {
-            error.getErrorKesalahan("Gagal mengecek Nik");
+            exceptionHandler.getErrorKesalahan("Gagal mengecek Nik");
         }
         return false;
     }
 
+    // cek apakah username telah digunakan
     public boolean cekUsername(String username) {
-        error = new ExceptionHandler();
+        exceptionHandler = new ExceptionHandler();
         String sqlUsername = "SELECT COUNT(*) FROM akun WHERE LOWER(username)= LOWER(?)";
         try {
             Connection koneksi = ClassKoneksi.GetConnection();
@@ -39,13 +40,39 @@ public class DbUserManager {
                 return rs.getInt(1) > 0;
             }
         } catch (Exception e) {
-            error.getErrorKesalahan("Gagal mengecek username");
+            exceptionHandler.getErrorKesalahan("Gagal mengecek username");
+        }
+        return false;
+    }
+
+    public boolean CekNoHp(String noHp) {
+        exceptionHandler = new ExceptionHandler();
+        String queryCek = "SELECT COUNT(*) FROM data_pengguna WHERE noHp= ? ";
+        Connection koneksi = null;
+        try {
+            koneksi = ClassKoneksi.GetConnection();
+            PreparedStatement stCek = koneksi.prepareStatement(queryCek);
+            stCek.setString(1, noHp);
+            ResultSet rs = stCek.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (Exception e) {
+            exceptionHandler.getErrorKesalahan("Gagal mengecek noHp");
+        } finally {
+            if (koneksi != null) {
+                try {
+                    koneksi.close();
+                } catch (Exception e) {
+                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection! " + e.getMessage());
+                }
+            }
         }
         return false;
     }
 
     public void add(String id_user, String id_akun, String nik, String nama, String noHp, String alamat, String username, String password, String role) {
-        error = new ExceptionHandler();
+        exceptionHandler = new ExceptionHandler();
         try {
             Connection koneksi = ClassKoneksi.GetConnection();
             String sqlBio = "INSERT INTO data_pengguna (id_user, nik, nama, noHp, alamat, posisi) VALUES (?,?,?,?,?,?)";
@@ -66,12 +93,12 @@ public class DbUserManager {
             stAkun.setString(4, id_user);
             stAkun.executeUpdate();
         } catch (Exception e) {
-            error.getErrorKesalahan("gagal" + e.getMessage());
+            exceptionHandler.getErrorKesalahan("gagal" + e.getMessage());
         }
     }
 
     public String authLogin(String username, String password) {
-        error = new ExceptionHandler();
+        exceptionHandler = new ExceptionHandler();
         String sqlGetUser = "SELECT * FROM akun WHERE username = ? AND password = ?";
         String sqlGetRole = "SELECT * FROM data_pengguna WHERE id_user =?";
         try {
@@ -90,16 +117,16 @@ public class DbUserManager {
                     return getRole;
                 }
             } else {
-                error.getErrorKesalahan("Username/Kata sandi salah");
+                exceptionHandler.getErrorKesalahan("Username/Kata sandi salah");
             }
         } catch (Exception e) {
-            error.getErrorKesalahan("Gagal melakukan authentikasi akun " + e);
+            exceptionHandler.getErrorKesalahan("Gagal melakukan authentikasi akun " + e);
         }
         return null;
     }
 
     public String authResetPassword(String nik) {
-        error = new ExceptionHandler();
+        exceptionHandler = new ExceptionHandler();
         String sqlNik = "SELECT * FROM data_pengguna WHERE nik = ?";
         try {
             Connection koneksi = ClassKoneksi.GetConnection();
@@ -110,16 +137,16 @@ public class DbUserManager {
                 String getName = rs.getString("nama");
                 return getName;
             } else {
-                error.getErrorKesalahan("NIK tidak ditemukan");
+                exceptionHandler.getErrorKesalahan("NIK tidak ditemukan");
             }
         } catch (Exception e) {
-            error.getErrorKesalahan("Gagal saat mencoba mencari nik");
+            exceptionHandler.getErrorKesalahan("Gagal saat mencoba mencari nik");
         }
         return null;
     }
 
     public boolean resetPassword(String nik, String password) {
-        error = new ExceptionHandler();
+        exceptionHandler = new ExceptionHandler();
         String sqlGetId = "SELECT * FROM data_pengguna WHERE nik = ?";
         String sqlReset = "UPDATE akun SET password = ? WHERE id_user = ?";
         try {
@@ -135,13 +162,119 @@ public class DbUserManager {
                 stReset.executeUpdate();
                 return true;
             } else {
-                error.getErrorKesalahan("gagal saat mengambil nik");
+                exceptionHandler.getErrorKesalahan("gagal saat mengambil nik");
             }
 
         } catch (Exception e) {
-            error.getErrorKesalahan("gagal saat mencoba merubah sandi" + e);
+            exceptionHandler.getErrorKesalahan("gagal saat mencoba merubah sandi" + e);
         }
         return false;
+    }
+
+    // db User Data
+    // update data pengguna(owner previlage)
+    public boolean ChangeUserData(String userId, String nik, String nama, String noHp, String alamat, String posisi) {
+        String queryUpdate = "UPDATE data_pengguna SET nik = ?, nama = ?, noHp = ?, alamat = ?, posisi = ? WHERE id_user = ?";
+        exceptionHandler = new ExceptionHandler();
+        boolean confirm = exceptionHandler.confirmChangePerson("Update user data?");
+        Connection koneksi = null;
+        try {
+            koneksi = ClassKoneksi.GetConnection();
+            PreparedStatement stUpdate = koneksi.prepareStatement(queryUpdate);
+            stUpdate.setString(1, nik);
+            stUpdate.setString(2, nama);
+            stUpdate.setString(3, noHp);
+            stUpdate.setString(4, alamat);
+            stUpdate.setString(5, posisi);
+            stUpdate.setString(6, userId);
+            if (confirm) {
+                stUpdate.executeUpdate();
+                exceptionHandler.getSucces("User data updated successfully!");
+                return true;
+            }
+        } catch (Exception e) {
+            exceptionHandler.getErrorKesalahan("Failed when trying to update user data! " + e.getMessage());
+        } finally {
+            if (koneksi != null) {
+                try {
+                    koneksi.close();
+                } catch (Exception e) {
+                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection! " + e.getMessage());
+                }
+            }
+        }
+        return false;
+    }
+
+    // delete data pengguna(owner previlage)
+    public boolean DeleteUserData(String idUser) {
+        String queryDelete = "DELETE FROM data_pengguna WHERE id_user = ?";
+        exceptionHandler = new ExceptionHandler();
+        Connection koneksi = null;
+        boolean confirm = exceptionHandler.confirmDeleteData("Warning! Are you sure you want to delete user data?" + "\nThis activity can cause the user's account to be deleted!");
+        try {
+            koneksi = ClassKoneksi.GetConnection();
+            PreparedStatement stDelete = koneksi.prepareStatement(queryDelete);
+            stDelete.setString(1, idUser);
+            if (confirm) {
+                stDelete.executeUpdate();
+                exceptionHandler.succesDeleteData("User data deleted successfully!");
+                return true;
+            }
+        } catch (Exception e) {
+            exceptionHandler.getErrorKesalahan("Failed when trying to delete user data! " + e.getMessage());
+        } finally {
+            if (koneksi != null) {
+                try {
+                    koneksi.close();
+                } catch (Exception e) {
+                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection! " + e.getMessage());
+                }
+            }
+        }
+        return false;
+    }
+
+    // get all data user untuk insert ke table
+    public ConfigTable GetAllDataPengguna() {
+        exceptionHandler = new ExceptionHandler();
+        ConfigTable dataTable = new ConfigTable();
+        String queryGetData = "SELECT dp.*, akun.id_akun FROM data_pengguna dp INNER JOIN akun ON dp.id_user = akun.id_user";
+        dataTable.addColumn("User ID");
+        dataTable.addColumn("NIK");
+        dataTable.addColumn("Name");
+        dataTable.addColumn("Phone Number");
+        dataTable.addColumn("Address");
+        dataTable.addColumn("Position");
+        dataTable.addColumn("Account ID");
+        Connection koneksi = null;
+        try {
+            koneksi = ClassKoneksi.GetConnection();
+            PreparedStatement stGetData = koneksi.prepareStatement(queryGetData);
+            ResultSet rs = stGetData.executeQuery();
+            while (rs.next()) {
+                dataTable.addRow(new Object[]{
+                    rs.getString("id_user"),
+                    rs.getString("nik"),
+                    rs.getString("nama"),
+                    rs.getString("noHp"),
+                    rs.getString("alamat"),
+                    rs.getString("posisi"),
+                    rs.getString("id_akun")
+                });
+            }
+        } catch (Exception e) {
+            exceptionHandler.getErrorKesalahan("Failed when trying to get data " + e.getMessage());
+        } finally {
+            if (koneksi != null) {
+                try {
+                    koneksi.close();
+                } catch (Exception e) {
+                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection!" + e.getMessage());
+                }
+            }
+        }
+        return dataTable;
     }
 
 }

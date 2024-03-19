@@ -3,11 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Abbie%20Communications/src/Logic/ProductControler.java</file>
-            <file>file:/D:/Abbie%20Communications/src/UI/Product.java</file>
-            <file>file:/D:/Abbie%20Communications/src/Data_Acces/DbProduct.java</file>
+            <file>file:/D:/Abbie%20Communications/src/UI/AddDiscount.java</file>
+            <file>file:/D:/Abbie%20Communications/src/Logic/PromoContoler.java</file>
+            <file>file:/D:/Abbie%20Communications/src/UI/UserData.java</file>
+            <file>file:/D:/Abbie%20Communications/src/Logic/UserManager.java</file>
+            <file>file:/D:/Abbie%20Communications/src/UI/ChangeDiscount.java</file>
+            <file>file:/D:/Abbie%20Communications/src/Logic/RegisterControler.java</file>
+            <file>file:/D:/Abbie%20Communications/src/UI/ChangeUserData.java</file>
             <file>file:/D:/Abbie%20Communications/src/Data_Acces/DbUserManager.java</file>
+            <file>file:/D:/Abbie%20Communications/src/Data_Acces/DbPromo.java</file>
             <file>file:/D:/Abbie%20Communications/src/UI/welcome.java</file>
+            <file>file:/D:/Abbie%20Communications/src/Logic/ChangeUserDataControler.java</file>
+            <file>file:/D:/Abbie%20Communications/src/UI/Member.java</file>
         </group>
     </open-files>
 </project-private>

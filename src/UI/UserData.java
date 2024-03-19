@@ -1,15 +1,29 @@
 package UI;
 
+import Logic.*;
 import java.awt.Color;
+import java.util.ArrayList;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
-public class UserData extends javax.swing.JInternalFrame {
+public class UserData extends javax.swing.JInternalFrame implements UpdateTable {
 
     public UserData() {
         initComponents();
-        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
+        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
         bui.setNorthPane(null);
+        ViewTable();
+    }
+
+    @Override
+    public void perbarui() {
+        ViewTable();
+    }
+
+    public void ViewTable() {
+        UserManagerControler controler = new UserManagerControler(null, null, null, null, null, null, null, null);
+        ConfigTable Tabel = controler.GetAllData();
+        table.setModel(Tabel);
     }
 
     @SuppressWarnings("unchecked")
@@ -195,9 +209,9 @@ public class UserData extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtSearchFocusGained
 
     private void txtSearchFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearchFocusLost
-        if (txtSearch.getText().trim().equals("")|| txtSearch.getText().length() == 0) {
+        if (txtSearch.getText().trim().equals("") || txtSearch.getText().length() == 0) {
             txtSearch.setText("Search User here...");
-            txtSearch.setForeground(new Color(153,153,153));
+            txtSearch.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtSearchFocusLost
 
@@ -232,7 +246,20 @@ public class UserData extends javax.swing.JInternalFrame {
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Edit-Click.png")));
         ChangeUserData changeUserData = new ChangeUserData(this, true);
-        changeUserData.setVisible(true);
+        UserManagerControler controler = new UserManagerControler(null, null, null, null, null, null, null, null);
+        int row = table.getSelectedRow();
+        boolean validasiSelectedRow = controler.ValidateRow(row, table);
+        if (validasiSelectedRow) {
+            changeUserData.setUserData(new UpdateTable() {
+                @Override
+                public void perbarui() {
+                    ViewTable();
+                }
+            });
+            ArrayList<String> data = controler.IsiStringField(row, table);
+            changeUserData.setField(data.get(0), data.get(1), data.get(2), data.get(3), data.get(4), data.get(5), data.get(1), data.get(3));
+            changeUserData.setVisible(true);
+        }
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnDeleteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteMouseEntered
@@ -249,42 +276,45 @@ public class UserData extends javax.swing.JInternalFrame {
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Delete-Click.png")));
+        UserManagerControler controler = new UserManagerControler(title, null, null, null, null, null, null, null);
+        controler.DeleteUserData(table);
+        ViewTable();
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void lblPosisiUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPosisiUserMouseClicked
-        lblPosisiUser.setForeground(new Color(28,119,255));
+        lblPosisiUser.setForeground(new Color(28, 119, 255));
         Profile profile = new Profile(this, true);
         profile.setVisible(true);
     }//GEN-LAST:event_lblPosisiUserMouseClicked
 
     private void lblPosisiUserMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPosisiUserMouseEntered
-        lblPosisiUser.setForeground(new Color(95,196,244));
+        lblPosisiUser.setForeground(new Color(95, 196, 244));
     }//GEN-LAST:event_lblPosisiUserMouseEntered
 
     private void lblPosisiUserMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPosisiUserMouseExited
-        lblPosisiUser.setForeground(new Color(0,0,0));
+        lblPosisiUser.setForeground(new Color(0, 0, 0));
     }//GEN-LAST:event_lblPosisiUserMouseExited
 
     private void lblPosisiUserMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPosisiUserMousePressed
-        lblPosisiUser.setForeground(new Color(28,119,255));
+        lblPosisiUser.setForeground(new Color(28, 119, 255));
     }//GEN-LAST:event_lblPosisiUserMousePressed
 
     private void lblNamaUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNamaUserMouseClicked
-        lblNamaUser.setForeground(new Color(28,119,255));
+        lblNamaUser.setForeground(new Color(28, 119, 255));
         Profile profile = new Profile(this, true);
         profile.setVisible(true);
     }//GEN-LAST:event_lblNamaUserMouseClicked
 
     private void lblNamaUserMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNamaUserMouseEntered
-        lblNamaUser.setForeground(new Color(95,196,244));
+        lblNamaUser.setForeground(new Color(95, 196, 244));
     }//GEN-LAST:event_lblNamaUserMouseEntered
 
     private void lblNamaUserMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNamaUserMouseExited
-        lblNamaUser.setForeground(new Color(0,0,0));
+        lblNamaUser.setForeground(new Color(0, 0, 0));
     }//GEN-LAST:event_lblNamaUserMouseExited
 
     private void lblNamaUserMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNamaUserMousePressed
-        lblNamaUser.setForeground(new Color(28,119,255));
+        lblNamaUser.setForeground(new Color(28, 119, 255));
     }//GEN-LAST:event_lblNamaUserMousePressed
 
 
