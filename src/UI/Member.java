@@ -395,7 +395,7 @@ public class Member extends javax.swing.JInternalFrame implements UpdateTable {
             changeDiscount.setField(dataString.get(0), dataString.get(1), dataInteger.get(0), dataInteger.get(1), dataString.get(2));
             changeDiscount.setVisible(true);
         }
-        
+
     }//GEN-LAST:event_btnEditPromoActionPerformed
 
     private void btnEditPromoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditPromoMouseEntered
@@ -457,12 +457,11 @@ public class Member extends javax.swing.JInternalFrame implements UpdateTable {
 
     private void btnEditMemberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditMemberActionPerformed
         btnEditMember.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Edit-Click.png")));
-        int row = tableMember.getSelectedRow();
-        ArrayList<String> data = new ArrayList<>();
-        if (row != -1) {
-            MemberControler controler = new MemberControler(null, null, null, null);
-            data = controler.IsiField(row, tableMember);
-            ChangeMember changeMember = new ChangeMember(this, true);
+        ChangeMember changeMember = new ChangeMember(this, true);
+        MemberControler controler = new MemberControler(null, null, null, null);
+        boolean validasiBaris = controler.ValidateRow(tableMember);
+        if (validasiBaris) {
+            ArrayList<String> data = controler.IsiField(tableMember);
             changeMember.setMember(new UpdateTable() {
                 @Override
                 public void perbarui() {
@@ -471,9 +470,6 @@ public class Member extends javax.swing.JInternalFrame implements UpdateTable {
             });
             changeMember.setField(data.get(0), data.get(1), data.get(2), data.get(3));
             changeMember.setVisible(true);
-        } else {
-            exceptionHandler = new ExceptionHandler();
-            exceptionHandler.getErrorKesalahan("Select the data you want to change!");
         }
     }//GEN-LAST:event_btnEditMemberActionPerformed
 
@@ -491,10 +487,11 @@ public class Member extends javax.swing.JInternalFrame implements UpdateTable {
 
     private void btnHapusMemberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusMemberActionPerformed
         btnHapusMember.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Delete-Click.png")));
-        int row = tableMember.getSelectedRow();
         MemberControler controler = new MemberControler(null, null, null, null);
-        controler.DeleteMember(row, tableMember);
-        ViewTableMember();
+        boolean succes = controler.DeleteMember(tableMember);
+        if (succes) {
+            ViewTableMember();
+        }
     }//GEN-LAST:event_btnHapusMemberActionPerformed
 
     private void btnHapusMemberMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHapusMemberMouseEntered

@@ -11,7 +11,9 @@ public class MemberControler {
     private String noHp;
     private String namaMember;
     private String alamatMember;
+    private String noHpLama;
     private ExceptionHandler exceptionHandler;
+    private DbMember dbMember;
 
     public MemberControler(String idMember, String noHp, String namaMember, String alamatMember) {
         this.idMember = idMember;
@@ -19,6 +21,11 @@ public class MemberControler {
         this.namaMember = namaMember;
         this.alamatMember = alamatMember;
         exceptionHandler = new ExceptionHandler();
+        dbMember = new DbMember();
+    }
+
+    public void SetNoHpLama(String noHp) {
+        this.noHpLama = noHp;
     }
 
     private String GenerateRandom(int angka) {
@@ -34,6 +41,16 @@ public class MemberControler {
         return idMember = "MBR" + GenerateRandom(4);
     }
 
+    public boolean ValidateRow(JTable table) {
+        int row = table.getSelectedRow();
+        if (row != -1) {
+            return true;
+        } else {
+            exceptionHandler.getErrorKesalahan("Select the data you want to change!");
+        }
+        return false;
+    }
+
     private boolean ValidateName() {
         if (namaMember.matches("[a-zA-Z .]+")) {
             if (namaMember.length() <= 25) {
@@ -46,27 +63,30 @@ public class MemberControler {
         }
         return false;
     }
-    
-    private boolean cekNoHp(){
-        DbMember dbMember = new DbMember(noHp);
-        boolean cek = dbMember.cekMember();
-        if (!cek) {
-            return true;
-        } else {
-            exceptionHandler.getErrorKesalahan("Telephone number has been used !");
-        }
-        return false;
-    }
 
     private boolean ValidateNoHp() {
-        DbMember dbMember = new DbMember(noHp);
         if (noHp.matches("\\d+") && noHp.length() > 11 && noHp.length() < 14) {
-            boolean cekNoHp = dbMember.cekMember();
+            boolean cekNoHp = dbMember.cekMember(noHp);
+            if (!cekNoHp) {
                 return true;
+            } else {
+                exceptionHandler.getErrorKesalahan("Telephone number has been used !");
+            }
         } else {
             exceptionHandler.getErrorKesalahan("Invalid cellphone number !");
         }
         return false;
+    }
+
+    private boolean ValidateNoHpBaru() {
+        boolean cekNoHp = dbMember.cekMember(noHp);
+        if (noHp.equalsIgnoreCase(noHpLama)) {
+            return true;
+        } else if (!cekNoHp) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private boolean ValidateAddress() {
@@ -81,54 +101,19 @@ public class MemberControler {
     private boolean ValidateField() {
         if (!namaMember.equalsIgnoreCase("Member Name") && !namaMember.equals("") && !noHp.equalsIgnoreCase("Telephone Number") && !noHp.equals("")
                 && !alamatMember.equalsIgnoreCase("Address") && !namaMember.equals("")) {
-            if (ValidateName() && ValidateNoHp() && ValidateAddress()) {
-                return true;
-            }
+            return true;
         } else {
             exceptionHandler.getErrorKesalahan("The field cannot be empty !");
         }
         return false;
     }
 
-    public boolean InsertMember() {
-        GenerateIdMember();
-        if (ValidateField() && cekNoHp()) {
-            DbMember dbMember = new DbMember(idMember, noHp, namaMember, alamatMember);
-            boolean succes = dbMember.InsertMember();
-            if (succes) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean ChangeMember() {
-        if (ValidateField()) {
-            DbMember dbMember = new DbMember(idMember, noHp, namaMember, alamatMember);
-            boolean succes = dbMember.ChangeMember();
-            if (succes) {
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    public void DeleteMember(int row, JTable table){
-        if(row != -1){
-        this.idMember = table.getValueAt(row, 0).toString();
-        DbMember dbMember = new DbMember(idMember, noHp, namaMember, alamatMember);
-        dbMember.DeleteMember();
-        } else {
-            exceptionHandler.getErrorKesalahan("Select the data you want to delete!");
-        }
-    }
-
     public ConfigTable GetAllData() {
-        DbMember dbMember = new DbMember(idMember, noHp, namaMember, alamatMember);
         return dbMember.GetAllDataMember();
     }
 
-    public ArrayList<String> IsiField(int row, JTable table) {
+    public ArrayList<String> IsiField(JTable table) {
+        int row = table.getSelectedRow();
         ArrayList<String> data = new ArrayList<>();
         String memberId = table.getValueAt(row, 0).toString();
         String nama = table.getValueAt(row, 1).toString();
@@ -139,5 +124,43 @@ public class MemberControler {
         data.add(noHpMember);
         data.add(alamat);
         return data;
+    }
+
+    public boolean InsertMember() {
+        GenerateIdMember();
+        if (ValidateField() && ValidateName() && ValidateNoHp() && ValidateAddress()) {
+            boolean confirm = exceptionHandler.confirmSaveDataPerson("Save Member Data?");
+            if (confirm) {
+                dbMember.InsertMember(idMember, namaMember, noHp, alamatMember);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean ChangeMember() {
+        if (ValidateName() && ValidateNoHpBaru() && ValidateAddress()) {
+            boolean confirm = exceptionHandler.confirmChangePerson("Change Member Data?");
+            if (confirm) {
+                dbMember.ChangeMember(namaMember, noHp, alamatMember, idMember);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean DeleteMember(JTable table) {
+        int row = table.getSelectedRow();
+        if (row != -1) {
+            this.idMember = table.getValueAt(row, 0).toString();
+            boolean confirm = exceptionHandler.confirmDeleteData("Are you sure you deleted member data?");
+            if (confirm) {
+                dbMember.DeleteMember(idMember);
+                return true;
+            }
+        } else {
+            exceptionHandler.getErrorKesalahan("Select the data you want to delete!");
+        }
+        return false;
     }
 }

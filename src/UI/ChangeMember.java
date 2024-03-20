@@ -7,10 +7,11 @@ import javax.swing.JInternalFrame;
 import Logic.*;
 
 public class ChangeMember extends javax.swing.JDialog {
-
+    
     private UpdateTable update;
     private String idMember;
-
+    private String noHpLama;
+    
     public ChangeMember(JInternalFrame parent, boolean modal) {
         super((JFrame) parent.getTopLevelAncestor(), modal);
         initComponents();
@@ -18,18 +19,19 @@ public class ChangeMember extends javax.swing.JDialog {
         getContentPane().setBackground(new Color(255, 255, 255, 150));
         bg.setFocusable(true);
     }
-
+    
     public void setField(String idMember, String namaMember, String noHp, String alamat) {
         this.idMember = idMember;
         txtName.setText(namaMember);
         txtNoHp.setText(noHp);
         txtAddress.setText(alamat);
+        this.noHpLama = noHp;
     }
-
+    
     public void setMember(UpdateTable update) {
         this.update = update;
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -158,6 +160,7 @@ public class ChangeMember extends javax.swing.JDialog {
         String noHp = txtNoHp.getText();
         String alamat = txtAddress.getText();
         MemberControler controler = new MemberControler(idMember, noHp, nama, alamat);
+        controler.SetNoHpLama(noHpLama);
         boolean succes = controler.ChangeMember();
         if (succes) {
             update.perbarui();

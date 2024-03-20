@@ -8,26 +8,10 @@ import Logic.*;
 
 public class DbMember {
 
-    private String idMember;
-    private String noHp;
-    private String namaMember;
-    private String alamatMember;
     private ExceptionHandler exceptionHandler;
 
-    public DbMember(String idMember, String noHp, String namaMember, String alamatMember) {
-        this.idMember = idMember;
-        this.noHp = noHp;
-        this.namaMember = namaMember;
-        this.alamatMember = alamatMember;
+    public boolean cekMember(String noHp) {
         exceptionHandler = new ExceptionHandler();
-    }
-
-    public DbMember(String noHp) {
-        this.noHp = noHp;
-        exceptionHandler = new ExceptionHandler();
-    }
-
-    public boolean cekMember() {
         String queryCek = "SELECT COUNT(*) FROM member WHERE tlp_member = ?";
         Connection koneksi = null;
         try {
@@ -52,10 +36,10 @@ public class DbMember {
         return false;
     }
 
-    public boolean InsertMember() {
+    public void InsertMember(String idMember, String namaMember, String noHp, String alamatMember) {
         String queryInsert = "INSERT INTO member (id_member, nama_member, tlp_member, alamat_member) VALUES (?, ?, ?, ?)";
-        boolean confirm = exceptionHandler.confirmSaveDataPerson("Save Member Data?");
         Connection koneksi = null;
+        exceptionHandler = new ExceptionHandler();
         try {
             koneksi = ClassKoneksi.GetConnection();
             PreparedStatement stInsert = koneksi.prepareStatement(queryInsert);
@@ -63,11 +47,8 @@ public class DbMember {
             stInsert.setString(2, namaMember);
             stInsert.setString(3, noHp);
             stInsert.setString(4, alamatMember);
-            if (confirm) {
-                stInsert.executeUpdate();
-                exceptionHandler.succesSavePersonData("Member data has been successfully saved");
-                return true;
-            }
+            stInsert.executeUpdate();
+            exceptionHandler.succesSavePersonData("Member data has been successfully saved");
         } catch (Exception e) {
             exceptionHandler.getErrorKesalahan("Failed when trying to save member data " + e);
         } finally {
@@ -79,13 +60,12 @@ public class DbMember {
                 }
             }
         }
-        return false;
     }
 
-    public boolean ChangeMember() {
+    public void ChangeMember(String namaMember, String noHp, String alamatMember, String idMember) {
         String queryUpdate = "UPDATE member SET nama_member = ?, tlp_member = ?, alamat_member = ? WHERE id_member = ?";
-        boolean confirm = exceptionHandler.confirmChangePerson("Change Member Data?");
         Connection koneksi = null;
+        exceptionHandler = new ExceptionHandler();
         try {
             koneksi = ClassKoneksi.GetConnection();
             PreparedStatement stChange = koneksi.prepareStatement(queryUpdate);
@@ -93,13 +73,10 @@ public class DbMember {
             stChange.setString(2, noHp);
             stChange.setString(3, alamatMember);
             stChange.setString(4, idMember);
-            if (confirm) {
-                stChange.executeUpdate();
-                exceptionHandler.succesSavePersonData("Member data has been successfully Changed");
-                return true;
-            }
+            stChange.executeUpdate();
+            exceptionHandler.succesSavePersonData("Member data has been successfully Changed");
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("Failed when trying to change member data " + e);
+            exceptionHandler.getErrorKesalahan("Failed when trying to change member data " + e.getMessage());
         } finally {
             if (koneksi != null) {
                 try {
@@ -109,22 +86,18 @@ public class DbMember {
                 }
             }
         }
-        return false;
     }
 
-    public boolean DeleteMember() {
+    public void DeleteMember(String idMember) {
         String queryDelete = "DELETE FROM member WHERE id_member = ?";
-        boolean confirm = exceptionHandler.confirmDeleteData("Are you sure you deleted member data?");
         Connection koneksi = null;
+        exceptionHandler = new ExceptionHandler();
         try {
             koneksi = ClassKoneksi.GetConnection();
             PreparedStatement stDelete = koneksi.prepareStatement(queryDelete);
             stDelete.setString(1, idMember);
-            if (confirm) {
-                stDelete.executeUpdate();
-                exceptionHandler.succesDeleteData("Member data has been successfully deleted");
-                return true;
-            }
+            stDelete.executeUpdate();
+            exceptionHandler.succesDeleteData("Member data has been successfully deleted");
         } catch (Exception e) {
             exceptionHandler.getErrorKesalahan("Failed when trying to delete member data " + e);
         } finally {
@@ -136,13 +109,13 @@ public class DbMember {
                 }
             }
         }
-        return false;
     }
 
     // get data member utk insert ke table
     public ConfigTable GetAllDataMember() {
         ConfigTable dataTable = new ConfigTable();
         Connection koneksi = null;
+        exceptionHandler = new ExceptionHandler();
         String queryGetData = "SELECT * FROM member";
         dataTable.addColumn("Member ID");
         dataTable.addColumn("Member Name");
