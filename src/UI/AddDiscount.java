@@ -147,14 +147,12 @@ public class AddDiscount extends javax.swing.JDialog {
         String kategori = (String) cmbKategori.getSelectedItem();
         String status = (String) cmbStatus.getSelectedItem();
         PromoContoler controler = new PromoContoler(null, kategori, 0, 0, status);
-        int minimum = controler.ValidateMinPurchase(txtMinimum);
-        int amount = controler.ValidateValue(txtAmount);
-        if (minimum != 0 && amount != 0) {
-            boolean succes = controler.InsertDiskon();
-            if (succes) {
-                update.perbarui();
-                dispose();
-            }
+        controler.ValidateMinPurchase(txtMinimum);
+        controler.ValidateValue(txtAmount);
+        boolean succes = controler.InsertDiskon();
+        if (succes) {
+            update.perbarui();
+            dispose();
         }
     }//GEN-LAST:event_btnAddActionPerformed
 

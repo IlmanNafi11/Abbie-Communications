@@ -158,14 +158,12 @@ public class ChangeDiscount extends javax.swing.JDialog {
         int jumlahDiskon = Integer.parseInt(txtAmount.getText());
         String status = (String) cmbStatus.getSelectedItem();
         PromoContoler controler = new PromoContoler(kodeDiskon, kategori, minimumBelanja, jumlahDiskon, status);
-        int minimum = controler.ValidateMinPurchase(txtMinimum);
-        int amount = controler.ValidateValue(txtAmount);
-        if (minimum != 0 && amount != 0) {
-            boolean succes = controler.ChangeDiskon();
-            if (succes) {
-                update.perbarui();
-                dispose();
-            }
+        controler.ValidateMinPurchase(txtMinimum);
+        controler.ValidateValue(txtAmount);
+        boolean succes = controler.ChangeDiskon();
+        if (succes) {
+            update.perbarui();
+            dispose();
         }
     }//GEN-LAST:event_btnChangeActionPerformed
 

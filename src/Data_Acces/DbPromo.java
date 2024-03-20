@@ -1,4 +1,3 @@
-
 package Data_Acces;
 
 import Connections.ClassKoneksi;
@@ -8,13 +7,12 @@ import java.sql.ResultSet;
 import Logic.*;
 
 public class DbPromo {
-    
+
     private ExceptionHandler exceptionHandler;
-    
-    public boolean InsertDiskon(String kodeDiskon, String kategori, int minimum, int jumlahDiskon, String status){
+
+    public void InsertDiskon(String kodeDiskon, String kategori, int minimum, int jumlahDiskon, String status) {
         String queryInsert = "INSERT INTO promo (kode_diskon, kategori, minimum, nilai, status) VALUES (?, ? , ? , ?, ?)";
         exceptionHandler = new ExceptionHandler();
-        boolean confirm = exceptionHandler.confirmSave("Save Discount?");
         Connection koneksi = null;
         try {
             koneksi = ClassKoneksi.GetConnection();
@@ -24,13 +22,10 @@ public class DbPromo {
             stInsert.setInt(3, minimum);
             stInsert.setInt(4, jumlahDiskon);
             stInsert.setString(5, status);
-            if (confirm) {
-                stInsert.executeUpdate();
-                exceptionHandler.getSucces("Discount successfully saved");
-                return true;
-            }  
+            stInsert.executeUpdate();
+            exceptionHandler.getSucces("Discount successfully saved");
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("Failed when trying to save discount"+ e.getMessage());
+            exceptionHandler.getErrorKesalahan("Failed when trying to save discount" + e.getMessage());
         } finally {
             if (koneksi != null) {
                 try {
@@ -40,29 +35,24 @@ public class DbPromo {
                 }
             }
         }
-        return false;
     }
-    
-    public boolean ChangeDiskon(String kodeDiskon, String kategori, int minimum, int jumlahDiskon, String status){
+
+    public void ChangeDiskon(String kodeDiskon, String kategori, int minimum, int jumlahDiskon, String status) {
         String queryChange = "UPDATE promo SET kategori = ?, minimum = ?, nilai = ?, status = ? WHERE kode_diskon = ?";
         exceptionHandler = new ExceptionHandler();
-        boolean confirm = exceptionHandler.confirmSave("Save changes?");
         Connection koneksi = null;
         try {
             koneksi = ClassKoneksi.GetConnection();
-            PreparedStatement stInsert = koneksi.prepareStatement(queryChange); 
+            PreparedStatement stInsert = koneksi.prepareStatement(queryChange);
             stInsert.setString(1, kategori);
             stInsert.setInt(2, minimum);
             stInsert.setInt(3, jumlahDiskon);
             stInsert.setString(4, status);
             stInsert.setString(5, kodeDiskon);
-            if (confirm) {
-                stInsert.executeUpdate();
-                exceptionHandler.getSucces("Discount successfully changed");
-                return true;
-            }  
+            stInsert.executeUpdate();
+            exceptionHandler.getSucces("Discount successfully changed");
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("Failed when trying to update discount data!"+ e.getMessage());
+            exceptionHandler.getErrorKesalahan("Failed when trying to update discount data!" + e.getMessage());
         } finally {
             if (koneksi != null) {
                 try {
@@ -72,23 +62,18 @@ public class DbPromo {
                 }
             }
         }
-        return false;
     }
-    
-    public boolean DeleteDiskon(String kodeDiskon){
+
+    public void DeleteDiskon(String kodeDiskon) {
         String queryDelete = "DELETE FROM promo WHERE kode_diskon = ?";
         exceptionHandler = new ExceptionHandler();
-        boolean confirm = exceptionHandler.confirmDeleteData("Delete Discount?");
         Connection koneksi = null;
         try {
             koneksi = ClassKoneksi.GetConnection();
             PreparedStatement stDelete = koneksi.prepareStatement(queryDelete);
             stDelete.setString(1, kodeDiskon);
-            if (confirm) {
-                stDelete.executeUpdate();
-                exceptionHandler.succesDeleteData("Discount successfully removed!");
-                return true;
-            }
+            stDelete.executeUpdate();
+            exceptionHandler.succesDeleteData("Discount successfully removed!");
         } catch (Exception e) {
             exceptionHandler.getErrorKesalahan("Failed when trying to remove discount!" + e.getMessage());
         } finally {
@@ -100,12 +85,12 @@ public class DbPromo {
                 }
             }
         }
-        return false;
     }
-    
-    // get data utk di insert ke table
+
+    // get all data utk insert ke table
     public ConfigTable GetAllDataPromo() {
         ConfigTable dataTable = new ConfigTable();
+        exceptionHandler = new ExceptionHandler();
         String queryGetData = "SELECT * FROM promo";
         dataTable.addColumn("Discount Code");
         dataTable.addColumn("Category");

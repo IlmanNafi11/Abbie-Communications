@@ -382,7 +382,7 @@ public class Member extends javax.swing.JInternalFrame implements UpdateTable {
         ArrayList<String> dataString = new ArrayList<>();
         ArrayList<Integer> dataInteger = new ArrayList<>();
         int row = tableDiskon.getSelectedRow();
-        boolean validasi = controler.ValidateRow(row, tableDiskon);
+        boolean validasi = controler.ValidateRow(tableDiskon);
         if (validasi) {
             changeDiscount.setDiskon(new UpdateTable() {
                 @Override
@@ -390,8 +390,8 @@ public class Member extends javax.swing.JInternalFrame implements UpdateTable {
                     ViewTableDiskon();
                 }
             });
-            dataString = controler.IsiStringField(row, tableDiskon);
-            dataInteger = controler.IsiIntField(row, tableDiskon);
+            dataString = controler.IsiStringField(tableDiskon);
+            dataInteger = controler.IsiIntField(tableDiskon);
             changeDiscount.setField(dataString.get(0), dataString.get(1), dataInteger.get(0), dataInteger.get(1), dataString.get(2));
             changeDiscount.setVisible(true);
         }
@@ -412,10 +412,11 @@ public class Member extends javax.swing.JInternalFrame implements UpdateTable {
 
     private void btnHapusPromoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusPromoActionPerformed
         btnHapusPromo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Delete-Click.png")));
-        int getRow = tableDiskon.getSelectedRow();
         PromoContoler contoler = new PromoContoler(null, null, 0, 0, null);
-        contoler.DeleteDiskon(getRow, tableDiskon);
-        ViewTableDiskon();
+        boolean succes = contoler.DeleteDiskon(tableDiskon);
+        if (succes) {
+            ViewTableDiskon();
+        }
     }//GEN-LAST:event_btnHapusPromoActionPerformed
 
     private void btnHapusPromoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHapusPromoMouseEntered

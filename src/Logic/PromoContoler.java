@@ -14,6 +14,7 @@ public class PromoContoler {
     private int nilai;
     private String status;
     private ExceptionHandler exceptionHandler;
+    private DbPromo dbPromo;
 
     public PromoContoler(String kodeDiskon, String kategori, int minimum, int nilai, String status) {
         this.kodeDiskon = kodeDiskon;
@@ -22,6 +23,7 @@ public class PromoContoler {
         this.nilai = nilai;
         this.status = status;
         exceptionHandler = new ExceptionHandler();
+        dbPromo = new DbPromo();
     }
 
     private String GenerateRandom(int angka) {
@@ -42,7 +44,8 @@ public class PromoContoler {
         return kodeDiskon;
     }
 
-    public boolean ValidateRow(int row, JTable table) {
+    public boolean ValidateRow(JTable table) {
+        int row = table.getSelectedRow();
         if (row != -1) {
             return true;
         } else {
@@ -70,7 +73,7 @@ public class PromoContoler {
             }
         } catch (NumberFormatException e) {
             exceptionHandler.getErrorKesalahan("Minimum purchase is invalid!");
-            
+
         }
         return 0;
     }
@@ -98,45 +101,12 @@ public class PromoContoler {
         return false;
     }
 
-    public boolean InsertDiskon() {
-        if (ValidateKategori() && ValidateStatus()) {
-            GenerateKodeDiskon();
-            DbPromo dbPromo = new DbPromo();
-            boolean succes = dbPromo.InsertDiskon(kodeDiskon, kategori, minimum, nilai, status);
-            if (succes) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean ChangeDiskon() {
-        DbPromo dbPromo = new DbPromo();
-        if (ValidateKategori() && ValidateStatus()) {
-            boolean succes = dbPromo.ChangeDiskon(kodeDiskon, kategori, minimum, nilai, status);
-            if (succes) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public void DeleteDiskon(int row, JTable table) {
-        DbPromo dbPromo = new DbPromo();
-        if (row != -1) {
-            this.kodeDiskon = table.getValueAt(row, 0).toString();
-            dbPromo.DeleteDiskon(kodeDiskon);
-        } else {
-            exceptionHandler.getErrorKesalahan("Select the discount data you want to delete!");
-        }
-    }
-
     public ConfigTable GetAllData() {
-        DbPromo dbPromo = new DbPromo();
         return dbPromo.GetAllDataPromo();
     }
 
-    public ArrayList<String> IsiStringField(int row, JTable table) {
+    public ArrayList<String> IsiStringField(JTable table) {
+        int row = table.getSelectedRow();
         ArrayList<String> data = new ArrayList<>();
         String kodePromo = table.getValueAt(row, 0).toString();
         String kategori = table.getValueAt(row, 1).toString();
@@ -147,13 +117,52 @@ public class PromoContoler {
         return data;
     }
 
-    public ArrayList<Integer> IsiIntField(int row, JTable table) {
+    public ArrayList<Integer> IsiIntField(JTable table) {
+        int row = table.getSelectedRow();
         ArrayList<Integer> data = new ArrayList<>();
         int minimumPurchase = (Integer) table.getValueAt(row, 2);
         int amount = (Integer) table.getValueAt(row, 3);
         data.add(minimumPurchase);
         data.add(amount);
         return data;
+    }
+
+    public boolean InsertDiskon() {
+        if (ValidateKategori() && ValidateStatus() && minimum != 0 && nilai != 0) {
+            GenerateKodeDiskon();
+            boolean confirm = exceptionHandler.confirmSave("Save Discount?");
+            if (confirm) {
+                dbPromo.InsertDiskon(kodeDiskon, kategori, minimum, nilai, status);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean ChangeDiskon() {
+        if (ValidateKategori() && ValidateStatus() && minimum != 0 && nilai != 0) {
+            boolean confirm = exceptionHandler.confirmSave("Save changes?");
+            if (confirm) {
+                dbPromo.ChangeDiskon(kodeDiskon, kategori, minimum, nilai, status);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean DeleteDiskon(JTable table) {
+        int row = table.getSelectedRow();
+        boolean confirm = exceptionHandler.confirmDeleteData("Delete Discount?");
+        if (row != -1) {
+            this.kodeDiskon = table.getValueAt(row, 0).toString();
+            if (confirm) {
+                dbPromo.DeleteDiskon(kodeDiskon);
+                return true;
+            }
+        } else {
+            exceptionHandler.getErrorKesalahan("Select the discount data you want to delete!");
+        }
+        return false;
     }
 
 }
