@@ -1,22 +1,39 @@
 package UI;
 
+import Logic.*;
 import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
+
 public class ChangeRestock extends javax.swing.JDialog {
+
+    private UpdateTable update;
+    private String idTransaksi;
 
     public ChangeRestock(JInternalFrame parent, boolean modal) {
         super((JFrame) parent.getTopLevelAncestor(), modal);
         initComponents();
         this.setUndecorated(false);
-        getContentPane().setBackground(new Color(255,255,255,150));
+        getContentPane().setBackground(new Color(255, 255, 255, 150));
+    }
+
+    public void setRestock(UpdateTable update) {
+        this.update = update;
+    }
+
+    public void SetField(String idTransaksi, String kategori, String idProduk, String namaProduk, int jumlah, String idSupplier, String namaSupplier, int harga) {
+        this.idTransaksi = idTransaksi;
+        cmbKategori.setSelectedItem(kategori);
+        cmbProductId.setSelectedItem(idProduk);
+        cmbIdSupplier.setSelectedItem(idSupplier);
+        txtQuantity.setText(String.valueOf(jumlah));
+        txtPrice.setText(String.valueOf(harga));
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        txtIdProduct = new javax.swing.JTextField();
         txtNamaProduk = new javax.swing.JTextField();
         txtQuantity = new javax.swing.JTextField();
         txtNamaSupplier = new javax.swing.JTextField();
@@ -25,24 +42,11 @@ public class ChangeRestock extends javax.swing.JDialog {
         btnRestock = new javax.swing.JButton();
         cmbKategori = new javax.swing.JComboBox<>();
         cmbIdSupplier = new javax.swing.JComboBox<>();
+        cmbProductId = new javax.swing.JComboBox<>();
         bg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
-
-        txtIdProduct.setForeground(new java.awt.Color(153, 153, 153));
-        txtIdProduct.setText("Product ID");
-        txtIdProduct.setBorder(null);
-        txtIdProduct.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtIdProductFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtIdProductFocusLost(evt);
-            }
-        });
-        getContentPane().add(txtIdProduct);
-        txtIdProduct.setBounds(31, 221, 488, 50);
 
         txtNamaProduk.setForeground(new java.awt.Color(153, 153, 153));
         txtNamaProduk.setText("Product Name");
@@ -144,13 +148,32 @@ public class ChangeRestock extends javax.swing.JDialog {
         getContentPane().add(btnRestock);
         btnRestock.setBounds(966, 454, 96, 55);
 
-        cmbKategori.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aksesoris", "Pulsa", "Elektronik", "Suku Cadang" }));
+        cmbKategori.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Category", "Accessories", "Phone credit/Internet credit", "Electronic", "Part" }));
+        cmbKategori.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbKategoriActionPerformed(evt);
+            }
+        });
         getContentPane().add(cmbKategori);
         cmbKategori.setBounds(22, 145, 506, 50);
 
-        cmbIdSupplier.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbIdSupplier.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Supplier ID" }));
+        cmbIdSupplier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbIdSupplierActionPerformed(evt);
+            }
+        });
         getContentPane().add(cmbIdSupplier);
         cmbIdSupplier.setBounds(552, 145, 506, 50);
+
+        cmbProductId.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Product ID" }));
+        cmbProductId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbProductIdActionPerformed(evt);
+            }
+        });
+        getContentPane().add(cmbProductId);
+        cmbProductId.setBounds(22, 221, 506, 50);
 
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Change-Restock-Product.png"))); // NOI18N
         getContentPane().add(bg);
@@ -179,6 +202,21 @@ public class ChangeRestock extends javax.swing.JDialog {
 
     private void btnRestockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestockActionPerformed
         btnRestock.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Change-Click.png")));
+        String kategori = (String) cmbKategori.getSelectedItem();
+        String idProduk = (String) cmbProductId.getSelectedItem();
+        String namaProduk = txtNamaProduk.getText();
+        int jumlah = Integer.parseInt(txtQuantity.getText());
+        String idSupplier = (String) cmbIdSupplier.getSelectedItem();
+        String namaSupplier = txtNamaSupplier.getText();
+        int harga = Integer.parseInt(txtPrice.getText());
+        RestockControler controler = new RestockControler(idTransaksi, kategori, idProduk, namaProduk, jumlah, idSupplier, namaSupplier, harga);
+        controler.ValidatePrice(txtPrice);
+        controler.ValidateQuantity(txtQuantity);
+        boolean succes = controler.ChangeData();
+        if (succes) {
+            update.perbarui();
+            dispose();
+        }
     }//GEN-LAST:event_btnRestockActionPerformed
 
     private void btnRestockMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRestockMouseEntered
@@ -193,20 +231,6 @@ public class ChangeRestock extends javax.swing.JDialog {
         btnRestock.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Change-Click.png")));
     }//GEN-LAST:event_btnRestockMousePressed
 
-    private void txtIdProductFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtIdProductFocusGained
-        if (txtIdProduct.getText().equals("Product ID")) {
-            txtIdProduct.setText("");
-            txtIdProduct.setForeground(Color.BLACK);
-        }
-    }//GEN-LAST:event_txtIdProductFocusGained
-
-    private void txtIdProductFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtIdProductFocusLost
-        if (txtIdProduct.getText().trim().equals("")|| txtIdProduct.getText().length() == 0) {
-            txtIdProduct.setText("Product ID");
-            txtIdProduct.setForeground(new Color(153,153,153));
-        }
-    }//GEN-LAST:event_txtIdProductFocusLost
-
     private void txtNamaProdukFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNamaProdukFocusGained
         if (txtNamaProduk.getText().equals("Product Name")) {
             txtNamaProduk.setText("");
@@ -215,9 +239,9 @@ public class ChangeRestock extends javax.swing.JDialog {
     }//GEN-LAST:event_txtNamaProdukFocusGained
 
     private void txtNamaProdukFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNamaProdukFocusLost
-        if (txtNamaProduk.getText().trim().equals("")|| txtNamaProduk.getText().length() == 0) {
+        if (txtNamaProduk.getText().trim().equals("") || txtNamaProduk.getText().length() == 0) {
             txtNamaProduk.setText("Product Name");
-            txtNamaProduk.setForeground(new Color(153,153,153));
+            txtNamaProduk.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtNamaProdukFocusLost
 
@@ -229,9 +253,9 @@ public class ChangeRestock extends javax.swing.JDialog {
     }//GEN-LAST:event_txtQuantityFocusGained
 
     private void txtQuantityFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtQuantityFocusLost
-        if (txtQuantity.getText().trim().equals("")|| txtQuantity.getText().length() == 0) {
+        if (txtQuantity.getText().trim().equals("") || txtQuantity.getText().length() == 0) {
             txtQuantity.setText("Quantity");
-            txtQuantity.setForeground(new Color(153,153,153));
+            txtQuantity.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtQuantityFocusLost
 
@@ -243,9 +267,9 @@ public class ChangeRestock extends javax.swing.JDialog {
     }//GEN-LAST:event_txtNamaSupplierFocusGained
 
     private void txtNamaSupplierFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNamaSupplierFocusLost
-        if (txtNamaSupplier.getText().trim().equals("")|| txtNamaSupplier.getText().length() == 0) {
+        if (txtNamaSupplier.getText().trim().equals("") || txtNamaSupplier.getText().length() == 0) {
             txtNamaSupplier.setText("Supplier Name");
-            txtNamaSupplier.setForeground(new Color(153,153,153));
+            txtNamaSupplier.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtNamaSupplierFocusLost
 
@@ -257,11 +281,40 @@ public class ChangeRestock extends javax.swing.JDialog {
     }//GEN-LAST:event_txtPriceFocusGained
 
     private void txtPriceFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPriceFocusLost
-        if (txtPrice.getText().trim().equals("")|| txtNamaSupplier.getText().length() == 0) {
+        if (txtPrice.getText().trim().equals("") || txtNamaSupplier.getText().length() == 0) {
             txtPrice.setText("Price");
-            txtPrice.setForeground(new Color(153,153,153));
+            txtPrice.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtPriceFocusLost
+
+    private void cmbKategoriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbKategoriActionPerformed
+        String kategori = (String) cmbKategori.getSelectedItem();
+        // get id supplier berdasarkan kategori
+        RestockControler controler = new RestockControler(null, kategori, null, null, 0, null, null, 0);
+        if (kategori != null) {
+            controler.SetComboProdukId(cmbProductId);
+            controler.SetComboIdSupplier(cmbIdSupplier);
+            cmbProductId.addItem("Product ID");
+            cmbProductId.setSelectedItem("Product ID");
+            cmbIdSupplier.addItem("Supplier ID");
+            cmbIdSupplier.setSelectedItem("Supplier ID");
+        }
+    }//GEN-LAST:event_cmbKategoriActionPerformed
+
+    private void cmbProductIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbProductIdActionPerformed
+        String produkId = (String) cmbProductId.getSelectedItem();
+        String kategori = (String) cmbKategori.getSelectedItem();
+        RestockControler controler = new RestockControler(null, kategori, produkId, null, 0, null, null, 0);
+        controler.SetTxtProdukName(produkId, txtNamaProduk);
+    }//GEN-LAST:event_cmbProductIdActionPerformed
+
+    private void cmbIdSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbIdSupplierActionPerformed
+        String idSupplier = (String) cmbIdSupplier.getSelectedItem();
+        String produkId = (String) cmbProductId.getSelectedItem();
+        String kategori = (String) cmbKategori.getSelectedItem();
+        RestockControler controler = new RestockControler(null, kategori, produkId, null, 0, idSupplier, null, 0);
+        controler.setTxtSupplierName(idSupplier, txtNamaSupplier);
+    }//GEN-LAST:event_cmbIdSupplierActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -315,7 +368,7 @@ public class ChangeRestock extends javax.swing.JDialog {
     private javax.swing.JButton btnRestock;
     private javax.swing.JComboBox<String> cmbIdSupplier;
     private javax.swing.JComboBox<String> cmbKategori;
-    private javax.swing.JTextField txtIdProduct;
+    private javax.swing.JComboBox<String> cmbProductId;
     private javax.swing.JTextField txtNamaProduk;
     private javax.swing.JTextField txtNamaSupplier;
     private javax.swing.JTextField txtPrice;

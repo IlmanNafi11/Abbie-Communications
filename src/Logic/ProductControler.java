@@ -68,7 +68,7 @@ public class ProductControler {
     //set item combo box id supplier berdasarkan kategori produk
     public void SetIdSupplier(JComboBox<String> comboBox) {
         try {
-            ArrayList<String> getIdSupplier = dbSupplier.GetIdSupplier(kategori); // change to db supplier
+            ArrayList<String> getIdSupplier = dbSupplier.GetIdSupplier(kategori);
             comboBox.removeAllItems();
             for (String idSupplier : getIdSupplier) {
                 comboBox.addItem(idSupplier);

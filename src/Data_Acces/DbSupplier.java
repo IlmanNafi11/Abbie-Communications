@@ -111,13 +111,13 @@ public class DbSupplier {
 
     // get id supplier berdasarkan kategori produk
     public ArrayList<String> GetIdSupplier(String kategori) {
-        String sqlGetProduct = "SELECT id_supplier FROM supplier WHERE kategori = ?";
+        String queryGetIdSupplier = "SELECT id_supplier FROM supplier WHERE kategori = ?";
         ArrayList<String> idSupplier = new ArrayList<>();
         exceptionHandler = new ExceptionHandler();
         Connection koneksi = null;
         try {
             koneksi = ClassKoneksi.GetConnection();
-            PreparedStatement stGetId = koneksi.prepareStatement(sqlGetProduct);
+            PreparedStatement stGetId = koneksi.prepareStatement(queryGetIdSupplier);
             stGetId.setString(1, kategori);
             ResultSet rs = stGetId.executeQuery();
             while (rs.next()) {

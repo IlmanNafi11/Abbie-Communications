@@ -1,15 +1,29 @@
 package UI;
 
 import java.awt.Color;
+import Logic.*;
+import java.util.ArrayList;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
-public class Restock extends javax.swing.JInternalFrame {
+public class Restock extends javax.swing.JInternalFrame implements UpdateTable{
 
     public Restock() {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
         BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
         bui.setNorthPane(null);
+        ViewTable();
+    }
+    
+    @Override
+    public void perbarui() {
+        ViewTable();
+    }
+    // blm disset
+    public void ViewTable() {
+        RestockControler controler = new RestockControler(null, null, null, null, 0, null, null, 0);
+        ConfigTable Tabel = controler.GetAllData();
+        table.setModel(Tabel);
     }
 
     @SuppressWarnings("unchecked")
@@ -147,6 +161,9 @@ public class Restock extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        table.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        table.setShowVerticalLines(true);
+        table.getTableHeader().setReorderingAllowed(false);
         JScrollPane.setViewportView(table);
         if (table.getColumnModel().getColumnCount() > 0) {
             table.getColumnModel().getColumn(0).setResizable(false);
@@ -254,6 +271,12 @@ public class Restock extends javax.swing.JInternalFrame {
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Add-Plus-Click.png")));
         AddRestock addRestock = new AddRestock(this, true);
+        addRestock.setRestock(new UpdateTable(){
+            @Override
+            public void perbarui(){
+                ViewTable();
+            }
+        });
         addRestock.setVisible(true);
     }//GEN-LAST:event_btnAddActionPerformed
 
@@ -272,7 +295,20 @@ public class Restock extends javax.swing.JInternalFrame {
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Edit-Click.png")));
         ChangeRestock changeRestock = new ChangeRestock(this, true);
-        changeRestock.setVisible(true);
+        RestockControler controler = new RestockControler(null, null, null, null, 0, null, null, 0);
+        boolean validasiBaris = controler.ValidateSelectedRow(table);
+        if (validasiBaris) {
+            changeRestock.setRestock(new UpdateTable(){
+                @Override
+                public void perbarui() {
+                    ViewTable();
+                }
+            });
+            ArrayList<String> dataString = controler.IsiStringField(table);
+            ArrayList<Integer> dataInteger = controler.IsiIntField(table);
+            changeRestock.SetField(dataString.get(0), dataString.get(1), dataString.get(2), dataString.get(3),dataInteger.get(0), dataString.get(4), dataString.get(5),dataInteger.get(1));
+            changeRestock.setVisible(true);
+        }
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnDeleteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteMouseEntered
@@ -289,6 +325,11 @@ public class Restock extends javax.swing.JInternalFrame {
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Delete-Click.png")));
+        RestockControler controler = new RestockControler(null, null, null, null, 0, null, null, 0);
+        boolean succes = controler.DeleteData(table);
+        if (succes) {
+            ViewTable();
+        }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void lblPosisiUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPosisiUserMouseClicked

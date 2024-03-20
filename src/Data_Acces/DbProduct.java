@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import Logic.*;
+import java.util.ArrayList;
 
 public class DbProduct {
 
@@ -195,6 +196,61 @@ public class DbProduct {
             }
         }
         return dataTable;
+    }
+    
+    // get idProduk berdasarkan kategori untuk kelas Restok controler
+    public ArrayList<String> GetIdProduk(String kategori){
+        String queryGetId = "SELECT id_produk FROM produk WHERE kategori = ?";
+        ArrayList<String> idProduk = new ArrayList<>();
+        exceptionHandler = new ExceptionHandler();
+        Connection koneksi = null;
+        try {
+            koneksi = ClassKoneksi.GetConnection();
+            PreparedStatement stGetId = koneksi.prepareStatement(queryGetId);
+            stGetId.setString(1, kategori);
+            ResultSet rs = stGetId.executeQuery();
+            while (rs.next()) {
+                idProduk.add(rs.getString("id_produk"));
+            }
+        } catch (Exception e) {
+            exceptionHandler.getErrorKesalahan("gagal saat mencoba mengambil Produk ID" + e.getMessage());
+        } finally {
+            if (koneksi != null) {
+                try {
+                    koneksi.close();
+                } catch (Exception e) {
+                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection! " + e.getMessage());
+                }
+            }
+        }
+        return idProduk;
+    }
+    
+    // get produk name berdasarkan id produk untuk kelas restock
+    public String GetProdukName(String idProduk){
+        String queryGetName = "SELECT nama_produk FROM produk WHERE id_produk = ?";
+        exceptionHandler = new ExceptionHandler();
+        Connection koneksi = null;
+        try {
+            koneksi = ClassKoneksi.GetConnection();
+            PreparedStatement stGetName = koneksi.prepareStatement(queryGetName);
+            stGetName.setString(1, idProduk);
+            ResultSet rs = stGetName.executeQuery();
+            while(rs.next()){
+                return rs.getString("nama_produk");
+            }
+        } catch (Exception e) {
+            exceptionHandler.getErrorKesalahan("gagal saat mencoba mengambil nama produk" + e.getMessage());
+        } finally {
+            if (koneksi != null) {
+                try {
+                    koneksi.close();
+                } catch (Exception e) {
+                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection! " + e.getMessage());
+                }
+            }
+        }
+        return null;
     }
 
 }
