@@ -37,7 +37,7 @@ public class RestockControler {
         exceptionHandler = new ExceptionHandler();
         dbRestock = new DbRestock();
         dbProduct = new DbProduct();
-        dbSupplier = new DbSupplier(null, null, null, null);
+        dbSupplier = new DbSupplier();
     }
 
     private String GenerateRandom(int angka) {

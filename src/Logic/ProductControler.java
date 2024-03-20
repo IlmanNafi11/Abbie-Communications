@@ -31,7 +31,7 @@ public class ProductControler {
         this.jumlahStock = jumlahStock;
         exception = new ExceptionHandler();
         dbProduct = new DbProduct();
-        dbSupplier = new DbSupplier(null, null, null, null);
+        dbSupplier = new DbSupplier();
     }
 
     // set nama lama untuk melacak perubahan nama produk saat update data produk
