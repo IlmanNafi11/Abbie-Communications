@@ -5,12 +5,10 @@ import Logic.UpdateTable;
 import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
-import javax.swing.JTable;
 
 public class ChangeSupplier extends javax.swing.JDialog {
 
     private UpdateTable update;
-private JTable tabel;
 
     public ChangeSupplier(JInternalFrame parent, boolean modal) {
         super((JFrame) parent.getTopLevelAncestor(), modal);
@@ -22,10 +20,6 @@ private JTable tabel;
 
     public void setSupplier(UpdateTable update) {
         this.update = update;
-    }
-    
-    public void getTabel(JTable table){
-        this.tabel = table;
     }
 
     public void setField(String idSupplier, String namaSupplier, String noHp, String kategori) {

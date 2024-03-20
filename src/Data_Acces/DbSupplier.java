@@ -9,61 +9,81 @@ import java.util.ArrayList;
 
 public class DbSupplier {
 
-    private String idSupplier;
-    private String namaSupplier;
-    private String noHp;
-    private String kategori;
     private ExceptionHandler exceptionHandler;
 
-    public DbSupplier(String idSupplier, String namaSupplier, String noHp, String kategori) {
-        this.idSupplier = idSupplier;
-        this.namaSupplier = namaSupplier;
-        this.noHp = noHp;
-        this.kategori = kategori;
-        exceptionHandler = new ExceptionHandler();
-    }
-
-    public boolean InsertSupplierData() {
+    public void InsertSupplierData(String idSupplier, String namaSupplier, String noHp, String kategori) {
         String sqlInsert = "INSERT INTO supplier (id_supplier, nama_supplier, tlp_supplier, kategori) VALUES (?, ?, ?, ?)";
+        Connection koneksi = null;
+        exceptionHandler = new ExceptionHandler();
         try {
-            boolean confirm = exceptionHandler.confirmSaveDataPerson("Save Supplier Data?");
-            if (confirm) {
-                Connection koneksi = ClassKoneksi.GetConnection();
-                PreparedStatement stInsert = koneksi.prepareStatement(sqlInsert);
-                stInsert.setString(1, idSupplier);
-                stInsert.setString(2, namaSupplier);
-                stInsert.setString(3, noHp);
-                stInsert.setString(4, kategori);
-                stInsert.executeUpdate();
-                exceptionHandler.succesSavePersonData("Data saved successfully !");
-                return true;
-            }
+            koneksi = ClassKoneksi.GetConnection();
+            PreparedStatement stInsert = koneksi.prepareStatement(sqlInsert);
+            stInsert.setString(1, idSupplier);
+            stInsert.setString(2, namaSupplier);
+            stInsert.setString(3, noHp);
+            stInsert.setString(4, kategori);
+            stInsert.executeUpdate();
+            exceptionHandler.succesSavePersonData("Data saved successfully !");
         } catch (Exception e) {
             exceptionHandler.getErrorKesalahan("Failed to save supplier data" + e);
+        } finally {
+            if (koneksi != null) {
+                try {
+                    koneksi.close();
+                } catch (Exception e) {
+                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection! " + e.getMessage());
+                }
+            }
         }
-        return false;
     }
 
-    public boolean ChangeSupplierData() {
+    public void ChangeSupplierData(String idSupplier, String namaSupplier, String noHp, String kategori) {
         String sqlInsert = "UPDATE supplier SET nama_supplier = ?, tlp_supplier = ?, kategori = ? WHERE id_supplier = ?";
+        Connection koneksi = null;
+        exceptionHandler = new ExceptionHandler();
         try {
-            boolean confirm = exceptionHandler.confirmChangePerson("Change Supplier data?");
-            if (confirm) {
-                Connection koneksi = ClassKoneksi.GetConnection();
-                PreparedStatement stInsert = koneksi.prepareStatement(sqlInsert);
-                stInsert.setString(1, namaSupplier);
-                stInsert.setString(2, noHp);
-                stInsert.setString(3, kategori);
-                stInsert.setString(4, idSupplier);
-                stInsert.executeUpdate();
-                exceptionHandler.succesSavePersonData("Data changed successfully !");
-                return true;
-            }
-
+            koneksi = ClassKoneksi.GetConnection();
+            PreparedStatement stInsert = koneksi.prepareStatement(sqlInsert);
+            stInsert.setString(1, namaSupplier);
+            stInsert.setString(2, noHp);
+            stInsert.setString(3, kategori);
+            stInsert.setString(4, idSupplier);
+            stInsert.executeUpdate();
+            exceptionHandler.succesSavePersonData("Data changed successfully !");
         } catch (Exception e) {
             exceptionHandler.getErrorKesalahan("Failed to change supplier data" + e);
+        } finally {
+            if (koneksi != null) {
+                try {
+                    koneksi.close();
+                } catch (Exception e) {
+                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection! " + e.getMessage());
+                }
+            }
         }
-        return false;
+    }
+
+    public void DeleteDataSupplier(String idSupplier) {
+        String sqlDelete = "DELETE FROM supplier WHERE id_supplier = ?";
+        Connection koneksi = null;
+        exceptionHandler = new ExceptionHandler();
+        try {
+            koneksi = ClassKoneksi.GetConnection();
+            PreparedStatement stDelete = koneksi.prepareStatement(sqlDelete);
+            stDelete.setString(1, idSupplier);
+            stDelete.executeUpdate();
+            exceptionHandler.succesDeleteData("Data deleted successfully !");
+        } catch (Exception e) {
+            exceptionHandler.getErrorKesalahan("Failed when trying to delete data" + e);
+        } finally {
+            if (koneksi != null) {
+                try {
+                    koneksi.close();
+                } catch (Exception e) {
+                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection! " + e.getMessage());
+                }
+            }
+        }
     }
 
     public ConfigTable GetAllDataSupplier() {
@@ -73,8 +93,10 @@ public class DbSupplier {
         dataTable.addColumn("Supplier Name");
         dataTable.addColumn("Telephone Number");
         dataTable.addColumn("Category");
+        Connection koneksi = null;
+        exceptionHandler = new ExceptionHandler();
         try {
-            Connection koneksi = ClassKoneksi.GetConnection();
+            koneksi = ClassKoneksi.GetConnection();
             PreparedStatement stGetData = koneksi.prepareStatement(sqlGetData);
             ResultSet rs = stGetData.executeQuery();
             while (rs.next()) {
@@ -87,29 +109,19 @@ public class DbSupplier {
             }
         } catch (Exception e) {
             exceptionHandler.getErrorKesalahan("Failed when trying to get data");
+        } finally {
+            if (koneksi != null) {
+                try {
+                    koneksi.close();
+                } catch (Exception e) {
+                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection! " + e.getMessage());
+                }
+            }
         }
         return dataTable;
     }
 
-    public boolean DeleteDataSupplier() {
-        String sqlDelete = "DELETE FROM supplier WHERE id_supplier = ?";
-        try {
-            boolean confirm = exceptionHandler.confirmDeleteData("Delete Supplier Data?");
-            Connection koneksi = ClassKoneksi.GetConnection();
-            PreparedStatement stDelete = koneksi.prepareStatement(sqlDelete);
-            stDelete.setString(1, idSupplier);
-            if (confirm) {
-                stDelete.executeUpdate();
-                exceptionHandler.succesDeleteData("Data deleted successfully !");
-                return true;
-            }
-        } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("Failed when trying to delete data" + e);
-        }
-        return false;
-    }
-
-    // get id supplier berdasarkan kategori produk
+    // get id supplier berdasarkan kategori produk di kelas yang membutuhkan
     public ArrayList<String> GetIdSupplier(String kategori) {
         String queryGetIdSupplier = "SELECT id_supplier FROM supplier WHERE kategori = ?";
         ArrayList<String> idSupplier = new ArrayList<>();
@@ -124,7 +136,7 @@ public class DbSupplier {
                 idSupplier.add(rs.getString("id_supplier"));
             }
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("gagal saat mencoba mengambil id_supplier" + e.getMessage());
+            exceptionHandler.getErrorKesalahan("Failed when trying to retrieve supplier ID! " + e.getMessage());
         } finally {
             if (koneksi != null) {
                 try {
@@ -137,7 +149,7 @@ public class DbSupplier {
         return idSupplier;
     }
 
-    // get nama supplier berdasarkan id supplier
+    // get nama supplier berdasarkan id supplier di kelas yang membutuhkan
     public String GetSupplierName(String supplierId) {
         String sqlGetName = "SELECT nama_supplier FROM supplier WHERE id_supplier = ?";
         String namaSupplier = null;
@@ -152,7 +164,7 @@ public class DbSupplier {
                 namaSupplier = rs.getString("nama_supplier");
             }
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("gagal saat mengambil nama supplier" + e.getMessage());
+            exceptionHandler.getErrorKesalahan("Failed when trying to retrieve supplier name! " + e.getMessage());
         } finally {
             if (koneksi != null) {
                 try {

@@ -12,6 +12,7 @@ public class SupplierControler {
     private String noHp;
     private String kategori;
     private ExceptionHandler exceptionHandler;
+    private DbSupplier dbSupplier;
 
     public SupplierControler(String idSupplier, String namaSupplier, String noHp, String kategori) {
         this.idSupplier = idSupplier;
@@ -19,6 +20,7 @@ public class SupplierControler {
         this.noHp = noHp;
         this.kategori = kategori;
         exceptionHandler = new ExceptionHandler();
+        dbSupplier = new DbSupplier();
     }
 
     private String GenerateRandom(int angka) {
@@ -42,6 +44,16 @@ public class SupplierControler {
             supplierId = "SPP" + GenerateRandom(4);
         }
         return supplierId;
+    }
+
+    public boolean ValidationRow(JTable table) {
+        int row = table.getSelectedRow();
+        if (row != -1) {
+            return true;
+        } else {
+            exceptionHandler.getErrorKesalahan("Select one of the data you want to change !");
+        }
+        return false;
     }
 
     private boolean CategoryValidation() {
@@ -86,35 +98,12 @@ public class SupplierControler {
         return false;
     }
 
-    public boolean InsertSupplierData() {
-        if (ValueValidation()) {
-            DbSupplier dbSupplier = new DbSupplier(idSupplier, namaSupplier, noHp, kategori);
-            boolean succes = dbSupplier.InsertSupplierData();
-            if (succes) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean ChangeSupplierData() {
-            if (ValueValidation()) {
-                DbSupplier dbSupplier = new DbSupplier(idSupplier, namaSupplier, noHp, kategori);
-                boolean succes = dbSupplier.ChangeSupplierData();
-                if (succes) {
-                    return true;
-                }
-            }
-        return false;
-    }
-
     public ConfigTable GetAllData() {
-        DbSupplier dbSupplier = new DbSupplier(idSupplier, namaSupplier, noHp, kategori);
         return dbSupplier.GetAllDataSupplier();
     }
 
-    public ArrayList<String> IsiField(int row, JTable table) {
-        int getRow = table.getSelectedRow();
+    public ArrayList<String> IsiField(JTable table) {
+        int row = table.getSelectedRow();
         ArrayList<String> data = new ArrayList<>();
         String supplierId = table.getValueAt(row, 0).toString();
         String namaSupplier = table.getValueAt(row, 1).toString();
@@ -127,13 +116,35 @@ public class SupplierControler {
         return data;
     }
 
+    public boolean InsertSupplierData() {
+        if (ValueValidation()) {
+            boolean confirm = exceptionHandler.confirmSaveDataPerson("Save Supplier Data?");
+            if (confirm) {
+                dbSupplier.InsertSupplierData(idSupplier, namaSupplier, noHp, kategori);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean ChangeSupplierData() {
+        if (ValueValidation()) {
+            boolean confirm = exceptionHandler.confirmChangePerson("Change Supplier data?");
+            if (confirm) {
+                dbSupplier.ChangeSupplierData(idSupplier, namaSupplier, noHp, kategori);
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean DeleteDataSupplier(JTable tabel) {
         int getRow = tabel.getSelectedRow();
         if (getRow != -1) {
             idSupplier = tabel.getValueAt(getRow, 0).toString();
-            DbSupplier dbSupplier = new DbSupplier(idSupplier, null, null, null);
-            boolean succes = dbSupplier.DeleteDataSupplier();
-            if (succes) {
+            boolean confirm = exceptionHandler.confirmDeleteData("Delete Supplier Data?");
+            if (confirm) {
+                dbSupplier.DeleteDataSupplier(idSupplier);
                 return true;
             }
         } else {

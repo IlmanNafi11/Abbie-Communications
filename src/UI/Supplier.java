@@ -6,7 +6,9 @@ import Logic.*;
 import java.util.ArrayList;
 
 public class Supplier extends javax.swing.JInternalFrame implements UpdateTable {
-private ExceptionHandler exceptionHandler;
+
+    private ExceptionHandler exceptionHandler;
+
     public Supplier() {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
@@ -268,20 +270,18 @@ private ExceptionHandler exceptionHandler;
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Edit-Click.png")));
         ChangeSupplier changeSupplier = new ChangeSupplier(this, true);
-        int row = table.getSelectedRow();
-        if(row != -1){
-             changeSupplier.setSupplier(new UpdateTable() {
+        SupplierControler controler = new SupplierControler(null, null, null, null);
+        boolean validasiBaris = controler.ValidationRow(table);
+        if (validasiBaris) {
+            changeSupplier.setSupplier(new UpdateTable() {
                 @Override
                 public void perbarui() {
                     ViewTable();
                 }
             });
-            SupplierControler controler = new SupplierControler(null, null, null, null);
-            ArrayList<String> data = controler.IsiField(row, table);
+            ArrayList<String> data = controler.IsiField(table);
             changeSupplier.setField(data.get(0), data.get(1), data.get(2), data.get(3));
             changeSupplier.setVisible(true);
-        } else {
-            exceptionHandler.getErrorKesalahan("Select one of the data you want to change !");
         }
     }//GEN-LAST:event_btnEditActionPerformed
 
