@@ -173,14 +173,13 @@ public class register_1 extends javax.swing.JInternalFrame {
         String noHp = txtTlp.getText();
         String alamat = txtAddress.getText();
         AuthRegister verifikasi = new AuthRegister(nik, nama, noHp, alamat, null, null, null, null);
-        boolean verif = verifikasi.verifBio();
+        boolean verif = verifikasi.VerifBio();
         if (verif) {
             Register2 rg2 = new Register2();
             rg2.getBio(nik, nama, noHp, alamat);
             desktopPane.add(rg2);
             rg2.setVisible(true);
         }
-
     }//GEN-LAST:event_btnNextActionPerformed
 
     private void lblLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLoginMouseClicked

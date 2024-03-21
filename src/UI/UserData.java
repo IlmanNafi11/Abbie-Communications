@@ -21,7 +21,7 @@ public class UserData extends javax.swing.JInternalFrame implements UpdateTable 
     }
 
     public void ViewTable() {
-        UserManagerControler controler = new UserManagerControler(null, null, null, null, null, null, null, null);
+        UserDataControler controler = new UserDataControler(null, null, null, null, null, null, null);
         ConfigTable Tabel = controler.GetAllData();
         table.setModel(Tabel);
     }
@@ -246,9 +246,8 @@ public class UserData extends javax.swing.JInternalFrame implements UpdateTable 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Edit-Click.png")));
         ChangeUserData changeUserData = new ChangeUserData(this, true);
-        UserManagerControler controler = new UserManagerControler(null, null, null, null, null, null, null, null);
-        int row = table.getSelectedRow();
-        boolean validasiSelectedRow = controler.ValidateRow(row, table);
+        UserDataControler controler = new UserDataControler(null, null, null, null, null, null, null);
+        boolean validasiSelectedRow = controler.ValidateRow(table);
         if (validasiSelectedRow) {
             changeUserData.setUserData(new UpdateTable() {
                 @Override
@@ -256,7 +255,7 @@ public class UserData extends javax.swing.JInternalFrame implements UpdateTable 
                     ViewTable();
                 }
             });
-            ArrayList<String> data = controler.IsiStringField(row, table);
+            ArrayList<String> data = controler.IsiStringField(table);
             changeUserData.setField(data.get(0), data.get(1), data.get(2), data.get(3), data.get(4), data.get(5), data.get(1), data.get(3));
             changeUserData.setVisible(true);
         }
@@ -276,9 +275,11 @@ public class UserData extends javax.swing.JInternalFrame implements UpdateTable 
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Delete-Click.png")));
-        UserManagerControler controler = new UserManagerControler(title, null, null, null, null, null, null, null);
-        controler.DeleteUserData(table);
-        ViewTable();
+        UserDataControler controler = new UserDataControler(null, null, null, null, null, null, null);
+        boolean succes = controler.DeleteUserData(table);
+        if (succes) {
+            ViewTable();
+        }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void lblPosisiUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPosisiUserMouseClicked

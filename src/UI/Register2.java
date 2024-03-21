@@ -249,7 +249,7 @@ public class Register2 extends javax.swing.JInternalFrame {
             status = "owner";
         }
         verifikasi = new AuthRegister(nik, nama, noHp, alamat, txtUsername.getText(), txtPassword.getText(), txtRepassword.getText(), status);
-        boolean verif = verifikasi.verifFieldAkun();
+        boolean verif = verifikasi.VerifFieldAkun();
         if (verif) {
             RegisterControler registrasi = new RegisterControler(verifikasi);
             if (registrasi.InsertData()) {

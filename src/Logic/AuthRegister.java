@@ -12,7 +12,8 @@ public class AuthRegister {
     private String password;
     private String Repas;
     private String role;
-    private ExceptionHandler error;
+    private ExceptionHandler exceptionHandler;
+    private DbUserManager dbUserManager;
 
     public AuthRegister(String nik, String nama, String noHp, String alamat, String username, String password, String rePass, String role) {
         this.nik = nik;
@@ -23,7 +24,8 @@ public class AuthRegister {
         this.password = password;
         this.Repas = rePass;
         this.role = role;
-        error = new ExceptionHandler();
+        exceptionHandler = new ExceptionHandler();
+        dbUserManager = new DbUserManager();
     }
 
     public String getNik() {
@@ -53,103 +55,97 @@ public class AuthRegister {
     public String getRole() {
         return role;
     }
-
-    public boolean verifPassword() {
+    
+    public boolean VerifPassword() {
         if (password.trim().equalsIgnoreCase(Repas.trim())) {
             if (password.trim().length() >= 8) {
                 return true;
             } else {
-                error.getErrorKesalahan("Password harus lebih dari 8 digit");
+                exceptionHandler.getErrorKesalahan("The password must consist of at least 8 characters!");
             }
         } else {
-            error.getErrorKesalahan("Password dengan repassword harus sama");
+            exceptionHandler.getErrorKesalahan("Password and password confirmation must have the same value");
         }
         return false;
     }
 
-    public boolean verifNik() {
-        if (nik.matches("\\d+")) {
-            if (nik.length() == 16) {
-                DbUserManager dbRegisterHandler = new DbUserManager();
-                if (!dbRegisterHandler.cekNik(nik)) {
+    public boolean VerifNik() {
+        if (nik.matches("\\d+") && nik.length() == 16) {
+                if (!dbUserManager.CekNik(nik)) {
                     return true;
                 } else {
-                    error.getErrorKesalahan("NIK telah terdaftar");
+                    exceptionHandler.getErrorKesalahan("Nik has registered!");
                 }
-            } else {
-                error.getErrorKesalahan("NIK tidak valid : harus berjumlah 16");
-            }
         } else {
-            error.getErrorKesalahan("NIK tidak valid : NIK harus berupa angka");
+            exceptionHandler.getErrorKesalahan("Nik is invalid!");
         }
         return false;
     }
 
-    public boolean verifNama() {
+    public boolean VerifNama() {
         if (nama.matches("[a-zA-Z .]+")) {
             if (nama.length() <= 25) {
                 return true;
             } else {
-                error.getErrorKesalahan("Nama tidak boleh lebih dari 25 Digit");
+                exceptionHandler.getErrorKesalahan("The maximum name must be 25 characters!");
             }
         } else {
-            error.getErrorKesalahan("Nama harus berupa huruf");
+            exceptionHandler.getErrorKesalahan("Invalid name!");
         }
         return false;
     }
 
-    public boolean verifAlamat() {
+    public boolean VerifAlamat() {
         if (alamat.length() <= 50) {
             return true;
         } else {
-            error.getErrorKesalahan("Alamat tidak boleh lebih dari 50 Digit");
+            exceptionHandler.getErrorKesalahan("The maximum address consists of 50 characters!");
         }
         return false;
     }
 
-    public boolean verifNoHp() {
-        if (noHp.matches("\\d+")) {
-            if (noHp.length() > 11 && noHp.length() < 14) {
+    public boolean VerifNoHp() {
+        if (noHp.matches("\\d+") && noHp.length() > 11 && noHp.length() < 14) {
+            boolean cekNoHp = !dbUserManager.CekNoHp(noHp);
+            if (cekNoHp) {
                 return true;
-            } else {
-                error.getErrorKesalahan("No Hp tidak valid : No Hp harus berjumlah antara 12-13 digit");
             }
         } else {
-            error.getErrorKesalahan("No Hp tidak valid : No Hp harus berupa angka");
+            exceptionHandler.getErrorKesalahan("Invalid phone number!");
         }
         return false;
     }
 
-    private boolean cekUsername() {
-        DbUserManager dbRegisterHandler = new DbUserManager();
-        if (!dbRegisterHandler.cekUsername(username)) {
+    private boolean CekUsername() {
+        boolean cekUsername = !dbUserManager.CekUsername(username);
+        if (cekUsername) {
             return true;
         } else {
-            error.getErrorKesalahan("Username telah digunakan");
+            exceptionHandler.getErrorKesalahan("Username has been used!");
         }
         return false;
     }
 
-    public boolean verifBio() {
+    public boolean VerifBio() {
         if (!nik.trim().equalsIgnoreCase("NIK") && !nik.equals("") && !nama.trim().equalsIgnoreCase("Name") && !nama.equals("")
                 && !noHp.trim().equalsIgnoreCase("Phone Number") && !noHp.equals("") && !alamat.trim().equalsIgnoreCase("Address") && !alamat.equals("")) {
-            if (verifNik() && verifNama() && verifNoHp() && verifAlamat()) {
+            if (VerifNik() && VerifNama() && VerifNoHp() && VerifAlamat()) {
                 return true;
             }
         } else {
-            error.getErrorKesalahan("Field tidak boleh ada yang kosong");
+            exceptionHandler.getErrorKesalahan("All fields must be filled in!");
         }
         return false;
     }
 
-    public boolean verifFieldAkun() {
-        if (cekUsername()) {
-            if (verifPassword()) {
+    public boolean VerifFieldAkun() {
+        if (CekUsername()) {
+            if (VerifPassword()) {
                 if (!username.trim().equalsIgnoreCase("Username") && !username.equals("") && !password.trim().equalsIgnoreCase("Password") && !password.equals("")
                         && !role.trim().equals("")) {
                     return true;
                 } else {
-                    error.getErrorKesalahan("Field tidak boleh ada yang kosong");
+                    exceptionHandler.getErrorKesalahan("All fields must be filled in!");
                 }
             }
         }

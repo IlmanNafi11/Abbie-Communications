@@ -7,13 +7,14 @@ public class LoginControler {
 
     private String username;
     private String password;
-    private DbUserManager dbRegisterHandler;
-    private ExceptionHandler error;
+    private DbUserManager dbUserManager;
+    private ExceptionHandler exceptionHandler;
 
     public LoginControler(String username, String password) {
         this.username = username;
         this.password = password;
-        error = new ExceptionHandler();
+        exceptionHandler = new ExceptionHandler();
+        dbUserManager = new DbUserManager();
     }
 
     private String HashSandi(String password) {
@@ -27,26 +28,25 @@ public class LoginControler {
             }
             return sb.toString();
         } catch (Exception e) {
-            error.getErrorKesalahan("Gagal meng enkripsi password");
+            exceptionHandler.getErrorKesalahan("A failure occurred while trying to encrypt the password! " + e.getMessage());
         }
         return null;
     }
 
-    private boolean verifField() {
+    private boolean VerifField() {
         if (!username.trim().equalsIgnoreCase("Username") && !username.trim().equals("")
                 && !password.trim().equalsIgnoreCase("Password") && !password.trim().equalsIgnoreCase("")) {
             return true;
         } else {
-            error.getErrorKesalahan("Field tidak boleh ada yang kosong");
+            exceptionHandler.getErrorKesalahan("All fields must be filled in!");
         }
         return false;
     }
 
-    public String authLogin() {
-        if (verifField()) {
+    public String AuthLogin() {
+        if (VerifField()) {
             String Hashpassword = HashSandi(password);
-            dbRegisterHandler = new DbUserManager();
-            String getRole = dbRegisterHandler.authLogin(username, Hashpassword);
+            String getRole = dbUserManager.AuthLogin(username, Hashpassword);
             return getRole;
         }
         return null;

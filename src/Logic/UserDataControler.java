@@ -4,9 +4,8 @@ import Data_Acces.DbUserManager;
 import java.util.ArrayList;
 import javax.swing.JTable;
 
-public class UserManagerControler {
+public class UserDataControler {
 
-    private String username;
     private String password;
     private String idUser;
     private String nama;
@@ -15,13 +14,11 @@ public class UserManagerControler {
     private String nik;
     private String role;
     private String nikLama;
-    private String usernameLama;
     private String noHpLama;
     private ExceptionHandler exceptionHandler;
     private DbUserManager dbUserManager;
 
-    public UserManagerControler(String username, String password, String idUser, String nama, String noHp, String alamat, String nik, String role) {
-        this.username = username;
+    public UserDataControler(String password, String idUser, String nama, String noHp, String alamat, String nik, String role) {
         this.password = password;
         this.idUser = idUser;
         this.nama = nama;
@@ -38,11 +35,6 @@ public class UserManagerControler {
         this.nikLama = nik;
     }
 
-    // set username lama;
-    public void SetUsernameLama(String username) {
-        this.usernameLama = username;
-    }
-
     // set no hp lama
     public void SetNoHpLama(String noHp) {
         this.noHpLama = noHp;
@@ -52,23 +44,13 @@ public class UserManagerControler {
     private boolean CekNik() {
         if (nik.matches("\\d+") && nik.length() == 16) {
             DbUserManager dbRegisterHandler = new DbUserManager();
-            if (!dbRegisterHandler.cekNik(nik)) {
+            if (!dbRegisterHandler.CekNik(nik)) {
                 return true;
             } else {
-                exceptionHandler.getErrorKesalahan("NIK telah terdaftar");
+                exceptionHandler.getErrorKesalahan("Nik has registered!");
             }
         } else {
-            exceptionHandler.getErrorKesalahan("NIK tidak valid !");
-        }
-        return false;
-    }
-
-    // validasi username apakah telah digunakan
-    private boolean cekUsername() {
-        if (!dbUserManager.cekUsername(username)) {
-            return true;
-        } else {
-            exceptionHandler.getErrorKesalahan("Username telah digunakan");
+            exceptionHandler.getErrorKesalahan("Nik is invalid!");
         }
         return false;
     }
@@ -79,10 +61,10 @@ public class UserManagerControler {
             if (!dbUserManager.CekNoHp(noHp)) {
                 return true;
             } else {
-                exceptionHandler.getErrorKesalahan("no hp telah digunakan");
+                exceptionHandler.getErrorKesalahan("The phone number is already in use!");
             }
         } else {
-            exceptionHandler.getErrorKesalahan("No Hp tidak valid !");
+            exceptionHandler.getErrorKesalahan("Invalid phone number!");
         }
         return false;
     }
@@ -92,16 +74,6 @@ public class UserManagerControler {
         if (nik.equalsIgnoreCase(nikLama)) {
             return true;
         } else if (CekNik()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    private boolean ValidasiUsernameBaru() {
-        if (username.equalsIgnoreCase(usernameLama)) {
-            return true;
-        } else if (cekUsername()) {
             return true;
         } else {
             return false;
@@ -124,10 +96,10 @@ public class UserManagerControler {
             if (nama.length() <= 25) {
                 return true;
             } else {
-                exceptionHandler.getErrorKesalahan("Nama tidak boleh lebih dari 25 Digit");
+                exceptionHandler.getErrorKesalahan("The maximum name must be 25 characters!");
             }
         } else {
-            exceptionHandler.getErrorKesalahan("Nama harus berupa huruf");
+            exceptionHandler.getErrorKesalahan("Invalid name!");
         }
         return false;
     }
@@ -137,7 +109,7 @@ public class UserManagerControler {
         if (alamat.length() <= 50) {
             return true;
         } else {
-            exceptionHandler.getErrorKesalahan("Alamat tidak boleh lebih dari 50 Digit");
+            exceptionHandler.getErrorKesalahan("The maximum address consists of 50 characters!");
         }
         return false;
     }
@@ -147,43 +119,18 @@ public class UserManagerControler {
                 && !noHp.trim().equalsIgnoreCase("Phone Number") && !noHp.equals("") && !alamat.trim().equalsIgnoreCase("Address") && !alamat.equals("")) {
             return true;
         } else {
-            exceptionHandler.getErrorKesalahan("Field tidak boleh ada yang kosong");
+            exceptionHandler.getErrorKesalahan("All fields must be filled in!");
         }
         return false;
     }
 
-    public boolean ValidateRow(int row, JTable table) {
+    public boolean ValidateRow(JTable table) {
+        int row = table.getSelectedRow();
         if (row != -1) {
             return true;
         } else {
             exceptionHandler.getErrorKesalahan("Select one of the product data you want to change");
         }
-        return false;
-    }
-
-    // change data user di kelas user data
-    public boolean ChangeUserData() {
-        if (ValidateNikBaru() && ValidasiNoHpBaru() && ValidasiNama() && ValidasiAlamat() && ValidasiField()) {
-            boolean succes = dbUserManager.ChangeUserData(idUser, nik, nama, noHp, alamat, role);
-            if (succes) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean DeleteUserData(JTable table) {
-        int getRow = table.getSelectedRow();
-        if (getRow != -1) {
-            idUser = table.getValueAt(getRow, 0).toString();
-            boolean succes = dbUserManager.DeleteUserData(idUser);
-            if (succes) {
-                return true;
-            }
-        } else {
-            exceptionHandler.getErrorKesalahan("Select one of the data you want to delete !");
-        }
-
         return false;
     }
 
@@ -193,7 +140,8 @@ public class UserManagerControler {
     }
 
     // isi field change user data di kelas change user data(previlage owner)
-    public ArrayList<String> IsiStringField(int row, JTable table) {
+    public ArrayList<String> IsiStringField(JTable table) {
+        int row = table.getSelectedRow();
         ArrayList<String> data = new ArrayList<>();
         String idUser = table.getValueAt(row, 0).toString();
         String nik = table.getValueAt(row, 1).toString();
@@ -208,5 +156,32 @@ public class UserManagerControler {
         data.add(alamat);
         data.add(posisi);
         return data;
+    }
+
+    // change data user di kelas user data
+    public boolean ChangeUserData() {
+        if (ValidateNikBaru() && ValidasiNoHpBaru() && ValidasiNama() && ValidasiAlamat() && ValidasiField()) {
+            boolean confirm = exceptionHandler.confirmChangePerson("Update user data?");
+            if (confirm) {
+                dbUserManager.ChangeUserData(idUser, nik, nama, noHp, alamat, role);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean DeleteUserData(JTable table) {
+        int getRow = table.getSelectedRow();
+        if (getRow != -1) {
+            idUser = table.getValueAt(getRow, 0).toString();
+            boolean confirm = exceptionHandler.confirmDeleteData("Warning! Are you sure you want to delete user data?" + "\nThis activity can cause the user's account to be deleted!");
+            if (confirm) {
+                dbUserManager.DeleteUserData(idUser);
+                return true;
+            }
+        } else {
+            exceptionHandler.getErrorKesalahan("Select one of the data you want to delete !");
+        }
+        return false;
     }
 }

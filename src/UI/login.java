@@ -1,25 +1,29 @@
 package UI;
+
 import java.awt.Color;
 import Logic.*;
 import java.awt.Window;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+
 public class login extends javax.swing.JInternalFrame {
+
     public login() {
         initComponents();
-        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
+        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
         bui.setNorthPane(null);
         jPanel1.setFocusable(true);
     }
-    
-    private void tutupFrame(){
+
+    private void tutupFrame() {
         Window window = SwingUtilities.getWindowAncestor(this);
-        if(window instanceof JFrame){
-            ((JFrame)window).dispose();
+        if (window instanceof JFrame) {
+            ((JFrame) window).dispose();
         }
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -181,7 +185,7 @@ public class login extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
+
     private void lblBackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBackMouseClicked
         this.dispose();
     }//GEN-LAST:event_lblBackMouseClicked
@@ -190,8 +194,8 @@ public class login extends javax.swing.JInternalFrame {
         String username = txtUsername.getText();
         String password = txtPassword.getText();
         LoginControler login = new LoginControler(username, password);
-        String getRole = login.authLogin();
-        if(getRole != null){
+        String getRole = login.AuthLogin();
+        if (getRole != null) {
             tutupFrame();
             MainFrame mainFrame = new MainFrame();
             mainFrame.DisplayMenu(getRole);
@@ -284,14 +288,14 @@ public class login extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtUsernameFocusGained
 
     private void txtUsernameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUsernameFocusLost
-        if (txtUsername.getText().trim().equals("")|| txtUsername.getText().length() == 0) {
+        if (txtUsername.getText().trim().equals("") || txtUsername.getText().length() == 0) {
             txtUsername.setText("Username");
-            txtUsername.setForeground(new Color(153,153,153));
+            txtUsername.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtUsernameFocusLost
 
     private void txtPasswordFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPasswordFocusGained
-        if(txtPassword.getText().equals("Password")) {
+        if (txtPassword.getText().equals("Password")) {
             txtPassword.setText("");
             txtPassword.setEchoChar('*');
             txtPassword.setForeground(Color.BLACK);
@@ -299,10 +303,10 @@ public class login extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtPasswordFocusGained
 
     private void txtPasswordFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPasswordFocusLost
-        if(txtPassword.getText().trim().equals("") || txtPassword.getText().length()==0) {
+        if (txtPassword.getText().trim().equals("") || txtPassword.getText().length() == 0) {
             txtPassword.setText("Password");
-            txtPassword.setEchoChar((char)0);
-            txtPassword.setForeground(new Color(153,153,153));
+            txtPassword.setEchoChar((char) 0);
+            txtPassword.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtPasswordFocusLost
 

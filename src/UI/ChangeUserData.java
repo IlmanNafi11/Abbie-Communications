@@ -186,7 +186,7 @@ public class ChangeUserData extends javax.swing.JDialog {
         String noHp = txtHp.getText();
         String alamat = txtAlamat.getText();
         String posisi = (String) cmbPosisi.getSelectedItem();
-        UserManagerControler controler = new UserManagerControler(null, null, idUser, nama, noHp, alamat, nik, posisi);
+        UserDataControler controler = new UserDataControler(null, idUser, nama, noHp, alamat, nik, posisi);
         controler.SetNikLama(nikLama);
         controler.SetNoHpLama(noHpLama);
         boolean succes = controler.ChangeUserData();

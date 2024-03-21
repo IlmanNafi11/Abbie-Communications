@@ -6,7 +6,7 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 public class forgotPassword_1 extends javax.swing.JInternalFrame {
 
-    private ChangeUserDataControler changeUserDataControler;
+    private ResetPasswordControler controler;
 
     public forgotPassword_1() {
         initComponents();
@@ -105,11 +105,11 @@ public class forgotPassword_1 extends javax.swing.JInternalFrame {
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
         btnNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Next-Primary-Default.png")));
         String nik = txtNik.getText();
-        changeUserDataControler = new ChangeUserDataControler(nik);
-        String verif = changeUserDataControler.cekNik();
-        if (verif != null) {
+        controler = new ResetPasswordControler(null, null, nik);
+        String namaUser = controler.GetName();
+        if (namaUser != null) {
             forgotPassword_2 forgotPass = new forgotPassword_2();
-            forgotPass.getUser(nik, verif);
+            forgotPass.getUser(nik, namaUser);
             forgotPass.setSapaan();
             desktopPane.add(forgotPass);
             forgotPass.setVisible(true);

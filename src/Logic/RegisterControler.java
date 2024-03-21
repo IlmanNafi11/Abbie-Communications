@@ -14,7 +14,8 @@ public class RegisterControler {
     private String username;
     private String password;
     private String role;
-    private ExceptionHandler error;
+    private ExceptionHandler exceptionHandler;
+    private DbUserManager dbUserManager;
 
     public RegisterControler(AuthRegister verif) {
         this.verifikasi = verif;
@@ -25,7 +26,8 @@ public class RegisterControler {
         this.username = verifikasi.getUsername();
         this.password = verifikasi.getPassword();
         this.role = verifikasi.getRole();
-        error = new ExceptionHandler();
+        exceptionHandler = new ExceptionHandler();
+        dbUserManager = new DbUserManager();
     }
 
     public String generateIdUser() {
@@ -60,7 +62,7 @@ public class RegisterControler {
             }
             return sb.toString();
         } catch (Exception e) {
-            error.getErrorKesalahan("Gagal meng enkripsi password");
+            exceptionHandler.getErrorKesalahan("A failure occurred while trying to encrypt the password! " + e.getMessage());
         }
         return null;
     }
@@ -68,10 +70,10 @@ public class RegisterControler {
     public boolean InsertData() {
         DbUserManager insert = new DbUserManager();
         String HashPassword = HashSandi(password);
-        boolean confirm = error.confirmSave("Save Account?");
+        boolean confirm = exceptionHandler.confirmSave("Save account? Make sure all data has been filled in correctly!");
         if (confirm) {
-            insert.add(generateIdUser(), generateIdAkun(), nik, nama, noHp, alamat, username, HashPassword, role);
-            error.getSucces("Succes");
+            insert.AddData(generateIdUser(), generateIdAkun(), nik, nama, noHp, alamat, username, HashPassword, role);
+            exceptionHandler.getSucces("Hooray, Registration has been successful!");
             return true;
         }
         return false;

@@ -140,9 +140,9 @@ public class forgotPassword_2 extends javax.swing.JInternalFrame {
         btnUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Update-Primary-Click.png")));
         String password = txtPassword.getText();
         String rePassword = txtRepassword.getText();
-        ChangeUserDataControler changeUserDataControler = new ChangeUserDataControler(password, rePassword, nik);
-        boolean reset = changeUserDataControler.resetPassword();
-        if (reset) {
+        ResetPasswordControler controler = new ResetPasswordControler(password, rePassword, nik);
+        boolean succesReset = controler.ResetPassword();
+        if (succesReset) {
             login lg = new login();
             this.getDesktopPane().add(lg);
             lg.setVisible(true);

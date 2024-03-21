@@ -3,47 +3,39 @@ package Logic;
 import Data_Acces.DbUserManager;
 import java.security.MessageDigest;
 
-public class ChangeUserDataControler {
+public class ResetPasswordControler {
 
-    private String username;
     private String password;
     private String repassword;
-    private String posisi;
-    private String noHp;
-    private String nama;
-    private String alamat;
     private String nik;
-    private ExceptionHandler error;
+    private ExceptionHandler exceptionHandler;
+    private DbUserManager dbUserManager;
 
-    public ChangeUserDataControler(String nik) {
-        this.nik = nik;
-    }
-
-    public ChangeUserDataControler(String password, String repassword, String nik) {
+    public ResetPasswordControler(String password, String repassword, String nik) {
         this.password = password;
         this.repassword = repassword;
         this.nik = nik;
+        exceptionHandler = new ExceptionHandler();
+        dbUserManager = new DbUserManager();
     }
 
-    public String cekNik() {
-        DbUserManager dbUserManager = new DbUserManager();
+    public String GetName() {
         if (!nik.equalsIgnoreCase("NIK") && !nik.equals("")) {
-            return dbUserManager.authResetPassword(nik);
+            return dbUserManager.AuthResetPassword(nik);
         }
         return null;
     }
 
-    private boolean verifPassword() {
-        error = new ExceptionHandler();
+    private boolean VerifPassword() {
         if (!password.equalsIgnoreCase("Enter New Password") && !password.equals("")
                 && !repassword.equalsIgnoreCase("Re-Enter New Password") && !repassword.equals("")) {
             if (password.equalsIgnoreCase(repassword)) {
                 return true;
             } else {
-                error.getErrorKesalahan("Password harus sama");
+                exceptionHandler.getErrorKesalahan("Password and confirm password must be the same value!");
             }
         } else {
-            error.getErrorKesalahan("field tidak boleh ada yang kosong");
+            exceptionHandler.getErrorKesalahan("All fields must be filled in!");
         }
         return false;
     }
@@ -59,19 +51,19 @@ public class ChangeUserDataControler {
             }
             return sb.toString();
         } catch (Exception e) {
-            error.getErrorKesalahan("Gagal meng enkripsi password");
+            exceptionHandler.getErrorKesalahan("A failure occurred while trying to encrypt the password! " + e.getMessage());
         }
         return null;
     }
 
-    public boolean resetPassword() {
-        error = new ExceptionHandler();
-        DbUserManager dbUserManager = new DbUserManager();
+    public boolean ResetPassword() {
         String hashPassword = HashSandi(password);
-        if (verifPassword()) {
-            dbUserManager.resetPassword(nik, hashPassword);
-            error.getSucces("UPDATE SUCCES");
-            return true;
+        if (VerifPassword()) {
+            boolean confirm = exceptionHandler.confirmChangePerson("Are you sure you want to update your password? make sure the new password is easy to remember!");
+            if (confirm) {
+                dbUserManager.ResetPassword(nik, hashPassword);
+                return true;
+            }
         }
         return false;
     }
