@@ -288,20 +288,19 @@ public class Product extends javax.swing.JInternalFrame implements UpdateTable {
         btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Edit-Click.png")));
         ChangeProduk changeProduct = new ChangeProduk(this, true);
         ProductControler controler = new ProductControler(null, null, null, null, 0, 0);
-        int row = table.getSelectedRow();
-        boolean validasi = controler.ValidateRow(row, table);
-        if (validasi) {
+        boolean validasiBaris = controler.ValidateRow(table);
+        if (validasiBaris) {
             changeProduct.setProduk(new UpdateTable() {
                 @Override
                 public void perbarui() {
                     ViewTable();
                 }
             });
-            ArrayList<String> dataString = controler.IsiStringField(row, table);
-            ArrayList<Integer> dataInteger = controler.IsiIntField(row, table);
+            ArrayList<String> dataString = controler.IsiStringField(table);
+            ArrayList<Integer> dataInteger = controler.IsiIntField(table);
             String idProduk = dataString.get(0);
             String IdSupplier = controler.SetSupplierId(idProduk);
-            String namaSupplier = controler.GetSupplierName();
+            String namaSupplier = controler.GetSupplierName(IdSupplier);
             changeProduct.SetField(dataString.get(2), dataString.get(0), dataString.get(1), dataInteger.get(1), dataInteger.get(0), IdSupplier, namaSupplier);
             changeProduct.setVisible(true);
         }
@@ -334,8 +333,10 @@ public class Product extends javax.swing.JInternalFrame implements UpdateTable {
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Delete-Click.png")));
         ProductControler controler = new ProductControler(null, null, null, null, 0, 0);
-        controler.DeleteDataProduk(table);
-        ViewTable();
+        boolean succes = controler.DeleteDataProduk(table);
+        if (succes) {
+            ViewTable();
+        }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnDeleteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteMousePressed

@@ -44,7 +44,7 @@ public class ChangeProduk extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextPane1 = new javax.swing.JTextPane();
         btnCancel = new javax.swing.JButton();
-        btnSave = new javax.swing.JButton();
+        btnChange = new javax.swing.JButton();
         cmbKategori = new javax.swing.JComboBox<>();
         cmbIdSupplier = new javax.swing.JComboBox<>();
         bg = new javax.swing.JLabel();
@@ -149,27 +149,27 @@ public class ChangeProduk extends javax.swing.JDialog {
         getContentPane().add(btnCancel);
         btnCancel.setBounds(871, 503, 96, 55);
 
-        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Save-Primary-Default.png"))); // NOI18N
-        btnSave.setBorder(null);
-        btnSave.setContentAreaFilled(false);
-        btnSave.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnChange.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Save-Primary-Default.png"))); // NOI18N
+        btnChange.setBorder(null);
+        btnChange.setContentAreaFilled(false);
+        btnChange.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnSaveMouseEntered(evt);
+                btnChangeMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnSaveMouseExited(evt);
+                btnChangeMouseExited(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnSaveMousePressed(evt);
+                btnChangeMousePressed(evt);
             }
         });
-        btnSave.addActionListener(new java.awt.event.ActionListener() {
+        btnChange.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSaveActionPerformed(evt);
+                btnChangeActionPerformed(evt);
             }
         });
-        getContentPane().add(btnSave);
-        btnSave.setBounds(982, 503, 96, 55);
+        getContentPane().add(btnChange);
+        btnChange.setBounds(982, 503, 96, 55);
 
         cmbKategori.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Category", "Accessories", "Phone credit/Internet credit", "Electronic", "Part" }));
         cmbKategori.addActionListener(new java.awt.event.ActionListener() {
@@ -180,7 +180,7 @@ public class ChangeProduk extends javax.swing.JDialog {
         getContentPane().add(cmbKategori);
         cmbKategori.setBounds(38, 145, 506, 50);
 
-        cmbIdSupplier.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Product ID" }));
+        cmbIdSupplier.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Supplier ID" }));
         cmbIdSupplier.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbIdSupplierActionPerformed(evt);
@@ -284,20 +284,20 @@ public class ChangeProduk extends javax.swing.JDialog {
         dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
 
-    private void btnSaveMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSaveMouseEntered
-        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Save-Primary-Hover.png")));
-    }//GEN-LAST:event_btnSaveMouseEntered
+    private void btnChangeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChangeMouseEntered
+        btnChange.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Save-Primary-Hover.png")));
+    }//GEN-LAST:event_btnChangeMouseEntered
 
-    private void btnSaveMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSaveMouseExited
-        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Save-Primary-Default.png")));
-    }//GEN-LAST:event_btnSaveMouseExited
+    private void btnChangeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChangeMouseExited
+        btnChange.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Save-Primary-Default.png")));
+    }//GEN-LAST:event_btnChangeMouseExited
 
-    private void btnSaveMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSaveMousePressed
-        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Save-Primary-Click.png")));
-    }//GEN-LAST:event_btnSaveMousePressed
+    private void btnChangeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChangeMousePressed
+        btnChange.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Save-Primary-Click.png")));
+    }//GEN-LAST:event_btnChangeMousePressed
 
-    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Save-Primary-Click.png")));
+    private void btnChangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeActionPerformed
+        btnChange.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Save-Primary-Click.png")));
         String kategori = (String) cmbKategori.getSelectedItem();
         String idProduk = txtIdProduct.getText();
         String namaProduk = txtNamaProduk.getText();
@@ -311,27 +311,23 @@ public class ChangeProduk extends javax.swing.JDialog {
             update.perbarui();
             dispose();
         }
-    }//GEN-LAST:event_btnSaveActionPerformed
+    }//GEN-LAST:event_btnChangeActionPerformed
 
     private void cmbKategoriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbKategoriActionPerformed
         String kategori = (String) cmbKategori.getSelectedItem();
         ProductControler controler = new ProductControler(null, kategori, null, null, 0, 0);
         String idProduk = controler.GenerateIdProduct();
         txtIdProduct.setText(idProduk);
-        if (kategori != null) {
-            controler.SetIdSupplier(cmbIdSupplier);
-            cmbIdSupplier.addItem("Supplier ID");
-        }
+        controler.SetIdSupplier(kategori, cmbIdSupplier);
+        cmbIdSupplier.addItem("Supplier ID");
     }//GEN-LAST:event_cmbKategoriActionPerformed
 
     private void cmbIdSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbIdSupplierActionPerformed
         String idSupplier = (String) cmbIdSupplier.getSelectedItem();
         String kategori = (String) cmbIdSupplier.getSelectedItem();
         ProductControler controler = new ProductControler(null, kategori, null, idSupplier, 0, 0);
-        if (idSupplier != null) {
-            String namaSupplier = controler.GetSupplierName();
-            txtNamaSupplier.setText(namaSupplier);
-        }
+        String namaSupplier = controler.GetSupplierName(idSupplier);
+        txtNamaSupplier.setText(namaSupplier);
     }//GEN-LAST:event_cmbIdSupplierActionPerformed
 
     /**
@@ -379,7 +375,7 @@ public class ChangeProduk extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bg;
     private javax.swing.JButton btnCancel;
-    private javax.swing.JButton btnSave;
+    private javax.swing.JButton btnChange;
     private javax.swing.JComboBox<String> cmbIdSupplier;
     private javax.swing.JComboBox<String> cmbKategori;
     private javax.swing.JScrollPane jScrollPane1;

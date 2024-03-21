@@ -66,15 +66,17 @@ public class ProductControler {
     }
 
     //set item combo box id supplier berdasarkan kategori produk
-    public void SetIdSupplier(JComboBox<String> comboBox) {
-        try {
-            ArrayList<String> getIdSupplier = dbSupplier.GetIdSupplier(kategori);
-            comboBox.removeAllItems();
-            for (String idSupplier : getIdSupplier) {
-                comboBox.addItem(idSupplier);
+    public void SetIdSupplier(String kategori, JComboBox<String> comboBox) {
+        if (kategori != null) {
+            try {
+                ArrayList<String> getIdSupplier = dbSupplier.GetIdSupplier(kategori);
+                comboBox.removeAllItems();
+                for (String idSupplier : getIdSupplier) {
+                    comboBox.addItem(idSupplier);
+                }
+            } catch (Exception e) {
+                e.getMessage();
             }
-        } catch (Exception e) {
-            e.getMessage();
         }
     }
 
@@ -98,10 +100,12 @@ public class ProductControler {
     }
 
     // get nama supplier berdasarkan id supplier yang dipilih di combo box
-    public String GetSupplierName() {
-        namaSuppplier = dbSupplier.GetSupplierName(idSupplier);
-        if (namaSuppplier != null) {
-            return namaSuppplier;
+    public String GetSupplierName(String idSupplier) {
+        if (idSupplier != null) {
+            namaSuppplier = dbSupplier.GetSupplierName(idSupplier);
+            if (namaSuppplier != null) {
+                return namaSuppplier;
+            }
         }
         return namaSuppplier = "Supplier Name";
     }
@@ -170,47 +174,8 @@ public class ProductControler {
         return 0;
     }
 
-    // insert data produk
-    public boolean InsertProduct() {
-        if (ValidasiDataProduk() && ValidasiNama() && jumlahStock != 0 && harga != 0) {
-            boolean succes = dbProduct.InsertProduct(kategori, idProduct, namaProduct, jumlahStock, idSupplier, harga);
-            if (succes) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    // update data produk
-    public boolean ChangeProductData() {
-        if (ValidasiComboBox() && ValidateUpdateName() && ValidasiNama() && jumlahStock != 0 && harga != 0) {
-            boolean succes = dbProduct.ChangeDataProduct(kategori, idProduct, namaProduct, jumlahStock, idSupplier, harga);
-            if (succes) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean DeleteDataProduk(JTable tabel) {
-        int getRow = tabel.getSelectedRow();
-        if (getRow != -1) {
-            idProduct = tabel.getValueAt(getRow, 0).toString();
-            boolean succes = dbProduct.DeleteProduk(idProduct);
-            if (succes) {
-                return true;
-            }
-        } else {
-            exception.getErrorKesalahan("Select one of the data you want to delete !");
-        }
-        return false;
-    }
-
-    public ConfigTable GetAllData() {
-        return dbProduct.GetAllDataProduk();
-    }
-
-    public ArrayList<String> IsiStringField(int row, JTable table) {
+    public ArrayList<String> IsiStringField(JTable table) {
+        int row = table.getSelectedRow();
         ArrayList<String> data = new ArrayList<>();
         String idProduk = table.getValueAt(row, 0).toString();
         String namaProduk = table.getValueAt(row, 1).toString();
@@ -221,7 +186,8 @@ public class ProductControler {
         return data;
     }
 
-    public ArrayList<Integer> IsiIntField(int row, JTable table) {
+    public ArrayList<Integer> IsiIntField(JTable table) {
+        int row = table.getSelectedRow();
         ArrayList<Integer> data = new ArrayList<>();
         int stok = (Integer) table.getValueAt(row, 3);
         int harga = (Integer) table.getValueAt(row, 4);
@@ -230,11 +196,55 @@ public class ProductControler {
         return data;
     }
 
-    public boolean ValidateRow(int row, JTable table) {
+    public boolean ValidateRow(JTable table) {
+        int row = table.getSelectedRow();
         if (row != -1) {
             return true;
         } else {
             exception.getErrorKesalahan("Select one of the product data you want to change");
+        }
+        return false;
+    }
+
+    public ConfigTable GetAllData() {
+        return dbProduct.GetAllDataProduk();
+    }
+
+    // insert data produk
+    public boolean InsertProduct() {
+        if (ValidasiDataProduk() && ValidasiNama() && jumlahStock != 0 && harga != 0) {
+            boolean confirm = exception.confirmSave("Save product data?");
+            if (confirm) {
+                dbProduct.InsertProduct(kategori, idProduct, namaProduct, jumlahStock, idSupplier, harga);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // update data produk
+    public boolean ChangeProductData() {
+        if (ValidasiComboBox() && ValidateUpdateName() && ValidasiNama() && jumlahStock != 0 && harga != 0) {
+            boolean confirm = exception.confirmSave("Save product data changes?");
+            if (confirm) {
+                dbProduct.ChangeDataProduct(kategori, idProduct, namaProduct, jumlahStock, idSupplier, harga);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean DeleteDataProduk(JTable tabel) {
+        int getRow = tabel.getSelectedRow();
+        if (getRow != -1) {
+            boolean confirm = exception.confirmDeleteData("Delete Product?");
+            idProduct = tabel.getValueAt(getRow, 0).toString();
+            if (confirm) {
+                dbProduct.DeleteProduk(idProduct);
+                return true;
+            }
+        } else {
+            exception.getErrorKesalahan("Select one of the data you want to delete !");
         }
         return false;
     }

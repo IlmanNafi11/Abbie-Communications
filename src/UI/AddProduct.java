@@ -1,6 +1,5 @@
 package UI;
 
-import Data_Acces.DbProduct;
 import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
@@ -311,21 +310,17 @@ public class AddProduct extends javax.swing.JDialog {
         ProductControler controler = new ProductControler(null, kategori, null, null, 0, 0);
         String idProduk = controler.GenerateIdProduct();
         txtIdProduct.setText(idProduk);
-        if (kategori != null) {
-            controler.SetIdSupplier(cmbIdSupplier);
-            cmbIdSupplier.addItem("Supplier ID");
-            cmbIdSupplier.setSelectedItem("Supplier ID");
-        }
+        controler.SetIdSupplier(kategori, cmbIdSupplier);
+        cmbIdSupplier.addItem("Supplier ID");
+        cmbIdSupplier.setSelectedItem("Supplier ID");
     }//GEN-LAST:event_cmbKategoriActionPerformed
 
     private void cmbIdSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbIdSupplierActionPerformed
         String idSupplier = (String) cmbIdSupplier.getSelectedItem();
         String kategori = (String) cmbIdSupplier.getSelectedItem();
         ProductControler controler = new ProductControler(null, kategori, null, idSupplier, 0, 0);
-        if (idSupplier != null) {
-            String namaSupplier = controler.GetSupplierName();
-            txtNamaSupplier.setText(namaSupplier);
-        }
+        String namaSupplier = controler.GetSupplierName(idSupplier);
+        txtNamaSupplier.setText(namaSupplier);
     }//GEN-LAST:event_cmbIdSupplierActionPerformed
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
