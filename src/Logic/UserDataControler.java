@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import javax.swing.JTable;
 
 public class UserDataControler {
-
+    
+    private String username;
     private String password;
     private String idUser;
     private String nama;
@@ -15,10 +16,12 @@ public class UserDataControler {
     private String role;
     private String nikLama;
     private String noHpLama;
+    private String usernameLama;
     private ExceptionHandler exceptionHandler;
     private DbUserManager dbUserManager;
 
-    public UserDataControler(String password, String idUser, String nama, String noHp, String alamat, String nik, String role) {
+    public UserDataControler(String username, String password, String idUser, String nama, String noHp, String alamat, String nik, String role) {
+        this.username = username;
         this.password = password;
         this.idUser = idUser;
         this.nama = nama;
@@ -40,11 +43,14 @@ public class UserDataControler {
         this.noHpLama = noHp;
     }
 
+    public void SetUsernameLama(String usernameLama) {
+        this.usernameLama = usernameLama;
+    }
+
     // Validasi nik, harus berupa angka, berjumlah 16 dan pengecekan apakah telah terdaftar
     private boolean CekNik() {
         if (nik.matches("\\d+") && nik.length() == 16) {
-            DbUserManager dbRegisterHandler = new DbUserManager();
-            if (!dbRegisterHandler.CekNik(nik)) {
+            if (!dbUserManager.CekNik(nik)) {
                 return true;
             } else {
                 exceptionHandler.getErrorKesalahan("Nik has registered!");
@@ -56,7 +62,7 @@ public class UserDataControler {
     }
 
     // cek ketersediaan noHp
-    private boolean cekNoHp() {
+    private boolean CekNoHp() {
         if (noHp.matches("\\d+") && noHp.length() > 11 && noHp.length() < 14) {
             if (!dbUserManager.CekNoHp(noHp)) {
                 return true;
@@ -65,6 +71,16 @@ public class UserDataControler {
             }
         } else {
             exceptionHandler.getErrorKesalahan("Invalid phone number!");
+        }
+        return false;
+    }
+    
+    private boolean CekUsername(){
+        boolean cekUsername = dbUserManager.CekUsername(username);
+        if (!cekUsername) {
+            return true;
+        } else {
+            exceptionHandler.getErrorKesalahan("Username has been used!");
         }
         return false;
     }
@@ -83,11 +99,26 @@ public class UserDataControler {
     private boolean ValidasiNoHpBaru() {
         if (noHp.equalsIgnoreCase(noHpLama)) {
             return true;
-        } else if (cekNoHp()) {
+        } else if (CekNoHp()) {
             return true;
         } else {
             return false;
         }
+    }
+    
+    private boolean ValidasiUsernameBaru() {
+        if (!username.equalsIgnoreCase("Username") && !username.equals("")) {
+            if (username.equalsIgnoreCase(usernameLama)) {
+            return true;
+        } else if (CekUsername()) {
+            return true;
+        } else {
+            return false;
+        }
+        } else {
+            exceptionHandler.getErrorKesalahan("All fields must be filled in!");
+        }
+        return false;
     }
 
     // validasi field nama;
@@ -181,6 +212,17 @@ public class UserDataControler {
             }
         } else {
             exceptionHandler.getErrorKesalahan("Select one of the data you want to delete !");
+        }
+        return false;
+    }
+    
+    public boolean UpdateProfile(){
+        if (ValidateNikBaru() && ValidasiUsernameBaru() && ValidasiNoHpBaru() && ValidasiField() && ValidasiNama() && ValidasiAlamat()) {
+            boolean confirm = exceptionHandler.confirmChangePerson("Update profile?");
+            if (confirm) {
+                dbUserManager.UpdateProfile(idUser, username, nama, nik, noHp, alamat);
+                return true;
+            }
         }
         return false;
     }

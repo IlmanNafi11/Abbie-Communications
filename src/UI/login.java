@@ -2,6 +2,7 @@ package UI;
 
 import java.awt.Color;
 import Logic.*;
+import java.util.ArrayList;
 import java.awt.Window;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -194,11 +195,10 @@ public class login extends javax.swing.JInternalFrame {
         String username = txtUsername.getText();
         String password = txtPassword.getText();
         LoginControler login = new LoginControler(username, password);
-        String getRole = login.AuthLogin();
-        if (getRole != null) {
+        String role = login.AuthLogin();
+        if (role != null) {
             tutupFrame();
-            MainFrame mainFrame = new MainFrame();
-            mainFrame.DisplayMenu(getRole);
+            MainFrame mainFrame = new MainFrame(username, role);
             mainFrame.setVisible(true);
         }
     }//GEN-LAST:event_btnLoginActionPerformed

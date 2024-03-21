@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import Logic.*;
+import java.util.ArrayList;
 
 public class DbUserManager {
 
@@ -62,7 +63,7 @@ public class DbUserManager {
         }
         return false;
     }
-
+    
     public boolean CekNoHp(String noHp) {
         exceptionHandler = new ExceptionHandler();
         String queryCek = "SELECT COUNT(*) FROM data_pengguna WHERE noHp= ? ";
@@ -106,8 +107,7 @@ public class DbUserManager {
                 stGetRole.setString(1, getId);
                 ResultSet rsGetRole = stGetRole.executeQuery();
                 if (rsGetRole.next()) {
-                    String getRole = rsGetRole.getString("posisi");
-                    return getRole;
+                    return rsGetRole.getString("posisi");
                 }
             } else {
                 exceptionHandler.getErrorKesalahan("Incorrect username or password!");
@@ -195,6 +195,39 @@ public class DbUserManager {
             }
         }
         return dataTable;
+    }
+    
+    // get data user untuk field menu profile
+    public ArrayList<String> GetDataProfile(String username){
+        ArrayList<String> data = new ArrayList<>();
+        exceptionHandler = new ExceptionHandler();
+        String queryGetData = "SELECT dp.* FROM data_pengguna dp JOIN akun a ON dp.id_user = a.id_user WHERE a.username = ?";
+        Connection koneksi = null;
+        try {
+            koneksi = ClassKoneksi.GetConnection();
+            PreparedStatement stGetData = koneksi.prepareStatement(queryGetData);
+            stGetData.setString(1, username);
+            ResultSet rs = stGetData.executeQuery();
+            while (rs.next()) {   
+                data.add(rs.getString("id_user"));
+                data.add(rs.getString("nik"));
+                data.add(rs.getString("nama"));
+                data.add(rs.getString("noHp"));
+                data.add(rs.getString("alamat"));
+                data.add(rs.getString("posisi"));
+            }
+        } catch (Exception e) {
+            exceptionHandler.getErrorKesalahan("A failure occurred when trying to retrieve user data! " + e.getMessage());
+        } finally {
+            if (koneksi != null) {
+                try {
+                    koneksi.close();
+                } catch (Exception e) {
+                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection! " + e.getMessage());
+                }
+            }
+        }
+        return data;
     }
 
     public void AddData(String id_user, String id_akun, String nik, String nama, String noHp, String alamat, String username, String password, String role) {
@@ -310,6 +343,40 @@ public class DbUserManager {
             exceptionHandler.succesDeleteData("User data deleted successfully!");
         } catch (Exception e) {
             exceptionHandler.getErrorKesalahan("Failed when trying to delete user data! " + e.getMessage());
+        } finally {
+            if (koneksi != null) {
+                try {
+                    koneksi.close();
+                } catch (Exception e) {
+                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection! " + e.getMessage());
+                }
+            }
+        }
+    }
+    
+    // update profile
+    public void UpdateProfile(String idUser, String username, String namaUser, String nik, String noHp, String alamat){
+        exceptionHandler = new ExceptionHandler();
+        String queryUpdateUserData = "UPDATE data_pengguna SET nik = ?, nama = ?, noHp = ?, alamat = ? WHERE id_user = ?";
+        String queryUpdateAkun = "UPDATE akun SET username = ? WHERE id_user = ?";
+        Connection koneksi = null;
+        try {
+            koneksi = ClassKoneksi.GetConnection();
+            PreparedStatement stUpdateUser = koneksi.prepareStatement(queryUpdateUserData);
+            PreparedStatement stUpdateAkun = koneksi.prepareStatement(queryUpdateAkun);
+            stUpdateUser.setString(1, nik);
+            stUpdateUser.setString(2, namaUser);
+            stUpdateUser.setString(3, noHp);
+            stUpdateUser.setString(4, alamat);
+            stUpdateUser.setString(5, idUser);
+            
+            stUpdateAkun.setString(1, username);
+            stUpdateAkun.setString(2, idUser);
+            stUpdateUser.executeUpdate();
+            stUpdateAkun.executeUpdate();
+            exceptionHandler.getSucces("Profile data updated successfully!");
+        } catch (Exception e) {
+            exceptionHandler.getErrorKesalahan("Failed when trying to update profile! " + e.getMessage());
         } finally {
             if (koneksi != null) {
                 try {

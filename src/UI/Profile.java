@@ -1,16 +1,39 @@
 package UI;
 
 import java.awt.Color;
+import Logic.*;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 
 public class Profile extends javax.swing.JDialog {
+    
+    private String role;
+    private String usernameLama;
+    private String noHpLama;
+    private String nikLama;
+    
     public Profile(JInternalFrame parent, boolean modal) {
         super((JFrame) parent.getTopLevelAncestor(), modal);
         initComponents();
         getContentPane().setBackground(new Color(255,255,255,150));
         bg.setFocusable(true);
     }
+    
+    public void SetField(String idUser, String nik, String namaUser, String noHp, String alamat, String username, String role){
+        txtUserId.setText(idUser);
+        txtNik.setText(nik);
+        txtName.setText(namaUser);
+        txtNoHp.setText(noHp);
+        txtAlamat.setText(alamat);
+        txtUsername.setText(username);
+        lblNameUser.setText(namaUser);
+        lblPosisi.setText(role);
+        this.role = role;
+        this.usernameLama = username;
+        this.noHpLama = noHp;
+        this.nikLama = nik;
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -24,13 +47,15 @@ public class Profile extends javax.swing.JDialog {
         btnCancel = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        lblNameUser = new javax.swing.JLabel();
+        lblPosisi = new javax.swing.JLabel();
         bg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Profile");
         getContentPane().setLayout(null);
 
+        txtUserId.setEditable(false);
         txtUserId.setBackground(new java.awt.Color(245, 246, 250));
         txtUserId.setForeground(new java.awt.Color(153, 153, 153));
         txtUserId.setText("User ID");
@@ -48,7 +73,7 @@ public class Profile extends javax.swing.JDialog {
 
         txtName.setBackground(new java.awt.Color(245, 246, 250));
         txtName.setForeground(new java.awt.Color(153, 153, 153));
-        txtName.setText("Fullname");
+        txtName.setText("Name");
         txtName.setBorder(null);
         txtName.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -106,6 +131,7 @@ public class Profile extends javax.swing.JDialog {
         getContentPane().add(txtAlamat);
         txtAlamat.setBounds(598, 644, 490, 45);
 
+        txtUsername.setEditable(false);
         txtUsername.setBackground(new java.awt.Color(245, 246, 250));
         txtUsername.setForeground(new java.awt.Color(153, 153, 153));
         txtUsername.setText("Username");
@@ -187,16 +213,16 @@ public class Profile extends javax.swing.JDialog {
         getContentPane().add(btnSave);
         btnSave.setBounds(1004, 811, 95, 50);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Ilman Nafian");
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(350, 410, 480, 40);
+        lblNameUser.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        lblNameUser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblNameUser.setText("Ilman Nafian");
+        getContentPane().add(lblNameUser);
+        lblNameUser.setBounds(350, 410, 480, 40);
 
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Admin");
-        getContentPane().add(jLabel2);
-        jLabel2.setBounds(520, 450, 140, 20);
+        lblPosisi.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPosisi.setText("Admin");
+        getContentPane().add(lblPosisi);
+        lblPosisi.setBounds(520, 450, 140, 20);
 
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Pofile.png"))); // NOI18N
         getContentPane().add(bg);
@@ -241,6 +267,21 @@ public class Profile extends javax.swing.JDialog {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Save-Primary-Click.png")));
+        String idUser = txtUserId.getText();
+        String nik = txtNik.getText();
+        String namaUser = txtName.getText();
+        String noHp = txtNoHp.getText();
+        String alamat = txtAlamat.getText();
+        String username = txtUsername.getText();
+        UserDataControler controler = new UserDataControler(username, null, idUser, namaUser, noHp, alamat, nik, role);
+        controler.SetNikLama(nikLama);
+        controler.SetNoHpLama(noHpLama);
+        controler.SetUsernameLama(usernameLama);
+        boolean succes = controler.UpdateProfile();
+        if (succes) {
+            lblNameUser.setText(namaUser);
+            dispose();
+        }
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnSaveMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSaveMouseEntered
@@ -270,7 +311,7 @@ public class Profile extends javax.swing.JDialog {
     }//GEN-LAST:event_txtUserIdFocusLost
 
     private void txtNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNameFocusGained
-        if (txtName.getText().equals("Fullname")) {
+        if (txtName.getText().equals("Name")) {
             txtName.setText("");
             txtName.setForeground(Color.BLACK);
         }
@@ -278,7 +319,7 @@ public class Profile extends javax.swing.JDialog {
 
     private void txtNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNameFocusLost
         if (txtName.getText().trim().equals("")|| txtName.getText().length() == 0) {
-            txtName.setText("Fullname");
+            txtName.setText("Name");
             txtName.setForeground(new Color(153,153,153));
         }
     }//GEN-LAST:event_txtNameFocusLost
@@ -386,8 +427,8 @@ public class Profile extends javax.swing.JDialog {
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnSave;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel lblNameUser;
+    private javax.swing.JLabel lblPosisi;
     private javax.swing.JTextField txtAlamat;
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtNik;

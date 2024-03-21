@@ -6,24 +6,39 @@ import javax.swing.JInternalFrame;
 
 public class MainFrame extends javax.swing.JFrame {
 
-    public MainFrame() {
+    private String username;
+    private String role;
+    private String idUser;
+    
+    public MainFrame(String username, String role) {
         initComponents();
+        this.username = username;
+        this.role = role;
+        DisplayFirst();
+        DisplayMenu();
+    }
+    
+    public void DisplayFirst(){
         Dashboard ds = new Dashboard();
+        ds.SetProfile(username, role);
         DesktopPaneBody.add(ds);
         ds.setVisible(true);
     }
     
-    public void DisplayMenu(String role) {
+    public void DisplayMenu() {
         if (role.equalsIgnoreCase("owner")) {
             MenuOwner menu = new MenuOwner();
+            menu.SetUser(username, role);
             DesktopPaneMenu.add(menu);
             menu.setVisible(true);
         } else if (role.equalsIgnoreCase("admin")) {
             MenuAdmin menu = new MenuAdmin();
+            menu.SetUser(username, role);
             DesktopPaneMenu.add(menu);
             menu.setVisible(true);
         } else if (role.equalsIgnoreCase("teknisi")) {
             MenuTeknisi menu = new MenuTeknisi();
+            menu.SetUser(username, role);
             DesktopPaneMenu.add(menu);
             menu.setVisible(true);
         }
@@ -68,6 +83,8 @@ public class MainFrame extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+        String username = null;
+        String role = null;
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -98,7 +115,7 @@ public class MainFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainFrame().setVisible(true);
+                new MainFrame(username, role).setVisible(true);
             }
         });
     }

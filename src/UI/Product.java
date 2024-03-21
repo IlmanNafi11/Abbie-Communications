@@ -7,6 +7,9 @@ import java.util.ArrayList;
 
 public class Product extends javax.swing.JInternalFrame implements UpdateTable {
 
+    private String username;
+    private String role;
+    
     public Product() {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
@@ -14,12 +17,19 @@ public class Product extends javax.swing.JInternalFrame implements UpdateTable {
         bui.setNorthPane(null);
         ViewTable();
     }
+    
+    public void SetProfile(String nama, String role){
+        lblNamaUser.setText(nama);
+        lblPosisiUser.setText(role);
+        this.username = nama;
+        this.role = role;
+    }
 
     @Override
     public void perbarui() {
         ViewTable();
     }
-
+        
     public void ViewTable() {
         ProductControler controler = new ProductControler(null, null, null, null, 0, 0);
         ConfigTable Tabel = controler.GetAllData();
@@ -368,6 +378,9 @@ public class Product extends javax.swing.JInternalFrame implements UpdateTable {
     private void lblPosisiUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPosisiUserMouseClicked
         lblPosisiUser.setForeground(new Color(28, 119, 255));
         Profile profile = new Profile(this, true);
+        LoginControler controler = new LoginControler(username, null);
+        ArrayList<String> data = controler.DataProfile();
+        profile.SetField(data.get(0), data.get(1), data.get(2), data.get(3), data.get(4), username, role);
         profile.setVisible(true);
     }//GEN-LAST:event_lblPosisiUserMouseClicked
 
@@ -386,6 +399,9 @@ public class Product extends javax.swing.JInternalFrame implements UpdateTable {
     private void lblNamaUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNamaUserMouseClicked
         lblNamaUser.setForeground(new Color(28, 119, 255));
         Profile profile = new Profile(this, true);
+        LoginControler controler = new LoginControler(username, null);
+        ArrayList<String> data = controler.DataProfile();
+        profile.SetField(data.get(0), data.get(1), data.get(2), data.get(3), data.get(4), username, role);
         profile.setVisible(true);
     }//GEN-LAST:event_lblNamaUserMouseClicked
 

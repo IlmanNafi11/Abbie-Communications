@@ -7,11 +7,19 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 public class MenuTeknisi extends javax.swing.JInternalFrame {
 
+    private String username;
+    private String role;
+    
     public MenuTeknisi() {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
         bui.setNorthPane(null);
+    }
+    
+    public void SetUser(String username, String role){
+        this.username = username;
+        this.role = role;
     }
 
     @SuppressWarnings("unchecked")
@@ -114,6 +122,7 @@ public class MenuTeknisi extends javax.swing.JInternalFrame {
     private void btnDashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDashboardActionPerformed
         btnDashboard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Menu-Dashboard-Click.png")));
         Dashboard ds = new Dashboard();
+        ds.SetProfile(username, role);
         MainFrame main = (MainFrame) SwingUtilities.getWindowAncestor(this);
         main.gantiKonten(ds);
     }//GEN-LAST:event_btnDashboardActionPerformed
@@ -129,6 +138,7 @@ public class MenuTeknisi extends javax.swing.JInternalFrame {
     private void btnProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductActionPerformed
         btnProduct.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Menu-Product-Click.png")));
         Product prod = new Product();
+        prod.SetProfile(username, role);
         MainFrame main = (MainFrame) SwingUtilities.getWindowAncestor(this);
         main.gantiKonten(prod);
     }//GEN-LAST:event_btnProductActionPerformed
@@ -144,6 +154,7 @@ public class MenuTeknisi extends javax.swing.JInternalFrame {
     private void btnServiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnServiceActionPerformed
         btnService.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Menu-Service-Transaction-Click.png")));
         TransaksiService transS = new TransaksiService();
+        transS.SetProfile(username, role);
         MainFrame main = (MainFrame) SwingUtilities.getWindowAncestor(this);
         main.gantiKonten(transS);
     }//GEN-LAST:event_btnServiceActionPerformed

@@ -7,12 +7,22 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 public class UserData extends javax.swing.JInternalFrame implements UpdateTable {
 
+    private String username;
+    private String role;
+    
     public UserData() {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
         bui.setNorthPane(null);
         ViewTable();
+    }
+    
+    public void SetProfile(String nama, String role){
+        lblNamaUser.setText(nama);
+        lblPosisiUser.setText(role);
+        this.username = nama;
+        this.role = role;
     }
 
     @Override
@@ -21,7 +31,7 @@ public class UserData extends javax.swing.JInternalFrame implements UpdateTable 
     }
 
     public void ViewTable() {
-        UserDataControler controler = new UserDataControler(null, null, null, null, null, null, null);
+        UserDataControler controler = new UserDataControler(null, null, null, null, null, null, null, null);
         ConfigTable Tabel = controler.GetAllData();
         table.setModel(Tabel);
     }
@@ -246,7 +256,7 @@ public class UserData extends javax.swing.JInternalFrame implements UpdateTable 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Edit-Click.png")));
         ChangeUserData changeUserData = new ChangeUserData(this, true);
-        UserDataControler controler = new UserDataControler(null, null, null, null, null, null, null);
+        UserDataControler controler = new UserDataControler(null, null, null, null, null, null, null, null);
         boolean validasiSelectedRow = controler.ValidateRow(table);
         if (validasiSelectedRow) {
             changeUserData.setUserData(new UpdateTable() {
@@ -275,7 +285,7 @@ public class UserData extends javax.swing.JInternalFrame implements UpdateTable 
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Delete-Click.png")));
-        UserDataControler controler = new UserDataControler(null, null, null, null, null, null, null);
+        UserDataControler controler = new UserDataControler(null, null, null, null, null, null, null, null);
         boolean succes = controler.DeleteUserData(table);
         if (succes) {
             ViewTable();
@@ -285,6 +295,9 @@ public class UserData extends javax.swing.JInternalFrame implements UpdateTable 
     private void lblPosisiUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPosisiUserMouseClicked
         lblPosisiUser.setForeground(new Color(28, 119, 255));
         Profile profile = new Profile(this, true);
+        LoginControler controler = new LoginControler(username, null);
+        ArrayList<String> data = controler.DataProfile();
+        profile.SetField(data.get(0), data.get(1), data.get(2), data.get(3), data.get(4), username, role);
         profile.setVisible(true);
     }//GEN-LAST:event_lblPosisiUserMouseClicked
 
@@ -303,6 +316,9 @@ public class UserData extends javax.swing.JInternalFrame implements UpdateTable 
     private void lblNamaUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNamaUserMouseClicked
         lblNamaUser.setForeground(new Color(28, 119, 255));
         Profile profile = new Profile(this, true);
+        LoginControler controler = new LoginControler(username, null);
+        ArrayList<String> data = controler.DataProfile();
+        profile.SetField(data.get(0), data.get(1), data.get(2), data.get(3), data.get(4), username, role);
         profile.setVisible(true);
     }//GEN-LAST:event_lblNamaUserMouseClicked
 

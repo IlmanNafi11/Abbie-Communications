@@ -7,15 +7,22 @@ import java.util.ArrayList;
 
 public class Supplier extends javax.swing.JInternalFrame implements UpdateTable {
 
-    private ExceptionHandler exceptionHandler;
+    private String username;
+    private String role;
 
     public Supplier() {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
         bui.setNorthPane(null);
-        exceptionHandler = new ExceptionHandler();
         ViewTable();
+    }
+    
+    public void SetProfile(String nama, String role){
+        lblNamaUser.setText(nama);
+        lblPosisiUser.setText(role);
+        this.username = nama;
+        this.role = role;
     }
 
     @Override
@@ -335,6 +342,9 @@ public class Supplier extends javax.swing.JInternalFrame implements UpdateTable 
     private void lblPosisiUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPosisiUserMouseClicked
         lblPosisiUser.setForeground(new Color(28, 119, 255));
         Profile profile = new Profile(this, true);
+        LoginControler controler = new LoginControler(username, null);
+        ArrayList<String> data = controler.DataProfile();
+        profile.SetField(data.get(0), data.get(1), data.get(2), data.get(3), data.get(4), username, role);
         profile.setVisible(true);
     }//GEN-LAST:event_lblPosisiUserMouseClicked
 
@@ -353,6 +363,9 @@ public class Supplier extends javax.swing.JInternalFrame implements UpdateTable 
     private void lblNamaUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNamaUserMouseClicked
         lblNamaUser.setForeground(new Color(28, 119, 255));
         Profile profile = new Profile(this, true);
+        LoginControler controler = new LoginControler(username, null);
+        ArrayList<String> data = controler.DataProfile();
+        profile.SetField(data.get(0), data.get(1), data.get(2), data.get(3), data.get(4), username, role);
         profile.setVisible(true);
     }//GEN-LAST:event_lblNamaUserMouseClicked
 

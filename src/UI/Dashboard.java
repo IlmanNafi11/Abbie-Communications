@@ -2,14 +2,27 @@ package UI;
 
 import java.awt.Color;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+import Logic.*;
+import java.util.ArrayList;
+import javax.swing.SwingUtilities;
 
 public class Dashboard extends javax.swing.JInternalFrame {
 
+    private String username;
+    private String role;
+
     public Dashboard() {
         initComponents();
-        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
+        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
         bui.setNorthPane(null);
+    }
+
+    public void SetProfile(String nama, String role) {
+        lblNamaUser.setText(nama);
+        lblPosisiUser.setText(role);
+        this.username = nama;
+        this.role = role;
     }
 
     @SuppressWarnings("unchecked")
@@ -173,43 +186,54 @@ public class Dashboard extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblNamaUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNamaUserMouseClicked
-        lblNamaUser.setForeground(new Color(28,119,255));
+        lblNamaUser.setForeground(new Color(28, 119, 255));
         Profile profile = new Profile(this, true);
+        LoginControler controler = new LoginControler(username, null);
+        ArrayList<String> data = controler.DataProfile();
+        profile.SetField(data.get(0), data.get(1), data.get(2), data.get(3), data.get(4), username, role);
         profile.setVisible(true);
     }//GEN-LAST:event_lblNamaUserMouseClicked
 
     private void lblNamaUserMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNamaUserMouseEntered
-        lblNamaUser.setForeground(new Color(95,196,244));
+        lblNamaUser.setForeground(new Color(95, 196, 244));
     }//GEN-LAST:event_lblNamaUserMouseEntered
 
     private void lblNamaUserMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNamaUserMouseExited
-        lblNamaUser.setForeground(new Color(0,0,0));
+        lblNamaUser.setForeground(new Color(0, 0, 0));
     }//GEN-LAST:event_lblNamaUserMouseExited
 
     private void lblPosisiUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPosisiUserMouseClicked
-        lblPosisiUser.setForeground(new Color(28,119,255));
+        lblPosisiUser.setForeground(new Color(28, 119, 255));
         Profile profile = new Profile(this, true);
+        LoginControler controler = new LoginControler(username, null);
+        ArrayList<String> data = controler.DataProfile();
+        profile.SetField(data.get(0), data.get(1), data.get(2), data.get(3), data.get(4), username, role);
         profile.setVisible(true);
     }//GEN-LAST:event_lblPosisiUserMouseClicked
 
     private void lblPosisiUserMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPosisiUserMouseEntered
-        lblPosisiUser.setForeground(new Color(95,196,244));
+        lblPosisiUser.setForeground(new Color(95, 196, 244));
     }//GEN-LAST:event_lblPosisiUserMouseEntered
 
     private void lblNamaUserMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNamaUserMousePressed
-        lblNamaUser.setForeground(new Color(28,119,255));
+        lblNamaUser.setForeground(new Color(28, 119, 255));
     }//GEN-LAST:event_lblNamaUserMousePressed
 
     private void lblPosisiUserMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPosisiUserMouseExited
-        lblPosisiUser.setForeground(new Color(0,0,0));
+        lblPosisiUser.setForeground(new Color(0, 0, 0));
     }//GEN-LAST:event_lblPosisiUserMouseExited
 
     private void lblPosisiUserMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPosisiUserMousePressed
-        lblPosisiUser.setForeground(new Color(28,119,255));
+        lblPosisiUser.setForeground(new Color(28, 119, 255));
     }//GEN-LAST:event_lblPosisiUserMousePressed
 
     private void btnJoinNowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJoinNowActionPerformed
         btnJoinNow.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Join-Now-Click.png")));
+        Member member = new Member();
+        member.SetProfile(username, role);
+        MainFrame main = (MainFrame) SwingUtilities.getWindowAncestor(this);
+        main.gantiKonten(member);
+        member.OpenAddMember();
     }//GEN-LAST:event_btnJoinNowActionPerformed
 
     private void btnJoinNowMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnJoinNowMouseEntered

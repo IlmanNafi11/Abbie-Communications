@@ -2,6 +2,7 @@ package Logic;
 
 import Data_Acces.DbUserManager;
 import java.security.MessageDigest;
+import java.util.ArrayList;
 
 public class LoginControler {
 
@@ -15,6 +16,10 @@ public class LoginControler {
         this.password = password;
         exceptionHandler = new ExceptionHandler();
         dbUserManager = new DbUserManager();
+    }
+    
+    public ArrayList<String> DataProfile(){
+        return dbUserManager.GetDataProfile(username);
     }
 
     private String HashSandi(String password) {
@@ -46,8 +51,7 @@ public class LoginControler {
     public String AuthLogin() {
         if (VerifField()) {
             String Hashpassword = HashSandi(password);
-            String getRole = dbUserManager.AuthLogin(username, Hashpassword);
-            return getRole;
+            return dbUserManager.AuthLogin(username, Hashpassword);
         }
         return null;
     }
