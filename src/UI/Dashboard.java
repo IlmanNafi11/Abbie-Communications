@@ -163,7 +163,7 @@ public class Dashboard extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(lblNamaUser);
-        lblNamaUser.setBounds(930, 20, 160, 30);
+        lblNamaUser.setBounds(930, 20, 130, 22);
 
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Dasboard.png"))); // NOI18N
         getContentPane().add(bg);
