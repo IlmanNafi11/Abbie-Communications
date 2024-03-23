@@ -2,7 +2,14 @@ package Logic;
 
 import java.util.ArrayList;
 import Data_Acces.*;
+import com.onbarcode.barcode.EAN13;
+import com.onbarcode.barcode.IBarcode;
+import java.awt.Font;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.util.Random;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -50,19 +57,44 @@ public class ProductControler {
     }
 
     // generate id produk
-    public String GenerateIdProduct() {
-        if (kategori.equalsIgnoreCase("Accessories")) {
-            this.idProduct = "ACS" + GenerateRandom(4);
-        } else if (kategori.equalsIgnoreCase("Phone credit/Internet credit")) {
-            this.idProduct = "PIC" + GenerateRandom(4);
-        } else if (kategori.equalsIgnoreCase("Electronic")) {
-            this.idProduct = "ELC" + GenerateRandom(4);
-        } else if (kategori.equalsIgnoreCase("Part")) {
-            this.idProduct = "PRT" + GenerateRandom(4);
+    public String GenerateIdProduct(JComboBox<String> cmbKategori) {
+        String kategori = (String) cmbKategori.getSelectedItem();
+        if (!kategori.equalsIgnoreCase("Category")) {
+            idProduct = GenerateRandom(12);
         } else {
-            this.idProduct = "Product ID";
+            idProduct = "Product ID";
         }
+
         return idProduct;
+    }
+
+    public byte[] GenerateBarcode(String idProduct) {
+        byte[] byteBarcode = null;
+            try {
+                EAN13 barcode = new EAN13();
+                barcode.setData(idProduct);
+                barcode.setUom(IBarcode.UOM_PIXEL);
+                barcode.setX(3f);
+                barcode.setY(75f);
+                barcode.setLeftMargin(0f);
+                barcode.setRightMargin(0f);
+                barcode.setTopMargin(0f);
+                barcode.setBottomMargin(0f);
+                barcode.setResolution(72);
+                barcode.setShowText(true);
+                barcode.setTextFont(new Font("Arial", 0, 12));
+                barcode.setTextMargin(6);
+                barcode.setRotate(IBarcode.ROTATE_0);
+                BufferedImage imgBarcode = barcode.drawBarcode();
+
+                ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+                ImageIO.write(imgBarcode, "gif", bytes);
+                byteBarcode = bytes.toByteArray();
+//        barcode.drawBarcode("src/images/barcode/" + idProduct + ".gif");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        return byteBarcode;
     }
 
     //set item combo box id supplier berdasarkan kategori produk
@@ -154,7 +186,7 @@ public class ProductControler {
                 exception.getErrorKesalahan("The Stock amount must be more than 0");
             }
         } catch (NumberFormatException e) {
-            exception.getErrorKesalahan("Invalid stock quantity");;
+            exception.getErrorKesalahan("Invalid stock quantity");
         }
         return 0;
     }
@@ -196,6 +228,18 @@ public class ProductControler {
         return data;
     }
 
+    public ImageIcon DisplayBarcode(String idProduct) {
+        byte[] iconBarcode = GenerateBarcode(idProduct);
+        ImageIcon imgBarcode = new ImageIcon(iconBarcode);
+        return imgBarcode;
+    }
+
+    public ImageIcon GetBarcode(String idProduct) {
+        byte[] iconBarcode = dbProduct.GetBarcode(idProduct);
+        ImageIcon imgBarcode = new ImageIcon(iconBarcode);
+        return imgBarcode;
+    }
+
     public boolean ValidateRow(JTable table) {
         int row = table.getSelectedRow();
         if (row != -1) {
@@ -212,13 +256,20 @@ public class ProductControler {
 
     // insert data produk
     public boolean InsertProduct() {
-        if (ValidasiDataProduk() && ValidasiNama() && jumlahStock != 0 && harga != 0) {
-            boolean confirm = exception.confirmSave("Save product data?");
-            if (confirm) {
-                dbProduct.InsertProduct(kategori, idProduct, namaProduct, jumlahStock, idSupplier, harga);
-                return true;
+        try {
+            if (ValidasiDataProduk() && ValidasiNama() && jumlahStock != 0 && harga != 0) {
+                byte[] barcode = GenerateBarcode(idProduct);
+                boolean confirm = exception.confirmSave("Save product data?");
+                if (confirm) {
+                    dbProduct.InsertProduct(kategori, idProduct, namaProduct, jumlahStock, idSupplier, harga, barcode);
+                    GenerateBarcode(idProduct);
+                    return true;
+                }
             }
+        } catch (Exception e) {
+            exception.getErrorKesalahan(e.getMessage());
         }
+
         return false;
     }
 

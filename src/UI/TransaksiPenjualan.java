@@ -1,27 +1,39 @@
 package UI;
 
-import Logic.LoginControler;
+import Logic.*;
 import java.awt.Color;
 import java.util.ArrayList;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 public class TransaksiPenjualan extends javax.swing.JInternalFrame {
 
     private String username;
     private String role;
+    private ConfigTable model;
     
     public TransaksiPenjualan() {
         initComponents();
-        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
+        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
         bui.setNorthPane(null);
+        ViewTableTransaksi();
+//        GetData();
+        
     }
-    
-    public void SetProfile(String nama, String role){
+
+    public void SetProfile(String nama, String role) {
         lblNamaUser.setText(nama);
         lblPosisiUser.setText(role);
         this.username = nama;
         this.role = role;
+    }
+
+    public void ViewTableTransaksi() {
+        TransaksiPenjualanControler controler = new TransaksiPenjualanControler(null, null, null, 0, null, 0, null, null, null, null);
+        model = controler.modelTabel();
+        table.setModel(model);
     }
 
     @SuppressWarnings("unchecked")
@@ -32,9 +44,9 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
         btnCount = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         btnAddMember = new javax.swing.JButton();
-        txtIdProduct = new javax.swing.JTextField();
         txtProductName = new javax.swing.JTextField();
         txtQuantity = new javax.swing.JTextField();
+        btnSearch = new javax.swing.JButton();
         txtNoHpMember = new javax.swing.JTextField();
         txtMemberName = new javax.swing.JTextField();
         cmbKategori = new javax.swing.JComboBox<>();
@@ -47,6 +59,7 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
         lblPosisiUser = new javax.swing.JLabel();
         IconProfil = new javax.swing.JLabel();
         lblNamaUser = new javax.swing.JLabel();
+        cmbProductId = new javax.swing.JComboBox<>();
         bg = new javax.swing.JLabel();
 
         setBorder(null);
@@ -136,19 +149,8 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
         });
         getContentPane().add(btnAddMember, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 882, -1, -1));
 
-        txtIdProduct.setForeground(new java.awt.Color(153, 153, 153));
-        txtIdProduct.setText("Product ID");
-        txtIdProduct.setBorder(null);
-        txtIdProduct.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtIdProductFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtIdProductFocusLost(evt);
-            }
-        });
-        getContentPane().add(txtIdProduct, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 357, 450, 50));
-
+        txtProductName.setEditable(false);
+        txtProductName.setBackground(new java.awt.Color(255, 255, 255));
         txtProductName.setForeground(new java.awt.Color(153, 153, 153));
         txtProductName.setText("Product Name");
         txtProductName.setBorder(null);
@@ -173,7 +175,33 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
                 txtQuantityFocusLost(evt);
             }
         });
+        txtQuantity.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtQuantityActionPerformed(evt);
+            }
+        });
         getContentPane().add(txtQuantity, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 281, 430, 50));
+
+        btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Icon-Search.png"))); // NOI18N
+        btnSearch.setBorder(null);
+        btnSearch.setContentAreaFilled(false);
+        btnSearch.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnSearchMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnSearchMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnSearchMousePressed(evt);
+            }
+        });
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 357, 60, 50));
 
         txtNoHpMember.setForeground(new java.awt.Color(153, 153, 153));
         txtNoHpMember.setText("Member Telephone Number");
@@ -188,6 +216,8 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
         });
         getContentPane().add(txtNoHpMember, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 357, 430, 50));
 
+        txtMemberName.setEditable(false);
+        txtMemberName.setBackground(new java.awt.Color(255, 255, 255));
         txtMemberName.setForeground(new java.awt.Color(153, 153, 153));
         txtMemberName.setText("Member Name");
         txtMemberName.setBorder(null);
@@ -201,7 +231,12 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
         });
         getContentPane().add(txtMemberName, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 433, 430, 50));
 
-        cmbKategori.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aksesoris", "Pulsa", "Suku Cadang", "Elektronik" }));
+        cmbKategori.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Category", "Accessories", "Phone credit/Internet credit", "Electronic", "Part" }));
+        cmbKategori.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbKategoriActionPerformed(evt);
+            }
+        });
         getContentPane().add(cmbKategori, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 280, 472, 50));
 
         table.setModel(new javax.swing.table.DefaultTableModel(
@@ -327,6 +362,14 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
         });
         getContentPane().add(lblNamaUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 20, -1, -1));
 
+        cmbProductId.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Product ID" }));
+        cmbProductId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbProductIdActionPerformed(evt);
+            }
+        });
+        getContentPane().add(cmbProductId, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 356, 472, 50));
+
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Sales Transactions.png"))); // NOI18N
         getContentPane().add(bg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -399,20 +442,6 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
         btnPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Button-Print-Primary-click.png")));
     }//GEN-LAST:event_btnPrintMousePressed
 
-    private void txtIdProductFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtIdProductFocusGained
-        if (txtIdProduct.getText().equals("Product ID")) {
-            txtIdProduct.setText("");
-            txtIdProduct.setForeground(Color.BLACK);
-        }
-    }//GEN-LAST:event_txtIdProductFocusGained
-
-    private void txtIdProductFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtIdProductFocusLost
-        if (txtIdProduct.getText().trim().equals("")|| txtIdProduct.getText().length() == 0) {
-            txtIdProduct.setText("Product ID");
-            txtIdProduct.setForeground(new Color(153,153,153));
-        }
-    }//GEN-LAST:event_txtIdProductFocusLost
-
     private void txtProductNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtProductNameFocusGained
         if (txtProductName.getText().equals("Product Name")) {
             txtProductName.setText("");
@@ -421,9 +450,9 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtProductNameFocusGained
 
     private void txtProductNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtProductNameFocusLost
-        if (txtProductName.getText().trim().equals("")|| txtProductName.getText().length() == 0) {
+        if (txtProductName.getText().trim().equals("") || txtProductName.getText().length() == 0) {
             txtProductName.setText("Product Name");
-            txtProductName.setForeground(new Color(153,153,153));
+            txtProductName.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtProductNameFocusLost
 
@@ -435,9 +464,9 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtQuantityFocusGained
 
     private void txtQuantityFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtQuantityFocusLost
-        if (txtQuantity.getText().trim().equals("")|| txtQuantity.getText().length() == 0) {
+        if (txtQuantity.getText().trim().equals("") || txtQuantity.getText().length() == 0) {
             txtQuantity.setText("Quantity");
-            txtQuantity.setForeground(new Color(153,153,153));
+            txtQuantity.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtQuantityFocusLost
 
@@ -449,9 +478,9 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtNoHpMemberFocusGained
 
     private void txtNoHpMemberFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNoHpMemberFocusLost
-        if (txtNoHpMember.getText().trim().equals("")|| txtNoHpMember.getText().length() == 0) {
+        if (txtNoHpMember.getText().trim().equals("") || txtNoHpMember.getText().length() == 0) {
             txtNoHpMember.setText("Member Telephone Number");
-            txtNoHpMember.setForeground(new Color(153,153,153));
+            txtNoHpMember.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtNoHpMemberFocusLost
 
@@ -463,9 +492,9 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtMemberNameFocusGained
 
     private void txtMemberNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtMemberNameFocusLost
-        if (txtMemberName.getText().trim().equals("")|| txtMemberName.getText().length() == 0) {
+        if (txtMemberName.getText().trim().equals("") || txtMemberName.getText().length() == 0) {
             txtMemberName.setText("Member Name");
-            txtMemberName.setForeground(new Color(153,153,153));
+            txtMemberName.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtMemberNameFocusLost
 
@@ -477,9 +506,9 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtTotalFocusGained
 
     private void txtTotalFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTotalFocusLost
-        if (txtTotal.getText().trim().equals("")|| txtTotal.getText().length() == 0) {
+        if (txtTotal.getText().trim().equals("") || txtTotal.getText().length() == 0) {
             txtTotal.setText("Total");
-            txtTotal.setForeground(new Color(153,153,153));
+            txtTotal.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtTotalFocusLost
 
@@ -491,9 +520,9 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtPayFocusGained
 
     private void txtPayFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPayFocusLost
-        if (txtPay.getText().trim().equals("")|| txtPay.getText().length() == 0) {
+        if (txtPay.getText().trim().equals("") || txtPay.getText().length() == 0) {
             txtPay.setText("Pay");
-            txtPay.setForeground(new Color(153,153,153));
+            txtPay.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtPayFocusLost
 
@@ -505,9 +534,9 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtKodeDiskonFocusGained
 
     private void txtKodeDiskonFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtKodeDiskonFocusLost
-       if (txtKodeDiskon.getText().trim().equals("")|| txtKodeDiskon.getText().length() == 0) {
+        if (txtKodeDiskon.getText().trim().equals("") || txtKodeDiskon.getText().length() == 0) {
             txtKodeDiskon.setText("Discount Code");
-            txtKodeDiskon.setForeground(new Color(153,153,153));
+            txtKodeDiskon.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtKodeDiskonFocusLost
 
@@ -519,14 +548,14 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtRefundFocusGained
 
     private void txtRefundFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtRefundFocusLost
-        if (txtRefund.getText().trim().equals("")|| txtRefund.getText().length() == 0) {
+        if (txtRefund.getText().trim().equals("") || txtRefund.getText().length() == 0) {
             txtRefund.setText("Refund");
-            txtRefund.setForeground(new Color(153,153,153));
+            txtRefund.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtRefundFocusLost
 
     private void lblPosisiUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPosisiUserMouseClicked
-        lblPosisiUser.setForeground(new Color(28,119,255));
+        lblPosisiUser.setForeground(new Color(28, 119, 255));
         Profile profile = new Profile(this, true);
         LoginControler controler = new LoginControler(username, null);
         ArrayList<String> data = controler.DataProfile();
@@ -535,19 +564,19 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_lblPosisiUserMouseClicked
 
     private void lblPosisiUserMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPosisiUserMouseEntered
-        lblPosisiUser.setForeground(new Color(95,196,244));
+        lblPosisiUser.setForeground(new Color(95, 196, 244));
     }//GEN-LAST:event_lblPosisiUserMouseEntered
 
     private void lblPosisiUserMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPosisiUserMouseExited
-        lblPosisiUser.setForeground(new Color(0,0,0));
+        lblPosisiUser.setForeground(new Color(0, 0, 0));
     }//GEN-LAST:event_lblPosisiUserMouseExited
 
     private void lblPosisiUserMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPosisiUserMousePressed
-        lblPosisiUser.setForeground(new Color(28,119,255));
+        lblPosisiUser.setForeground(new Color(28, 119, 255));
     }//GEN-LAST:event_lblPosisiUserMousePressed
 
     private void lblNamaUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNamaUserMouseClicked
-        lblNamaUser.setForeground(new Color(28,119,255));
+        lblNamaUser.setForeground(new Color(28, 119, 255));
         Profile profile = new Profile(this, true);
         LoginControler controler = new LoginControler(username, null);
         ArrayList<String> data = controler.DataProfile();
@@ -556,18 +585,91 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_lblNamaUserMouseClicked
 
     private void lblNamaUserMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNamaUserMouseEntered
-        lblNamaUser.setForeground(new Color(95,196,244));
+        lblNamaUser.setForeground(new Color(95, 196, 244));
     }//GEN-LAST:event_lblNamaUserMouseEntered
 
     private void lblNamaUserMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNamaUserMouseExited
-        lblNamaUser.setForeground(new Color(0,0,0));
+        lblNamaUser.setForeground(new Color(0, 0, 0));
     }//GEN-LAST:event_lblNamaUserMouseExited
 
     private void lblNamaUserMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNamaUserMousePressed
-        lblNamaUser.setForeground(new Color(28,119,255));
+        lblNamaUser.setForeground(new Color(28, 119, 255));
     }//GEN-LAST:event_lblNamaUserMousePressed
 
+    private void cmbKategoriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbKategoriActionPerformed
+        TransaksiPenjualanControler controler = new TransaksiPenjualanControler(null, null, null, 0, null, 0, null, null, null, null);
+        controler.SetComboProdukId(cmbKategori, cmbProductId);
+        
+    }//GEN-LAST:event_cmbKategoriActionPerformed
 
+    private void cmbProductIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbProductIdActionPerformed
+        String idProduct = (String) cmbProductId.getSelectedItem();
+        TransaksiPenjualanControler controler = new TransaksiPenjualanControler(null, null, null, 0, null, 0, null, null, null, null);
+        controler.SetTxtProdukName(idProduct, txtProductName);
+        CheckdanAddData();
+    }//GEN-LAST:event_cmbProductIdActionPerformed
+
+    private void btnSearchMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSearchMouseEntered
+        btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Icon-Search-Hover.png")));
+    }//GEN-LAST:event_btnSearchMouseEntered
+
+    private void btnSearchMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSearchMouseExited
+        btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Icon-Search.png")));
+    }//GEN-LAST:event_btnSearchMouseExited
+
+    private void btnSearchMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSearchMousePressed
+        btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Icon-Search-Click.png")));
+    }//GEN-LAST:event_btnSearchMousePressed
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Icon-Search-Click.png")));
+        String noHp = txtNoHpMember.getText();
+        TransaksiPenjualanControler controler = new TransaksiPenjualanControler(null, null, null, 0, noHp, 0, null, null, null, null);
+        controler.SetTxtNamaMember(txtNoHpMember, txtMemberName);
+    }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void txtQuantityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQuantityActionPerformed
+
+    }//GEN-LAST:event_txtQuantityActionPerformed
+
+    public void SetDataTable(String namaProduk, int jumlahBeli, int harga) {
+        if (jumlahBeli != 0 && jumlahBeli > 0) {
+            Object[] data = {namaProduk, jumlahBeli, harga};
+            model.addRow(data);
+        }
+    }
+    
+    private void CheckdanAddData() {
+                TransaksiPenjualanControler controler = new TransaksiPenjualanControler(null, null, null, 0, null, 0, null, null, null, null);
+                String productId = (String) cmbProductId.getSelectedItem();
+                txtQuantity.setText("1");
+                String productName = txtProductName.getText();
+                int jumlahBeli = controler.ValidateQuantity(txtQuantity);
+                int harga = controler.GetHargaProduk(productId);               
+                SetDataTable(productName, jumlahBeli, harga);
+            }
+    
+//    private void GetData() {
+//        txtProductName.getDocument().addDocumentListener(new DocumentListener() {
+//            @Override
+//            public void insertUpdate(DocumentEvent e) {
+//                CheckdanAddData();
+//            }
+//
+//            @Override
+//            public void removeUpdate(DocumentEvent e) {
+////                CheckdanAddData();
+//            }
+//
+//            @Override
+//            public void changedUpdate(DocumentEvent e) {
+//
+//            }
+//
+//            
+//        });
+        
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel IconProfil;
     private javax.swing.JScrollPane JScrollPane;
@@ -576,11 +678,12 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnCount;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnPrint;
+    private javax.swing.JButton btnSearch;
     private javax.swing.JComboBox<String> cmbKategori;
+    private javax.swing.JComboBox<String> cmbProductId;
     private javax.swing.JLabel lblNamaUser;
     private javax.swing.JLabel lblPosisiUser;
     private javax.swing.JTable table;
-    private javax.swing.JTextField txtIdProduct;
     private javax.swing.JTextField txtKodeDiskon;
     private javax.swing.JTextField txtMemberName;
     private javax.swing.JTextField txtNoHpMember;

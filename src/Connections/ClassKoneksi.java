@@ -11,7 +11,7 @@ public class ClassKoneksi {
 
     public static Connection GetConnection() throws SQLException {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             pengkoneksi = DriverManager.getConnection("jdbc:mysql://localhost:3306/abbie_communication", "root", "");
 
         } catch (Exception e) {

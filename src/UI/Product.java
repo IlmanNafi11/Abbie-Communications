@@ -4,6 +4,7 @@ import java.awt.Color;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import Logic.*;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 
 public class Product extends javax.swing.JInternalFrame implements UpdateTable {
 
@@ -311,7 +312,8 @@ public class Product extends javax.swing.JInternalFrame implements UpdateTable {
             String idProduk = dataString.get(0);
             String IdSupplier = controler.SetSupplierId(idProduk);
             String namaSupplier = controler.GetSupplierName(IdSupplier);
-            changeProduct.SetField(dataString.get(2), dataString.get(0), dataString.get(1), dataInteger.get(1), dataInteger.get(0), IdSupplier, namaSupplier);
+            ImageIcon iconBarcode = controler.GetBarcode(idProduk);
+            changeProduct.SetField(dataString.get(2), dataString.get(0), dataString.get(1), dataInteger.get(1), dataInteger.get(0), IdSupplier, namaSupplier, iconBarcode);
             changeProduct.setVisible(true);
         }
     }//GEN-LAST:event_btnEditActionPerformed

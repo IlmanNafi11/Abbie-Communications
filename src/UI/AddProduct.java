@@ -4,6 +4,9 @@ import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import Logic.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 
 public class AddProduct extends javax.swing.JDialog {
 
@@ -29,12 +32,11 @@ public class AddProduct extends javax.swing.JDialog {
         txtQuantity = new javax.swing.JTextField();
         txtNamaSupplier = new javax.swing.JTextField();
         txtPrice = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextPane1 = new javax.swing.JTextPane();
         btnCancel = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
         cmbKategori = new javax.swing.JComboBox<>();
         cmbIdSupplier = new javax.swing.JComboBox<>();
+        lblBarcode = new javax.swing.JLabel();
         bg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -114,11 +116,6 @@ public class AddProduct extends javax.swing.JDialog {
         getContentPane().add(txtPrice);
         txtPrice.setBounds(577, 297, 488, 50);
 
-        jScrollPane1.setViewportView(jTextPane1);
-
-        getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(576, 377, 490, 100);
-
         btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Cancel-Primary-Default.png"))); // NOI18N
         btnCancel.setBorder(null);
         btnCancel.setContentAreaFilled(false);
@@ -180,6 +177,8 @@ public class AddProduct extends javax.swing.JDialog {
         });
         getContentPane().add(cmbIdSupplier);
         cmbIdSupplier.setBounds(568, 145, 506, 50);
+        getContentPane().add(lblBarcode);
+        lblBarcode.setBounds(570, 370, 500, 110);
 
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Add-Product.png"))); // NOI18N
         getContentPane().add(bg);
@@ -216,10 +215,11 @@ public class AddProduct extends javax.swing.JDialog {
         controler.ValidasiStok(txtQuantity);
         controler.ValidasiHarga(txtPrice);
         boolean succes = controler.InsertProduct();
-        if (succes) {
+            if (succes) {
             update.perbarui();
             dispose();
-        }
+            }
+        
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnSaveMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSaveMouseEntered
@@ -308,8 +308,10 @@ public class AddProduct extends javax.swing.JDialog {
     private void cmbKategoriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbKategoriActionPerformed
         String kategori = (String) cmbKategori.getSelectedItem();
         ProductControler controler = new ProductControler(null, kategori, null, null, 0, 0);
-        String idProduk = controler.GenerateIdProduct();
+        String idProduk = controler.GenerateIdProduct(cmbKategori);
         txtIdProduct.setText(idProduk);
+        ImageIcon iconBarcode = controler.DisplayBarcode(idProduk);
+        lblBarcode.setIcon(iconBarcode);
         controler.SetIdSupplier(kategori, cmbIdSupplier);
         cmbIdSupplier.addItem("Supplier ID");
         cmbIdSupplier.setSelectedItem("Supplier ID");
@@ -367,8 +369,7 @@ public class AddProduct extends javax.swing.JDialog {
     private javax.swing.JButton btnSave;
     private javax.swing.JComboBox<String> cmbIdSupplier;
     private javax.swing.JComboBox<String> cmbKategori;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextPane jTextPane1;
+    private javax.swing.JLabel lblBarcode;
     private javax.swing.JTextField txtIdProduct;
     private javax.swing.JTextField txtNamaProduk;
     private javax.swing.JTextField txtNamaSupplier;

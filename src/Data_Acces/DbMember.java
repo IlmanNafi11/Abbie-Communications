@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import Logic.*;
+import java.util.ArrayList;
 
 public class DbMember {
 
@@ -34,6 +35,35 @@ public class DbMember {
             }
         }
         return false;
+    }
+    
+    // get data member berdasarkan no hp untuk transaksi penjualan
+    public ArrayList<String> GekMember(String noHp){
+        exceptionHandler = new ExceptionHandler();
+        ArrayList<String> dataMember = new ArrayList<>();
+        String queryCek = "SELECT id_member, nama_member FROM member WHERE tlp_member = ?";
+        Connection koneksi = null;
+        try {
+            koneksi = ClassKoneksi.GetConnection();
+            PreparedStatement stGetId = koneksi.prepareStatement(queryCek);
+            stGetId.setString(1, noHp);
+            ResultSet rs = stGetId.executeQuery();
+            while (rs.next()) {                
+                dataMember.add(rs.getString("id_member"));
+                dataMember.add(rs.getString("nama_member"));
+            }
+        } catch (Exception e) {
+            exceptionHandler.getErrorKesalahan("A failure occurred while trying to retrieve member data!" + e);
+        } finally {
+            if (koneksi != null) {
+                try {
+                    koneksi.close();
+                } catch (Exception e) {
+                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection!" + e.getMessage());
+                }
+            }
+        }
+        return dataMember;
     }
 
     public void InsertMember(String idMember, String namaMember, String noHp, String alamatMember) {

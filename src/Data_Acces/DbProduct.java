@@ -12,9 +12,9 @@ public class DbProduct {
     private ExceptionHandler exceptionHandler;
 
     // insert data ke database table produk
-    public void InsertProduct(String kategori, String idProduk, String namaProduk, int stok, String idSupplier, float harga) {
+    public void InsertProduct(String kategori, String idProduk, String namaProduk, int stok, String idSupplier, float harga, byte[] barcode) {
         exceptionHandler = new ExceptionHandler();
-        String sqlInsert = "INSERT INTO produk (id_produk, nama_produk, kategori, jumlah, harga, id_supplier) VALUES (?,?,?,?,?,?)";
+        String sqlInsert = "INSERT INTO produk (id_produk, nama_produk, kategori, jumlah, harga, id_supplier, barcode) VALUES (?,?,?,?,?,?,?)";
         Connection koneksi = null;
         try {
             koneksi = ClassKoneksi.GetConnection();
@@ -25,6 +25,7 @@ public class DbProduct {
             stInsert.setInt(4, stok);
             stInsert.setFloat(5, harga);
             stInsert.setString(6, idSupplier);
+            stInsert.setBytes(7, barcode);
             stInsert.executeUpdate();
             exceptionHandler.getSucces("New product data saved successfully!");
         } catch (Exception e) {
@@ -90,6 +91,33 @@ public class DbProduct {
                 }
             }
         }
+    }
+    
+    public byte[] GetBarcode(String idProduct){
+        byte[] barcode = null;
+        String queryGet = "SELECT barcode FROM produk WHERE id_produk = ?";
+        exceptionHandler = new ExceptionHandler();
+        Connection koneksi = null;
+        try {
+            koneksi = ClassKoneksi.GetConnection();
+            PreparedStatement stGet = koneksi.prepareStatement(queryGet);
+            stGet.setString(1, idProduct);
+            ResultSet rs = stGet.executeQuery();
+            while(rs.next()){
+                 barcode = rs.getBytes("barcode");
+            }
+        } catch (Exception e) {
+            exceptionHandler.getErrorKesalahan("Failed to get barcode");
+        } finally {
+            if (koneksi != null) {
+                try {
+                    koneksi.close();
+                } catch (Exception e) {
+                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection!" + e.getMessage());
+                }
+            }
+        }
+        return barcode;
     }
 
     // validasi ketersediaan nama produk
@@ -236,5 +264,32 @@ public class DbProduct {
             }
         }
         return null;
+    }
+    
+    // get price untuk transaksi
+    public int GetPrice(String idProduct){
+        exceptionHandler = new ExceptionHandler();
+        String queryGet = "SELECT harga FROM produk WHERE id_produk = ?";
+        Connection koneksi = null;
+        try {
+            koneksi = ClassKoneksi.GetConnection();
+            PreparedStatement stGet = koneksi.prepareStatement(queryGet);
+            stGet.setString(1, idProduct);
+            ResultSet rs = stGet.executeQuery();
+            while (rs.next()) {                
+                return rs.getInt("harga");
+            }
+        } catch (Exception e) {
+            exceptionHandler.getErrorKesalahan("A Failure occurred while retrieving product prices! ");
+        } finally {
+            if (koneksi != null) {
+                try {
+                    koneksi.close();
+                } catch (Exception e) {
+                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection! " + e.getMessage());
+                }
+            }
+        }
+        return 0;
     }
 }

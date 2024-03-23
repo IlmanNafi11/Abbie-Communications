@@ -2,6 +2,7 @@ package UI;
 
 import Logic.*;
 import java.awt.Color;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 
@@ -15,13 +16,15 @@ public class ChangeProduk extends javax.swing.JDialog {
         initComponents();
         this.setUndecorated(false);
         getContentPane().setBackground(new Color(255, 255, 255, 150));
+        revalidate();
+        repaint();
     }
 
     public void setProduk(UpdateTable update) {
         this.update = update;
     }
 
-    public void SetField(String kategori, String idProduk, String namaProduk, int stok, int harga, String idSupplier, String namaSupplier) {
+    public void SetField(String kategori, String idProduk, String namaProduk, int stok, int harga, String idSupplier, String namaSupplier, ImageIcon iconBarcode) {
         cmbKategori.setSelectedItem(kategori);
         txtIdProduct.setText(idProduk);
         txtNamaProduk.setText(namaProduk);
@@ -30,6 +33,7 @@ public class ChangeProduk extends javax.swing.JDialog {
         txtNamaSupplier.setText(namaSupplier);
         cmbIdSupplier.setSelectedItem(idSupplier);
         this.produkNameBeforeUpdate = namaProduk;
+        lblBarcode.setIcon(iconBarcode);
     }
 
     @SuppressWarnings("unchecked")
@@ -41,17 +45,18 @@ public class ChangeProduk extends javax.swing.JDialog {
         txtQuantity = new javax.swing.JTextField();
         txtNamaSupplier = new javax.swing.JTextField();
         txtPrice = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextPane1 = new javax.swing.JTextPane();
         btnCancel = new javax.swing.JButton();
         btnChange = new javax.swing.JButton();
         cmbKategori = new javax.swing.JComboBox<>();
         cmbIdSupplier = new javax.swing.JComboBox<>();
+        lblBarcode = new javax.swing.JLabel();
         bg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
 
+        txtIdProduct.setEditable(false);
+        txtIdProduct.setBackground(new java.awt.Color(255, 255, 255));
         txtIdProduct.setForeground(new java.awt.Color(153, 153, 153));
         txtIdProduct.setText("Product ID");
         txtIdProduct.setBorder(null);
@@ -94,6 +99,8 @@ public class ChangeProduk extends javax.swing.JDialog {
         getContentPane().add(txtQuantity);
         txtQuantity.setBounds(47, 373, 488, 50);
 
+        txtNamaSupplier.setEditable(false);
+        txtNamaSupplier.setBackground(new java.awt.Color(255, 255, 255));
         txtNamaSupplier.setForeground(new java.awt.Color(153, 153, 153));
         txtNamaSupplier.setText("Supplier Name");
         txtNamaSupplier.setBorder(null);
@@ -121,11 +128,6 @@ public class ChangeProduk extends javax.swing.JDialog {
         });
         getContentPane().add(txtPrice);
         txtPrice.setBounds(577, 297, 488, 50);
-
-        jScrollPane1.setViewportView(jTextPane1);
-
-        getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(576, 377, 490, 100);
 
         btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Cancel-Primary-Default.png"))); // NOI18N
         btnCancel.setBorder(null);
@@ -188,6 +190,8 @@ public class ChangeProduk extends javax.swing.JDialog {
         });
         getContentPane().add(cmbIdSupplier);
         cmbIdSupplier.setBounds(568, 145, 506, 50);
+        getContentPane().add(lblBarcode);
+        lblBarcode.setBounds(570, 370, 500, 110);
 
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Change-Product.png"))); // NOI18N
         getContentPane().add(bg);
@@ -316,8 +320,10 @@ public class ChangeProduk extends javax.swing.JDialog {
     private void cmbKategoriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbKategoriActionPerformed
         String kategori = (String) cmbKategori.getSelectedItem();
         ProductControler controler = new ProductControler(null, kategori, null, null, 0, 0);
-        String idProduk = controler.GenerateIdProduct();
+        String idProduk = controler.GenerateIdProduct(cmbKategori);
         txtIdProduct.setText(idProduk);
+        ImageIcon iconBarcode = controler.DisplayBarcode(idProduk);
+        lblBarcode.setIcon(iconBarcode);
         controler.SetIdSupplier(kategori, cmbIdSupplier);
         cmbIdSupplier.addItem("Supplier ID");
     }//GEN-LAST:event_cmbKategoriActionPerformed
@@ -378,8 +384,7 @@ public class ChangeProduk extends javax.swing.JDialog {
     private javax.swing.JButton btnChange;
     private javax.swing.JComboBox<String> cmbIdSupplier;
     private javax.swing.JComboBox<String> cmbKategori;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextPane jTextPane1;
+    private javax.swing.JLabel lblBarcode;
     private javax.swing.JTextField txtIdProduct;
     private javax.swing.JTextField txtNamaProduk;
     private javax.swing.JTextField txtNamaSupplier;
