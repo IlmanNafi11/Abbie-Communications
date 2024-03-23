@@ -19,7 +19,6 @@ public class TransaksiPenjualanControler {
     private String idMember;
     private float total;
     private Date tanggal;
-    private String kategori;
     private String kodePromo;
     private String idUser;
     private ConfigTable model;
@@ -29,7 +28,7 @@ public class TransaksiPenjualanControler {
     private DbSupplier dbSupplier;
     private DbMember dbMember;
 
-    public TransaksiPenjualanControler(String idTransaksi, String idProduk, String namaProduk, int jumlah, String noHp, float total, Date tanggal, String kategori, String kodePromo, String idUser) {
+    public TransaksiPenjualanControler(String idTransaksi, String idProduk, String namaProduk, int jumlah, String noHp, float total, Date tanggal, String kodePromo, String idUser) {
         this.idTransaksi = idTransaksi;
         this.idProduk = idProduk;
         this.namaProduk = namaProduk;
@@ -37,7 +36,6 @@ public class TransaksiPenjualanControler {
         this.noHpMember = noHp;
         this.total = total;
         this.tanggal = tanggal;
-        this.kategori = kategori;
         this.kodePromo = kodePromo;
         this.idUser = idUser;
         exceptionHandler = new ExceptionHandler();
@@ -66,15 +64,6 @@ public class TransaksiPenjualanControler {
     // get tanggal terbaru
     private Date GetDate() {
         return new Date();
-    }
-
-    private boolean ValidateKategori() {
-        if (kategori != null && !kategori.equalsIgnoreCase("Category")) {
-            return true;
-        } else {
-            exceptionHandler.getErrorKesalahan("Please choose one of the product categories!");
-            return false;
-        }
     }
 
     private boolean ValidateNamaProduk() {
@@ -157,11 +146,11 @@ public class TransaksiPenjualanControler {
     }
 
     public boolean InsertData() {
-        if (ValidateKategori() && ValidateNamaProduk() && jumlah != 0) {
+        if (ValidateNamaProduk() && jumlah != 0) {
             this.tanggal = GetDate();
             boolean confirm = exceptionHandler.confirmSave("Save transactions?");
             if (confirm) {
-                dbTransaksi.AddSaleTransaction(idTransaksi, idProduk, namaProduk, jumlah, idMember, total, tanggal, kategori, kodePromo, idUser);
+                dbTransaksi.AddSaleTransaction(idTransaksi, idProduk, namaProduk, jumlah, idMember, total, tanggal, kodePromo, idUser);
                 return true;
             }
         }

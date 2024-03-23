@@ -54,7 +54,7 @@ public class welcome extends javax.swing.JFrame{
             }
         });
         desktopPane.add(btnStarted);
-        btnStarted.setBounds(173, 637, 158, 50);
+        btnStarted.setBounds(163, 627, 180, 70);
 
         btnSignUp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Sign-Up-Default.png"))); // NOI18N
         btnSignUp.setBorder(null);

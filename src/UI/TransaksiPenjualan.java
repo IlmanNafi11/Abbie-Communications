@@ -31,7 +31,7 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
     }
 
     public void ViewTableTransaksi() {
-        TransaksiPenjualanControler controler = new TransaksiPenjualanControler(null, null, null, 0, null, 0, null, null, null, null);
+        TransaksiPenjualanControler controler = new TransaksiPenjualanControler(null, null, null, 0, null, 0, null, null, null);
         model = controler.modelTabel();
         table.setModel(model);
     }
@@ -49,17 +49,16 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
         btnSearch = new javax.swing.JButton();
         txtNoHpMember = new javax.swing.JTextField();
         txtMemberName = new javax.swing.JTextField();
-        cmbKategori = new javax.swing.JComboBox<>();
         JScrollPane = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
         txtTotal = new javax.swing.JTextField();
         txtPay = new javax.swing.JTextField();
         txtKodeDiskon = new javax.swing.JTextField();
         txtRefund = new javax.swing.JTextField();
+        txtProductId = new javax.swing.JTextField();
         lblPosisiUser = new javax.swing.JLabel();
         IconProfil = new javax.swing.JLabel();
         lblNamaUser = new javax.swing.JLabel();
-        cmbProductId = new javax.swing.JComboBox<>();
         bg = new javax.swing.JLabel();
 
         setBorder(null);
@@ -162,7 +161,7 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
                 txtProductNameFocusLost(evt);
             }
         });
-        getContentPane().add(txtProductName, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 433, 450, 50));
+        getContentPane().add(txtProductName, new org.netbeans.lib.awtextra.AbsoluteConstraints(92, 357, 450, 50));
 
         txtQuantity.setForeground(new java.awt.Color(153, 153, 153));
         txtQuantity.setText("Quantity");
@@ -180,7 +179,7 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
                 txtQuantityActionPerformed(evt);
             }
         });
-        getContentPane().add(txtQuantity, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 281, 430, 50));
+        getContentPane().add(txtQuantity, new org.netbeans.lib.awtextra.AbsoluteConstraints(92, 433, 450, 50));
 
         btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Icon-Search.png"))); // NOI18N
         btnSearch.setBorder(null);
@@ -201,7 +200,7 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
                 btnSearchActionPerformed(evt);
             }
         });
-        getContentPane().add(btnSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 357, 60, 50));
+        getContentPane().add(btnSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(955, 281, 60, 50));
 
         txtNoHpMember.setForeground(new java.awt.Color(153, 153, 153));
         txtNoHpMember.setText("Member Telephone Number");
@@ -214,7 +213,7 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
                 txtNoHpMemberFocusLost(evt);
             }
         });
-        getContentPane().add(txtNoHpMember, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 357, 430, 50));
+        getContentPane().add(txtNoHpMember, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 281, 430, 50));
 
         txtMemberName.setEditable(false);
         txtMemberName.setBackground(new java.awt.Color(255, 255, 255));
@@ -229,15 +228,7 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
                 txtMemberNameFocusLost(evt);
             }
         });
-        getContentPane().add(txtMemberName, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 433, 430, 50));
-
-        cmbKategori.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Category", "Accessories", "Phone credit/Internet credit", "Electronic", "Part" }));
-        cmbKategori.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbKategoriActionPerformed(evt);
-            }
-        });
-        getContentPane().add(cmbKategori, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 280, 472, 50));
+        getContentPane().add(txtMemberName, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 357, 430, 50));
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -319,6 +310,21 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
         });
         getContentPane().add(txtRefund, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 799, 198, 50));
 
+        txtProductId.setEditable(false);
+        txtProductId.setBackground(new java.awt.Color(255, 255, 255));
+        txtProductId.setForeground(new java.awt.Color(153, 153, 153));
+        txtProductId.setText("Product ID");
+        txtProductId.setBorder(null);
+        txtProductId.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtProductIdFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtProductIdFocusLost(evt);
+            }
+        });
+        getContentPane().add(txtProductId, new org.netbeans.lib.awtextra.AbsoluteConstraints(92, 281, 450, 50));
+
         lblPosisiUser.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblPosisiUser.setText("Admin");
         lblPosisiUser.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -361,14 +367,6 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(lblNamaUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 20, -1, -1));
-
-        cmbProductId.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Product ID" }));
-        cmbProductId.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbProductIdActionPerformed(evt);
-            }
-        });
-        getContentPane().add(cmbProductId, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 356, 472, 50));
 
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Sales Transactions.png"))); // NOI18N
         getContentPane().add(bg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -596,19 +594,6 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
         lblNamaUser.setForeground(new Color(28, 119, 255));
     }//GEN-LAST:event_lblNamaUserMousePressed
 
-    private void cmbKategoriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbKategoriActionPerformed
-        TransaksiPenjualanControler controler = new TransaksiPenjualanControler(null, null, null, 0, null, 0, null, null, null, null);
-        controler.SetComboProdukId(cmbKategori, cmbProductId);
-        
-    }//GEN-LAST:event_cmbKategoriActionPerformed
-
-    private void cmbProductIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbProductIdActionPerformed
-        String idProduct = (String) cmbProductId.getSelectedItem();
-        TransaksiPenjualanControler controler = new TransaksiPenjualanControler(null, null, null, 0, null, 0, null, null, null, null);
-        controler.SetTxtProdukName(idProduct, txtProductName);
-        CheckdanAddData();
-    }//GEN-LAST:event_cmbProductIdActionPerformed
-
     private void btnSearchMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSearchMouseEntered
         btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Icon-Search-Hover.png")));
     }//GEN-LAST:event_btnSearchMouseEntered
@@ -624,13 +609,24 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Icon-Search-Click.png")));
         String noHp = txtNoHpMember.getText();
-        TransaksiPenjualanControler controler = new TransaksiPenjualanControler(null, null, null, 0, noHp, 0, null, null, null, null);
+        TransaksiPenjualanControler controler = new TransaksiPenjualanControler(null, null, null, 0, noHp, 0, null, null, null);
         controler.SetTxtNamaMember(txtNoHpMember, txtMemberName);
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void txtQuantityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQuantityActionPerformed
 
     }//GEN-LAST:event_txtQuantityActionPerformed
+
+    private void txtProductIdFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtProductIdFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtProductIdFocusGained
+
+    private void txtProductIdFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtProductIdFocusLost
+//        if (txtRefund.getText().trim().equals("") || txtRefund.getText().length() == 0) {
+//            txtRefund.setText("Product ID");
+//            txtRefund.setForeground(new Color(153, 153, 153));
+//        }
+    }//GEN-LAST:event_txtProductIdFocusLost
 
     public void SetDataTable(String namaProduk, int jumlahBeli, int harga) {
         if (jumlahBeli != 0 && jumlahBeli > 0) {
@@ -640,8 +636,8 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
     }
     
     private void CheckdanAddData() {
-                TransaksiPenjualanControler controler = new TransaksiPenjualanControler(null, null, null, 0, null, 0, null, null, null, null);
-                String productId = (String) cmbProductId.getSelectedItem();
+                TransaksiPenjualanControler controler = new TransaksiPenjualanControler(null, null, null, 0, null, 0, null, null, null);
+                String productId = txtProductId.getText();
                 txtQuantity.setText("1");
                 String productName = txtProductName.getText();
                 int jumlahBeli = controler.ValidateQuantity(txtQuantity);
@@ -679,8 +675,6 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnPrint;
     private javax.swing.JButton btnSearch;
-    private javax.swing.JComboBox<String> cmbKategori;
-    private javax.swing.JComboBox<String> cmbProductId;
     private javax.swing.JLabel lblNamaUser;
     private javax.swing.JLabel lblPosisiUser;
     private javax.swing.JTable table;
@@ -688,6 +682,7 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtMemberName;
     private javax.swing.JTextField txtNoHpMember;
     private javax.swing.JTextField txtPay;
+    private javax.swing.JTextField txtProductId;
     private javax.swing.JTextField txtProductName;
     private javax.swing.JTextField txtQuantity;
     private javax.swing.JTextField txtRefund;

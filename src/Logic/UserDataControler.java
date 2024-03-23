@@ -144,6 +144,15 @@ public class UserDataControler {
         }
         return false;
     }
+    
+    private boolean ValidasiRole(){
+        if (!role.equalsIgnoreCase("Position")) {
+            return true;
+        } else {
+            exceptionHandler.getErrorKesalahan("Please, Select a user position!");
+        }
+        return false;
+    }
 
     public boolean ValidasiField() {
         if (!nik.trim().equalsIgnoreCase("NIK") && !nik.equals("") && !nama.trim().equalsIgnoreCase("Name") && !nama.equals("")
@@ -191,7 +200,7 @@ public class UserDataControler {
 
     // change data user di kelas user data
     public boolean ChangeUserData() {
-        if (ValidateNikBaru() && ValidasiNoHpBaru() && ValidasiNama() && ValidasiAlamat() && ValidasiField()) {
+        if (ValidateNikBaru() && ValidasiNoHpBaru() && ValidasiNama() && ValidasiAlamat() && ValidasiField() && ValidasiRole()) {
             boolean confirm = exceptionHandler.confirmChangePerson("Update user data?");
             if (confirm) {
                 dbUserManager.ChangeUserData(idUser, nik, nama, noHp, alamat, role);

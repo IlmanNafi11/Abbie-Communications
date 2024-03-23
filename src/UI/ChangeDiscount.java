@@ -42,6 +42,8 @@ public class ChangeDiscount extends javax.swing.JDialog {
         bg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Change Discount");
+        setResizable(false);
         getContentPane().setLayout(null);
 
         txtMinimum.setForeground(new java.awt.Color(153, 153, 153));
@@ -124,7 +126,7 @@ public class ChangeDiscount extends javax.swing.JDialog {
         getContentPane().add(bg);
         bg.setBounds(0, 0, 401, 486);
 
-        setSize(new java.awt.Dimension(436, 522));
+        setSize(new java.awt.Dimension(418, 525));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 

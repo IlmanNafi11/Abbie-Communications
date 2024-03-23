@@ -42,7 +42,8 @@ public class ChangeSupplier extends javax.swing.JDialog {
         bg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Change Supplier Data");
+        setTitle("Change Supplier");
+        setResizable(false);
         getContentPane().setLayout(null);
 
         txtName.setText("Supplier Name");

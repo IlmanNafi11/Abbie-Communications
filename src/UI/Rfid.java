@@ -7,8 +7,6 @@ public class Rfid extends javax.swing.JDialog {
     public Rfid(JInternalFrame parent, boolean modal) {
         super((JFrame) parent.getTopLevelAncestor(), modal);
         initComponents();
-        this.setUndecorated(true);
-        getContentPane().setBackground(new Color(255,255,255,150));
     }
     
     @SuppressWarnings("unchecked")
@@ -49,7 +47,7 @@ public class Rfid extends javax.swing.JDialog {
         getContentPane().add(bg);
         bg.setBounds(0, 0, 567, 641);
 
-        setSize(new java.awt.Dimension(567, 641));
+        setSize(new java.awt.Dimension(583, 673));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 

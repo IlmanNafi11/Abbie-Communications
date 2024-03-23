@@ -4,9 +4,6 @@ import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import Logic.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.ImageIcon;
 
 public class AddProduct extends javax.swing.JDialog {
 
@@ -40,6 +37,8 @@ public class AddProduct extends javax.swing.JDialog {
         bg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Add Product");
+        setResizable(false);
         getContentPane().setLayout(null);
 
         txtIdProduct.setEditable(false);
@@ -188,7 +187,7 @@ public class AddProduct extends javax.swing.JDialog {
         getContentPane().add(bg);
         bg.setBounds(0, 0, 1111, 612);
 
-        setSize(new java.awt.Dimension(1127, 620));
+        setSize(new java.awt.Dimension(1130, 650));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 

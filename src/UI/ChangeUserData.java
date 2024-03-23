@@ -48,8 +48,11 @@ public class ChangeUserData extends javax.swing.JDialog {
         bg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Change User's");
+        setResizable(false);
         getContentPane().setLayout(null);
 
+        btnChange.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Change-Default.png"))); // NOI18N
         btnChange.setBorder(null);
         btnChange.setContentAreaFilled(false);
         btnChange.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -69,7 +72,7 @@ public class ChangeUserData extends javax.swing.JDialog {
             }
         });
         getContentPane().add(btnChange);
-        btnChange.setBounds(992, 379, 90, 50);
+        btnChange.setBounds(990, 379, 94, 50);
 
         btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Cancel-Primary-Default.png"))); // NOI18N
         btnCancel.setBorder(null);
@@ -91,7 +94,7 @@ public class ChangeUserData extends javax.swing.JDialog {
             }
         });
         getContentPane().add(btnCancel);
-        btnCancel.setBounds(881, 379, 90, 50);
+        btnCancel.setBounds(880, 379, 91, 50);
 
         txtUserId.setEditable(false);
         txtUserId.setBackground(new java.awt.Color(255, 255, 255));
@@ -174,7 +177,7 @@ public class ChangeUserData extends javax.swing.JDialog {
         getContentPane().add(bg);
         bg.setBounds(0, 0, 1125, 494);
 
-        setSize(new java.awt.Dimension(1141, 502));
+        setSize(new java.awt.Dimension(1141, 531));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 

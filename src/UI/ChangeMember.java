@@ -44,6 +44,8 @@ public class ChangeMember extends javax.swing.JDialog {
         bg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Change Member");
+        setResizable(false);
         getContentPane().setLayout(null);
 
         txtName.setText("Member Name");
@@ -105,7 +107,7 @@ public class ChangeMember extends javax.swing.JDialog {
             }
         });
         getContentPane().add(btnCancel);
-        btnCancel.setBounds(159, 390, 95, 50);
+        btnCancel.setBounds(159, 397, 95, 50);
 
         btnChange.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Change-Default.png"))); // NOI18N
         btnChange.setBorder(null);
@@ -127,13 +129,13 @@ public class ChangeMember extends javax.swing.JDialog {
             }
         });
         getContentPane().add(btnChange);
-        btnChange.setBounds(270, 390, 95, 50);
+        btnChange.setBounds(270, 397, 95, 50);
 
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Change-Member.png"))); // NOI18N
         getContentPane().add(bg);
         bg.setBounds(0, 0, 401, 507);
 
-        setSize(new java.awt.Dimension(417, 515));
+        setSize(new java.awt.Dimension(417, 535));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 

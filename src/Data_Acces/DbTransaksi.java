@@ -13,7 +13,7 @@ public class DbTransaksi {
     
     
     
-    public void AddSaleTransaction(String idTransaksi, String idProduk, String namaProduk, int jumlah, String idMember, float total, Date tanggal, String kategori, String kodePromo, String idUser){
+    public void AddSaleTransaction(String idTransaksi, String idProduk, String namaProduk, int jumlah, String idMember, float total, Date tanggal, String kodePromo, String idUser){
         exceptionHandler = new ExceptionHandler();
         String queryInsert = "INSERT INTO transaksi_penjualan (id_transaksi, id_produk, nama_produk, jumlah, id_member, biaya, tanggal, kategori, kode_promo, id_user) VALUES (?, ?, ? , ?, ?, ?, ?, ?, ?, ?)";
         Connection koneksi = null;
@@ -27,9 +27,8 @@ public class DbTransaksi {
             stInsert.setString(5, idMember);
             stInsert.setFloat(6, total);
             stInsert.setDate(7, new java.sql.Date(tanggal.getTime()));
-            stInsert.setString(8, kategori);
-            stInsert.setString(9, kodePromo);
-            stInsert.setString(10, idUser);
+            stInsert.setString(8, kodePromo);
+            stInsert.setString(9, idUser);
             stInsert.executeUpdate();
             exceptionHandler.getSucces("Transaction successful!");
         } catch (Exception e) {

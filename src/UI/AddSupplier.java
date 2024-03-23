@@ -34,7 +34,7 @@ public class AddSupplier extends javax.swing.JDialog {
         bg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Add New Supplier");
+        setTitle("Add Supplier");
         setResizable(false);
         getContentPane().setLayout(null);
 

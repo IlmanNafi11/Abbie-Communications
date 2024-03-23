@@ -17,7 +17,6 @@ public class ChangeProduk extends javax.swing.JDialog {
         this.setUndecorated(false);
         getContentPane().setBackground(new Color(255, 255, 255, 150));
         revalidate();
-        repaint();
     }
 
     public void setProduk(UpdateTable update) {
@@ -53,6 +52,8 @@ public class ChangeProduk extends javax.swing.JDialog {
         bg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Change Product");
+        setResizable(false);
         getContentPane().setLayout(null);
 
         txtIdProduct.setEditable(false);
@@ -200,7 +201,7 @@ public class ChangeProduk extends javax.swing.JDialog {
         getContentPane().add(bg);
         bg.setBounds(0, 0, 1111, 612);
 
-        setSize(new java.awt.Dimension(1127, 620));
+        setSize(new java.awt.Dimension(1130, 651));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 

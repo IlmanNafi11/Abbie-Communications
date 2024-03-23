@@ -36,6 +36,8 @@ public class AddRestock extends javax.swing.JDialog {
         bg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Restock Product");
+        setResizable(false);
         getContentPane().setLayout(null);
 
         txtNamaProduk.setForeground(new java.awt.Color(153, 153, 153));
@@ -50,7 +52,7 @@ public class AddRestock extends javax.swing.JDialog {
             }
         });
         getContentPane().add(txtNamaProduk);
-        txtNamaProduk.setBounds(31, 297, 488, 50);
+        txtNamaProduk.setBounds(50, 297, 488, 50);
 
         txtQuantity.setForeground(new java.awt.Color(153, 153, 153));
         txtQuantity.setText("Quantity");
@@ -64,7 +66,7 @@ public class AddRestock extends javax.swing.JDialog {
             }
         });
         getContentPane().add(txtQuantity);
-        txtQuantity.setBounds(31, 373, 488, 50);
+        txtQuantity.setBounds(50, 373, 488, 50);
 
         txtNamaSupplier.setForeground(new java.awt.Color(153, 153, 153));
         txtNamaSupplier.setText("Supplier Name");
@@ -78,7 +80,7 @@ public class AddRestock extends javax.swing.JDialog {
             }
         });
         getContentPane().add(txtNamaSupplier);
-        txtNamaSupplier.setBounds(561, 221, 488, 50);
+        txtNamaSupplier.setBounds(580, 221, 488, 50);
 
         txtPrice.setForeground(new java.awt.Color(153, 153, 153));
         txtPrice.setText("Price");
@@ -92,7 +94,7 @@ public class AddRestock extends javax.swing.JDialog {
             }
         });
         getContentPane().add(txtPrice);
-        txtPrice.setBounds(561, 297, 488, 50);
+        txtPrice.setBounds(580, 297, 488, 50);
 
         btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Cancel-Primary-Default.png"))); // NOI18N
         btnCancel.setBorder(null);
@@ -145,7 +147,7 @@ public class AddRestock extends javax.swing.JDialog {
             }
         });
         getContentPane().add(cmbKategori);
-        cmbKategori.setBounds(22, 145, 506, 50);
+        cmbKategori.setBounds(40, 145, 506, 50);
 
         cmbIdSupplier.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Supplier ID" }));
         cmbIdSupplier.addActionListener(new java.awt.event.ActionListener() {
@@ -154,7 +156,7 @@ public class AddRestock extends javax.swing.JDialog {
             }
         });
         getContentPane().add(cmbIdSupplier);
-        cmbIdSupplier.setBounds(552, 145, 506, 50);
+        cmbIdSupplier.setBounds(570, 145, 506, 50);
 
         cmbProductId.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Product ID" }));
         cmbProductId.addActionListener(new java.awt.event.ActionListener() {
@@ -163,13 +165,13 @@ public class AddRestock extends javax.swing.JDialog {
             }
         });
         getContentPane().add(cmbProductId);
-        cmbProductId.setBounds(22, 221, 506, 50);
+        cmbProductId.setBounds(40, 221, 506, 50);
 
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Add-Restock.png"))); // NOI18N
         getContentPane().add(bg);
-        bg.setBounds(0, 0, 1080, 545);
+        bg.setBounds(0, 0, 1115, 578);
 
-        setSize(new java.awt.Dimension(1096, 553));
+        setSize(new java.awt.Dimension(1133, 624));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 

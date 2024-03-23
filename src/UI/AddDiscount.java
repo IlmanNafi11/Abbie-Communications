@@ -34,6 +34,8 @@ public class AddDiscount extends javax.swing.JDialog {
         bg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Add Discount");
+        setResizable(false);
         getContentPane().setLayout(null);
 
         txtMinimum.setForeground(new java.awt.Color(153, 153, 153));
@@ -108,7 +110,7 @@ public class AddDiscount extends javax.swing.JDialog {
         getContentPane().add(btnAdd);
         btnAdd.setBounds(270, 390, 95, 50);
 
-        cmbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Status", "Active", "Non Active", " " }));
+        cmbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Status", "Active", "Non Active" }));
         getContentPane().add(cmbStatus);
         cmbStatus.setBounds(40, 308, 320, 50);
 
@@ -116,7 +118,7 @@ public class AddDiscount extends javax.swing.JDialog {
         getContentPane().add(bg);
         bg.setBounds(0, 0, 401, 486);
 
-        setSize(new java.awt.Dimension(436, 533));
+        setSize(new java.awt.Dimension(418, 525));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
