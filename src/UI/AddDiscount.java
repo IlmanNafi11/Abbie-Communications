@@ -30,7 +30,6 @@ public class AddDiscount extends javax.swing.JDialog {
         txtAmount = new javax.swing.JTextField();
         btnCancel = new javax.swing.JButton();
         btnAdd = new javax.swing.JButton();
-        cmbKategori = new javax.swing.JComboBox<>();
         cmbStatus = new javax.swing.JComboBox<>();
         bg = new javax.swing.JLabel();
 
@@ -49,7 +48,7 @@ public class AddDiscount extends javax.swing.JDialog {
             }
         });
         getContentPane().add(txtMinimum);
-        txtMinimum.setBounds(46, 230, 310, 50);
+        txtMinimum.setBounds(50, 155, 310, 50);
 
         txtAmount.setForeground(new java.awt.Color(153, 153, 153));
         txtAmount.setText("Amount");
@@ -63,7 +62,7 @@ public class AddDiscount extends javax.swing.JDialog {
             }
         });
         getContentPane().add(txtAmount);
-        txtAmount.setBounds(46, 307, 310, 50);
+        txtAmount.setBounds(50, 232, 310, 50);
 
         btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Cancel-Primary-Default.png"))); // NOI18N
         btnCancel.setBorder(null);
@@ -85,7 +84,7 @@ public class AddDiscount extends javax.swing.JDialog {
             }
         });
         getContentPane().add(btnCancel);
-        btnCancel.setBounds(159, 466, 95, 50);
+        btnCancel.setBounds(159, 390, 95, 50);
 
         btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Add-Default.png"))); // NOI18N
         btnAdd.setBorder(null);
@@ -107,21 +106,17 @@ public class AddDiscount extends javax.swing.JDialog {
             }
         });
         getContentPane().add(btnAdd);
-        btnAdd.setBounds(270, 466, 95, 50);
-
-        cmbKategori.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Category", "Minimum item purchase", "Minimum total expenditure" }));
-        getContentPane().add(cmbKategori);
-        cmbKategori.setBounds(40, 155, 322, 50);
+        btnAdd.setBounds(270, 390, 95, 50);
 
         cmbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Status", "Active", "Non Active", " " }));
         getContentPane().add(cmbStatus);
-        cmbStatus.setBounds(40, 380, 320, 50);
+        cmbStatus.setBounds(40, 308, 320, 50);
 
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Add-Discount.png"))); // NOI18N
         getContentPane().add(bg);
-        bg.setBounds(0, 0, 401, 562);
+        bg.setBounds(0, 0, 401, 486);
 
-        setSize(new java.awt.Dimension(436, 601));
+        setSize(new java.awt.Dimension(436, 533));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -144,9 +139,8 @@ public class AddDiscount extends javax.swing.JDialog {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Add-Click.png")));
-        String kategori = (String) cmbKategori.getSelectedItem();
         String status = (String) cmbStatus.getSelectedItem();
-        PromoContoler controler = new PromoContoler(null, kategori, 0, 0, status);
+        PromoContoler controler = new PromoContoler(null, 0, 0, status);
         controler.ValidateMinPurchase(txtMinimum);
         controler.ValidateValue(txtAmount);
         boolean succes = controler.InsertDiskon();
@@ -243,7 +237,6 @@ public class AddDiscount extends javax.swing.JDialog {
     private javax.swing.JLabel bg;
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnCancel;
-    private javax.swing.JComboBox<String> cmbKategori;
     private javax.swing.JComboBox<String> cmbStatus;
     private javax.swing.JTextField txtAmount;
     private javax.swing.JTextField txtMinimum;

@@ -23,9 +23,8 @@ public class ChangeDiscount extends javax.swing.JDialog {
         this.update = update;
     }
 
-    public void setField(String kodeDiskon, String kategori, int minumumPurchase, int amount, String status) {
+    public void setField(String kodeDiskon, int minumumPurchase, int amount, String status) {
         this.kodeDiskon = kodeDiskon;
-        cmbKategori.setSelectedItem(kategori);
         txtMinimum.setText(String.valueOf(minumumPurchase));
         txtAmount.setText(String.valueOf(amount));
         cmbStatus.setSelectedItem(status);
@@ -39,7 +38,6 @@ public class ChangeDiscount extends javax.swing.JDialog {
         txtAmount = new javax.swing.JTextField();
         btnCancel = new javax.swing.JButton();
         btnChange = new javax.swing.JButton();
-        cmbKategori = new javax.swing.JComboBox<>();
         cmbStatus = new javax.swing.JComboBox<>();
         bg = new javax.swing.JLabel();
 
@@ -58,7 +56,7 @@ public class ChangeDiscount extends javax.swing.JDialog {
             }
         });
         getContentPane().add(txtMinimum);
-        txtMinimum.setBounds(46, 230, 310, 50);
+        txtMinimum.setBounds(50, 155, 310, 50);
 
         txtAmount.setForeground(new java.awt.Color(153, 153, 153));
         txtAmount.setText("Amount");
@@ -72,7 +70,7 @@ public class ChangeDiscount extends javax.swing.JDialog {
             }
         });
         getContentPane().add(txtAmount);
-        txtAmount.setBounds(46, 307, 310, 50);
+        txtAmount.setBounds(50, 231, 310, 50);
 
         btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Cancel-Primary-Default.png"))); // NOI18N
         btnCancel.setBorder(null);
@@ -94,7 +92,7 @@ public class ChangeDiscount extends javax.swing.JDialog {
             }
         });
         getContentPane().add(btnCancel);
-        btnCancel.setBounds(159, 466, 95, 50);
+        btnCancel.setBounds(159, 390, 95, 50);
 
         btnChange.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Change-Default.png"))); // NOI18N
         btnChange.setBorder(null);
@@ -116,21 +114,17 @@ public class ChangeDiscount extends javax.swing.JDialog {
             }
         });
         getContentPane().add(btnChange);
-        btnChange.setBounds(270, 466, 95, 50);
-
-        cmbKategori.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Category", "Minimum item purchase", "Minimum total expenditure" }));
-        getContentPane().add(cmbKategori);
-        cmbKategori.setBounds(40, 155, 322, 50);
+        btnChange.setBounds(270, 390, 95, 50);
 
         cmbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Status", "Active", "Non Active" }));
         getContentPane().add(cmbStatus);
-        cmbStatus.setBounds(40, 380, 320, 50);
+        cmbStatus.setBounds(40, 307, 320, 50);
 
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Change-Discount.png"))); // NOI18N
         getContentPane().add(bg);
-        bg.setBounds(0, 0, 401, 562);
+        bg.setBounds(0, 0, 401, 486);
 
-        setSize(new java.awt.Dimension(418, 573));
+        setSize(new java.awt.Dimension(436, 522));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -153,11 +147,10 @@ public class ChangeDiscount extends javax.swing.JDialog {
 
     private void btnChangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeActionPerformed
         btnChange.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Change-Click.png")));
-        String kategori = (String) cmbKategori.getSelectedItem();
         int minimumBelanja = Integer.parseInt(txtMinimum.getText());
         int jumlahDiskon = Integer.parseInt(txtAmount.getText());
         String status = (String) cmbStatus.getSelectedItem();
-        PromoContoler controler = new PromoContoler(kodeDiskon, kategori, minimumBelanja, jumlahDiskon, status);
+        PromoContoler controler = new PromoContoler(kodeDiskon, minimumBelanja, jumlahDiskon, status);
         controler.ValidateMinPurchase(txtMinimum);
         controler.ValidateValue(txtAmount);
         boolean succes = controler.ChangeDiskon();
@@ -256,7 +249,6 @@ public class ChangeDiscount extends javax.swing.JDialog {
     private javax.swing.JLabel bg;
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnChange;
-    private javax.swing.JComboBox<String> cmbKategori;
     private javax.swing.JComboBox<String> cmbStatus;
     private javax.swing.JTextField txtAmount;
     private javax.swing.JTextField txtMinimum;

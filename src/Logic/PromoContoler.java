@@ -9,16 +9,14 @@ import java.util.Random;
 public class PromoContoler {
 
     private String kodeDiskon;
-    private String kategori;
     private int minimum;
     private int nilai;
     private String status;
     private ExceptionHandler exceptionHandler;
     private DbPromo dbPromo;
 
-    public PromoContoler(String kodeDiskon, String kategori, int minimum, int nilai, String status) {
+    public PromoContoler(String kodeDiskon, int minimum, int nilai, String status) {
         this.kodeDiskon = kodeDiskon;
-        this.kategori = kategori;
         this.minimum = minimum;
         this.nilai = nilai;
         this.status = status;
@@ -26,6 +24,7 @@ public class PromoContoler {
         dbPromo = new DbPromo();
     }
 
+    // Men generate angka random
     private String GenerateRandom(int angka) {
         Random random = new Random();
         StringBuilder stringBuilder = new StringBuilder();
@@ -35,30 +34,19 @@ public class PromoContoler {
         return stringBuilder.toString();
     }
 
+    // generate kode diskon
     private String GenerateKodeDiskon() {
-        if (kategori.equalsIgnoreCase("Minimum item purchase")) {
-            this.kodeDiskon = "MIP" + GenerateRandom(4);
-        } else if (kategori.equalsIgnoreCase("Minimum total expenditure")) {
-            this.kodeDiskon = "MTE" + GenerateRandom(4);
-        }
+        kodeDiskon = "DSC" + GenerateRandom(4);
         return kodeDiskon;
     }
 
+    // validasi baris table sebelum aksi update
     public boolean ValidateRow(JTable table) {
         int row = table.getSelectedRow();
         if (row != -1) {
             return true;
         } else {
             exceptionHandler.getErrorKesalahan("Select one of the discount data you want to change");
-        }
-        return false;
-    }
-
-    private boolean ValidateKategori() {
-        if (!kategori.equalsIgnoreCase("Category")) {
-            return true;
-        } else {
-            exceptionHandler.getErrorKesalahan("Select a discount category!");
         }
         return false;
     }
@@ -109,10 +97,8 @@ public class PromoContoler {
         int row = table.getSelectedRow();
         ArrayList<String> data = new ArrayList<>();
         String kodePromo = table.getValueAt(row, 0).toString();
-        String kategori = table.getValueAt(row, 1).toString();
-        String status = table.getValueAt(row, 4).toString();
+        String status = table.getValueAt(row, 3).toString();
         data.add(kodePromo);
-        data.add(kategori);
         data.add(status);
         return data;
     }
@@ -120,19 +106,19 @@ public class PromoContoler {
     public ArrayList<Integer> IsiIntField(JTable table) {
         int row = table.getSelectedRow();
         ArrayList<Integer> data = new ArrayList<>();
-        int minimumPurchase = (Integer) table.getValueAt(row, 2);
-        int amount = (Integer) table.getValueAt(row, 3);
+        int minimumPurchase = (Integer) table.getValueAt(row, 1);
+        int amount = (Integer) table.getValueAt(row, 2);
         data.add(minimumPurchase);
         data.add(amount);
         return data;
     }
 
     public boolean InsertDiskon() {
-        if (ValidateKategori() && ValidateStatus() && minimum != 0 && nilai != 0) {
+        if (ValidateStatus() && minimum != 0 && nilai != 0) {
             GenerateKodeDiskon();
             boolean confirm = exceptionHandler.confirmSave("Save Discount?");
             if (confirm) {
-                dbPromo.InsertDiskon(kodeDiskon, kategori, minimum, nilai, status);
+                dbPromo.InsertDiskon(kodeDiskon, minimum, nilai, status);
                 return true;
             }
         }
@@ -140,10 +126,10 @@ public class PromoContoler {
     }
 
     public boolean ChangeDiskon() {
-        if (ValidateKategori() && ValidateStatus() && minimum != 0 && nilai != 0) {
+        if (ValidateStatus() && minimum != 0 && nilai != 0) {
             boolean confirm = exceptionHandler.confirmSave("Save changes?");
             if (confirm) {
-                dbPromo.ChangeDiskon(kodeDiskon, kategori, minimum, nilai, status);
+                dbPromo.ChangeDiskon(kodeDiskon, minimum, nilai, status);
                 return true;
             }
         }

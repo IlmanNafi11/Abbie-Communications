@@ -39,7 +39,7 @@ public class Member extends javax.swing.JInternalFrame implements UpdateTable {
     }
 
     public void ViewTableDiskon() {
-        PromoContoler controler = new PromoContoler(null, null, 0, 0, null);
+        PromoContoler controler = new PromoContoler(null, 0, 0, null);
         ConfigTable Tabel = controler.GetAllData();
         tableDiskon.setModel(Tabel);
     }
@@ -397,7 +397,7 @@ public class Member extends javax.swing.JInternalFrame implements UpdateTable {
     private void btnEditPromoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditPromoActionPerformed
         btnEditPromo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Edit-Click.png")));
         ChangeDiscount changeDiscount = new ChangeDiscount(this, true);
-        PromoContoler controler = new PromoContoler(null, null, 0, 0, null);
+        PromoContoler controler = new PromoContoler(null, 0, 0, null);
         ArrayList<String> dataString = new ArrayList<>();
         ArrayList<Integer> dataInteger = new ArrayList<>();
         int row = tableDiskon.getSelectedRow();
@@ -411,7 +411,7 @@ public class Member extends javax.swing.JInternalFrame implements UpdateTable {
             });
             dataString = controler.IsiStringField(tableDiskon);
             dataInteger = controler.IsiIntField(tableDiskon);
-            changeDiscount.setField(dataString.get(0), dataString.get(1), dataInteger.get(0), dataInteger.get(1), dataString.get(2));
+            changeDiscount.setField(dataString.get(0), dataInteger.get(0), dataInteger.get(1), dataString.get(1));
             changeDiscount.setVisible(true);
         }
 
@@ -431,7 +431,7 @@ public class Member extends javax.swing.JInternalFrame implements UpdateTable {
 
     private void btnHapusPromoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusPromoActionPerformed
         btnHapusPromo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Delete-Click.png")));
-        PromoContoler contoler = new PromoContoler(null, null, 0, 0, null);
+        PromoContoler contoler = new PromoContoler(null, 0, 0, null);
         boolean succes = contoler.DeleteDiskon(tableDiskon);
         if (succes) {
             ViewTableDiskon();
