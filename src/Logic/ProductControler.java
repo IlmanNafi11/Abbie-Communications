@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import Data_Acces.*;
 import com.onbarcode.barcode.EAN13;
 import com.onbarcode.barcode.IBarcode;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -11,6 +12,7 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
@@ -64,12 +66,12 @@ public class ProductControler {
         } else {
             idProduct = "Product ID";
         }
-
         return idProduct;
     }
 
-    public byte[] GenerateBarcode(String idProduct) {
+    public byte[] GenerateBarcode(String idProduct, String kategori) {
         byte[] byteBarcode = null;
+        if (!kategori.equalsIgnoreCase("Category")) {
             try {
                 EAN13 barcode = new EAN13();
                 barcode.setData(idProduct);
@@ -94,6 +96,7 @@ public class ProductControler {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }  
         return byteBarcode;
     }
 
@@ -228,10 +231,17 @@ public class ProductControler {
         return data;
     }
 
-    public ImageIcon DisplayBarcode(String idProduct) {
-        byte[] iconBarcode = GenerateBarcode(idProduct);
-        ImageIcon imgBarcode = new ImageIcon(iconBarcode);
-        return imgBarcode;
+    public void DisplayBarcode(String idProduct, String kategori, JLabel lblBarcode) {
+        byte[] iconBarcode = GenerateBarcode(idProduct, kategori);
+        if (iconBarcode != null) {
+            ImageIcon imgBarcode = new ImageIcon(iconBarcode);
+            lblBarcode.setIcon(imgBarcode);
+            lblBarcode.setText("");
+        } else {
+            lblBarcode.setIcon(null);
+            lblBarcode.setForeground(new Color(153,153,153));
+            lblBarcode.setText("Barcode");
+        }
     }
 
     public ImageIcon GetBarcode(String idProduct) {
@@ -258,11 +268,10 @@ public class ProductControler {
     public boolean InsertProduct() {
         try {
             if (ValidasiDataProduk() && ValidasiNama() && jumlahStock != 0 && harga != 0) {
-                byte[] barcode = GenerateBarcode(idProduct);
+                byte[] barcode = GenerateBarcode(idProduct, kategori);
                 boolean confirm = exception.confirmSave("Save product data?");
                 if (confirm) {
                     dbProduct.InsertProduct(kategori, idProduct, namaProduct, jumlahStock, idSupplier, harga, barcode);
-                    GenerateBarcode(idProduct);
                     return true;
                 }
             }

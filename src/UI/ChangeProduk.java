@@ -190,6 +190,9 @@ public class ChangeProduk extends javax.swing.JDialog {
         });
         getContentPane().add(cmbIdSupplier);
         cmbIdSupplier.setBounds(568, 145, 506, 50);
+
+        lblBarcode.setForeground(new java.awt.Color(153, 153, 153));
+        lblBarcode.setText("Barcode");
         getContentPane().add(lblBarcode);
         lblBarcode.setBounds(570, 370, 500, 110);
 
@@ -322,8 +325,7 @@ public class ChangeProduk extends javax.swing.JDialog {
         ProductControler controler = new ProductControler(null, kategori, null, null, 0, 0);
         String idProduk = controler.GenerateIdProduct(cmbKategori);
         txtIdProduct.setText(idProduk);
-        ImageIcon iconBarcode = controler.DisplayBarcode(idProduk);
-        lblBarcode.setIcon(iconBarcode);
+        controler.DisplayBarcode(idProduk, kategori, lblBarcode);
         controler.SetIdSupplier(kategori, cmbIdSupplier);
         cmbIdSupplier.addItem("Supplier ID");
     }//GEN-LAST:event_cmbKategoriActionPerformed
