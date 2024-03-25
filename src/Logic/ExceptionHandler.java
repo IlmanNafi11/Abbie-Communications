@@ -17,7 +17,7 @@ public class ExceptionHandler {
     ImageIcon succesAddPersonData = new ImageIcon(getClass().getResource("/images/IconError/Succes-Save-Person-Data.png"));
     ImageIcon confirmSaveDataPerson = new ImageIcon(getClass().getResource("/images/IconError/Confirm-Save-Person-Data.png"));
     ImageIcon confirmChangeDataPerson = new ImageIcon(getClass().getResource("/images/IconError/Confirm-Change-Data-Person.png"));
-    
+    ImageIcon confirmDiscount = new ImageIcon(getClass().getResource("/images/IconError/Icon-Discount.png"));
 
     // pesan error
     public void getErrorKesalahan(String pesanError) {
@@ -85,6 +85,13 @@ public class ExceptionHandler {
     // konfirmasi ubah data person
     public boolean confirmChangePerson(String pesan) {
         if (JOptionPane.showConfirmDialog(null, pesan, "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, confirmChangeDataPerson) == JOptionPane.YES_OPTION) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean ConfirmDiscount(String pesan){
+        if (JOptionPane.showConfirmDialog(null, pesan, "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, confirmDiscount) == JOptionPane.YES_OPTION) {
             return true;
         }
         return false;

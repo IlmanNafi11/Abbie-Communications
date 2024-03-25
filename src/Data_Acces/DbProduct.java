@@ -239,7 +239,7 @@ public class DbProduct {
         return idProduk;
     }
 
-    // get produk name berdasarkan id produk untuk kelas restock
+    // get produk name berdasarkan id produk untuk kelas restock, transaksi
     public String GetProdukName(String idProduk) {
         String queryGetName = "SELECT nama_produk FROM produk WHERE id_produk = ?";
         exceptionHandler = new ExceptionHandler();
@@ -281,6 +281,33 @@ public class DbProduct {
             }
         } catch (Exception e) {
             exceptionHandler.getErrorKesalahan("A Failure occurred while retrieving product prices! ");
+        } finally {
+            if (koneksi != null) {
+                try {
+                    koneksi.close();
+                } catch (Exception e) {
+                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection! " + e.getMessage());
+                }
+            }
+        }
+        return 0;
+    }
+    
+    // get jumlah stok untuk validasi ketika transaksi
+    public int GetStok(String idProduct){
+        exceptionHandler = new ExceptionHandler();
+        String queryGet = "SELECT jumlah FROM produk WHERE id_produk = ?";
+        Connection koneksi = null;
+        try {
+            koneksi = ClassKoneksi.GetConnection();
+            PreparedStatement stGet = koneksi.prepareStatement(queryGet);
+            stGet.setString(1, idProduct);
+            ResultSet rs = stGet.executeQuery();
+            while (rs.next()) {                
+                return rs.getInt("jumlah");
+            }
+        } catch (Exception e) {
+            exceptionHandler.getErrorKesalahan("A failure occurred when trying to retrieve the product stock quantity " + e.getMessage());
         } finally {
             if (koneksi != null) {
                 try {

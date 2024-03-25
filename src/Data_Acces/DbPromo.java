@@ -4,6 +4,7 @@ import Connections.ClassKoneksi;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import Logic.*;
 
 public class DbPromo {
@@ -11,7 +12,7 @@ public class DbPromo {
     private ExceptionHandler exceptionHandler;
 
     public void InsertDiskon(String kodeDiskon, int minimum, int jumlahDiskon, String status) {
-        String queryInsert = "INSERT INTO promo (kode_diskon, minimum, nilai, status) VALUES (? , ? , ?, ?)";
+        String queryInsert = "INSERT INTO promo (kode_diskon, minimum, diskon, status) VALUES (? , ? , ?, ?)";
         exceptionHandler = new ExceptionHandler();
         Connection koneksi = null;
         try {
@@ -37,7 +38,7 @@ public class DbPromo {
     }
 
     public void ChangeDiskon(String kodeDiskon, int minimum, int jumlahDiskon, String status) {
-        String queryChange = "UPDATE promo SET minimum = ?, nilai = ?, status = ? WHERE kode_diskon = ?";
+        String queryChange = "UPDATE promo SET minimum = ?, diskon = ?, status = ? WHERE kode_diskon = ?";
         exceptionHandler = new ExceptionHandler();
         Connection koneksi = null;
         try {
@@ -103,7 +104,7 @@ public class DbPromo {
                 dataTable.addRow(new Object[]{
                     rs.getString("kode_diskon"),
                     rs.getInt("minimum"),
-                    rs.getInt("nilai"),
+                    rs.getInt("diskon"),
                     rs.getString("status")
                 });
             }
@@ -119,5 +120,58 @@ public class DbPromo {
             }
         }
         return dataTable;
+    }
+
+    public ArrayList<String> GetKodeDiskon(int total) {
+        ArrayList<String> kodeDiskon = new ArrayList<>();
+        exceptionHandler = new ExceptionHandler();
+        String queryGet = "SELECT kode_diskon FROM promo WHERE ? > minimum";
+        Connection koneksi = null;
+        try {
+            koneksi = ClassKoneksi.GetConnection();
+            PreparedStatement stGet = koneksi.prepareStatement(queryGet);
+            stGet.setInt(1, total);
+            ResultSet rs = stGet.executeQuery();
+            while (rs.next()) {
+                kodeDiskon.add(rs.getString("kode_diskon"));
+            }
+        } catch (Exception e) {
+            exceptionHandler.getErrorKesalahan("A failure occurred while trying to retrieve the promo code!" + e.getMessage());
+        } finally {
+            if (koneksi != null) {
+                try {
+                    koneksi.close();
+                } catch (Exception e) {
+                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection!");
+                }
+            }
+        }
+        return kodeDiskon;
+    }
+    
+    public int GetDiskon(String kodeDiskon){
+        exceptionHandler  = new ExceptionHandler();
+        String queryGet = "SELECT diskon FROM promo WHERE kode_diskon = ?";
+        Connection koneksi = null;
+        try {
+            koneksi = ClassKoneksi.GetConnection();
+            PreparedStatement stGet = koneksi.prepareStatement(queryGet);
+            stGet.setString(1, kodeDiskon);
+            ResultSet rs = stGet.executeQuery();
+            while (rs.next()) {                
+                return rs.getInt("diskon");
+            }
+        } catch (Exception e) {
+            exceptionHandler.getErrorKesalahan("A failure occurred while retrieving the discount amount!");
+        } finally {
+            if (koneksi != null) {
+                try {
+                    koneksi.close();
+                } catch (Exception e) {
+                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection!");
+                }
+            }
+        }
+        return 0;
     }
 }

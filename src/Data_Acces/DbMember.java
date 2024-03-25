@@ -38,7 +38,7 @@ public class DbMember {
     }
     
     // get data member berdasarkan no hp untuk transaksi penjualan
-    public ArrayList<String> GekMember(String noHp){
+    public ArrayList<String> GetMember(String noHp){
         exceptionHandler = new ExceptionHandler();
         ArrayList<String> dataMember = new ArrayList<>();
         String queryCek = "SELECT id_member, nama_member FROM member WHERE tlp_member = ?";

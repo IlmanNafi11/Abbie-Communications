@@ -23,7 +23,18 @@ public class PromoContoler {
         exceptionHandler = new ExceptionHandler();
         dbPromo = new DbPromo();
     }
-
+    
+    // get kode diskon untuk transaksi
+    public ArrayList<String> getKodeDiskon(int total) {
+        ArrayList<String> kode = dbPromo.GetKodeDiskon(total);
+        return kode;
+    }
+    
+    // get jumlah diskon untuk transaksi
+    public int GetDiscountAmount(){
+        return dbPromo.GetDiskon(kodeDiskon);
+    }
+    
     // Men generate angka random
     private String GenerateRandom(int angka) {
         Random random = new Random();

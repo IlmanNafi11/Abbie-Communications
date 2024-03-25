@@ -2,9 +2,9 @@ package UI;
 
 import Logic.*;
 import java.awt.Color;
+import java.awt.event.ItemEvent;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 public class TransaksiPenjualan extends javax.swing.JInternalFrame {
@@ -12,15 +12,14 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
     private String username;
     private String role;
     private ConfigTable model;
-    
+
     public TransaksiPenjualan() {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
         bui.setNorthPane(null);
+        bg.setFocusable(true);
         ViewTableTransaksi();
-//        GetData();
-        
     }
 
     public void SetProfile(String nama, String role) {
@@ -31,7 +30,7 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
     }
 
     public void ViewTableTransaksi() {
-        TransaksiPenjualanControler controler = new TransaksiPenjualanControler(null, null, null, 0, null, 0, null, null, null);
+        TransaksiPenjualanControler controler = new TransaksiPenjualanControler(null, null, null, 0, null, 0, null);
         model = controler.modelTabel();
         table.setModel(model);
     }
@@ -53,12 +52,12 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
         table = new javax.swing.JTable();
         txtTotal = new javax.swing.JTextField();
         txtPay = new javax.swing.JTextField();
-        txtKodeDiskon = new javax.swing.JTextField();
         txtRefund = new javax.swing.JTextField();
         txtProductId = new javax.swing.JTextField();
         lblPosisiUser = new javax.swing.JLabel();
         IconProfil = new javax.swing.JLabel();
         lblNamaUser = new javax.swing.JLabel();
+        cmbKodeDiskon = new javax.swing.JComboBox<>();
         bg = new javax.swing.JLabel();
 
         setBorder(null);
@@ -153,14 +152,6 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
         txtProductName.setForeground(new java.awt.Color(153, 153, 153));
         txtProductName.setText("Product Name");
         txtProductName.setBorder(null);
-        txtProductName.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtProductNameFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtProductNameFocusLost(evt);
-            }
-        });
         getContentPane().add(txtProductName, new org.netbeans.lib.awtextra.AbsoluteConstraints(92, 357, 450, 50));
 
         txtQuantity.setForeground(new java.awt.Color(153, 153, 153));
@@ -174,9 +165,9 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
                 txtQuantityFocusLost(evt);
             }
         });
-        txtQuantity.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtQuantityActionPerformed(evt);
+        txtQuantity.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtQuantityKeyReleased(evt);
             }
         });
         getContentPane().add(txtQuantity, new org.netbeans.lib.awtextra.AbsoluteConstraints(92, 433, 450, 50));
@@ -232,32 +223,39 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Product Name", "Quantity", "Price"
+                "Product ID", "Product Name", "Quantity", "Price", "sub-Total"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
+        table.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        table.setShowVerticalLines(true);
+        table.getTableHeader().setReorderingAllowed(false);
         JScrollPane.setViewportView(table);
         if (table.getColumnModel().getColumnCount() > 0) {
             table.getColumnModel().getColumn(0).setResizable(false);
             table.getColumnModel().getColumn(1).setResizable(false);
             table.getColumnModel().getColumn(2).setResizable(false);
+            table.getColumnModel().getColumn(3).setResizable(false);
+            table.getColumnModel().getColumn(4).setResizable(false);
         }
 
         getContentPane().add(JScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 500, 940, 180));
 
+        txtTotal.setEditable(false);
+        txtTotal.setBackground(new java.awt.Color(255, 255, 255));
         txtTotal.setForeground(new java.awt.Color(153, 153, 153));
         txtTotal.setText("Total");
         txtTotal.setBorder(null);
@@ -282,36 +280,15 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
                 txtPayFocusLost(evt);
             }
         });
-        getContentPane().add(txtPay, new org.netbeans.lib.awtextra.AbsoluteConstraints(368, 799, 202, 50));
+        getContentPane().add(txtPay, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 799, 202, 50));
 
-        txtKodeDiskon.setForeground(new java.awt.Color(153, 153, 153));
-        txtKodeDiskon.setText("Discount Code");
-        txtKodeDiskon.setBorder(null);
-        txtKodeDiskon.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtKodeDiskonFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtKodeDiskonFocusLost(evt);
-            }
-        });
-        getContentPane().add(txtKodeDiskon, new org.netbeans.lib.awtextra.AbsoluteConstraints(607, 799, 165, 50));
-
+        txtRefund.setEditable(false);
+        txtRefund.setBackground(new java.awt.Color(255, 255, 255));
         txtRefund.setForeground(new java.awt.Color(153, 153, 153));
         txtRefund.setText("Refund");
         txtRefund.setBorder(null);
-        txtRefund.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtRefundFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtRefundFocusLost(evt);
-            }
-        });
         getContentPane().add(txtRefund, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 799, 198, 50));
 
-        txtProductId.setEditable(false);
-        txtProductId.setBackground(new java.awt.Color(255, 255, 255));
         txtProductId.setForeground(new java.awt.Color(153, 153, 153));
         txtProductId.setText("Product ID");
         txtProductId.setBorder(null);
@@ -321,6 +298,11 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtProductIdFocusLost(evt);
+            }
+        });
+        txtProductId.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtProductIdKeyReleased(evt);
             }
         });
         getContentPane().add(txtProductId, new org.netbeans.lib.awtextra.AbsoluteConstraints(92, 281, 450, 50));
@@ -368,6 +350,14 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
         });
         getContentPane().add(lblNamaUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 20, -1, -1));
 
+        cmbKodeDiskon.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Discount Code" }));
+        cmbKodeDiskon.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbKodeDiskonItemStateChanged(evt);
+            }
+        });
+        getContentPane().add(cmbKodeDiskon, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 800, 180, 50));
+
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Sales Transactions.png"))); // NOI18N
         getContentPane().add(bg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -410,6 +400,8 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
 
     private void btnCountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCountActionPerformed
         btnCount.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Button-Count-Primary-click.png")));
+        TransaksiPenjualanControler controler = new TransaksiPenjualanControler(null, null, null, 0, null, 0, null);
+        controler.HitungKembalian(txtTotal, txtPay, txtRefund);
     }//GEN-LAST:event_btnCountActionPerformed
 
     private void btnCountMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCountMouseEntered
@@ -439,20 +431,6 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
     private void btnPrintMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPrintMousePressed
         btnPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Button-Print-Primary-click.png")));
     }//GEN-LAST:event_btnPrintMousePressed
-
-    private void txtProductNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtProductNameFocusGained
-        if (txtProductName.getText().equals("Product Name")) {
-            txtProductName.setText("");
-            txtProductName.setForeground(Color.BLACK);
-        }
-    }//GEN-LAST:event_txtProductNameFocusGained
-
-    private void txtProductNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtProductNameFocusLost
-        if (txtProductName.getText().trim().equals("") || txtProductName.getText().length() == 0) {
-            txtProductName.setText("Product Name");
-            txtProductName.setForeground(new Color(153, 153, 153));
-        }
-    }//GEN-LAST:event_txtProductNameFocusLost
 
     private void txtQuantityFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtQuantityFocusGained
         if (txtQuantity.getText().equals("Quantity")) {
@@ -524,34 +502,6 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_txtPayFocusLost
 
-    private void txtKodeDiskonFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtKodeDiskonFocusGained
-        if (txtKodeDiskon.getText().equals("Discount Code")) {
-            txtKodeDiskon.setText("");
-            txtKodeDiskon.setForeground(Color.BLACK);
-        }
-    }//GEN-LAST:event_txtKodeDiskonFocusGained
-
-    private void txtKodeDiskonFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtKodeDiskonFocusLost
-        if (txtKodeDiskon.getText().trim().equals("") || txtKodeDiskon.getText().length() == 0) {
-            txtKodeDiskon.setText("Discount Code");
-            txtKodeDiskon.setForeground(new Color(153, 153, 153));
-        }
-    }//GEN-LAST:event_txtKodeDiskonFocusLost
-
-    private void txtRefundFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtRefundFocusGained
-        if (txtRefund.getText().equals("Refund")) {
-            txtRefund.setText("");
-            txtRefund.setForeground(Color.BLACK);
-        }
-    }//GEN-LAST:event_txtRefundFocusGained
-
-    private void txtRefundFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtRefundFocusLost
-        if (txtRefund.getText().trim().equals("") || txtRefund.getText().length() == 0) {
-            txtRefund.setText("Refund");
-            txtRefund.setForeground(new Color(153, 153, 153));
-        }
-    }//GEN-LAST:event_txtRefundFocusLost
-
     private void lblPosisiUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPosisiUserMouseClicked
         lblPosisiUser.setForeground(new Color(28, 119, 255));
         Profile profile = new Profile(this, true);
@@ -609,63 +559,54 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Icon-Search-Click.png")));
         String noHp = txtNoHpMember.getText();
-        TransaksiPenjualanControler controler = new TransaksiPenjualanControler(null, null, null, 0, noHp, 0, null, null, null);
-        controler.SetTxtNamaMember(txtNoHpMember, txtMemberName);
+        String kodeDiskon = (String) cmbKodeDiskon.getSelectedItem();
+        TransaksiPenjualanControler controler = new TransaksiPenjualanControler(null, null, null, 0, noHp, 0, kodeDiskon);
+        controler.SetTxtNamaMember(txtNoHpMember, txtMemberName, cmbKodeDiskon);
+        controler.GetDiskon(txtMemberName, txtTotal, cmbKodeDiskon);
     }//GEN-LAST:event_btnSearchActionPerformed
 
-    private void txtQuantityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQuantityActionPerformed
-
-    }//GEN-LAST:event_txtQuantityActionPerformed
-
     private void txtProductIdFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtProductIdFocusGained
-        // TODO add your handling code here:
+        if (txtProductId.getText().equals("Product ID")) {
+            txtProductId.setText("");
+            txtProductId.setForeground(Color.BLACK);
+        }
     }//GEN-LAST:event_txtProductIdFocusGained
 
     private void txtProductIdFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtProductIdFocusLost
-//        if (txtRefund.getText().trim().equals("") || txtRefund.getText().length() == 0) {
-//            txtRefund.setText("Product ID");
-//            txtRefund.setForeground(new Color(153, 153, 153));
-//        }
+        if (txtProductId.getText().trim().equals("") || txtProductId.getText().length() == 0) {
+            txtProductId.setText("Product ID");
+            txtProductId.setForeground(new Color(153, 153, 153));
+        }
     }//GEN-LAST:event_txtProductIdFocusLost
 
-    public void SetDataTable(String namaProduk, int jumlahBeli, int harga) {
-        if (jumlahBeli != 0 && jumlahBeli > 0) {
-            Object[] data = {namaProduk, jumlahBeli, harga};
-            model.addRow(data);
+    private void txtProductIdKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtProductIdKeyReleased
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            TransaksiPenjualanControler controler = new TransaksiPenjualanControler(null, null, null, 0, null, 0, null);
+            controler.SetFieldTransaksi(txtProductId, txtProductName, txtQuantity);
         }
-    }
-    
-    private void CheckdanAddData() {
-                TransaksiPenjualanControler controler = new TransaksiPenjualanControler(null, null, null, 0, null, 0, null, null, null);
-                String productId = txtProductId.getText();
-                txtQuantity.setText("1");
-                String productName = txtProductName.getText();
-                int jumlahBeli = controler.ValidateQuantity(txtQuantity);
-                int harga = controler.GetHargaProduk(productId);               
-                SetDataTable(productName, jumlahBeli, harga);
+    }//GEN-LAST:event_txtProductIdKeyReleased
+
+    private void txtQuantityKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtQuantityKeyReleased
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            TransaksiPenjualanControler controler = new TransaksiPenjualanControler(null, null, null, 0, null, 0, null);
+            Object[] data = controler.AddToTable(txtProductId, txtProductName, txtQuantity, bg);
+            model.addRow(data);
+            controler.UpdateTotal(table, txtTotal);
+            controler.GetDiskon(txtMemberName, txtTotal, cmbKodeDiskon);
+        }
+    }//GEN-LAST:event_txtQuantityKeyReleased
+
+    private void cmbKodeDiskonItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbKodeDiskonItemStateChanged
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            String kodeDiskon = (String) cmbKodeDiskon.getSelectedItem();
+            if (!kodeDiskon.equalsIgnoreCase("Discount Code")) {
+                TransaksiPenjualanControler controler = new TransaksiPenjualanControler(null, null, null, 0, null, 0, kodeDiskon);
+                int diskon = controler.GetDiscountAmount(cmbKodeDiskon);
+                controler.HitungTotal(txtTotal, diskon);
             }
-    
-//    private void GetData() {
-//        txtProductName.getDocument().addDocumentListener(new DocumentListener() {
-//            @Override
-//            public void insertUpdate(DocumentEvent e) {
-//                CheckdanAddData();
-//            }
-//
-//            @Override
-//            public void removeUpdate(DocumentEvent e) {
-////                CheckdanAddData();
-//            }
-//
-//            @Override
-//            public void changedUpdate(DocumentEvent e) {
-//
-//            }
-//
-//            
-//        });
-        
-    
+        }
+    }//GEN-LAST:event_cmbKodeDiskonItemStateChanged
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel IconProfil;
     private javax.swing.JScrollPane JScrollPane;
@@ -675,10 +616,10 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnPrint;
     private javax.swing.JButton btnSearch;
+    private javax.swing.JComboBox<String> cmbKodeDiskon;
     private javax.swing.JLabel lblNamaUser;
     private javax.swing.JLabel lblPosisiUser;
     private javax.swing.JTable table;
-    private javax.swing.JTextField txtKodeDiskon;
     private javax.swing.JTextField txtMemberName;
     private javax.swing.JTextField txtNoHpMember;
     private javax.swing.JTextField txtPay;

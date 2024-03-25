@@ -23,7 +23,7 @@ public class ProductControler {
     private String idProduct;
     private String idSupplier;
     private String namaSuppplier;
-    private float harga;
+    private int harga;
     private String barcode;
     private int jumlahStock;
     private String namaLama;
@@ -31,7 +31,7 @@ public class ProductControler {
     private DbProduct dbProduct;
     private DbSupplier dbSupplier;
 
-    public ProductControler(String namaProduct, String kategori, String idProduct, String idSupplier, float harga, int jumlahStock) {
+    public ProductControler(String namaProduct, String kategori, String idProduct, String idSupplier, int harga, int jumlahStock) {
         this.namaProduct = namaProduct;
         this.kategori = kategori;
         this.idProduct = idProduct;
@@ -42,6 +42,31 @@ public class ProductControler {
         dbProduct = new DbProduct();
         dbSupplier = new DbSupplier();
     }
+
+    // get nama produk berdasarkan id untuk kelas transaksi dan restok(blm)
+    public String getNamaProduct() {
+        namaProduct = dbProduct.GetProdukName(idProduct);
+        return namaProduct;
+    }
+
+    // get harga produk berdasarkan id untuk kelas transaksi;
+    public int getHarga() {
+        harga = dbProduct.GetPrice(idProduct);
+        return harga;
+    }
+
+    // get jumlah stok produk untuk keperluan validasi sebelum transaksi
+    public int getJumlahStock() {
+        jumlahStock = dbProduct.GetStok(idProduct);
+        return jumlahStock;
+    }
+    
+    // get id produk berdasarkan kategori yang dipilih pada combo box(blm)
+    public ArrayList<String> getIdProduct() {
+        ArrayList<String> produkId = dbProduct.GetIdProduk(kategori);
+        return produkId;
+    }
+    
 
     // set nama lama untuk melacak perubahan nama produk saat update data produk
     public void SetNamaLama(String nama) {
