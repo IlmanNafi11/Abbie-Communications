@@ -41,7 +41,6 @@ public class AddProduct extends javax.swing.JDialog {
         setResizable(false);
         getContentPane().setLayout(null);
 
-        txtIdProduct.setEditable(false);
         txtIdProduct.setBackground(new java.awt.Color(255, 255, 255));
         txtIdProduct.setForeground(new java.awt.Color(153, 153, 153));
         txtIdProduct.setText("Product ID");
@@ -238,18 +237,17 @@ public class AddProduct extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSaveMousePressed
 
     private void txtIdProductFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtIdProductFocusGained
-//        if (txtIdProduct.getText().equals("Product ID")) {
-//            txtIdProduct.setText("");
-//            txtIdProduct.setForeground(Color.BLACK);
-//        }
+        if (txtIdProduct.getText().equals("Product ID")) {
+            txtIdProduct.setText("");
+            txtIdProduct.setForeground(Color.BLACK);
+        }
     }//GEN-LAST:event_txtIdProductFocusGained
 
     private void txtIdProductFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtIdProductFocusLost
-//        if (txtIdProduct.getText().trim().equals("") || txtIdProduct.getText().length() == 0) {
-//            txtIdProduct.setText("Product ID");
-//            txtIdProduct.setForeground(new Color(153, 153, 153));
-//        }
-
+        if (txtIdProduct.getText().trim().equals("") || txtIdProduct.getText().length() == 0) {
+            txtIdProduct.setText("Product ID");
+            txtIdProduct.setForeground(new Color(153, 153, 153));
+        }
     }//GEN-LAST:event_txtIdProductFocusLost
 
     private void txtNamaProdukFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNamaProdukFocusGained

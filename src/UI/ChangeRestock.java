@@ -39,7 +39,7 @@ public class ChangeRestock extends javax.swing.JDialog {
         txtNamaSupplier = new javax.swing.JTextField();
         txtPrice = new javax.swing.JTextField();
         btnCancel = new javax.swing.JButton();
-        btnRestock = new javax.swing.JButton();
+        btnChange = new javax.swing.JButton();
         cmbKategori = new javax.swing.JComboBox<>();
         cmbIdSupplier = new javax.swing.JComboBox<>();
         cmbProductId = new javax.swing.JComboBox<>();
@@ -128,27 +128,27 @@ public class ChangeRestock extends javax.swing.JDialog {
         getContentPane().add(btnCancel);
         btnCancel.setBounds(855, 454, 96, 55);
 
-        btnRestock.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Change-Default.png"))); // NOI18N
-        btnRestock.setBorder(null);
-        btnRestock.setContentAreaFilled(false);
-        btnRestock.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnChange.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Change-Default.png"))); // NOI18N
+        btnChange.setBorder(null);
+        btnChange.setContentAreaFilled(false);
+        btnChange.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnRestockMouseEntered(evt);
+                btnChangeMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnRestockMouseExited(evt);
+                btnChangeMouseExited(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnRestockMousePressed(evt);
+                btnChangeMousePressed(evt);
             }
         });
-        btnRestock.addActionListener(new java.awt.event.ActionListener() {
+        btnChange.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRestockActionPerformed(evt);
+                btnChangeActionPerformed(evt);
             }
         });
-        getContentPane().add(btnRestock);
-        btnRestock.setBounds(966, 454, 96, 55);
+        getContentPane().add(btnChange);
+        btnChange.setBounds(966, 454, 96, 55);
 
         cmbKategori.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Category", "Accessories", "Phone credit/Internet credit", "Electronic", "Part" }));
         cmbKategori.addActionListener(new java.awt.event.ActionListener() {
@@ -202,8 +202,8 @@ public class ChangeRestock extends javax.swing.JDialog {
         btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Cancel-Primary-Click.png")));
     }//GEN-LAST:event_btnCancelMousePressed
 
-    private void btnRestockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestockActionPerformed
-        btnRestock.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Change-Click.png")));
+    private void btnChangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeActionPerformed
+        btnChange.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Change-Click.png")));
         String kategori = (String) cmbKategori.getSelectedItem();
         String idProduk = (String) cmbProductId.getSelectedItem();
         String namaProduk = txtNamaProduk.getText();
@@ -219,19 +219,19 @@ public class ChangeRestock extends javax.swing.JDialog {
             update.perbarui();
             dispose();
         }
-    }//GEN-LAST:event_btnRestockActionPerformed
+    }//GEN-LAST:event_btnChangeActionPerformed
 
-    private void btnRestockMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRestockMouseEntered
-        btnRestock.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Change-Hover.png")));
-    }//GEN-LAST:event_btnRestockMouseEntered
+    private void btnChangeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChangeMouseEntered
+        btnChange.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Change-Hover.png")));
+    }//GEN-LAST:event_btnChangeMouseEntered
 
-    private void btnRestockMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRestockMouseExited
-        btnRestock.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Change-Default.png")));
-    }//GEN-LAST:event_btnRestockMouseExited
+    private void btnChangeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChangeMouseExited
+        btnChange.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Change-Default.png")));
+    }//GEN-LAST:event_btnChangeMouseExited
 
-    private void btnRestockMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRestockMousePressed
-        btnRestock.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Change-Click.png")));
-    }//GEN-LAST:event_btnRestockMousePressed
+    private void btnChangeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChangeMousePressed
+        btnChange.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Change-Click.png")));
+    }//GEN-LAST:event_btnChangeMousePressed
 
     private void txtNamaProdukFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNamaProdukFocusGained
         if (txtNamaProduk.getText().equals("Product Name")) {
@@ -367,7 +367,7 @@ public class ChangeRestock extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bg;
     private javax.swing.JButton btnCancel;
-    private javax.swing.JButton btnRestock;
+    private javax.swing.JButton btnChange;
     private javax.swing.JComboBox<String> cmbIdSupplier;
     private javax.swing.JComboBox<String> cmbKategori;
     private javax.swing.JComboBox<String> cmbProductId;

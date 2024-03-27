@@ -4,6 +4,7 @@ import Data_Acces.DbSupplier;
 import java.util.Random;
 import javax.swing.JTable;
 import java.util.ArrayList;
+import javax.swing.JComboBox;
 
 public class SupplierControler {
 
@@ -44,6 +45,30 @@ public class SupplierControler {
             supplierId = "SPP" + GenerateRandom(4);
         }
         return supplierId;
+    }
+
+    // get id supplier berdasakan kategori untuk combo box
+    public ArrayList<String> GetIdSupplier() {
+        ArrayList<String> idSupplier = new ArrayList<>();
+        if (kategori != null) {
+            try {
+                idSupplier = dbSupplier.GetIdSupplier(kategori);
+            } catch (Exception e) {
+                e.getMessage();
+            }
+        }
+        return idSupplier;
+    }
+
+    // get nama supplier berdasarkan id supplier di ComboBox
+    public String GetSupplierName() {
+        if (idSupplier != null) {
+            namaSupplier = dbSupplier.GetSupplierName(idSupplier);
+            if (namaSupplier != null) {
+                return namaSupplier;
+            }
+        }
+        return namaSupplier = "Supplier Name";
     }
 
     public boolean ValidationRow(JTable table) {

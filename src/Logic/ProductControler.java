@@ -28,8 +28,8 @@ public class ProductControler {
     private int jumlahStock;
     private String namaLama;
     private ExceptionHandler exception;
+    private SupplierControler supplierControler;
     private DbProduct dbProduct;
-    private DbSupplier dbSupplier;
 
     public ProductControler(String namaProduct, String kategori, String idProduct, String idSupplier, int harga, int jumlahStock) {
         this.namaProduct = namaProduct;
@@ -40,7 +40,6 @@ public class ProductControler {
         this.jumlahStock = jumlahStock;
         exception = new ExceptionHandler();
         dbProduct = new DbProduct();
-        dbSupplier = new DbSupplier();
     }
 
     // get nama produk berdasarkan id untuk kelas transaksi dan restok(blm)
@@ -60,13 +59,12 @@ public class ProductControler {
         jumlahStock = dbProduct.GetStok(idProduct);
         return jumlahStock;
     }
-    
+
     // get id produk berdasarkan kategori yang dipilih pada combo box(blm)
     public ArrayList<String> getIdProduct() {
         ArrayList<String> produkId = dbProduct.GetIdProduk(kategori);
         return produkId;
     }
-    
 
     // set nama lama untuk melacak perubahan nama produk saat update data produk
     public void SetNamaLama(String nama) {
@@ -86,6 +84,7 @@ public class ProductControler {
     // generate id produk
     public String GenerateIdProduct(JComboBox<String> cmbKategori) {
         String kategori = (String) cmbKategori.getSelectedItem();
+//        boolean confirm = exception.
         if (!kategori.equalsIgnoreCase("Category")) {
             idProduct = GenerateRandom(12);
         } else {
@@ -121,7 +120,7 @@ public class ProductControler {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }  
+        }
         return byteBarcode;
     }
 
@@ -129,9 +128,10 @@ public class ProductControler {
     public void SetIdSupplier(String kategori, JComboBox<String> comboBox) {
         if (kategori != null) {
             try {
-                ArrayList<String> getIdSupplier = dbSupplier.GetIdSupplier(kategori);
+                supplierControler = new SupplierControler(null, null, null, kategori);
+                ArrayList<String> GetidSupplier = supplierControler.GetIdSupplier();
                 comboBox.removeAllItems();
-                for (String idSupplier : getIdSupplier) {
+                for (String idSupplier : GetidSupplier) {
                     comboBox.addItem(idSupplier);
                 }
             } catch (Exception e) {
@@ -161,13 +161,9 @@ public class ProductControler {
 
     // get nama supplier berdasarkan id supplier yang dipilih di combo box
     public String GetSupplierName(String idSupplier) {
-        if (idSupplier != null) {
-            namaSuppplier = dbSupplier.GetSupplierName(idSupplier);
-            if (namaSuppplier != null) {
-                return namaSuppplier;
-            }
-        }
-        return namaSuppplier = "Supplier Name";
+        supplierControler = new SupplierControler(idSupplier, null, null, null);
+        String namaSupplier = supplierControler.GetSupplierName();
+        return namaSupplier;
     }
 
     // cek apakah data produk telah tersedia
@@ -264,7 +260,7 @@ public class ProductControler {
             lblBarcode.setText("");
         } else {
             lblBarcode.setIcon(null);
-            lblBarcode.setForeground(new Color(153,153,153));
+            lblBarcode.setForeground(new Color(153, 153, 153));
             lblBarcode.setText("Barcode");
         }
     }
