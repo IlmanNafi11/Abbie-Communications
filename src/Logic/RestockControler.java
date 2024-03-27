@@ -21,9 +21,9 @@ public class RestockControler {
     private float total;
     private Date tanggal;
     private ExceptionHandler exceptionHandler;
+    private ProductControler productControler;
+    private SupplierControler supplierControler;
     private DbRestock dbRestock;
-    private DbProduct dbProduct;
-    private DbSupplier dbSupplier;
 
     public RestockControler(String idTransaksi, String kategory, String productId, String productName, int quantity, String supplierId, String supplierName, int price) {
         this.transactionId = idTransaksi;
@@ -36,8 +36,6 @@ public class RestockControler {
         this.price = price;
         exceptionHandler = new ExceptionHandler();
         dbRestock = new DbRestock();
-        dbProduct = new DbProduct();
-        dbSupplier = new DbSupplier();
     }
 
     private String GenerateRandom(int angka) {
@@ -130,7 +128,8 @@ public class RestockControler {
     // set comboBox id produk berdasarkan kategorinya
     public void SetComboProdukId(JComboBox<String> comboBox) {
         try {
-            ArrayList<String> getIdProduk = dbProduct.GetIdProduk(category);
+            productControler = new ProductControler(null, category, null, null, 0, 0);
+            ArrayList<String> getIdProduk = productControler.getIdProduct();
             comboBox.removeAllItems();
             for (String idProduk : getIdProduk) {
                 comboBox.addItem(idProduk);
@@ -142,33 +141,35 @@ public class RestockControler {
 
     public void SetTxtProdukName(String idProdct, JTextField txtProdukName) {
         if (idProdct != "Product ID") {
-            productName = dbProduct.GetProdukName(productId);
+            productControler = new ProductControler(null, category, productId, null, 0, 0);
+            productName = productControler.getNamaProduct();
             txtProdukName.setText(productName);
         } else {
             txtProdukName.setText("Product Name");
-        }
-        
-    }
-
-    public void setTxtSupplierName(String idSupplier, JTextField txtSupplierName) {
-        if (idSupplier != "Supplier ID") {
-            supplierName = dbSupplier.GetSupplierName(supplierId);
-            txtSupplierName.setText(supplierName);
-        } else {
-            txtSupplierName.setText("Supplier Name");
         }
     }
 
     //set item combo box id supplier berdasarkan kategori produk
     public void SetComboIdSupplier(JComboBox<String> comboBox) {
         try {
-            ArrayList<String> getIdSupplier = dbSupplier.GetIdSupplier(category);
+            supplierControler = new SupplierControler(null, null, null, category);
+            ArrayList<String> getIdSupplier = supplierControler.GetIdSupplier();
             comboBox.removeAllItems();
             for (String idSupplier : getIdSupplier) {
                 comboBox.addItem(idSupplier);
             }
         } catch (Exception e) {
             e.getMessage();
+        }
+    }
+
+    public void setTxtSupplierName(String idSupplier, JTextField txtSupplierName) {
+        if (idSupplier != "Supplier ID") {
+            supplierControler = new SupplierControler(supplierId, null, null, null);
+            supplierName = supplierControler.GetSupplierName();
+            txtSupplierName.setText(supplierName);
+        } else {
+            txtSupplierName.setText("Supplier Name");
         }
     }
 
@@ -180,7 +181,8 @@ public class RestockControler {
         String kategori = table.getValueAt(row, 1).toString();
         String namaProduk = table.getValueAt(row, 2).toString();
         String idSupplier = table.getValueAt(row, 5).toString();
-        String namaSupplier = dbSupplier.GetSupplierName(idSupplier);
+        supplierControler = new SupplierControler(idSupplier, null, null, null);
+        String namaSupplier = supplierControler.GetSupplierName();
         data.add(idTransaksi);
         data.add(kategori);
         data.add(idProduk);

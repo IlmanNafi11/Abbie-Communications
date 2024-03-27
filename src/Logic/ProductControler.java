@@ -60,7 +60,7 @@ public class ProductControler {
         return jumlahStock;
     }
 
-    // get id produk berdasarkan kategori yang dipilih pada combo box(blm)
+    // get id produk berdasarkan kategori yang dipilih pada combo box
     public ArrayList<String> getIdProduct() {
         ArrayList<String> produkId = dbProduct.GetIdProduk(kategori);
         return produkId;
