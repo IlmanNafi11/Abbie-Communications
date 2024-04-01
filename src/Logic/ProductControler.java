@@ -82,18 +82,12 @@ public class ProductControler {
     }
 
     // generate id produk
-    public String GenerateIdProduct(JComboBox<String> cmbKategori) {
-        String kategori = (String) cmbKategori.getSelectedItem();
-//        boolean confirm = exception.
-        if (!kategori.equalsIgnoreCase("Category")) {
+    public void GenerateIdProduct(JTextField txtIdProduct) {
             idProduct = GenerateRandom(12);
-        } else {
-            idProduct = "Product ID";
-        }
-        return idProduct;
+            txtIdProduct.setText(idProduct);
     }
 
-    public byte[] GenerateBarcode(String idProduct, String kategori) {
+    private byte[] GenerateBarcode() {
         byte[] byteBarcode = null;
         if (!kategori.equalsIgnoreCase("Category")) {
             try {
@@ -252,8 +246,8 @@ public class ProductControler {
         return data;
     }
 
-    public void DisplayBarcode(String idProduct, String kategori, JLabel lblBarcode) {
-        byte[] iconBarcode = GenerateBarcode(idProduct, kategori);
+    public void DisplayBarcode(JLabel lblBarcode) {
+        byte[] iconBarcode = GenerateBarcode();
         if (iconBarcode != null) {
             ImageIcon imgBarcode = new ImageIcon(iconBarcode);
             lblBarcode.setIcon(imgBarcode);
@@ -289,7 +283,7 @@ public class ProductControler {
     public boolean InsertProduct() {
         try {
             if (ValidasiDataProduk() && ValidasiNama() && jumlahStock != 0 && harga != 0) {
-                byte[] barcode = GenerateBarcode(idProduct, kategori);
+                byte[] barcode = GenerateBarcode();
                 boolean confirm = exception.confirmSave("Save product data?");
                 if (confirm) {
                     dbProduct.InsertProduct(kategori, idProduct, namaProduct, jumlahStock, idSupplier, harga, barcode);
@@ -299,7 +293,6 @@ public class ProductControler {
         } catch (Exception e) {
             exception.getErrorKesalahan(e.getMessage());
         }
-
         return false;
     }
 

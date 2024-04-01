@@ -110,4 +110,30 @@ public class DbTransaksi {
             }
         }
     }
+
+    public void InsertTransaksiService(String idTransaksi, String keterangan, String namaCustomer, String noHp, String alamat, int biaya){
+        exceptionHandler = new ExceptionHandler();
+        String queryInsert = "INSERT INTO transaksi_service (id_transaksi, keterangan, nama_customer, noHp, alamat, biaya) VALUES(?,?,?,?,?,?)";
+        Connection koneksi = null;
+        try {
+            koneksi = ClassKoneksi.GetConnection();
+            PreparedStatement stInsert = koneksi.prepareStatement(queryInsert);
+            stInsert.setString(1, idTransaksi);
+            stInsert.setString(2, keterangan);
+            stInsert.setString(3, namaCustomer);
+            stInsert.setString(4, alamat);
+            stInsert.setString(5, noHp);
+            stInsert.setInt(6, biaya);
+        } catch (Exception e) {
+            exceptionHandler.getErrorKesalahan("Gagal insert data");
+        } finally {
+            if (koneksi != null){
+                try {
+                    koneksi.close();
+                } catch (Exception e){
+                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection! \" + e.getMessage()");
+                }
+            }
+        }
+    }
 }

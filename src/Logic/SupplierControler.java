@@ -4,7 +4,6 @@ import Data_Acces.DbSupplier;
 import java.util.Random;
 import javax.swing.JTable;
 import java.util.ArrayList;
-import javax.swing.JComboBox;
 
 public class SupplierControler {
 

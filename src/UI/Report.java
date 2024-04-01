@@ -5,6 +5,7 @@ import Logic.LoginControler;
 import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+import Logic.*;
 
 public class Report extends javax.swing.JInternalFrame {
 
@@ -17,6 +18,7 @@ public class Report extends javax.swing.JInternalFrame {
         BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
         bui.setNorthPane(null);
         bg.setFocusable(true);
+        ViewTable();
     }
     
     public void SetProfile(String nama, String role){
@@ -25,13 +27,18 @@ public class Report extends javax.swing.JInternalFrame {
         this.username = nama;
         this.role = role;
     }
-
+    
+    private void ViewTable(){
+        LaporanControler laporanControler = new LaporanControler();
+        ConfigTable model = laporanControler.GetLaporan();
+        tabel.setModel(model);
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabel = new javax.swing.JTable();
         jMonthChooser1 = new com.toedter.calendar.JMonthChooser();
         jYearChooser1 = new com.toedter.calendar.JYearChooser();
         btnPrint = new javax.swing.JButton();
@@ -42,18 +49,17 @@ public class Report extends javax.swing.JInternalFrame {
 
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabel.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Date", "Sales Income", "Service Income", "Total Expenses"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tabel);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(67, 207, 962, 680));
         getContentPane().add(jMonthChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 160, -1, 30));
@@ -194,9 +200,9 @@ public class Report extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnPrint;
     private com.toedter.calendar.JMonthChooser jMonthChooser1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private com.toedter.calendar.JYearChooser jYearChooser1;
     private javax.swing.JLabel lblNamaUser;
     private javax.swing.JLabel lblPosisiUser;
+    private javax.swing.JTable tabel;
     // End of variables declaration//GEN-END:variables
 }

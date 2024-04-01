@@ -74,6 +74,7 @@ public class Dashboard extends javax.swing.JInternalFrame {
 
         Table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {"23458724563", "samsung ultra", "1000000", "ilman", "2024-03-28"},
                 {null, null, null, null, null},
                 {null, null, null, null, null},
                 {null, null, null, null, null},

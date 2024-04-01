@@ -4,17 +4,14 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
-
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-
 import Data_Acces.DbMember;
 import Data_Acces.DbSupplier;
 import Data_Acces.DbTransaksi;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+
 
 public class TransaksiPenjualanControler {
 
@@ -25,7 +22,6 @@ public class TransaksiPenjualanControler {
     private int hargaProduct;
     private String noHpMember;
     private String namaMember;
-    private String idMember;
     private int subTotal;
     private int total;
     private Date tanggal;
@@ -33,7 +29,6 @@ public class TransaksiPenjualanControler {
     private ConfigTable model;
     private ExceptionHandler exceptionHandler;
     private DbTransaksi dbTransaksi;
-    private DbSupplier dbSupplier;
     private DbMember dbMember;
     private ProductControler productControler;
     private PromoContoler promoContoler;
@@ -48,7 +43,6 @@ public class TransaksiPenjualanControler {
         this.kodePromo = kodePromo;
         exceptionHandler = new ExceptionHandler();
         dbTransaksi = new DbTransaksi();
-        dbSupplier = new DbSupplier();
         dbMember = new DbMember();
         model = new ConfigTable();
     }

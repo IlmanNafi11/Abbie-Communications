@@ -12,11 +12,19 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Abbie%20Communications/src/UI/MenuOwner.java</file>
-            <file>file:/D:/Abbie%20Communications/src/UI/ChangeUserData.java</file>
+            <file>file:/D:/Abbie%20Communications/src/Logic/ProductControler.java</file>
+            <file>file:/D:/Abbie%20Communications/src/UI/Report.java</file>
+            <file>file:/D:/Abbie%20Communications/src/UI/Product.java</file>
+            <file>file:/D:/Abbie%20Communications/src/UI/MainFrame.java</file>
+            <file>file:/D:/Abbie%20Communications/src/Logic/LaporanControler.java</file>
             <file>file:/D:/Abbie%20Communications/src/UI/welcome.java</file>
-            <file>file:/D:/Abbie%20Communications/src/config/Dashboard.java</file>
-            <file>file:/D:/Abbie%20Communications/src/config/MenuOwner.java</file>
+            <file>file:/D:/Abbie%20Communications/src/UI/Profile.java</file>
+            <file>file:/D:/Abbie%20Communications/src/UI/login.java</file>
+            <file>file:/D:/Abbie%20Communications/src/UI/MenuOwner.java</file>
+            <file>file:/D:/Abbie%20Communications/src/Data_Acces/DbProduct.java</file>
+            <file>file:/D:/Abbie%20Communications/src/Data_Acces/DbUserManager.java</file>
+            <file>file:/D:/Abbie%20Communications/src/Data_Acces/DbLaporan.java</file>
+            <file>file:/D:/Abbie%20Communications/src/Logic/LoginControler.java</file>
         </group>
     </open-files>
 </project-private>

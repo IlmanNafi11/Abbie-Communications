@@ -136,7 +136,7 @@ public class UserDataControler {
     }
 
     //validasi field alamat
-    public boolean ValidasiAlamat() {
+    private boolean ValidasiAlamat() {
         if (alamat.length() <= 50) {
             return true;
         } else {
@@ -154,7 +154,7 @@ public class UserDataControler {
         return false;
     }
 
-    public boolean ValidasiField() {
+    private boolean ValidasiField() {
         if (!nik.trim().equalsIgnoreCase("NIK") && !nik.equals("") && !nama.trim().equalsIgnoreCase("Name") && !nama.equals("")
                 && !noHp.trim().equalsIgnoreCase("Phone Number") && !noHp.equals("") && !alamat.trim().equalsIgnoreCase("Address") && !alamat.equals("")) {
             return true;

@@ -16,6 +16,7 @@ public class ChangeProduk extends javax.swing.JDialog {
         initComponents();
         this.setUndecorated(false);
         getContentPane().setBackground(new Color(255, 255, 255, 150));
+        bg.setFocusable(true);
         revalidate();
     }
 
@@ -39,6 +40,7 @@ public class ChangeProduk extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnGenerateId = new javax.swing.JButton();
         txtIdProduct = new javax.swing.JTextField();
         txtNamaProduk = new javax.swing.JTextField();
         txtQuantity = new javax.swing.JTextField();
@@ -56,6 +58,28 @@ public class ChangeProduk extends javax.swing.JDialog {
         setResizable(false);
         getContentPane().setLayout(null);
 
+        btnGenerateId.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Generate-Default.png"))); // NOI18N
+        btnGenerateId.setBorder(null);
+        btnGenerateId.setContentAreaFilled(false);
+        btnGenerateId.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnGenerateIdMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnGenerateIdMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnGenerateIdMousePressed(evt);
+            }
+        });
+        btnGenerateId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerateIdActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnGenerateId);
+        btnGenerateId.setBounds(440, 152, 94, 36);
+
         txtIdProduct.setEditable(false);
         txtIdProduct.setBackground(new java.awt.Color(255, 255, 255));
         txtIdProduct.setForeground(new java.awt.Color(153, 153, 153));
@@ -70,7 +94,7 @@ public class ChangeProduk extends javax.swing.JDialog {
             }
         });
         getContentPane().add(txtIdProduct);
-        txtIdProduct.setBounds(47, 221, 488, 50);
+        txtIdProduct.setBounds(47, 145, 488, 50);
 
         txtNamaProduk.setForeground(new java.awt.Color(153, 153, 153));
         txtNamaProduk.setText("Product Name");
@@ -181,7 +205,7 @@ public class ChangeProduk extends javax.swing.JDialog {
             }
         });
         getContentPane().add(cmbKategori);
-        cmbKategori.setBounds(38, 145, 506, 50);
+        cmbKategori.setBounds(38, 221, 506, 50);
 
         cmbIdSupplier.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Supplier ID" }));
         cmbIdSupplier.addActionListener(new java.awt.event.ActionListener() {
@@ -323,10 +347,9 @@ public class ChangeProduk extends javax.swing.JDialog {
 
     private void cmbKategoriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbKategoriActionPerformed
         String kategori = (String) cmbKategori.getSelectedItem();
-        ProductControler controler = new ProductControler(null, kategori, null, null, 0, 0);
-        String idProduk = controler.GenerateIdProduct(cmbKategori);
-        txtIdProduct.setText(idProduk);
-        controler.DisplayBarcode(idProduk, kategori, lblBarcode);
+        String idProduk = txtIdProduct.getText();
+        ProductControler controler = new ProductControler(null, kategori, idProduk, null, 0, 0);
+        controler.DisplayBarcode(lblBarcode);
         controler.SetIdSupplier(kategori, cmbIdSupplier);
         cmbIdSupplier.addItem("Supplier ID");
     }//GEN-LAST:event_cmbKategoriActionPerformed
@@ -338,6 +361,26 @@ public class ChangeProduk extends javax.swing.JDialog {
         String namaSupplier = controler.GetSupplierName(idSupplier);
         txtNamaSupplier.setText(namaSupplier);
     }//GEN-LAST:event_cmbIdSupplierActionPerformed
+
+    private void btnGenerateIdMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGenerateIdMouseEntered
+        btnGenerateId.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Generate-Hover.png")));
+    }//GEN-LAST:event_btnGenerateIdMouseEntered
+
+    private void btnGenerateIdMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGenerateIdMouseExited
+        btnGenerateId.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Generate-Default.png")));
+    }//GEN-LAST:event_btnGenerateIdMouseExited
+
+    private void btnGenerateIdMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGenerateIdMousePressed
+        btnGenerateId.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Generate-Click.png")));
+    }//GEN-LAST:event_btnGenerateIdMousePressed
+
+    private void btnGenerateIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerateIdActionPerformed
+        btnGenerateId.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Generate-Click.png")));
+        String kategori = (String) cmbKategori.getSelectedItem();
+        ProductControler controler = new ProductControler(null, kategori, null, null, 0, 0);
+        controler.GenerateIdProduct(txtIdProduct);
+        controler.DisplayBarcode(lblBarcode);
+    }//GEN-LAST:event_btnGenerateIdActionPerformed
 
     /**
      * @param args the command line arguments
@@ -385,6 +428,7 @@ public class ChangeProduk extends javax.swing.JDialog {
     private javax.swing.JLabel bg;
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnChange;
+    private javax.swing.JButton btnGenerateId;
     private javax.swing.JComboBox<String> cmbIdSupplier;
     private javax.swing.JComboBox<String> cmbKategori;
     private javax.swing.JLabel lblBarcode;

@@ -2,7 +2,6 @@ package UI;
 
 import java.awt.Color;
 import Logic.*;
-import java.util.ArrayList;
 import java.awt.Window;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;

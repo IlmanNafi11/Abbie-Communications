@@ -1,26 +1,30 @@
 package UI;
 
+import Logic.LaporanControler;
+import Logic.LoginControler;
 import java.awt.Window;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+
 public class MenuOwner extends javax.swing.JInternalFrame {
-    
+
     private String username;
     private String role;
-    
+
     public MenuOwner() {
         initComponents();
-        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
+        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
         bui.setNorthPane(null);
     }
-    
-    public void SetUser(String username, String role){
+
+    public void SetUser(String username, String role) {
         this.username = username;
         this.role = role;
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -352,8 +356,8 @@ public class MenuOwner extends javax.swing.JInternalFrame {
 
     private void btnUserDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserDataActionPerformed
         btnUserData.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Menu-User-Data-Click.png")));
-         UserData userData= new UserData();
-         userData.SetProfile(username, role);
+        UserData userData = new UserData();
+        userData.SetProfile(username, role);
         MainFrame main = (MainFrame) SwingUtilities.getWindowAncestor(this);
         main.gantiKonten(userData);
     }//GEN-LAST:event_btnUserDataActionPerformed
@@ -372,6 +376,11 @@ public class MenuOwner extends javax.swing.JInternalFrame {
         report.SetProfile(username, role);
         MainFrame main = (MainFrame) SwingUtilities.getWindowAncestor(this);
         main.gantiKonten(report);
+        LoginControler loginControler = new LoginControler(username, null);
+        ArrayList<String> IdUser = loginControler.DataProfile();
+        LaporanControler laporanControler = new LaporanControler();
+        laporanControler.setIdUser(IdUser.get(0));
+        laporanControler.InsertLaporan();
     }//GEN-LAST:event_btnReportActionPerformed
 
     private void btnReportMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReportMouseEntered
@@ -396,17 +405,17 @@ public class MenuOwner extends javax.swing.JInternalFrame {
         btnSignOut.setIcon(null);
     }//GEN-LAST:event_btnSignOutMouseExited
 
-    private void tutupMainFrame(){
+    private void tutupMainFrame() {
         Window window = SwingUtilities.getWindowAncestor(this);
-        if(window instanceof JFrame){
-            ((JFrame)window).dispose();
+        if (window instanceof JFrame) {
+            ((JFrame) window).dispose();
         }
     }
-    
-    private void bukaWelcomeFrame(){
+
+    private void bukaWelcomeFrame() {
         welcome welcome = new welcome();
         welcome.bukaLogin();
-        welcome.setVisible(true);     
+        welcome.setVisible(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
