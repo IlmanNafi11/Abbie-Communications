@@ -19,6 +19,11 @@ public class TransaksiService {
         this.total = total;
     }
 
+    public ConfigTable modelTable() {
+        ConfigTable model = new ConfigTable();
+        return model;
+    }
+
     public void InsertData(){
 
     }
