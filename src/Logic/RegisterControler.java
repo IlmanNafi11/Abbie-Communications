@@ -14,6 +14,7 @@ public class RegisterControler {
     private String username;
     private String password;
     private String role;
+    private String idAkun;
     private ExceptionHandler exceptionHandler;
     private DbUserManager dbUserManager;
 
@@ -26,6 +27,7 @@ public class RegisterControler {
         this.username = verifikasi.getUsername();
         this.password = verifikasi.getPassword();
         this.role = verifikasi.getRole();
+        this.idAkun = verifikasi.getIdAkun();
         exceptionHandler = new ExceptionHandler();
         dbUserManager = new DbUserManager();
     }
@@ -36,11 +38,11 @@ public class RegisterControler {
         return userId;
     }
 
-    public String generateIdAkun() {
-        String defaultValue = "ACN";
-        String userId = defaultValue + generateRandom(4);
-        return userId;
-    }
+//    public String generateIdAkun() {
+//        String defaultValue = "ACN";
+//        String userId = defaultValue + generateRandom(4);
+//        return userId;
+//    }
 
     public String generateRandom(int angka) {
         Random random = new Random();
@@ -72,7 +74,7 @@ public class RegisterControler {
         String HashPassword = HashSandi(password);
         boolean confirm = exceptionHandler.confirmSave("Save account? Make sure all data has been filled in correctly!");
         if (confirm) {
-            insert.AddData(generateIdUser(), generateIdAkun(), nik, nama, noHp, alamat, username, HashPassword, role);
+            insert.AddData(generateIdUser(), idAkun, nik, nama, noHp, alamat, username, HashPassword, role);
             exceptionHandler.getSucces("Hooray, Registration has been successful!");
             return true;
         }

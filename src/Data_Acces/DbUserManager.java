@@ -1,10 +1,13 @@
 package Data_Acces;
 
 import Connections.ClassKoneksi;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
 import Logic.*;
+
 import java.util.ArrayList;
 
 public class DbUserManager {
@@ -63,7 +66,7 @@ public class DbUserManager {
         }
         return false;
     }
-    
+
     public boolean CekNoHp(String noHp) {
         exceptionHandler = new ExceptionHandler();
         String queryCek = "SELECT COUNT(*) FROM data_pengguna WHERE noHp= ? ";
@@ -90,9 +93,9 @@ public class DbUserManager {
         return false;
     }
 
-    public String AuthLogin(String username, String password) {
+    public String AuthLogin(String username, String password, String idAkun) {
         exceptionHandler = new ExceptionHandler();
-        String sqlGetUser = "SELECT * FROM akun WHERE username = ? AND password = ?";
+        String sqlGetUser = "SELECT * FROM akun WHERE username = ? AND password = ? OR id_akun = ?";
         String sqlGetRole = "SELECT * FROM data_pengguna WHERE id_user =?";
         Connection koneksi = null;
         try {
@@ -100,6 +103,7 @@ public class DbUserManager {
             PreparedStatement stAuthLogin = koneksi.prepareStatement(sqlGetUser);
             stAuthLogin.setString(1, username);
             stAuthLogin.setString(2, password);
+            stAuthLogin.setString(3, idAkun);
             ResultSet rs = stAuthLogin.executeQuery();
             if (rs.next()) {
                 String getId = rs.getString("id_user");
@@ -110,7 +114,7 @@ public class DbUserManager {
                     return rsGetRole.getString("posisi");
                 }
             } else {
-                exceptionHandler.getErrorKesalahan("Incorrect username or password!");
+                exceptionHandler.getErrorKesalahan("Incorrect username or password or id akun not registered!");
             }
         } catch (Exception e) {
             exceptionHandler.getErrorKesalahan("A failure occurred during authentication " + e.getMessage());
@@ -121,6 +125,26 @@ public class DbUserManager {
                 } catch (Exception e) {
                     exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection! " + e.getMessage());
                 }
+            }
+        }
+        return null;
+    }
+
+    public String GetUsername(String role, String idUser) {
+        exceptionHandler = new ExceptionHandler();
+        String sqlIdAkun = "SELECT username FROM akun WHERE id_akun = ?";
+        Connection koneksi = null;
+        if (role != null) {
+            try {
+                koneksi = ClassKoneksi.GetConnection();
+                PreparedStatement stGet = koneksi.prepareStatement(sqlIdAkun);
+                stGet.setString(1, idUser);
+                ResultSet rs = stGet.executeQuery();
+                while (rs.next()) {
+                    return rs.getString("username");
+                }
+            } catch (Exception e) {
+                exceptionHandler.getErrorKesalahan("There was a failure while trying to retrieve the user's username!");
             }
         }
         return null;
@@ -174,13 +198,13 @@ public class DbUserManager {
             ResultSet rs = stGetData.executeQuery();
             while (rs.next()) {
                 dataTable.addRow(new Object[]{
-                    rs.getString("id_user"),
-                    rs.getString("nik"),
-                    rs.getString("nama"),
-                    rs.getString("noHp"),
-                    rs.getString("alamat"),
-                    rs.getString("posisi"),
-                    rs.getString("id_akun")
+                        rs.getString("id_user"),
+                        rs.getString("nik"),
+                        rs.getString("nama"),
+                        rs.getString("noHp"),
+                        rs.getString("alamat"),
+                        rs.getString("posisi"),
+                        rs.getString("id_akun")
                 });
             }
         } catch (Exception e) {
@@ -196,9 +220,9 @@ public class DbUserManager {
         }
         return dataTable;
     }
-    
+
     // get data user untuk field menu profile
-    public ArrayList<String> GetDataProfile(String username){
+    public ArrayList<String> GetDataProfile(String username) {
         ArrayList<String> data = new ArrayList<>();
         exceptionHandler = new ExceptionHandler();
         String queryGetData = "SELECT dp.* FROM data_pengguna dp JOIN akun a ON dp.id_user = a.id_user WHERE a.username = ?";
@@ -208,7 +232,7 @@ public class DbUserManager {
             PreparedStatement stGetData = koneksi.prepareStatement(queryGetData);
             stGetData.setString(1, username);
             ResultSet rs = stGetData.executeQuery();
-            while (rs.next()) {   
+            while (rs.next()) {
                 data.add(rs.getString("id_user"));
                 data.add(rs.getString("nik"));
                 data.add(rs.getString("nama"));
@@ -353,9 +377,9 @@ public class DbUserManager {
             }
         }
     }
-    
+
     // update profile
-    public void UpdateProfile(String idUser, String username, String namaUser, String nik, String noHp, String alamat){
+    public void UpdateProfile(String idUser, String username, String namaUser, String nik, String noHp, String alamat) {
         exceptionHandler = new ExceptionHandler();
         String queryUpdateUserData = "UPDATE data_pengguna SET nik = ?, nama = ?, noHp = ?, alamat = ? WHERE id_user = ?";
         String queryUpdateAkun = "UPDATE akun SET username = ? WHERE id_user = ?";
@@ -369,7 +393,7 @@ public class DbUserManager {
             stUpdateUser.setString(3, noHp);
             stUpdateUser.setString(4, alamat);
             stUpdateUser.setString(5, idUser);
-            
+
             stUpdateAkun.setString(1, username);
             stUpdateAkun.setString(2, idUser);
             stUpdateUser.executeUpdate();

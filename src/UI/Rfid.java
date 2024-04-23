@@ -1,8 +1,11 @@
 package UI;
 
-import java.awt.Color;
+import Logic.LoginControler;
+
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
+import java.awt.event.KeyEvent;
+
 public class Rfid extends javax.swing.JDialog {
     public Rfid(JInternalFrame parent, boolean modal) {
         super((JFrame) parent.getTopLevelAncestor(), modal);
@@ -14,6 +17,7 @@ public class Rfid extends javax.swing.JDialog {
     private void initComponents() {
 
         btnBack = new javax.swing.JButton();
+        txtRfid = new javax.swing.JTextField();
         bg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -21,7 +25,7 @@ public class Rfid extends javax.swing.JDialog {
         setResizable(false);
         getContentPane().setLayout(null);
 
-        btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Next-Primary-Default.png"))); // NOI18N
+        btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Back-Primary-Default.png"))); // NOI18N
         btnBack.setBorder(null);
         btnBack.setContentAreaFilled(false);
         btnBack.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -43,6 +47,16 @@ public class Rfid extends javax.swing.JDialog {
         getContentPane().add(btnBack);
         btnBack.setBounds(102, 556, 364, 52);
 
+        txtRfid.setForeground(new java.awt.Color(255, 255, 255));
+        txtRfid.setBorder(null);
+        txtRfid.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtRfidKeyReleased(evt);
+            }
+        });
+        getContentPane().add(txtRfid);
+        txtRfid.setBounds(110, 450, 350, 40);
+
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Login-RFID.png"))); // NOI18N
         getContentPane().add(bg);
         bg.setBounds(0, 0, 567, 641);
@@ -52,21 +66,36 @@ public class Rfid extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Next-Primary-Click.png")));
+        btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Back-Primary-Click.png")));
         dispose();
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnBackMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBackMouseEntered
-        btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Next-Primary-Hover.png")));
+        btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Back-Primary-Hover.png")));
     }//GEN-LAST:event_btnBackMouseEntered
 
     private void btnBackMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBackMouseExited
-        btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Next-Primary-Default.png")));
+        btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Back-Primary-Default.png")));
     }//GEN-LAST:event_btnBackMouseExited
 
     private void btnBackMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBackMousePressed
-        btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Next-Primary-Click.png")));
+        btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Back-Primary-Click.png")));
     }//GEN-LAST:event_btnBackMousePressed
+
+    private void txtRfidKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRfidKeyReleased
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+            String idAkun = txtRfid.getText();
+            login kelasLogin = new login();
+            LoginControler login = new LoginControler(null, null, idAkun);
+            String role = login.AuthLoginRfid();
+            if (role != null) {
+                String username = login.GetUsername(role, idAkun);
+                this.dispose();
+                MainFrame mainFrame = new MainFrame(username, role);
+                mainFrame.setVisible(true);
+            }
+        }
+    }//GEN-LAST:event_txtRfidKeyReleased
 
     /**
      * @param args the command line arguments
@@ -113,5 +142,6 @@ public class Rfid extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bg;
     private javax.swing.JButton btnBack;
+    private javax.swing.JTextField txtRfid;
     // End of variables declaration//GEN-END:variables
 }

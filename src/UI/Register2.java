@@ -37,6 +37,7 @@ public class Register2 extends javax.swing.JInternalFrame {
         txtUsername = new javax.swing.JTextField();
         txtPassword = new javax.swing.JPasswordField();
         txtRepassword = new javax.swing.JPasswordField();
+        txtRfid = new javax.swing.JTextField();
         rdOwner = new javax.swing.JRadioButton();
         rdAdmin = new javax.swing.JRadioButton();
         rdTeknisi = new javax.swing.JRadioButton();
@@ -111,6 +112,21 @@ public class Register2 extends javax.swing.JInternalFrame {
         Pane.add(txtRepassword);
         txtRepassword.setBounds(933, 523, 298, 44);
 
+        txtRfid.setBackground(new java.awt.Color(242, 242, 242));
+        txtRfid.setForeground(new java.awt.Color(153, 153, 153));
+        txtRfid.setText("RfidD ID, paste your Rfid ID card into the scanner");
+        txtRfid.setBorder(null);
+        txtRfid.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtRfidFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtRfidFocusLost(evt);
+            }
+        });
+        Pane.add(txtRfid);
+        txtRfid.setBounds(933, 599, 298, 44);
+
         Role.add(rdOwner);
         rdOwner.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Radio-Button-Default.png"))); // NOI18N
         rdOwner.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Radio-Button-Hover.png"))); // NOI18N
@@ -123,7 +139,7 @@ public class Register2 extends javax.swing.JInternalFrame {
             }
         });
         Pane.add(rdOwner);
-        rdOwner.setBounds(967, 588, 24, 25);
+        rdOwner.setBounds(967, 658, 24, 25);
 
         Role.add(rdAdmin);
         rdAdmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Radio-Button-Default.png"))); // NOI18N
@@ -137,7 +153,7 @@ public class Register2 extends javax.swing.JInternalFrame {
             }
         });
         Pane.add(rdAdmin);
-        rdAdmin.setBounds(1046, 588, 24, 25);
+        rdAdmin.setBounds(1047, 658, 24, 25);
 
         Role.add(rdTeknisi);
         rdTeknisi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Radio-Button-Default.png"))); // NOI18N
@@ -151,7 +167,7 @@ public class Register2 extends javax.swing.JInternalFrame {
             }
         });
         Pane.add(rdTeknisi);
-        rdTeknisi.setBounds(1123, 587, 24, 25);
+        rdTeknisi.setBounds(1123, 658, 24, 25);
 
         btnRegister.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Register-Primary-Default.png"))); // NOI18N
         btnRegister.setBorder(null);
@@ -173,7 +189,7 @@ public class Register2 extends javax.swing.JInternalFrame {
             }
         });
         Pane.add(btnRegister);
-        btnRegister.setBounds(880, 634, 364, 52);
+        btnRegister.setBounds(880, 705, 364, 52);
 
         lblLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Label-Login-Default.png"))); // NOI18N
         lblLogin.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -188,7 +204,7 @@ public class Register2 extends javax.swing.JInternalFrame {
             }
         });
         Pane.add(lblLogin);
-        lblLogin.setBounds(1149, 714, 50, 20);
+        lblLogin.setBounds(1149, 785, 50, 20);
 
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Sign Up-2.png"))); // NOI18N
         Pane.add(bg);
@@ -241,6 +257,7 @@ public class Register2 extends javax.swing.JInternalFrame {
         String status;
         String password = txtPassword.getText();
         String repas = txtRepassword.getText();
+        String idAkun = txtRfid.getText();
         if (rdAdmin.isSelected()) {
             status = "admin";
         } else if (rdTeknisi.isSelected()) {
@@ -248,7 +265,7 @@ public class Register2 extends javax.swing.JInternalFrame {
         } else {
             status = "owner";
         }
-        verifikasi = new AuthRegister(nik, nama, noHp, alamat, txtUsername.getText(), txtPassword.getText(), txtRepassword.getText(), status);
+        verifikasi = new AuthRegister(nik, nama, noHp, alamat, txtUsername.getText(), txtPassword.getText(), txtRepassword.getText(), status, idAkun);
         boolean verif = verifikasi.VerifFieldAkun();
         if (verif) {
             RegisterControler registrasi = new RegisterControler(verifikasi);
@@ -335,6 +352,20 @@ public class Register2 extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_txtRepasswordFocusLost
 
+    private void txtRfidFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtRfidFocusGained
+        if (txtRfid.getText().equals("RfidD ID, paste your Rfid ID card into the scanner")) {
+            txtRfid.setText("");
+            txtRfid.setForeground(Color.BLACK);
+        }
+    }//GEN-LAST:event_txtRfidFocusGained
+
+    private void txtRfidFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtRfidFocusLost
+        if (txtRfid.getText().trim().equals("") || txtRfid.getText().length() == 0) {
+            txtRfid.setText("RfidD ID, paste your Rfid ID card into the scanner");
+            txtRfid.setForeground(new Color(153, 153, 153));
+        }
+    }//GEN-LAST:event_txtRfidFocusLost
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Pane;
@@ -348,6 +379,7 @@ public class Register2 extends javax.swing.JInternalFrame {
     private javax.swing.JRadioButton rdTeknisi;
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JPasswordField txtRepassword;
+    private javax.swing.JTextField txtRfid;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 }

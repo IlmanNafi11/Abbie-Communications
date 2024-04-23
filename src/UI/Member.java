@@ -542,7 +542,7 @@ public class Member extends javax.swing.JInternalFrame implements UpdateTable {
     private void lblPosisiUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPosisiUserMouseClicked
         lblPosisiUser.setForeground(new Color(28, 119, 255));
         Profile profile = new Profile(this, true);
-        LoginControler controler = new LoginControler(username, null);
+        LoginControler controler = new LoginControler(username, null, null);
         ArrayList<String> data = controler.DataProfile();
         profile.SetField(data.get(0), data.get(1), data.get(2), data.get(3), data.get(4), username, role);
         profile.setVisible(true);
@@ -563,7 +563,7 @@ public class Member extends javax.swing.JInternalFrame implements UpdateTable {
     private void lblNamaUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNamaUserMouseClicked
         lblNamaUser.setForeground(new Color(28, 119, 255));
         Profile profile = new Profile(this, true);
-        LoginControler controler = new LoginControler(username, null);
+        LoginControler controler = new LoginControler(username, null, null);
         ArrayList<String> data = controler.DataProfile();
         profile.SetField(data.get(0), data.get(1), data.get(2), data.get(3), data.get(4), username, role);
         profile.setVisible(true);

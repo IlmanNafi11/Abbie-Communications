@@ -8,6 +8,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+
 import Data_Acces.DbMember;
 import Data_Acces.DbSupplier;
 import Data_Acces.DbTransaksi;
@@ -59,51 +60,21 @@ public class TransaksiPenjualanControler {
 
     // generate id transaksi
     public String GenerateIdTransaksi() {
-        return idTransaksi = "TRP" + GenerateRandom(4);
+        return GenerateRandom(11);
+    }
+
+    public ConfigTable modelTabel() {
+        model.addColumn("Product ID");
+        model.addColumn("Product Name");
+        model.addColumn("Quantity");
+        model.addColumn("Price");
+        model.addColumn("sub-Total");
+        return model;
     }
 
     // get tanggal terbaru
     private Date GetDate() {
         return new Date();
-    }
-
-    private boolean ValidateNamaProduk() {
-        if (!namaProduk.equalsIgnoreCase("Product Name") && !namaProduk.equals("")) {
-            return true;
-        } else {
-            exceptionHandler.getErrorKesalahan("Please choose one of the product ID!");
-            return false;
-        }
-    }
-
-    private int ValidateQuantity(JTextField txtQuantity) {
-        try {
-            int jumlahBeli = Integer.parseInt(txtQuantity.getText());
-            return jumlahBeli;
-        } catch (NumberFormatException e) {
-            exceptionHandler.getErrorKesalahan("Invalid purchase amount!");
-        }
-        return 0;
-    }
-
-    private int ValidatePay(JTextField txtPay) {
-        try {
-            int jumlahBayar = Integer.parseInt(txtPay.getText());
-            return jumlahBayar;
-        } catch (NumberFormatException e) {
-            exceptionHandler.getErrorKesalahan("Invalid payment amount!");
-        }
-        return 0;
-    }
-
-    private boolean ValidateTotal(int total) {
-        try {
-            int cekTotal = total;
-            return true;
-        } catch (NumberFormatException e) {
-            exceptionHandler.getErrorKesalahan("Input data produk terlebih dahulu");
-        }
-        return false;
     }
 
     private boolean ValidateMember() {
@@ -113,19 +84,20 @@ public class TransaksiPenjualanControler {
         return false;
     }
 
-    // validasi pilihan combo box diskon(blm ke aply)
-    public boolean ValidateComboKodeDiskon(JComboBox<String> comboDiskon) {
-        String kodeDiskon = (String) comboDiskon.getSelectedItem();
-        if (!kodeDiskon.equalsIgnoreCase("Discount Code")) {
-            boolean confirm = exceptionHandler.ConfirmDiscount("");
-            if (confirm) {
-                return true;
-            }
+    public void SetTxtNamaMember(JTextField noHpMember, JTextField namaMember, JComboBox<String> cmbKodeDiskon) {
+        ArrayList<String> dataMember = dbMember.GetMember(noHpMember.getText());
+        if (!dataMember.isEmpty()) {
+            namaMember.setText(dataMember.get(1));
+        } else {
+            namaMember.setText("Member Name");
+            exceptionHandler.getErrorKesalahan("Member not found!");
+            cmbKodeDiskon.removeAllItems();
+            cmbKodeDiskon.addItem("Discount Code");
+            cmbKodeDiskon.setSelectedItem("Discount Code");
         }
-        return false;
     }
 
-    // set field nama produk, dan quantity
+    // set field nama produk, dan quantity setelah inputan idProduct
     public void SetFieldTransaksi(JTextField txtIdProduct, JTextField txtNamaProduct, JTextField txtQuantity) {
         idProduk = txtIdProduct.getText();
         productControler = new ProductControler(null, null, idProduk, null, 0, 0);
@@ -138,6 +110,17 @@ public class TransaksiPenjualanControler {
             exceptionHandler.getErrorKesalahan("Product with Id" + idProduk + " not found!");
             txtNamaProduct.setText("Product Name");
         }
+    }
+
+    // validasi inputan jumlah pembelian
+    private int ValidateQuantity(JTextField txtQuantity) {
+        try {
+            int jumlahBeli = Integer.parseInt(txtQuantity.getText());
+            return jumlahBeli;
+        } catch (NumberFormatException e) {
+            exceptionHandler.getErrorKesalahan("Invalid purchase amount!");
+        }
+        return 0;
     }
 
     // tambahkan data ke tabel
@@ -162,16 +145,6 @@ public class TransaksiPenjualanControler {
         return data;
     }
 
-    // perbarui textField total
-    public void UpdateTotal(JTable tabel, JTextField txtTotal) {
-        total = 0;
-        for (int i = 0; i < tabel.getRowCount(); i++) {
-            total += Double.parseDouble(tabel.getValueAt(i, 4).toString());
-        }
-        txtTotal.setText(String.valueOf(total));
-        txtTotal.setForeground(Color.BLACK);
-    }
-
     // get kode diskon untuk diset ke combo kode diskon
     public void GetDiskon(JTextField txtNamaMember, JTextField txtTotal, JComboBox<String> comboDiskon) {
         namaMember = txtNamaMember.getText().trim();
@@ -179,21 +152,22 @@ public class TransaksiPenjualanControler {
             try {
                 int totalBelanja = Integer.parseInt(txtTotal.getText());
                 promoContoler = new PromoContoler(null, 0, 0, null);
-                    ArrayList<String> GetkodeDiskon = promoContoler.getKodeDiskon(totalBelanja);
-                    comboDiskon.removeAllItems();
-                    comboDiskon.addItem("Discount Code");
-                    comboDiskon.setSelectedItem("Discount Code");
-                    for (String kodeDiskon : GetkodeDiskon) {
-                        comboDiskon.addItem(kodeDiskon);
-                    }
+                ArrayList<String> GetkodeDiskon = promoContoler.getKodeDiskon(totalBelanja);
+                comboDiskon.removeAllItems();
+                comboDiskon.addItem("Discount Code");
+                comboDiskon.setSelectedItem("Discount Code");
+                for (String kodeDiskon : GetkodeDiskon) {
+                    comboDiskon.addItem(kodeDiskon);
+                }
             } catch (NumberFormatException e) {
                 exceptionHandler.getErrorKesalahan("Add purchased products to get discounts!");
             }
         }
     }
 
+    // mendapatkan jumlah diskon dari kode diskon yang diapply
     public int GetDiscountAmount(JComboBox<String> comboDiskon) {
-            if (!kodePromo.equalsIgnoreCase("Discount Code")) {
+        if (!kodePromo.equalsIgnoreCase("Discount Code")) {
             boolean confirm = exceptionHandler.ConfirmDiscount("Attention! Are you sure you chose the discount code? Discount codes cannot be changed once they have been used!");
             if (confirm) {
                 promoContoler = new PromoContoler(kodePromo, 0, 0, null);
@@ -208,13 +182,25 @@ public class TransaksiPenjualanControler {
         return 0;
     }
 
+    // perbarui textField total
+    public void UpdateTotal(JTable tabel, JTextField txtTotal) {
+        total = 0;
+        for (int i = 0; i < tabel.getRowCount(); i++) {
+            total += Double.parseDouble(tabel.getValueAt(i, 4).toString());
+        }
+        txtTotal.setText(String.valueOf(total));
+        txtTotal.setForeground(Color.BLACK);
+    }
+
+    // menghitung total yang harus dibayar
     public void HitungTotal(JTextField txtTotal, int diskon) {
         total = Integer.parseInt(txtTotal.getText());
         int totalAkhir = total - diskon;
         txtTotal.setText(String.valueOf(totalAkhir));
     }
-    
-    public void HitungKembalian(JTextField txtTotal, JTextField txtPay, JTextField txtRefund){
+
+    // menghitung kembalian
+    public void HitungKembalian(JTextField txtTotal, JTextField txtPay, JTextField txtRefund) {
         total = Integer.parseInt(txtTotal.getText());
         int jumlahBayar = Integer.parseInt(txtPay.getText());
         int hasil;
@@ -226,40 +212,72 @@ public class TransaksiPenjualanControler {
         } else {
             hasil = jumlahBayar - total;
             txtPay.setForeground(Color.BLACK);
-            txtRefund.setText("Rp. " +String.valueOf(hasil));
+            txtRefund.setText("Rp. " + String.valueOf(hasil));
         }
     }
 
-    public void SetTxtNamaMember(JTextField noHpMember, JTextField namaMember, JComboBox<String> cmbKodeDiskon) {
-        ArrayList<String> dataMember = dbMember.GetMember(noHpMember.getText());
-        if (!dataMember.isEmpty()) {
-            namaMember.setText(dataMember.get(1));
-        } else {
-            namaMember.setText("Member Name");
-            exceptionHandler.getErrorKesalahan("Member not found!");
-            cmbKodeDiskon.removeAllItems();
-            cmbKodeDiskon.addItem("Discount Code");
-            cmbKodeDiskon.setSelectedItem("Discount Code");
+    private int ValidatePay(JTextField txtPay) {
+        try {
+            int jumlahBayar = Integer.parseInt(txtPay.getText());
+            return jumlahBayar;
+        } catch (NumberFormatException e) {
+            exceptionHandler.getErrorKesalahan("Invalid payment amount!");
         }
+        return 0;
     }
 
-    public ConfigTable modelTabel() {
-        model.addColumn("Product ID");
-        model.addColumn("Product Name");
-        model.addColumn("Quantity");
-        model.addColumn("Price");
-        model.addColumn("sub-Total");
-        return model;
-    }
-
-    public boolean InsertData() {
-        if (ValidateNamaProduk() && jumlah != 0) {
-            this.tanggal = GetDate();
-            boolean confirm = exceptionHandler.confirmSave("Save transactions?");
+    public void DeleteDataTransakssi(JTable tabel, JTextField txtTotal) {
+        int getRow = tabel.getSelectedRow();
+        if (getRow != -1) {
+            boolean confirm = exceptionHandler.confirmDeleteData("Remove a product from your purchase list?");
             if (confirm) {
-//                dbTransaksi.AddSaleTransaction(idTransaksi, idProduk, namaProduk, jumlah, idMember, total, tanggal, kodePromo, idUser);
-                return true;
+                ConfigTable modelTable = (ConfigTable) tabel.getModel();
+                modelTable.removeRow(getRow);
+                UpdateTotal(tabel, txtTotal);
             }
+        } else {
+            exceptionHandler.getErrorKesalahan("Please select a row to delete");
+        }
+    }
+
+    private void InsertDetailTransaksi(JTable table, String idTransaksi) {
+        ConfigTable model = (ConfigTable) table.getModel();
+        try {
+            for (int row = 0; row < model.getRowCount(); row++) {
+                idProduk = (String) model.getValueAt(row, 0);
+                jumlah = (int) model.getValueAt(row, 2);
+                subTotal = (int) model.getValueAt(row, 4);
+                dbTransaksi.InsertDetailTransaksi(idTransaksi, idProduk, jumlah, subTotal, tanggal);
+            }
+        } catch (Exception e) {
+            e.getMessage();
+        }
+    }
+
+    private void InsertTransaksiMember(String idTransaksi) {
+        ArrayList<String> dataMember = dbMember.GetMember(noHpMember);
+        String idMember = dataMember.get(0);
+        dbTransaksi.InsertTransaksiMember(idTransaksi, idMember);
+    }
+
+    private void InsertDetailTransaksiDiskon(String idTransaksi, int jumlahDiskon) {
+        dbTransaksi.InsertDetailTransaksiDiskon(idTransaksi, kodePromo, jumlahDiskon);
+    }
+
+    public boolean InsertTransaksiPenjualan(JTable table, int jumlahDiskon, String namaMember) {
+        this.tanggal = GetDate();
+        this.idTransaksi = GenerateIdTransaksi();
+        boolean confirm = exceptionHandler.confirmSave("Save transactions?");
+        if (confirm) {
+            dbTransaksi.InsertTransaksi(idTransaksi, tanggal, total);
+            InsertDetailTransaksi(table, idTransaksi);
+            if (!namaMember.equalsIgnoreCase("Member Name")) {
+                InsertTransaksiMember(idTransaksi);
+                if (!kodePromo.equalsIgnoreCase("Discount ID")) {
+                    InsertDetailTransaksiDiskon(idTransaksi, jumlahDiskon);
+                }
+            }
+            return true;
         }
         return false;
     }

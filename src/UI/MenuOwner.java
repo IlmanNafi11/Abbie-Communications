@@ -376,7 +376,7 @@ public class MenuOwner extends javax.swing.JInternalFrame {
         report.SetProfile(username, role);
         MainFrame main = (MainFrame) SwingUtilities.getWindowAncestor(this);
         main.gantiKonten(report);
-        LoginControler loginControler = new LoginControler(username, null);
+        LoginControler loginControler = new LoginControler(username, null, null);
         ArrayList<String> IdUser = loginControler.DataProfile();
         LaporanControler laporanControler = new LaporanControler();
         laporanControler.setIdUser(IdUser.get(0));

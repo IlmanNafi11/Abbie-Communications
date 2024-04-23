@@ -8,12 +8,14 @@ public class LoginControler {
 
     private String username;
     private String password;
+    private String idAkun;
     private DbUserManager dbUserManager;
     private ExceptionHandler exceptionHandler;
 
-    public LoginControler(String username, String password) {
+    public LoginControler(String username, String password, String idAkun) {
         this.username = username;
         this.password = password;
+        this.idAkun = idAkun;
         exceptionHandler = new ExceptionHandler();
         dbUserManager = new DbUserManager();
     }
@@ -48,11 +50,20 @@ public class LoginControler {
         return false;
     }
 
+    public String GetUsername(String role, String idAkun) {
+        return dbUserManager.GetUsername(role, idAkun);
+    }
+
     public String AuthLogin() {
         if (VerifField()) {
             String Hashpassword = HashSandi(password);
-            return dbUserManager.AuthLogin(username, Hashpassword);
+            return dbUserManager.AuthLogin(username, Hashpassword, idAkun);
         }
         return null;
+    }
+
+    public String AuthLoginRfid(){
+        String role = dbUserManager.AuthLogin(username, null, idAkun);
+        return role;
     }
 }

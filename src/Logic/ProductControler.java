@@ -22,9 +22,7 @@ public class ProductControler {
     private String kategori;
     private String idProduct;
     private String idSupplier;
-    private String namaSuppplier;
     private int harga;
-    private String barcode;
     private int jumlahStock;
     private String namaLama;
     private ExceptionHandler exception;

@@ -11,6 +11,8 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
 
     private String username;
     private String role;
+
+    private int jumlahDiskon;
     private ConfigTable model;
 
     public TransaksiPenjualan() {
@@ -27,6 +29,10 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
         lblPosisiUser.setText(role);
         this.username = nama;
         this.role = role;
+    }
+
+    public void SetJumlahDiskon(int jumlahDiskon) {
+        this.jumlahDiskon = jumlahDiskon;
     }
 
     public void ViewTableTransaksi() {
@@ -384,6 +390,8 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Button-Delete-Primary-Click.png")));
+        TransaksiPenjualanControler controler = new TransaksiPenjualanControler(null, null, null, 0, null, 0, null);
+        controler.DeleteDataTransakssi(table, txtTotal);
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnDeleteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteMouseEntered
@@ -418,6 +426,12 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
 
     private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
         btnPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Button-Print-Primary-click.png")));
+        String namaMember = txtMemberName.getText();
+        String noHpMember = txtNoHpMember.getText();
+        String kodeDiskon = (String) cmbKodeDiskon.getSelectedItem();
+        int total = Integer.parseInt(txtTotal.getText());
+        TransaksiPenjualanControler controler = new TransaksiPenjualanControler(null, null, null,0,noHpMember, total, kodeDiskon);
+        controler.InsertTransaksiPenjualan(table, jumlahDiskon, namaMember);
     }//GEN-LAST:event_btnPrintActionPerformed
 
     private void btnPrintMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPrintMouseEntered
@@ -505,7 +519,7 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
     private void lblPosisiUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPosisiUserMouseClicked
         lblPosisiUser.setForeground(new Color(28, 119, 255));
         Profile profile = new Profile(this, true);
-        LoginControler controler = new LoginControler(username, null);
+        LoginControler controler = new LoginControler(username, null, null);
         ArrayList<String> data = controler.DataProfile();
         profile.SetField(data.get(0), data.get(1), data.get(2), data.get(3), data.get(4), username, role);
         profile.setVisible(true);
@@ -526,7 +540,7 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
     private void lblNamaUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNamaUserMouseClicked
         lblNamaUser.setForeground(new Color(28, 119, 255));
         Profile profile = new Profile(this, true);
-        LoginControler controler = new LoginControler(username, null);
+        LoginControler controler = new LoginControler(username, null, null);
         ArrayList<String> data = controler.DataProfile();
         profile.SetField(data.get(0), data.get(1), data.get(2), data.get(3), data.get(4), username, role);
         profile.setVisible(true);
@@ -602,6 +616,7 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
             if (!kodeDiskon.equalsIgnoreCase("Discount Code")) {
                 TransaksiPenjualanControler controler = new TransaksiPenjualanControler(null, null, null, 0, null, 0, kodeDiskon);
                 int diskon = controler.GetDiscountAmount(cmbKodeDiskon);
+                SetJumlahDiskon(diskon);
                 controler.HitungTotal(txtTotal, diskon);
             }
         }

@@ -172,7 +172,7 @@ public class register_1 extends javax.swing.JInternalFrame {
         String nama = txtName.getText();
         String noHp = txtTlp.getText();
         String alamat = txtAddress.getText();
-        AuthRegister verifikasi = new AuthRegister(nik, nama, noHp, alamat, null, null, null, null);
+        AuthRegister verifikasi = new AuthRegister(nik, nama, noHp, alamat, null, null, null, null, null);
         boolean verif = verifikasi.VerifBio();
         if (verif) {
             Register2 rg2 = new Register2();

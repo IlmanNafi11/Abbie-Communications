@@ -12,10 +12,11 @@ public class AuthRegister {
     private String password;
     private String Repas;
     private String role;
+    private String idAkun;
     private ExceptionHandler exceptionHandler;
     private DbUserManager dbUserManager;
 
-    public AuthRegister(String nik, String nama, String noHp, String alamat, String username, String password, String rePass, String role) {
+    public AuthRegister(String nik, String nama, String noHp, String alamat, String username, String password, String rePass, String role, String idAkun) {
         this.nik = nik;
         this.nama = nama;
         this.noHp = noHp;
@@ -24,6 +25,7 @@ public class AuthRegister {
         this.password = password;
         this.Repas = rePass;
         this.role = role;
+        this.idAkun = idAkun;
         exceptionHandler = new ExceptionHandler();
         dbUserManager = new DbUserManager();
     }
@@ -55,7 +57,11 @@ public class AuthRegister {
     public String getRole() {
         return role;
     }
-    
+
+    public String getIdAkun() {
+        return idAkun;
+    }
+
     public boolean VerifPassword() {
         if (password.trim().equalsIgnoreCase(Repas.trim())) {
             if (password.trim().length() >= 8) {

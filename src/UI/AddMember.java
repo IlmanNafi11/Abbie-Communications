@@ -50,7 +50,7 @@ public class AddMember extends javax.swing.JDialog {
             }
         });
         getContentPane().add(txtName);
-        txtName.setBounds(46, 155, 310, 50);
+        txtName.setBounds(46, 157, 310, 50);
 
         txtNoHp.setForeground(new java.awt.Color(153, 153, 153));
         txtNoHp.setText("Telephone Number");
@@ -64,7 +64,7 @@ public class AddMember extends javax.swing.JDialog {
             }
         });
         getContentPane().add(txtNoHp);
-        txtNoHp.setBounds(46, 231, 310, 50);
+        txtNoHp.setBounds(46, 233, 310, 50);
 
         txtAddress.setForeground(new java.awt.Color(153, 153, 153));
         txtAddress.setText("Address");
@@ -78,7 +78,7 @@ public class AddMember extends javax.swing.JDialog {
             }
         });
         getContentPane().add(txtAddress);
-        txtAddress.setBounds(46, 307, 310, 50);
+        txtAddress.setBounds(46, 309, 310, 50);
 
         btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Cancel-Primary-Default.png"))); // NOI18N
         btnCancel.setBorder(null);
@@ -126,9 +126,9 @@ public class AddMember extends javax.swing.JDialog {
 
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Add-Member.png"))); // NOI18N
         getContentPane().add(bg);
-        bg.setBounds(0, 0, 401, 507);
+        bg.setBounds(0, 0, 401, 488);
 
-        setSize(new java.awt.Dimension(417, 533));
+        setSize(new java.awt.Dimension(417, 524));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 

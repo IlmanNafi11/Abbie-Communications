@@ -17,9 +17,11 @@ public class login extends javax.swing.JInternalFrame {
         jPanel1.setFocusable(true);
     }
 
-    private void tutupFrame() {
+    public void tutupFrame(String username, String role) {
         Window window = SwingUtilities.getWindowAncestor(this);
         if (window instanceof JFrame) {
+            MainFrame mainFrame = new MainFrame(username, role);
+            mainFrame.setVisible(true);
             ((JFrame) window).dispose();
         }
     }
@@ -193,12 +195,10 @@ public class login extends javax.swing.JInternalFrame {
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         String username = txtUsername.getText();
         String password = txtPassword.getText();
-        LoginControler login = new LoginControler(username, password);
+        LoginControler login = new LoginControler(username, password, null);
         String role = login.AuthLogin();
         if (role != null) {
-            tutupFrame();
-            MainFrame mainFrame = new MainFrame(username, role);
-            mainFrame.setVisible(true);
+            tutupFrame(username,role);
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 
