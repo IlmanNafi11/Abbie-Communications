@@ -39,8 +39,8 @@ public class Report extends javax.swing.JInternalFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tabel = new javax.swing.JTable();
-        jMonthChooser1 = new com.toedter.calendar.JMonthChooser();
-        jYearChooser1 = new com.toedter.calendar.JYearChooser();
+        JMoonChooser = new com.toedter.calendar.JMonthChooser();
+        JYearChooser = new com.toedter.calendar.JYearChooser();
         btnPrint = new javax.swing.JButton();
         lblPosisiUser = new javax.swing.JLabel();
         IconProfil = new javax.swing.JLabel();
@@ -62,8 +62,8 @@ public class Report extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(tabel);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(67, 207, 962, 680));
-        getContentPane().add(jMonthChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 160, -1, 30));
-        getContentPane().add(jYearChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 160, 70, 30));
+        getContentPane().add(JMoonChooser, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 160, -1, 30));
+        getContentPane().add(JYearChooser, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 160, 70, 30));
 
         btnPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Button-Print-Primary-Default.png"))); // NOI18N
         btnPrint.setBorder(null);
@@ -137,6 +137,8 @@ public class Report extends javax.swing.JInternalFrame {
 
     private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
         btnPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Button-Print-Primary-click.png")));
+           LaporanControler laporanControler = new LaporanControler();
+           laporanControler.PrintLaporan(JMoonChooser, JYearChooser);        
     }//GEN-LAST:event_btnPrintActionPerformed
 
     private void btnPrintMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPrintMouseEntered
@@ -196,11 +198,11 @@ public class Report extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel IconProfil;
+    private com.toedter.calendar.JMonthChooser JMoonChooser;
+    private com.toedter.calendar.JYearChooser JYearChooser;
     private javax.swing.JLabel bg;
     private javax.swing.JButton btnPrint;
-    private com.toedter.calendar.JMonthChooser jMonthChooser1;
     private javax.swing.JScrollPane jScrollPane1;
-    private com.toedter.calendar.JYearChooser jYearChooser1;
     private javax.swing.JLabel lblNamaUser;
     private javax.swing.JLabel lblPosisiUser;
     private javax.swing.JTable tabel;

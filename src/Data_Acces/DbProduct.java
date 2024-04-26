@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import Logic.*;
+
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class DbProduct {
@@ -318,5 +320,28 @@ public class DbProduct {
             }
         }
         return 0;
+    }
+
+    public ConfigTable SearchProduct(String namaProduk, String idProduct, String kategori){
+        ConfigTable dataProduct = new ConfigTable();
+        String sqlGetProduct = "SELECT * FROM produk WHERE idProduct = ?";
+        Connection koneksi = null;
+        try {
+            koneksi = ClassKoneksi.GetConnection();
+            PreparedStatement stGetProduk = koneksi.prepareStatement(sqlGetProduct);
+            stGetProduk.setString(1, namaProduk);
+            stGetProduk.setString(2, idProduct);
+            stGetProduk.setString(3, kategori);
+            ResultSet rsGet = stGetProduk.executeQuery();
+            while (rsGet.next()) {
+                dataProduct.addRow(new  Object[]{
+                        rsGet.getString("id_produk"),
+                        rsGet.getString("nama_produk")
+                });
+            }
+        } catch (Exception e) {
+
+        }
+        return dataProduct;
     }
 }

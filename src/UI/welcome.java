@@ -11,7 +11,7 @@ public class welcome extends javax.swing.JFrame{
     }
 
     public void bukaLogin(){
-        login login = new login();
+        login login = new login(this);
         desktopPane.add(login);
         login.setVisible(true);
     }
@@ -138,7 +138,7 @@ public class welcome extends javax.swing.JFrame{
     }//GEN-LAST:event_btnSignUpActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        login lg = new login();
+        login lg = new login(this);
         desktopPane.add(lg);
         lg.setVisible(true);
     }//GEN-LAST:event_btnLoginActionPerformed

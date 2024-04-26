@@ -96,7 +96,7 @@ public class forgotPassword_1 extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblBackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBackMouseClicked
-        login lg = new login();
+        login lg = new login(null);
         this.getDesktopPane().add(lg);
         lg.setVisible(true);
         this.dispose();

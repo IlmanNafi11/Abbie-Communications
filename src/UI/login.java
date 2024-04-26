@@ -3,17 +3,17 @@ package UI;
 import java.awt.Color;
 import Logic.*;
 import java.awt.Window;
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 public class login extends javax.swing.JInternalFrame {
-
-    public login() {
+private JFrame parentFrame;
+    public login(JFrame parentFrame) {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
         bui.setNorthPane(null);
+        this.parentFrame = parentFrame;
         jPanel1.setFocusable(true);
     }
 
@@ -22,6 +22,13 @@ public class login extends javax.swing.JInternalFrame {
         if (window instanceof JFrame) {
             MainFrame mainFrame = new MainFrame(username, role);
             mainFrame.setVisible(true);
+            ((JFrame) window).dispose();
+        }
+    }
+
+    public void tutupJInternalDanFrame(JInternalFrame internalFrameLogin) {
+        Window window = SwingUtilities.getWindowAncestor(internalFrameLogin);
+        if (window instanceof JFrame) {
             ((JFrame) window).dispose();
         }
     }
@@ -212,7 +219,7 @@ public class login extends javax.swing.JInternalFrame {
 
     private void btnRfidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRfidActionPerformed
         btnRfid.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-RFID-Primary-Default.png")));
-        Rfid rfid = new Rfid(this, true);
+        Rfid rfid = new Rfid(parentFrame,this, true);
         rfid.setVisible(true);
     }//GEN-LAST:event_btnRfidActionPerformed
 

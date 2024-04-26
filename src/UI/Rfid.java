@@ -7,9 +7,13 @@ import javax.swing.JInternalFrame;
 import java.awt.event.KeyEvent;
 
 public class Rfid extends javax.swing.JDialog {
-    public Rfid(JInternalFrame parent, boolean modal) {
+    private JInternalFrame parentInternalFrame;
+    private JFrame parentFrame;
+    public Rfid(JFrame parentFrame, JInternalFrame parent, boolean modal) {
         super((JFrame) parent.getTopLevelAncestor(), modal);
         initComponents();
+        this.parentInternalFrame = parent;
+        this.parentFrame = parentFrame;
     }
     
     @SuppressWarnings("unchecked")
@@ -85,14 +89,15 @@ public class Rfid extends javax.swing.JDialog {
     private void txtRfidKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRfidKeyReleased
         if (evt.getKeyCode() == KeyEvent.VK_ENTER){
             String idAkun = txtRfid.getText();
-            login kelasLogin = new login();
+            login kelasLogin = new login(parentFrame);
             LoginControler login = new LoginControler(null, null, idAkun);
             String role = login.AuthLoginRfid();
             if (role != null) {
                 String username = login.GetUsername(role, idAkun);
-                this.dispose();
                 MainFrame mainFrame = new MainFrame(username, role);
                 mainFrame.setVisible(true);
+                this.dispose();
+                parentFrame.dispose();
             }
         }
     }//GEN-LAST:event_txtRfidKeyReleased
@@ -127,7 +132,7 @@ public class Rfid extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Rfid dialog = new Rfid(new javax.swing.JInternalFrame(), true);
+                Rfid dialog = new Rfid(null,new javax.swing.JInternalFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

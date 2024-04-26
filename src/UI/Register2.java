@@ -270,7 +270,7 @@ public class Register2 extends javax.swing.JInternalFrame {
         if (verif) {
             RegisterControler registrasi = new RegisterControler(verifikasi);
             if (registrasi.InsertData()) {
-                login lg = new login();
+                login lg = new login(null);
                 this.getDesktopPane().add(lg);
                 lg.setVisible(true);
                 this.dispose();
@@ -292,7 +292,7 @@ public class Register2 extends javax.swing.JInternalFrame {
 
     private void lblLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLoginMouseClicked
         lblLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Label-Login-Hover.png")));
-        login lg = new login();
+        login lg = new login(null);
         this.getDesktopPane().add(lg);
         lg.setVisible(true);
         this.dispose();

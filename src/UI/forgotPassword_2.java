@@ -143,7 +143,7 @@ public class forgotPassword_2 extends javax.swing.JInternalFrame {
         ResetPasswordControler controler = new ResetPasswordControler(password, rePassword, nik);
         boolean succesReset = controler.ResetPassword();
         if (succesReset) {
-            login lg = new login();
+            login lg = new login(null);
             this.getDesktopPane().add(lg);
             lg.setVisible(true);
             this.dispose();

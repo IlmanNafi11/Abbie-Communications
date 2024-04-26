@@ -12,7 +12,10 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Abbie%20Communications/src/UI/Register2.java</file>
+            <file>file:/D:/Abbie%20Communications/src/Logic/TransaksiPenjualanControler.java</file>
+            <file>file:/D:/Abbie%20Communications/src/UI/Report.java</file>
+            <file>file:/D:/Abbie%20Communications/src/report/laporan.jrxml</file>
+            <file>file:/D:/Abbie%20Communications/src/Logic/LaporanControler.java</file>
             <file>file:/D:/Abbie%20Communications/src/UI/welcome.java</file>
         </group>
     </open-files>

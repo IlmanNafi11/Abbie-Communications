@@ -10,7 +10,6 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 
 import Data_Acces.DbMember;
-import Data_Acces.DbSupplier;
 import Data_Acces.DbTransaksi;
 
 
