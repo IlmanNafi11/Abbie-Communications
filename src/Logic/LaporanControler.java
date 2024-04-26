@@ -36,7 +36,7 @@ public class LaporanControler {
         Connection koneksi = ClassKoneksi.GetConnection();
         int getBulan = bulan.getMonth() + 1;
         int getTahun = tahun.getYear();
-        InputStream path = getClass().getResourceAsStream("/report/laporan.jasper");
+        InputStream path = getClass().getResourceAsStream("/report/LaporanBulanan.jasper");
         Map<String, Object> parameter = new HashMap<>();
         parameter.put("bulan", getBulan);
         parameter.put("tahun", getTahun);
