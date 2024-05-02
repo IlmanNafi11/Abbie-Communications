@@ -36,7 +36,7 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
     }
 
     public void ViewTableTransaksi() {
-        TransaksiPenjualanControler controler = new TransaksiPenjualanControler(null, null, null, 0, null, 0, null);
+        TransaksiPenjualanControler controler = new TransaksiPenjualanControler(null, null, 0, null);
         model = controler.modelTabel();
         table.setModel(model);
     }
@@ -390,7 +390,7 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Button-Delete-Primary-Click.png")));
-        TransaksiPenjualanControler controler = new TransaksiPenjualanControler(null, null, null, 0, null, 0, null);
+        TransaksiPenjualanControler controler = new TransaksiPenjualanControler(null,  null, 0, null);
         controler.DeleteDataTransakssi(table, txtTotal);
     }//GEN-LAST:event_btnDeleteActionPerformed
 
@@ -408,7 +408,7 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
 
     private void btnCountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCountActionPerformed
         btnCount.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Button-Count-Primary-click.png")));
-        TransaksiPenjualanControler controler = new TransaksiPenjualanControler(null, null, null, 0, null, 0, null);
+        TransaksiPenjualanControler controler = new TransaksiPenjualanControler(null,  null, 0, null);
         controler.HitungKembalian(txtTotal, txtPay, txtRefund);
     }//GEN-LAST:event_btnCountActionPerformed
 
@@ -430,8 +430,8 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
         String noHpMember = txtNoHpMember.getText();
         String kodeDiskon = (String) cmbKodeDiskon.getSelectedItem();
         int total = Integer.parseInt(txtTotal.getText());
-        TransaksiPenjualanControler controler = new TransaksiPenjualanControler(null, null, null,0,noHpMember, total, kodeDiskon);
-        controler.InsertTransaksiPenjualan(table, jumlahDiskon, namaMember);
+        TransaksiPenjualanControler controler = new TransaksiPenjualanControler(username, noHpMember, total, kodeDiskon);
+        controler.InsertTransaksiPenjualan(table, jumlahDiskon, namaMember, txtPay, txtRefund);
     }//GEN-LAST:event_btnPrintActionPerformed
 
     private void btnPrintMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPrintMouseEntered
@@ -574,7 +574,7 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
         btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Icon-Search-Click.png")));
         String noHp = txtNoHpMember.getText();
         String kodeDiskon = (String) cmbKodeDiskon.getSelectedItem();
-        TransaksiPenjualanControler controler = new TransaksiPenjualanControler(null, null, null, 0, noHp, 0, kodeDiskon);
+        TransaksiPenjualanControler controler = new TransaksiPenjualanControler( null, noHp, 0, kodeDiskon);
         controler.SetTxtNamaMember(txtNoHpMember, txtMemberName, cmbKodeDiskon);
         controler.GetDiskon(txtMemberName, txtTotal, cmbKodeDiskon);
     }//GEN-LAST:event_btnSearchActionPerformed
@@ -595,14 +595,14 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
 
     private void txtProductIdKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtProductIdKeyReleased
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            TransaksiPenjualanControler controler = new TransaksiPenjualanControler(null, null, null, 0, null, 0, null);
+            TransaksiPenjualanControler controler = new TransaksiPenjualanControler(null, null, 0, null);
             controler.SetFieldTransaksi(txtProductId, txtProductName, txtQuantity);
         }
     }//GEN-LAST:event_txtProductIdKeyReleased
 
     private void txtQuantityKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtQuantityKeyReleased
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            TransaksiPenjualanControler controler = new TransaksiPenjualanControler(null, null, null, 0, null, 0, null);
+            TransaksiPenjualanControler controler = new TransaksiPenjualanControler(null, null, 0, null);
             Object[] data = controler.AddToTable(txtProductId, txtProductName, txtQuantity, bg);
             model.addRow(data);
             controler.UpdateTotal(table, txtTotal);
@@ -614,7 +614,7 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
         if (evt.getStateChange() == ItemEvent.SELECTED) {
             String kodeDiskon = (String) cmbKodeDiskon.getSelectedItem();
             if (!kodeDiskon.equalsIgnoreCase("Discount Code")) {
-                TransaksiPenjualanControler controler = new TransaksiPenjualanControler(null, null, null, 0, null, 0, kodeDiskon);
+                TransaksiPenjualanControler controler = new TransaksiPenjualanControler(null,  null, 0, kodeDiskon);
                 int diskon = controler.GetDiscountAmount(cmbKodeDiskon);
                 SetJumlahDiskon(diskon);
                 controler.HitungTotal(txtTotal, diskon);

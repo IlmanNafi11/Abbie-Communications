@@ -382,12 +382,14 @@ public class TransaksiService extends javax.swing.JInternalFrame {
     private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
         btnPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Button-Print-Primary-click.png")));
         String namaCustomer = txtCustomerName.getText();
-        String noHpCustomer = txtCustomerName.getText();
+        String noHpCustomer = txtNoHpCustomer.getText();
         String alamat = txtCustomerAddress.getText();
         int total = Integer.parseInt(txtTotal.getText());
+        int pay = Integer.parseInt(txtPay.getText());
+        int kembalian = Integer.parseInt(txtRefund.getText());
         TransaksiServiceControler transaksiServiceControler = new TransaksiServiceControler(null, null, null, 0, 0, total, namaCustomer, noHpCustomer, alamat);
         transaksiServiceControler.ValidatePayment(txtPay);
-        transaksiServiceControler.InsertTransaksi(table);
+        transaksiServiceControler.InsertTransaksi(table, username, total, pay, kembalian);
     }//GEN-LAST:event_btnPrintActionPerformed
 
     private void btnPrintMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPrintMouseEntered

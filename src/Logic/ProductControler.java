@@ -81,8 +81,8 @@ public class ProductControler {
 
     // generate id produk
     public void GenerateIdProduct(JTextField txtIdProduct) {
-            idProduct = GenerateRandom(12);
-            txtIdProduct.setText(idProduct);
+        idProduct = GenerateRandom(12);
+        txtIdProduct.setText(idProduct);
     }
 
     private byte[] GenerateBarcode() {
@@ -225,11 +225,11 @@ public class ProductControler {
     public ArrayList<String> IsiStringField(JTable table) {
         int row = table.getSelectedRow();
         ArrayList<String> data = new ArrayList<>();
-        String idProduk = table.getValueAt(row, 0).toString();
-        String namaProduk = table.getValueAt(row, 1).toString();
-        String kategori = table.getValueAt(row, 2).toString();
-        data.add(idProduk);
-        data.add(namaProduk);
+        idProduct = table.getValueAt(row, 0).toString();
+        namaProduct = table.getValueAt(row, 1).toString();
+        kategori = table.getValueAt(row, 2).toString();
+        data.add(idProduct);
+        data.add(namaProduct);
         data.add(kategori);
         return data;
     }
@@ -238,7 +238,7 @@ public class ProductControler {
         int row = table.getSelectedRow();
         ArrayList<Integer> data = new ArrayList<>();
         int stok = (Integer) table.getValueAt(row, 3);
-        int harga = (Integer) table.getValueAt(row, 4);
+        harga = (Integer) table.getValueAt(row, 4);
         data.add(harga);
         data.add(stok);
         return data;
@@ -275,6 +275,54 @@ public class ProductControler {
 
     public ConfigTable GetAllData() {
         return dbProduct.GetAllDataProduk();
+    }
+
+    public void SelectionSort(JTable table, int columnIndex, JComboBox<String> JComboSortByPrice) {
+        String price = (String) JComboSortByPrice.getSelectedItem();
+        ConfigTable model = (ConfigTable) table.getModel();
+        int rowCount = model.getRowCount();
+        if (price.equalsIgnoreCase("Sort by price: lowest")) {
+            for (int i = 0; i < rowCount - 1; i++) {
+                int minIndex = i;
+                for (int j = i + 1; j < rowCount; j++) {
+                    double minValue = Double.parseDouble(model.getValueAt(minIndex, columnIndex).toString());
+                    double currentValue = Double.parseDouble(model.getValueAt(j, columnIndex).toString());
+                    if (currentValue < minValue) {
+                        minIndex = j;
+                    }
+                }
+                if (minIndex != i) {
+                    swapRows(model, i, minIndex);
+                }
+            }
+        } else if (price.equalsIgnoreCase("Sort by price: highest")) {
+            for (int i = 0; i < rowCount - 1; i++) {
+                int maxIndex = i;
+                for (int j = i + 1; j < rowCount; j++) {
+                    double maxValue = Double.parseDouble(model.getValueAt(maxIndex, columnIndex).toString());
+                    double currentValue = Double.parseDouble(model.getValueAt(j, columnIndex).toString());
+                    if (currentValue > maxValue) {
+                        maxIndex = j;
+                    }
+                }
+                if (maxIndex != i) {
+                    swapRows(model, i, maxIndex);
+                }
+            }
+        } else {
+            table.setModel(GetAllData());
+        }
+    }
+
+    private void swapRows(ConfigTable model, int i, int j) {
+        int columnCount = model.getColumnCount();
+        Object[] temp = new Object[columnCount];
+
+        for (int k = 0; k < columnCount; k++) {
+            temp[k] = model.getValueAt(i, k);
+            model.setValueAt(model.getValueAt(j, k), i, k);
+            model.setValueAt(temp[k], j, k);
+        }
     }
 
     // insert data produk

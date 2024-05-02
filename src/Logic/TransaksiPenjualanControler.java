@@ -1,5 +1,6 @@
 package Logic;
 
+import Connections.ClassKoneksi;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,10 +12,17 @@ import javax.swing.JTextField;
 
 import Data_Acces.DbMember;
 import Data_Acces.DbTransaksi;
-
+import java.io.InputStream;
+import java.sql.Connection;
+import java.util.HashMap;
+import java.util.Map;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 public class TransaksiPenjualanControler {
 
+    private String namaKasir;
     private String idTransaksi;
     private String idProduk;
     private String namaProduk;
@@ -33,11 +41,8 @@ public class TransaksiPenjualanControler {
     private ProductControler productControler;
     private PromoContoler promoContoler;
 
-    public TransaksiPenjualanControler(String idTransaksi, String idProduk, String namaProduk, int jumlah, String noHp, int total, String kodePromo) {
-        this.idTransaksi = idTransaksi;
-        this.idProduk = idProduk;
-        this.namaProduk = namaProduk;
-        this.jumlah = jumlah;
+    public TransaksiPenjualanControler(String namaKasir, String noHp, int total, String kodePromo) {
+        this.namaKasir = namaKasir;
         this.noHpMember = noHp;
         this.total = total;
         this.kodePromo = kodePromo;
@@ -201,17 +206,19 @@ public class TransaksiPenjualanControler {
     // menghitung kembalian
     public void HitungKembalian(JTextField txtTotal, JTextField txtPay, JTextField txtRefund) {
         total = Integer.parseInt(txtTotal.getText());
-        int jumlahBayar = Integer.parseInt(txtPay.getText());
+        int jumlahBayar = ValidatePay(txtPay);
         int hasil;
-        if (total > jumlahBayar) {
-            hasil = total - jumlahBayar;
-            exceptionHandler.getErrorKesalahan("The payment amount is less than Rp. " + hasil);
-            txtPay.setForeground(Color.red);
-            txtRefund.setText("Refund");
-        } else {
-            hasil = jumlahBayar - total;
-            txtPay.setForeground(Color.BLACK);
-            txtRefund.setText("Rp. " + String.valueOf(hasil));
+        if (jumlahBayar != 0) {
+            if (total > jumlahBayar) {
+                hasil = total - jumlahBayar;
+                exceptionHandler.getErrorKesalahan("The payment amount is less than Rp. " + hasil);
+                txtPay.setForeground(Color.red);
+                txtRefund.setText("Refund");
+            } else {
+                hasil = jumlahBayar - total;
+                txtPay.setForeground(Color.BLACK);
+                txtRefund.setText(String.valueOf(hasil));
+            }
         }
     }
 
@@ -263,9 +270,11 @@ public class TransaksiPenjualanControler {
         dbTransaksi.InsertDetailTransaksiDiskon(idTransaksi, kodePromo, jumlahDiskon);
     }
 
-    public boolean InsertTransaksiPenjualan(JTable table, int jumlahDiskon, String namaMember) {
+    public boolean InsertTransaksiPenjualan(JTable table, int jumlahDiskon, String namaMember, JTextField txtPay, JTextField txtReturn) {
         this.tanggal = GetDate();
         this.idTransaksi = GenerateIdTransaksi();
+        int pay = Integer.parseInt(txtPay.getText());
+        int kembalian = Integer.parseInt(txtReturn.getText());
         boolean confirm = exceptionHandler.confirmSave("Save transactions?");
         if (confirm) {
             dbTransaksi.InsertTransaksi(idTransaksi, tanggal, total);
@@ -276,8 +285,36 @@ public class TransaksiPenjualanControler {
                     InsertDetailTransaksiDiskon(idTransaksi, jumlahDiskon);
                 }
             }
+            PrintStruk(idTransaksi, namaKasir, namaMember, total, jumlahDiskon, pay, kembalian);
             return true;
         }
         return false;
+    }
+
+    private void PrintStruk(String idTransaksi, String namaKasir, String namaMember, int total, int diskon, int tunai, int kembalian) {
+        String member = "Not a member";
+        int jumlahDiskon = 0;
+        if (!namaMember.equalsIgnoreCase("Member Name")) {
+            member = namaMember;
+            if (!kodePromo.equalsIgnoreCase("Discount ID")) {
+                jumlahDiskon = diskon;
+            }
+        }
+        try {
+            Connection koneksi = ClassKoneksi.GetConnection();
+            InputStream path = getClass().getResourceAsStream("/report/StrukPenjualan.jasper");
+            Map<String, Object> parameter = new HashMap<>();
+            parameter.put("idTransaksi", idTransaksi);
+            parameter.put("kasir", namaKasir);
+            parameter.put("member", member);
+            parameter.put("total", total);
+            parameter.put("diskon", jumlahDiskon);
+            parameter.put("tunai", tunai);
+            parameter.put("kembalian", kembalian);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(path, parameter, koneksi);
+            JasperViewer.viewReport(jasperPrint, false);
+        } catch (Exception e) {
+            exceptionHandler.getErrorKesalahan("gagal" + e.getMessage());
+        }
     }
 }

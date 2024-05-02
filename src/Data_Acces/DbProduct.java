@@ -5,8 +5,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import Logic.*;
-
-import javax.swing.*;
 import java.util.ArrayList;
 
 public class DbProduct {

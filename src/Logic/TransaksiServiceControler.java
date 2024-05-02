@@ -1,7 +1,6 @@
 package Logic;
 
 import Data_Acces.DbTransaksi;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.Date;
@@ -143,7 +142,8 @@ public class TransaksiServiceControler {
         if (ValidateInformation() && biaya != 0) {
             kuantitas = 1;
             idProduct = "0000SRVC";
-            data = new Object[]{idProduct, information, kuantitas, biaya};
+            subTotal = kuantitas * biaya;
+            data = new Object[]{idProduct, information, kuantitas, biaya, subTotal};
         }
         return data;
     }
@@ -151,7 +151,8 @@ public class TransaksiServiceControler {
     private Object[] GetDataPart() {
         Object[] dataPart = null;
         if (!namaProduk.trim().equalsIgnoreCase("Product Name") && !namaProduk.trim().equalsIgnoreCase("") && kuantitas != 0) {
-            dataPart = new Object[]{idProduct, namaProduk, kuantitas, biaya};
+            subTotal = kuantitas * biaya;
+            dataPart = new Object[]{idProduct, namaProduk, kuantitas, biaya, subTotal};
         }
         return dataPart;
     }
@@ -193,7 +194,7 @@ public class TransaksiServiceControler {
     public void UpdateTotal(JTable tabel, JTextField txttotal) {
         total = 0;
         for (int i = 0; i < tabel.getRowCount(); i++) {
-            total += Double.parseDouble(tabel.getValueAt(i, 3).toString());
+            total += Double.parseDouble(tabel.getValueAt(i, 4).toString());
         }
         txttotal.setText(String.valueOf(total));
         txttotal.setForeground(Color.BLACK);
@@ -211,7 +212,7 @@ public class TransaksiServiceControler {
             kembalian = jumlahBayar - total;
             txtKembalian.setForeground(Color.BLACK);
             txtBayar.setForeground(Color.black);
-            txtKembalian.setText("Rp. " + String.valueOf(kembalian));
+            txtKembalian.setText(String.valueOf(kembalian));
         }
     }
 
@@ -220,6 +221,7 @@ public class TransaksiServiceControler {
         model.addColumn("Product Name/Information");
         model.addColumn("Quantity");
         model.addColumn("Price");
+        model.addColumn("Sub-Total");
         return model;
     }
 
@@ -237,7 +239,7 @@ public class TransaksiServiceControler {
         }
     }
 
-    public void InsertTransaksi(JTable tabel) {
+    public void InsertTransaksi(JTable tabel, String namaTeknisi, int total, int pay, int kembalian) {
         this.idTransaksi = GenerateIdTransaksi();
         this.tanggal = GetDate();
         ConfigTable modelTable = (ConfigTable) tabel.getModel();
@@ -251,13 +253,15 @@ public class TransaksiServiceControler {
                             idProduct = (String) modelTable.getValueAt(i, 0);
                             namaProduk = (String) modelTable.getValueAt(i, 1);
                             kuantitas = (int) modelTable.getValueAt(i, 2);
-                            subTotal = (int) modelTable.getValueAt(i, 3);
+                            hargaProduct = (int) modelTable.getValueAt(i, 3);
+                            subTotal = hargaProduct * kuantitas;
                             if (idProduct.equalsIgnoreCase("0000SRVC")) {
                                 dbTransaksi.InsertTransaksiService(idTransaksi, namaProduk, namaCustomer, noHpCustomer, alamatCustomer, subTotal, tanggal);
                             } else {
                                 dbTransaksi.InsertDetailTransaksi(idTransaksi, idProduct, kuantitas, subTotal, tanggal);
                             }
                         }
+                        dbTransaksi.PrintStruk(idTransaksi, namaTeknisi, total, pay, kembalian);
                     } catch (Exception e) {
                         e.getMessage();
                     }

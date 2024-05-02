@@ -41,6 +41,7 @@ public class Product extends javax.swing.JInternalFrame implements UpdateTable {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        JComboSortByPrice = new javax.swing.JComboBox<>();
         txtSearch = new javax.swing.JTextField();
         btnPrint = new javax.swing.JButton();
         btnAdd = new javax.swing.JButton();
@@ -56,6 +57,14 @@ public class Product extends javax.swing.JInternalFrame implements UpdateTable {
 
         setBorder(null);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        JComboSortByPrice.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sort by price:", "Sort by price: lowest", "Sort by price: highest" }));
+        JComboSortByPrice.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JComboSortByPriceActionPerformed(evt);
+            }
+        });
+        getContentPane().add(JComboSortByPrice, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 160, 160, 30));
 
         txtSearch.setBackground(new java.awt.Color(249, 250, 251));
         txtSearch.setForeground(new java.awt.Color(153, 153, 153));
@@ -419,9 +428,15 @@ public class Product extends javax.swing.JInternalFrame implements UpdateTable {
         lblNamaUser.setForeground(new Color(28, 119, 255));
     }//GEN-LAST:event_lblNamaUserMousePressed
 
+    private void JComboSortByPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JComboSortByPriceActionPerformed
+        ProductControler controler = new ProductControler(null, null, null, null, 0, 0);
+        controler.SelectionSort(table, 4, JComboSortByPrice);
+    }//GEN-LAST:event_JComboSortByPriceActionPerformed
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel IconProfil;
+    private javax.swing.JComboBox<String> JComboSortByPrice;
     private javax.swing.JLabel bg;
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnDelete;

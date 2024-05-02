@@ -1,15 +1,16 @@
 package Data_Acces;
 
 import Connections.ClassKoneksi;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-
 import Logic.*;
-
-import java.util.ArrayList;
+import java.io.InputStream;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 public class DbTransaksi {
     private ExceptionHandler exceptionHandler;
@@ -127,14 +128,42 @@ public class DbTransaksi {
             stInsert.setString(1, idTransaksi);
             stInsert.setString(2, keterangan);
             stInsert.setString(3, namaCustomer);
-            stInsert.setString(4, alamat);
-            stInsert.setString(5, noHp);
+            stInsert.setString(4, noHp);
+            stInsert.setString(5, alamat);
             stInsert.setInt(6, biaya);
             stInsert.setDate(7, new java.sql.Date(tanggal.getTime()));
             stInsert.executeUpdate();
             exceptionHandler.getSucces("Transaction successful!");
         } catch (Exception e) {
             exceptionHandler.getErrorKesalahan("Gagal insert data " + e.getMessage());
+        } finally {
+            if (koneksi != null) {
+                try {
+                    koneksi.close();
+                } catch (Exception e) {
+                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection! \" + e.getMessage()");
+                }
+            }
+        }
+    }
+    
+    public void PrintStruk(String idTransaksi, String namaTeknisi, int total, int tunai, int kembalian){
+    exceptionHandler = new ExceptionHandler();
+    String id = idTransaksi;
+    Connection koneksi = null;
+        try {
+            koneksi = ClassKoneksi.GetConnection();
+            InputStream path = getClass().getResourceAsStream("/report/StrukService.jasper");
+            Map<String, Object> parameter = new HashMap<>();
+            parameter.put("idTransaksi", id);
+            parameter.put("teknisi", namaTeknisi);
+            parameter.put("total", total);
+            parameter.put("tunai", tunai);
+            parameter.put("kembalian", kembalian);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(path, parameter, koneksi);
+            JasperViewer.viewReport(jasperPrint, false);
+        } catch (Exception e) {
+            e.getMessage();
         } finally {
             if (koneksi != null) {
                 try {
