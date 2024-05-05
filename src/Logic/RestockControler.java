@@ -1,6 +1,7 @@
 package Logic;
 
 import Data_Acces.*;
+import java.awt.Color;
 import java.util.Date;
 import java.util.Random;
 import javax.swing.JComboBox;
@@ -24,14 +25,15 @@ public class RestockControler {
     private ProductControler productControler;
     private SupplierControler supplierControler;
     private DbRestock dbRestock;
+    private ConfigTable model;
 
-    public RestockControler(String idTransaksi, String kategory, String productId, String productName, int quantity, String supplierId, String supplierName, int price) {
+    public RestockControler(String idTransaksi, String kategory, String productId, String productName, int quantity, String idSupplier, String supplierName, int price) {
         this.transactionId = idTransaksi;
         this.category = kategory;
         this.productId = productId;
         this.productName = productName;
         this.quantity = quantity;
-        this.supplierId = supplierId;
+        this.supplierId = idSupplier;
         this.supplierName = supplierName;
         this.price = price;
         exceptionHandler = new ExceptionHandler();
@@ -61,7 +63,7 @@ public class RestockControler {
         if (row != -1) {
             return true;
         } else {
-            exceptionHandler.getErrorKesalahan("Select one of the Restock data you want to change");
+            exceptionHandler.Kesalahan("Select one of the Restock data you want to change");
         }
         return false;
     }
@@ -70,7 +72,7 @@ public class RestockControler {
         if (!category.equalsIgnoreCase("Category")) {
             return true;
         } else {
-            exceptionHandler.getErrorKesalahan("Choose one of the product categories!");
+            exceptionHandler.Kesalahan("Choose one of the product categories!");
         }
         return false;
     }
@@ -79,7 +81,7 @@ public class RestockControler {
         if (!supplierId.equalsIgnoreCase("Supplier ID")) {
             return true;
         } else {
-            exceptionHandler.getErrorKesalahan("Choose one of the Supplier ID!");
+            exceptionHandler.Kesalahan("Choose one of the Supplier ID!");
         }
         return false;
     }
@@ -88,7 +90,7 @@ public class RestockControler {
         if (!productId.equalsIgnoreCase("Product ID")) {
             return true;
         } else {
-            exceptionHandler.getErrorKesalahan("Choose one of the Product ID!");
+            exceptionHandler.Kesalahan("Choose one of the Product ID!");
         }
         return false;
     }
@@ -100,7 +102,7 @@ public class RestockControler {
                 return quantity;
             }
         } catch (NumberFormatException e) {
-            exceptionHandler.getErrorKesalahan("Invalid restock amount!");;
+            exceptionHandler.Kesalahan("Invalid restock amount!");;
         }
         return 0;
     }
@@ -112,7 +114,7 @@ public class RestockControler {
                 return price;
             }
         } catch (NumberFormatException e) {
-            exceptionHandler.getErrorKesalahan("Invalid price amount!");;
+            exceptionHandler.Kesalahan("Invalid price amount!");;
         }
         return 0;
     }
@@ -121,27 +123,72 @@ public class RestockControler {
         return quantity * price;
     }
 
-    public ConfigTable GetAllData() {
-        return dbRestock.GetAllDataRestock();
+    public ConfigTable SetModelTable() {
+        model = new ConfigTable();
+        model.addColumn("Transaction ID");
+        model.addColumn("Category");
+        model.addColumn("Product Name");
+        model.addColumn("Quantity");
+        model.addColumn("Price");
+        model.addColumn("Supplier ID");
+        model.addColumn("Total");
+        model.addColumn("Date");
+        return model;
+    }
+
+    public void GetAllData(JTable table) {
+        model = (ConfigTable) table.getModel();
+        ArrayList<Object[]> listData = dbRestock.GetAllDataRestock();
+        for (Object[] data : listData) {
+            model.addRow(data);
+        }
+    }
+
+    public void SearchTransaksi(JTable table, JTextField txtSearch) {
+        String teksSearch = txtSearch.getText().trim();
+        model = (ConfigTable) table.getModel();
+        model.setRowCount(0);
+        ArrayList<Object[]> DataProduct;
+        if (!teksSearch.equalsIgnoreCase("Enter the restock transaction ID or date here")) {        
+            DataProduct = dbRestock.SearchTransactionRestock(teksSearch);
+            if (DataProduct.isEmpty()) {
+                DataProduct = dbRestock.GetAllDataRestock();
+                for (Object[] data : DataProduct) {
+                    model.addRow(data);
+                }
+            } else {
+                for (Object[] data : DataProduct) {
+                    model.addRow(data);
+                }
+            }
+            txtSearch.setText("Enter the restock transaction ID or date here");
+            txtSearch.setForeground(new Color(153, 153, 153));
+        } else {
+            exceptionHandler.Kesalahan("Please enter the restock transaction ID or transaction date!");
+            DataProduct = dbRestock.GetAllDataRestock();
+            for (Object[] data : DataProduct) {
+                model.addRow(data);
+            }
+        }
     }
 
     // set comboBox id produk berdasarkan kategorinya
     public void SetComboProdukId(JComboBox<String> comboBox) {
         try {
-            productControler = new ProductControler(null, category, null, null, 0, 0);
+            productControler = new ProductControler(category, null);
             ArrayList<String> getIdProduk = productControler.getIdProduct();
             comboBox.removeAllItems();
             for (String idProduk : getIdProduk) {
-                comboBox.addItem(idProduk);
+                comboBox.addItem(idProduk);               
             }
         } catch (Exception e) {
-            e.getMessage();
-        }
+            e.printStackTrace();
+        }       
     }
 
-    public void SetTxtProdukName(String idProdct, JTextField txtProdukName) {
-        if (idProdct != "Product ID") {
-            productControler = new ProductControler(null, category, productId, null, 0, 0);
+    public void SetTxtProdukName(String idProduct, JTextField txtProdukName) {
+        if (idProduct != "Product ID") {
+            productControler = new ProductControler(category, idProduct);
             productName = productControler.getNamaProduct();
             txtProdukName.setText(productName);
         } else {
@@ -151,20 +198,18 @@ public class RestockControler {
 
     //set item combo box id supplier berdasarkan kategori produk
     public void SetComboIdSupplier(JComboBox<String> comboBox) {
-        try {
+//        if (!category.equalsIgnoreCase("Category")) {
             supplierControler = new SupplierControler(null, null, null, category);
             ArrayList<String> getIdSupplier = supplierControler.GetIdSupplier();
             comboBox.removeAllItems();
             for (String idSupplier : getIdSupplier) {
                 comboBox.addItem(idSupplier);
             }
-        } catch (Exception e) {
-            e.getMessage();
-        }
+//        }    
     }
 
     public void setTxtSupplierName(String idSupplier, JTextField txtSupplierName) {
-        if (idSupplier != "Supplier ID") {
+        if (supplierId != "Supplier ID") {
             supplierControler = new SupplierControler(supplierId, null, null, null);
             supplierName = supplierControler.GetSupplierName();
             txtSupplierName.setText(supplierName);
@@ -207,11 +252,10 @@ public class RestockControler {
             GenerateIdTransaksi();
             this.tanggal = GetDate();
             this.total = CalculateTotal();
-            boolean confirm = exceptionHandler.confirmSave("Save Transaction?");
+            boolean confirm = exceptionHandler.ConfirmSave("Save Transaction?");
             if (confirm) {
                 dbRestock.InsertData(transactionId, productName, quantity, price, supplierId, productId, total, tanggal);
                 return true;
-
             }
         }
         return false;
@@ -221,7 +265,7 @@ public class RestockControler {
         if (ValidateKategori() && ValidateProductId() && quantity != 0 && ValidateSupplierId() && price != 0) {
             this.tanggal = GetDate();
             this.total = CalculateTotal();
-            boolean confirm = exceptionHandler.confirmSave("Save data changes restock?");
+            boolean confirm = exceptionHandler.ConfirmSave("Save data changes restock?");
             if (confirm) {
                 dbRestock.ChangeRestockData(transactionId, productName, quantity, price, supplierId, productId, total, tanggal);
                 return true;
@@ -234,13 +278,13 @@ public class RestockControler {
         int row = table.getSelectedRow();
         if (row != -1) {
             String idTransaksi = table.getValueAt(row, 0).toString();
-            boolean confirm = exceptionHandler.confirmDeleteData("Are you sure you want to delete the data?");
+            boolean confirm = exceptionHandler.ConfirmDeleteData("Are you sure you want to delete the data?");
             if (confirm) {
                 dbRestock.DeleteData(idTransaksi);
                 return true;
             }
         } else {
-            exceptionHandler.getErrorKesalahan("Please, Select one of the data you want to delete!");
+            exceptionHandler.Kesalahan("Please, Select one of the data you want to delete!");
         }
         return false;
     }

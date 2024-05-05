@@ -149,10 +149,8 @@ public class ChangeDiscount extends javax.swing.JDialog {
 
     private void btnChangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeActionPerformed
         btnChange.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Change-Click.png")));
-        int minimumBelanja = Integer.parseInt(txtMinimum.getText());
-        int jumlahDiskon = Integer.parseInt(txtAmount.getText());
         String status = (String) cmbStatus.getSelectedItem();
-        PromoContoler controler = new PromoContoler(kodeDiskon, minimumBelanja, jumlahDiskon, status);
+        PromoContoler controler = new PromoContoler(kodeDiskon, status);
         controler.ValidateMinPurchase(txtMinimum);
         controler.ValidateValue(txtAmount);
         boolean succes = controler.ChangeDiskon();

@@ -330,15 +330,8 @@ public class ChangeProduk extends javax.swing.JDialog {
 
     private void btnChangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeActionPerformed
         btnChange.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Save-Primary-Click.png")));
-        String kategori = (String) cmbKategori.getSelectedItem();
-        String idProduk = txtIdProduct.getText();
-        String namaProduk = txtNamaProduk.getText();
-        String idSupplier = (String) cmbIdSupplier.getSelectedItem();
-        ProductControler controler = new ProductControler(namaProduk, kategori, idProduk, idSupplier, 0, 0);
-        controler.SetNamaLama(produkNameBeforeUpdate);
-        controler.ValidasiStok(txtQuantity);
-        controler.ValidasiHarga(txtPrice);
-        boolean succes = controler.ChangeProductData();
+        ProductControler controler = new ProductControler(null, null);
+        boolean succes = controler.ChangeProductData(txtIdProduct, txtNamaProduk, txtQuantity, cmbIdSupplier, cmbKategori, txtPrice, produkNameBeforeUpdate);
         if (succes) {
             update.perbarui();
             dispose();
@@ -348,8 +341,8 @@ public class ChangeProduk extends javax.swing.JDialog {
     private void cmbKategoriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbKategoriActionPerformed
         String kategori = (String) cmbKategori.getSelectedItem();
         String idProduk = txtIdProduct.getText();
-        ProductControler controler = new ProductControler(null, kategori, idProduk, null, 0, 0);
-        controler.DisplayBarcode(lblBarcode);
+        ProductControler controler = new ProductControler(kategori, idProduk);
+        controler.DisplayBarcode(cmbKategori, lblBarcode);
         controler.SetIdSupplier(kategori, cmbIdSupplier);
         cmbIdSupplier.addItem("Supplier ID");
     }//GEN-LAST:event_cmbKategoriActionPerformed
@@ -357,7 +350,7 @@ public class ChangeProduk extends javax.swing.JDialog {
     private void cmbIdSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbIdSupplierActionPerformed
         String idSupplier = (String) cmbIdSupplier.getSelectedItem();
         String kategori = (String) cmbIdSupplier.getSelectedItem();
-        ProductControler controler = new ProductControler(null, kategori, null, idSupplier, 0, 0);
+        ProductControler controler = new ProductControler(kategori, null);
         String namaSupplier = controler.GetSupplierName(idSupplier);
         txtNamaSupplier.setText(namaSupplier);
     }//GEN-LAST:event_cmbIdSupplierActionPerformed
@@ -377,9 +370,9 @@ public class ChangeProduk extends javax.swing.JDialog {
     private void btnGenerateIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerateIdActionPerformed
         btnGenerateId.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Generate-Click.png")));
         String kategori = (String) cmbKategori.getSelectedItem();
-        ProductControler controler = new ProductControler(null, kategori, null, null, 0, 0);
+        ProductControler controler = new ProductControler(kategori, null);
         controler.GenerateIdProduct(txtIdProduct);
-        controler.DisplayBarcode(lblBarcode);
+        controler.DisplayBarcode(cmbKategori, lblBarcode);
     }//GEN-LAST:event_btnGenerateIdActionPerformed
 
     /**

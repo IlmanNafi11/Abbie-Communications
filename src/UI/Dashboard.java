@@ -10,12 +10,15 @@ public class Dashboard extends javax.swing.JInternalFrame {
 
     private String username;
     private String role;
-
+    private DashboardControler dashboardControler;
+    private ConfigTable model;
     public Dashboard() {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
         bui.setNorthPane(null);
+        SetMainBoard();
+        SetModelTable();
     }
 
     public void SetProfile(String nama, String role) {
@@ -23,6 +26,22 @@ public class Dashboard extends javax.swing.JInternalFrame {
         lblPosisiUser.setText(role);
         this.username = nama;
         this.role = role;
+    }
+    
+    private void SetMainBoard(){
+        dashboardControler = new DashboardControler();
+        dashboardControler.GetTanggalBanner(lblHari);
+        dashboardControler.GetTotalMember(lblMember);
+        dashboardControler.GetTotalProductSold(lblProduct);
+        dashboardControler.GetTotalPemasukan(lblIncome);
+        dashboardControler.GetTotalPengeluaran(lblExpenditure);
+    }
+    
+    private void SetModelTable(){
+        dashboardControler = new DashboardControler();
+        model = dashboardControler.ModelTable();
+        Table.setModel(model);
+        dashboardControler.GetDataHistory(Table);
     }
 
     @SuppressWarnings("unchecked")
@@ -33,7 +52,6 @@ public class Dashboard extends javax.swing.JInternalFrame {
         ScrollPane = new javax.swing.JScrollPane();
         Table = new javax.swing.JTable();
         lblHari = new javax.swing.JLabel();
-        DateChooser = new com.toedter.calendar.JDateChooser();
         lblMember = new javax.swing.JLabel();
         lblProduct = new javax.swing.JLabel();
         lblIncome = new javax.swing.JLabel();
@@ -110,8 +128,6 @@ public class Dashboard extends javax.swing.JInternalFrame {
         lblHari.setText("Februari, 02 2024");
         getContentPane().add(lblHari);
         lblHari.setBounds(84, 298, 190, 20);
-        getContentPane().add(DateChooser);
-        DateChooser.setBounds(881, 480, 150, 30);
 
         lblMember.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblMember.setText("930");
@@ -251,7 +267,6 @@ public class Dashboard extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.toedter.calendar.JDateChooser DateChooser;
     private javax.swing.JLabel IconProfil;
     private javax.swing.JScrollPane ScrollPane;
     private javax.swing.JTable Table;

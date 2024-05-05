@@ -9,69 +9,6 @@ import Logic.*;
 public class DbLaporan {
     private ExceptionHandler exceptionHandler;
     
-    private void HitungPemasukanPenjualan(){
-        String queryTotal = "SELECT tanggal, SUM(subtotal) AS total_subtotal FROM transaksi_detail GROUP BY tanggal";
-        exceptionHandler = new ExceptionHandler();
-        Connection koneksi = null;
-        try {
-            koneksi = ClassKoneksi.GetConnection();
-            PreparedStatement stTotal = koneksi.prepareStatement(queryTotal);
-            stTotal.executeQuery();
-        } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("There was a failure when calculating total sales revenue!");
-        } finally {
-            if (koneksi != null) {
-                try {
-                    koneksi.close();
-                } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection!");
-                }
-            }
-        }
-    }
-    
-    private void HitungPemasukanService(){
-        String queryTotal = "SELECT tanggal, SUM(biaya) AS total_biaya FROM transaksi_service GROUP BY tanggal";
-        exceptionHandler = new ExceptionHandler();
-        Connection koneksi = null;
-        try {
-            koneksi = ClassKoneksi.GetConnection();
-            PreparedStatement stTotal = koneksi.prepareStatement(queryTotal);
-            stTotal.executeQuery();
-        } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("A failure occurred while calculating the total service income");
-        } finally {
-            if (koneksi != null) {
-                try {
-                    koneksi.close();
-                } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection!");
-                }
-            }
-        }
-    }
-    
-    private void HitungPemasukanRestock(){
-        String queryTotal = "SELECT tanggal, SUM(total) AS total_restock FROM restock GROUP BY tanggal";
-        exceptionHandler = new ExceptionHandler();
-        Connection koneksi = null;
-        try {
-            koneksi = ClassKoneksi.GetConnection();
-            PreparedStatement stTotal = koneksi.prepareStatement(queryTotal);
-            stTotal.executeQuery();
-        } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("A failure occurred while calculating total expenses");
-        } finally {
-            if (koneksi != null) {
-                try {
-                    koneksi.close();
-                } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection!");
-                }
-            }
-        }
-    }
-    
     public void InsertLaporan(String idUser){
         String queryInsert = "INSERT IGNORE INTO laporan(id_user, tanggal, pemasukan_penjualan, pemasukan_service, jumlah_pengeluaran)" +
                 "SELECT ?, tanggal, COALESCE((SELECT SUM(subtotal) FROM transaksi_detail WHERE tanggal = l.tanggal), 0) AS pemasukan_penjualan, " +
@@ -87,13 +24,13 @@ public class DbLaporan {
             stInsert.setString(1, idUser);
             stInsert.executeUpdate();
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("Gagal" + e.getMessage());
+            exceptionHandler.Kesalahan("A failure occurred when trying to add report data");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection!");
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
                 }
             }
         }
@@ -123,13 +60,13 @@ public class DbLaporan {
                 });
             }
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("A failure occurred when trying to retrieve report data" + e.getMessage());
+            exceptionHandler.Kesalahan("A failure occurred when trying to retrieve report data");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection!" + e.getMessage());
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
                 }
             }
         }

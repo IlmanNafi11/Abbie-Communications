@@ -1,6 +1,7 @@
 package UI;
 
 import com.formdev.flatlaf.FlatLightLaf;
+import java.awt.Toolkit;
 import javax.swing.UIManager;
 
 public class welcome extends javax.swing.JFrame{
@@ -8,8 +9,12 @@ public class welcome extends javax.swing.JFrame{
     public welcome() {
         initComponents();
         getContentPane().add(desktopPane);
+        SetIcon();
     }
 
+    private void SetIcon(){
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/logo Abbie Communications.png")));
+    }
     public void bukaLogin(){
         login login = new login(this);
         desktopPane.add(login);

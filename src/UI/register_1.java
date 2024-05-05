@@ -28,7 +28,9 @@ public class register_1 extends javax.swing.JInternalFrame {
         lblBack = new javax.swing.JLabel();
         bg = new javax.swing.JLabel();
 
-        setPreferredSize(new java.awt.Dimension(1440, 1024));
+        setTitle("Register");
+        setPreferredSize(new java.awt.Dimension(1452, 1060));
+        setRequestFocusEnabled(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         desktopPane.setPreferredSize(new java.awt.Dimension(1440, 1024));
@@ -148,13 +150,14 @@ public class register_1 extends javax.swing.JInternalFrame {
         lblBack.setBounds(779, 206, 60, 28);
 
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Sign Up-1.png"))); // NOI18N
+        bg.setPreferredSize(new java.awt.Dimension(1452, 1060));
         jPanel1.add(bg);
-        bg.setBounds(0, 0, 1440, 1024);
+        bg.setBounds(0, 0, 1450, 1024);
 
         desktopPane.add(jPanel1);
         jPanel1.setBounds(0, 0, 1440, 1024);
 
-        getContentPane().add(desktopPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1438, 1164));
+        getContentPane().add(desktopPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1440, 1140));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

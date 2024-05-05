@@ -14,6 +14,7 @@ public class AddRestock extends javax.swing.JDialog {
         initComponents();
         this.setUndecorated(false);
         getContentPane().setBackground(new Color(255, 255, 255, 150));
+        revalidate();
     }
 
     public void setRestock(UpdateTable update) {

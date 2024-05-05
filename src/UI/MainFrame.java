@@ -1,6 +1,7 @@
 package UI;
 
 import com.formdev.flatlaf.FlatLightLaf;
+import java.awt.Toolkit;
 import javax.swing.UIManager;
 import javax.swing.JInternalFrame;
 
@@ -16,6 +17,11 @@ public class MainFrame extends javax.swing.JFrame {
         this.role = role;
         DisplayFirst();
         DisplayMenu();
+        SetIcon();
+    }
+    
+    private void SetIcon(){
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/logo Abbie Communications.png")));
     }
     
     public void DisplayFirst(){
@@ -58,7 +64,7 @@ public class MainFrame extends javax.swing.JFrame {
         DesktopPaneBody = new javax.swing.JDesktopPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Dashboard");
+        setTitle("Abbie Communications Apps");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         getContentPane().add(DesktopPaneMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 345, 1024));
 

@@ -22,6 +22,8 @@ public class ResetPasswordControler {
     public String GetName() {
         if (!nik.equalsIgnoreCase("NIK") && !nik.equals("")) {
             return dbUserManager.AuthResetPassword(nik);
+        } else {
+            exceptionHandler.Kesalahan("Please enter your NIK!");
         }
         return null;
     }
@@ -32,10 +34,10 @@ public class ResetPasswordControler {
             if (password.equalsIgnoreCase(repassword)) {
                 return true;
             } else {
-                exceptionHandler.getErrorKesalahan("Password and confirm password must be the same value!");
+                exceptionHandler.Kesalahan("Password and confirm password must be the same value!");
             }
         } else {
-            exceptionHandler.getErrorKesalahan("All fields must be filled in!");
+            exceptionHandler.Kesalahan("All fields must be filled in!");
         }
         return false;
     }
@@ -51,7 +53,7 @@ public class ResetPasswordControler {
             }
             return sb.toString();
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("A failure occurred while trying to encrypt the password! " + e.getMessage());
+            exceptionHandler.Kesalahan("A failure occurred while trying to encrypt the password!");
         }
         return null;
     }
@@ -59,7 +61,7 @@ public class ResetPasswordControler {
     public boolean ResetPassword() {
         String hashPassword = HashSandi(password);
         if (VerifPassword()) {
-            boolean confirm = exceptionHandler.confirmChangePerson("Are you sure you want to update your password? make sure the new password is easy to remember!");
+            boolean confirm = exceptionHandler.ConfirmChangePerson("Are you sure you want to update your password? make sure the new password is easy to remember!");
             if (confirm) {
                 dbUserManager.ResetPassword(nik, hashPassword);
                 return true;

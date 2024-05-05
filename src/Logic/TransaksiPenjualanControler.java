@@ -1,6 +1,5 @@
 package Logic;
 
-import Connections.ClassKoneksi;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,16 +8,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-
-import Data_Acces.DbMember;
 import Data_Acces.DbTransaksi;
-import java.io.InputStream;
-import java.sql.Connection;
-import java.util.HashMap;
-import java.util.Map;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.view.JasperViewer;
 
 public class TransaksiPenjualanControler {
 
@@ -37,9 +27,9 @@ public class TransaksiPenjualanControler {
     private ConfigTable model;
     private ExceptionHandler exceptionHandler;
     private DbTransaksi dbTransaksi;
-    private DbMember dbMember;
     private ProductControler productControler;
     private PromoContoler promoContoler;
+    private MemberControler memberControler;
 
     public TransaksiPenjualanControler(String namaKasir, String noHp, int total, String kodePromo) {
         this.namaKasir = namaKasir;
@@ -48,7 +38,6 @@ public class TransaksiPenjualanControler {
         this.kodePromo = kodePromo;
         exceptionHandler = new ExceptionHandler();
         dbTransaksi = new DbTransaksi();
-        dbMember = new DbMember();
         model = new ConfigTable();
     }
 
@@ -88,30 +77,34 @@ public class TransaksiPenjualanControler {
         return false;
     }
 
-    public void SetTxtNamaMember(JTextField noHpMember, JTextField namaMember, JComboBox<String> cmbKodeDiskon) {
-        ArrayList<String> dataMember = dbMember.GetMember(noHpMember.getText());
-        if (!dataMember.isEmpty()) {
-            namaMember.setText(dataMember.get(1));
-        } else {
-            namaMember.setText("Member Name");
-            exceptionHandler.getErrorKesalahan("Member not found!");
-            cmbKodeDiskon.removeAllItems();
-            cmbKodeDiskon.addItem("Discount Code");
-            cmbKodeDiskon.setSelectedItem("Discount Code");
+    public void SetTxtNamaMember(JTextField txtNoHpMember, JTextField namaMember, JComboBox<String> cmbKodeDiskon) {
+        noHpMember = txtNoHpMember.getText();
+        if (ValidateMember()) {
+            MemberControler memberControler = new MemberControler(null, noHpMember, null, null);
+            ArrayList<String> dataMember = memberControler.GetDataMember();
+            if (!dataMember.isEmpty()) {
+                namaMember.setText(dataMember.get(1));
+            } else {
+                namaMember.setText("Member Name");
+                exceptionHandler.Kesalahan("Member not found!");
+                cmbKodeDiskon.removeAllItems();
+                cmbKodeDiskon.addItem("Discount Code");
+                cmbKodeDiskon.setSelectedItem("Discount Code");
+            }
         }
     }
 
     // set field nama produk, dan quantity setelah inputan idProduct
     public void SetFieldTransaksi(JTextField txtIdProduct, JTextField txtNamaProduct, JTextField txtQuantity) {
         idProduk = txtIdProduct.getText();
-        productControler = new ProductControler(null, null, idProduk, null, 0, 0);
+        productControler = new ProductControler(null, idProduk);
         namaProduk = productControler.getNamaProduct();
         if (namaProduk != null) {
             txtNamaProduct.setText(namaProduk);
             txtQuantity.setText("1");
             txtQuantity.requestFocus();
         } else {
-            exceptionHandler.getErrorKesalahan("Product with Id" + idProduk + " not found!");
+            exceptionHandler.Kesalahan("Product with Id" + idProduk + " not found!");
             txtNamaProduct.setText("Product Name");
         }
     }
@@ -122,7 +115,7 @@ public class TransaksiPenjualanControler {
             int jumlahBeli = Integer.parseInt(txtQuantity.getText());
             return jumlahBeli;
         } catch (NumberFormatException e) {
-            exceptionHandler.getErrorKesalahan("Invalid purchase amount!");
+            exceptionHandler.Kesalahan("Invalid purchase amount!");
         }
         return 0;
     }
@@ -132,7 +125,7 @@ public class TransaksiPenjualanControler {
         Object[] data = null;
         idProduk = txtIdProduct.getText();
         namaProduk = txtNamaProduct.getText();
-        productControler = new ProductControler(namaProduk, null, idProduk, null, 0, 0);
+        productControler = new ProductControler(null, idProduk);
         jumlah = ValidateQuantity(txtQuantity);
         if (jumlah != 0) {
             hargaProduct = productControler.getHarga();
@@ -144,7 +137,7 @@ public class TransaksiPenjualanControler {
             txtQuantity.setText("Quantity");
             bg.requestFocus();
         } else {
-            exceptionHandler.getErrorKesalahan("The minimum purchase amount is 1 product");
+            exceptionHandler.Kesalahan("The minimum purchase amount is 1 product");
         }
         return data;
     }
@@ -155,7 +148,7 @@ public class TransaksiPenjualanControler {
         if (!namaMember.equalsIgnoreCase("Member Name")) {
             try {
                 int totalBelanja = Integer.parseInt(txtTotal.getText());
-                promoContoler = new PromoContoler(null, 0, 0, null);
+                promoContoler = new PromoContoler(null, null);
                 ArrayList<String> GetkodeDiskon = promoContoler.getKodeDiskon(totalBelanja);
                 comboDiskon.removeAllItems();
                 comboDiskon.addItem("Discount Code");
@@ -164,7 +157,7 @@ public class TransaksiPenjualanControler {
                     comboDiskon.addItem(kodeDiskon);
                 }
             } catch (NumberFormatException e) {
-                exceptionHandler.getErrorKesalahan("Add purchased products to get discounts!");
+                exceptionHandler.Kesalahan("Add purchased products to get discounts!");
             }
         }
     }
@@ -174,9 +167,9 @@ public class TransaksiPenjualanControler {
         if (!kodePromo.equalsIgnoreCase("Discount Code")) {
             boolean confirm = exceptionHandler.ConfirmDiscount("Attention! Are you sure you chose the discount code? Discount codes cannot be changed once they have been used!");
             if (confirm) {
-                promoContoler = new PromoContoler(kodePromo, 0, 0, null);
+                promoContoler = new PromoContoler(kodePromo, null);
                 int jumlahDiskon = promoContoler.GetDiscountAmount();
-                exceptionHandler.getSucces("Successfully obtained a discount of Rp. " + jumlahDiskon);
+                exceptionHandler.SuccesSaveData("Successfully obtained a discount of Rp. " + jumlahDiskon);
                 comboDiskon.setEnabled(false);
                 return jumlahDiskon;
             } else {
@@ -211,7 +204,7 @@ public class TransaksiPenjualanControler {
         if (jumlahBayar != 0) {
             if (total > jumlahBayar) {
                 hasil = total - jumlahBayar;
-                exceptionHandler.getErrorKesalahan("The payment amount is less than Rp. " + hasil);
+                exceptionHandler.Kesalahan("The payment amount is less than Rp. " + hasil);
                 txtPay.setForeground(Color.red);
                 txtRefund.setText("Refund");
             } else {
@@ -227,7 +220,7 @@ public class TransaksiPenjualanControler {
             int jumlahBayar = Integer.parseInt(txtPay.getText());
             return jumlahBayar;
         } catch (NumberFormatException e) {
-            exceptionHandler.getErrorKesalahan("Invalid payment amount!");
+            exceptionHandler.Kesalahan("Invalid payment amount!");
         }
         return 0;
     }
@@ -235,19 +228,19 @@ public class TransaksiPenjualanControler {
     public void DeleteDataTransakssi(JTable tabel, JTextField txtTotal) {
         int getRow = tabel.getSelectedRow();
         if (getRow != -1) {
-            boolean confirm = exceptionHandler.confirmDeleteData("Remove a product from your purchase list?");
+            boolean confirm = exceptionHandler.ConfirmDeleteData("Remove a product from your purchase list?");
             if (confirm) {
                 ConfigTable modelTable = (ConfigTable) tabel.getModel();
                 modelTable.removeRow(getRow);
                 UpdateTotal(tabel, txtTotal);
             }
         } else {
-            exceptionHandler.getErrorKesalahan("Please select a row to delete");
+            exceptionHandler.Kesalahan("Please select a row to delete");
         }
     }
 
     private void InsertDetailTransaksi(JTable table, String idTransaksi) {
-        ConfigTable model = (ConfigTable) table.getModel();
+        model = (ConfigTable) table.getModel();
         try {
             for (int row = 0; row < model.getRowCount(); row++) {
                 idProduk = (String) model.getValueAt(row, 0);
@@ -261,7 +254,8 @@ public class TransaksiPenjualanControler {
     }
 
     private void InsertTransaksiMember(String idTransaksi) {
-        ArrayList<String> dataMember = dbMember.GetMember(noHpMember);
+        memberControler = new MemberControler(null, noHpMember, null, null);
+        ArrayList<String> dataMember = memberControler.GetDataMember();
         String idMember = dataMember.get(0);
         dbTransaksi.InsertTransaksiMember(idTransaksi, idMember);
     }
@@ -275,7 +269,7 @@ public class TransaksiPenjualanControler {
         this.idTransaksi = GenerateIdTransaksi();
         int pay = Integer.parseInt(txtPay.getText());
         int kembalian = Integer.parseInt(txtReturn.getText());
-        boolean confirm = exceptionHandler.confirmSave("Save transactions?");
+        boolean confirm = exceptionHandler.ConfirmSave("Save transactions?");
         if (confirm) {
             dbTransaksi.InsertTransaksi(idTransaksi, tanggal, total);
             InsertDetailTransaksi(table, idTransaksi);
@@ -285,36 +279,9 @@ public class TransaksiPenjualanControler {
                     InsertDetailTransaksiDiskon(idTransaksi, jumlahDiskon);
                 }
             }
-            PrintStruk(idTransaksi, namaKasir, namaMember, total, jumlahDiskon, pay, kembalian);
+            dbTransaksi.PrintStrukPenjualan(idTransaksi, namaKasir, namaMember, total, jumlahDiskon, pay, kembalian, kodePromo);
             return true;
         }
         return false;
-    }
-
-    private void PrintStruk(String idTransaksi, String namaKasir, String namaMember, int total, int diskon, int tunai, int kembalian) {
-        String member = "Not a member";
-        int jumlahDiskon = 0;
-        if (!namaMember.equalsIgnoreCase("Member Name")) {
-            member = namaMember;
-            if (!kodePromo.equalsIgnoreCase("Discount ID")) {
-                jumlahDiskon = diskon;
-            }
-        }
-        try {
-            Connection koneksi = ClassKoneksi.GetConnection();
-            InputStream path = getClass().getResourceAsStream("/report/StrukPenjualan.jasper");
-            Map<String, Object> parameter = new HashMap<>();
-            parameter.put("idTransaksi", idTransaksi);
-            parameter.put("kasir", namaKasir);
-            parameter.put("member", member);
-            parameter.put("total", total);
-            parameter.put("diskon", jumlahDiskon);
-            parameter.put("tunai", tunai);
-            parameter.put("kembalian", kembalian);
-            JasperPrint jasperPrint = JasperFillManager.fillReport(path, parameter, koneksi);
-            JasperViewer.viewReport(jasperPrint, false);
-        } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("gagal" + e.getMessage());
-        }
     }
 }

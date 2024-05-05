@@ -23,15 +23,15 @@ public class DbSupplier {
             stInsert.setString(3, noHp);
             stInsert.setString(4, kategori);
             stInsert.executeUpdate();
-            exceptionHandler.succesSavePersonData("Data saved successfully !");
+            exceptionHandler.SuccesSaveData("Data saved successfully !");
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("Failed to save supplier data" + e);
+            exceptionHandler.GagalTersimpan("Failed to save supplier data");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection! " + e.getMessage());
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection! ");
                 }
             }
         }
@@ -49,15 +49,15 @@ public class DbSupplier {
             stInsert.setString(3, kategori);
             stInsert.setString(4, idSupplier);
             stInsert.executeUpdate();
-            exceptionHandler.succesSavePersonData("Data changed successfully !");
+            exceptionHandler.SuccesSavePersonData("Data changed successfully !");
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("Failed to change supplier data" + e);
+            exceptionHandler.GagalTersimpan("Failed to change supplier data");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection! " + e.getMessage());
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
                 }
             }
         }
@@ -72,53 +72,87 @@ public class DbSupplier {
             PreparedStatement stDelete = koneksi.prepareStatement(sqlDelete);
             stDelete.setString(1, idSupplier);
             stDelete.executeUpdate();
-            exceptionHandler.succesDeleteData("Data deleted successfully !");
+            exceptionHandler.SuccesDeleteData("Data deleted successfully !");
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("Failed when trying to delete data" + e);
+            exceptionHandler.FailedDelete("Failed when trying to delete data");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection! " + e.getMessage());
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection! ");
                 }
             }
         }
     }
 
-    public ConfigTable GetAllDataSupplier() {
-        ConfigTable dataTable = new ConfigTable();
+    public ArrayList<Object[]> GetAllDataSupplier() {
         String sqlGetData = "SELECT * FROM supplier";
-        dataTable.addColumn("Supplier ID");
-        dataTable.addColumn("Supplier Name");
-        dataTable.addColumn("Telephone Number");
-        dataTable.addColumn("Category");
         Connection koneksi = null;
         exceptionHandler = new ExceptionHandler();
+        ArrayList<Object[]> listDataSupplier = new ArrayList<>();
         try {
             koneksi = ClassKoneksi.GetConnection();
             PreparedStatement stGetData = koneksi.prepareStatement(sqlGetData);
             ResultSet rs = stGetData.executeQuery();
             while (rs.next()) {
-                dataTable.addRow(new Object[]{
-                    rs.getString("id_supplier"),
-                    rs.getString("nama_supplier"),
-                    rs.getString("tlp_supplier"),
-                    rs.getString("kategori")
-                });
+                String idSupplier = rs.getString("id_supplier");
+                String namaSupplier = rs.getString("nama_supplier");
+                String noHpSupplier = rs.getString("tlp_supplier");
+                String kategori = rs.getString("kategori");
+                Object[] data = new Object[]{idSupplier, namaSupplier, noHpSupplier, kategori};
+                listDataSupplier.add(data);
             }
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("Failed when trying to get data");
+            exceptionHandler.Kesalahan("Failed when trying to get data");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection! " + e.getMessage());
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection! ");
                 }
             }
         }
-        return dataTable;
+        return listDataSupplier;
+    }
+
+    public ArrayList<Object[]> SearchSupplier(String inputSearch) {
+        ArrayList<Object[]> listDataSupplier = new ArrayList<>();
+        exceptionHandler = new ExceptionHandler();
+        Connection koneksi = null;
+        String querySerach = "SELECT * FROM supplier WHERE id_supplier LIKE ? OR nama_supplier LIKE ? OR tlp_supplier LIKE ?";
+        try {
+            koneksi = ClassKoneksi.GetConnection();
+            PreparedStatement stSearch = koneksi.prepareStatement(querySerach);
+            stSearch.setString(1, "%" + inputSearch + "%");
+            stSearch.setString(2, "%" + inputSearch + "%");
+            stSearch.setString(3, "%" + inputSearch + "%");
+            ResultSet rs = stSearch.executeQuery();
+            while (rs.next()) {
+                String idSupplier = rs.getString("id_supplier");
+                String namaSupplier = rs.getString("nama_supplier");
+                String noHpSupplier = rs.getString("tlp_supplier");
+                String kategori = rs.getString("kategori");
+                Object[] data = new Object[]{idSupplier, namaSupplier, noHpSupplier, kategori};
+                listDataSupplier.add(data);
+            }
+            if (listDataSupplier.isEmpty()) {
+                exceptionHandler.Kesalahan("Supplier not found!");
+            }
+        } catch (Exception e) {
+            exceptionHandler.Kesalahan("A failure occurred when trying to search for supplier data!" + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            if (koneksi != null) {
+                try {
+                    koneksi.close();
+                } catch (Exception e) {
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
+                }
+            }
+        }
+        return listDataSupplier;
     }
 
     // get id supplier berdasarkan kategori produk di kelas yang membutuhkan
@@ -136,13 +170,13 @@ public class DbSupplier {
                 idSupplier.add(rs.getString("id_supplier"));
             }
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("Failed when trying to retrieve supplier ID! " + e.getMessage());
+            exceptionHandler.Kesalahan("Failed when trying to retrieve supplier ID! ");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection! " + e.getMessage());
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection! ");
                 }
             }
         }
@@ -164,13 +198,13 @@ public class DbSupplier {
                 namaSupplier = rs.getString("nama_supplier");
             }
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("Failed when trying to retrieve supplier name! " + e.getMessage());
+            exceptionHandler.Kesalahan("Failed when trying to retrieve supplier name! ");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection! " + e.getMessage());
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection! ");
                 }
             }
         }

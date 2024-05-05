@@ -38,12 +38,6 @@ public class RegisterControler {
         return userId;
     }
 
-//    public String generateIdAkun() {
-//        String defaultValue = "ACN";
-//        String userId = defaultValue + generateRandom(4);
-//        return userId;
-//    }
-
     public String generateRandom(int angka) {
         Random random = new Random();
         StringBuilder stringBuilder = new StringBuilder();
@@ -64,7 +58,7 @@ public class RegisterControler {
             }
             return sb.toString();
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("A failure occurred while trying to encrypt the password! " + e.getMessage());
+            exceptionHandler.Kesalahan("A failure occurred while trying to encrypt the password!");
         }
         return null;
     }
@@ -72,10 +66,10 @@ public class RegisterControler {
     public boolean InsertData() {
         DbUserManager insert = new DbUserManager();
         String HashPassword = HashSandi(password);
-        boolean confirm = exceptionHandler.confirmSave("Save account? Make sure all data has been filled in correctly!");
+        boolean confirm = exceptionHandler.ConfirmSaveDataPerson("Save account? Make sure all data has been filled in correctly!");
         if (confirm) {
             insert.AddData(generateIdUser(), idAkun, nik, nama, noHp, alamat, username, HashPassword, role);
-            exceptionHandler.getSucces("Hooray, Registration has been successful!");
+            exceptionHandler.SuccesSavePersonData("Hooray, Registration has been successful!");
             return true;
         }
         return false;

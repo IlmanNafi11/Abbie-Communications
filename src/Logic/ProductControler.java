@@ -28,19 +28,16 @@ public class ProductControler {
     private ExceptionHandler exception;
     private SupplierControler supplierControler;
     private DbProduct dbProduct;
+    private ConfigTable model;
 
-    public ProductControler(String namaProduct, String kategori, String idProduct, String idSupplier, int harga, int jumlahStock) {
-        this.namaProduct = namaProduct;
+    public ProductControler(String kategori, String idProduct) {
         this.kategori = kategori;
         this.idProduct = idProduct;
-        this.idSupplier = idSupplier;
-        this.harga = harga;
-        this.jumlahStock = jumlahStock;
         exception = new ExceptionHandler();
         dbProduct = new DbProduct();
     }
 
-    // get nama produk berdasarkan id untuk kelas transaksi dan restok(blm)
+    // get nama produk berdasarkan id untuk kelas transaksi dan restok
     public String getNamaProduct() {
         namaProduct = dbProduct.GetProdukName(idProduct);
         return namaProduct;
@@ -143,17 +140,17 @@ public class ProductControler {
             if (!idSupplier.equalsIgnoreCase("Supplier ID")) {
                 return true;
             } else {
-                exception.getErrorKesalahan("Please select supplier ID!");
+                exception.Kesalahan("Please select supplier ID!");
             }
         } else {
-            exception.getErrorKesalahan("Please Select a product category!");
+            exception.Kesalahan("Please Select a product category!");
         }
         return false;
     }
 
     // get nama supplier berdasarkan id supplier yang dipilih di combo box
-    public String GetSupplierName(String idSupplier) {
-        supplierControler = new SupplierControler(idSupplier, null, null, null);
+    public String GetSupplierName(String suplierId) {
+        supplierControler = new SupplierControler(suplierId, null, null, null);
         String namaSupplier = supplierControler.GetSupplierName();
         return namaSupplier;
     }
@@ -164,7 +161,7 @@ public class ProductControler {
         if (!getProduct) {
             return true;
         }
-        exception.getErrorKesalahan("Product has been registered!");
+        exception.Kesalahan("Product has been registered!");
         return false;
     }
 
@@ -174,10 +171,10 @@ public class ProductControler {
             if (namaProduct.length() <= 25) {
                 return true;
             } else {
-                exception.getErrorKesalahan("The Product Name must not exceed 25 characters!");
+                exception.Kesalahan("The Product Name must not exceed 25 characters!");
             }
         }
-        exception.getErrorKesalahan("All columns must be filled in");
+        exception.Kesalahan("All columns must be filled in");
         return false;
     }
 
@@ -199,25 +196,25 @@ public class ProductControler {
             if (jumlahStock != 0) {
                 return jumlahStock;
             } else {
-                exception.getErrorKesalahan("The Stock amount must be more than 0");
+                exception.Kesalahan("The Stock amount must be more than 0");
             }
         } catch (NumberFormatException e) {
-            exception.getErrorKesalahan("Invalid stock quantity");
+            exception.Kesalahan("Invalid stock quantity");
         }
         return 0;
     }
 
     // validasi harga produk
-    public float ValidasiHarga(JTextField txtHarga) {
+    public int ValidasiHarga(JTextField txtHarga) {
         try {
             this.harga = Integer.parseInt(txtHarga.getText());
             if (harga != 0) {
                 return harga;
             } else {
-                exception.getErrorKesalahan("The price amount must be more than 0");
+                exception.Kesalahan("The price amount must be more than 0");
             }
         } catch (Exception e) {
-            exception.getErrorKesalahan("Price amount is invalid");
+            exception.Kesalahan("Price amount is invalid");
         }
         return 0;
     }
@@ -243,8 +240,9 @@ public class ProductControler {
         data.add(stok);
         return data;
     }
-
-    public void DisplayBarcode(JLabel lblBarcode) {
+    
+    public void DisplayBarcode(JComboBox<String> cmbKategori, JLabel lblBarcode) {
+        kategori = (String) cmbKategori.getSelectedItem();
         byte[] iconBarcode = GenerateBarcode();
         if (iconBarcode != null) {
             ImageIcon imgBarcode = new ImageIcon(iconBarcode);
@@ -268,18 +266,60 @@ public class ProductControler {
         if (row != -1) {
             return true;
         } else {
-            exception.getErrorKesalahan("Select one of the product data you want to change");
+            exception.Kesalahan("Select one of the product data you want to change");
         }
         return false;
     }
 
-    public ConfigTable GetAllData() {
-        return dbProduct.GetAllDataProduk();
+    public ConfigTable SetModelTable() {
+        model = new ConfigTable();
+        model.addColumn("Product ID");
+        model.addColumn("Product Name");
+        model.addColumn("Category");
+        model.addColumn("Quantity");
+        model.addColumn("Price");       
+        return model;
+    }
+    
+    public void GetAllData(JTable table){
+        model = (ConfigTable) table.getModel();
+        ArrayList<Object[]> DataProduct = dbProduct.GetAllDataProduk();
+        for (Object[] data : DataProduct) {
+            model.addRow(data);
+        }
+    }
+    
+    public void SearchData(JTable table, JTextField txtSearch) {
+        String teksSearch = txtSearch.getText();
+        model = (ConfigTable) table.getModel();
+        model.setRowCount(0);
+        ArrayList<Object[]> DataProduct;
+        if (!teksSearch.equalsIgnoreCase("Enter the ID or product name here")) {
+            DataProduct = dbProduct.SearchProduct(teksSearch);
+            if (DataProduct.isEmpty()) {
+                DataProduct = dbProduct.GetAllDataProduk();
+                for (Object[] data : DataProduct) {
+                    model.addRow(data);
+                }
+            } else {
+                for (Object[] data : DataProduct) {
+                    model.addRow(data);
+                }
+            }
+            txtSearch.setText("Enter the ID or product name here");
+            txtSearch.setForeground(new Color(153, 153, 153));
+        } else {
+            exception.Kesalahan("Please enter the product ID or name of the product you want to search for!");
+            DataProduct = dbProduct.GetAllDataProduk();
+            for (Object[] data : DataProduct) {
+                model.addRow(data);
+            }
+        }
     }
 
     public void SelectionSort(JTable table, int columnIndex, JComboBox<String> JComboSortByPrice) {
         String price = (String) JComboSortByPrice.getSelectedItem();
-        ConfigTable model = (ConfigTable) table.getModel();
+        model = (ConfigTable) table.getModel();
         int rowCount = model.getRowCount();
         if (price.equalsIgnoreCase("Sort by price: lowest")) {
             for (int i = 0; i < rowCount - 1; i++) {
@@ -310,7 +350,7 @@ public class ProductControler {
                 }
             }
         } else {
-            table.setModel(GetAllData());
+            table.setModel(SetModelTable());
         }
     }
 
@@ -326,26 +366,35 @@ public class ProductControler {
     }
 
     // insert data produk
-    public boolean InsertProduct() {
-        try {
-            if (ValidasiDataProduk() && ValidasiNama() && jumlahStock != 0 && harga != 0) {
-                byte[] barcode = GenerateBarcode();
-                boolean confirm = exception.confirmSave("Save product data?");
-                if (confirm) {
-                    dbProduct.InsertProduct(kategori, idProduct, namaProduct, jumlahStock, idSupplier, harga, barcode);
-                    return true;
-                }
+    public boolean InsertProduct(JTextField txtIdProduk, JTextField txtNamaProduk, JTextField txtJmlStock, JComboBox<String> cmbIdSupplier, JComboBox<String> cmbKategori,JTextField txtHargaProduk) {
+        kategori = (String) cmbKategori.getSelectedItem();
+        idProduct = txtIdProduk.getText();
+        namaProduct = txtNamaProduk.getText();
+        idSupplier = (String) cmbIdSupplier.getSelectedItem();
+        jumlahStock = ValidasiStok(txtJmlStock);
+        harga = ValidasiHarga(txtHargaProduk);
+        if (ValidasiDataProduk() && ValidasiNama() && jumlahStock != 0 && harga != 0) {
+            byte[] barcode = GenerateBarcode();
+            boolean confirm = exception.ConfirmSave("Save product data?");
+            if (confirm) {
+                dbProduct.InsertProduct(kategori, idProduct, namaProduct, jumlahStock, idSupplier, harga, barcode);
+                return true;
             }
-        } catch (Exception e) {
-            exception.getErrorKesalahan(e.getMessage());
         }
         return false;
     }
 
     // update data produk
-    public boolean ChangeProductData() {
+    public boolean ChangeProductData(JTextField txtIdProduk, JTextField txtNamaProduk, JTextField txtJmlStock, JComboBox<String> cmbIdSupplier, JComboBox<String> cmbKategori,JTextField txtHargaProduk, String namaLama) {
+        kategori = (String) cmbKategori.getSelectedItem();
+        idProduct = txtIdProduk.getText();
+        namaProduct = txtNamaProduk.getText();
+        SetNamaLama(namaLama);
+        idSupplier = (String) cmbIdSupplier.getSelectedItem();
+        jumlahStock = ValidasiStok(txtJmlStock);
+        harga = ValidasiHarga(txtHargaProduk);
         if (ValidasiComboBox() && ValidateUpdateName() && ValidasiNama() && jumlahStock != 0 && harga != 0) {
-            boolean confirm = exception.confirmSave("Save product data changes?");
+            boolean confirm = exception.ConfirmSave("Save product data changes?");
             if (confirm) {
                 dbProduct.ChangeDataProduct(kategori, idProduct, namaProduct, jumlahStock, idSupplier, harga);
                 return true;
@@ -357,14 +406,14 @@ public class ProductControler {
     public boolean DeleteDataProduk(JTable tabel) {
         int getRow = tabel.getSelectedRow();
         if (getRow != -1) {
-            boolean confirm = exception.confirmDeleteData("Delete Product?");
+            boolean confirm = exception.ConfirmDeleteData("Delete Product?");
             idProduct = tabel.getValueAt(getRow, 0).toString();
             if (confirm) {
                 dbProduct.DeleteProduk(idProduct);
                 return true;
             }
         } else {
-            exception.getErrorKesalahan("Select one of the data you want to delete !");
+            exception.Kesalahan("Select one of the data you want to delete !");
         }
         return false;
     }

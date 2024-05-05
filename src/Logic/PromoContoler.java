@@ -14,11 +14,10 @@ public class PromoContoler {
     private String status;
     private ExceptionHandler exceptionHandler;
     private DbPromo dbPromo;
+    private ConfigTable model;
 
-    public PromoContoler(String kodeDiskon, int minimum, int nilai, String status) {
+    public PromoContoler(String kodeDiskon, String status) {
         this.kodeDiskon = kodeDiskon;
-        this.minimum = minimum;
-        this.nilai = nilai;
         this.status = status;
         exceptionHandler = new ExceptionHandler();
         dbPromo = new DbPromo();
@@ -57,7 +56,7 @@ public class PromoContoler {
         if (row != -1) {
             return true;
         } else {
-            exceptionHandler.getErrorKesalahan("Select one of the discount data you want to change");
+            exceptionHandler.Kesalahan("Select one of the discount data you want to change");
         }
         return false;
     }
@@ -68,10 +67,10 @@ public class PromoContoler {
             if (minimum != 0) {
                 return minimum;
             } else {
-                exceptionHandler.getErrorKesalahan("Minimum purchase is invalid!");
+                exceptionHandler.Kesalahan("Minimum purchase is invalid!");
             }
         } catch (NumberFormatException e) {
-            exceptionHandler.getErrorKesalahan("Minimum purchase is invalid!");
+            exceptionHandler.Kesalahan("Minimum purchase is invalid!");
 
         }
         return 0;
@@ -83,10 +82,10 @@ public class PromoContoler {
             if (nilai != 0) {
                 return nilai;
             } else {
-                exceptionHandler.getErrorKesalahan("Invalid discount amount!");
+                exceptionHandler.Kesalahan("Invalid discount amount!");
             }
         } catch (NumberFormatException e) {
-            exceptionHandler.getErrorKesalahan("Invalid discount amount!");
+            exceptionHandler.Kesalahan("Invalid discount amount!");
         }
         return 0;
     }
@@ -95,21 +94,34 @@ public class PromoContoler {
         if (!status.equalsIgnoreCase("Status")) {
             return true;
         } else {
-            exceptionHandler.getErrorKesalahan("Select discount status!");
+            exceptionHandler.Kesalahan("Select discount status!");
         }
         return false;
     }
 
-    public ConfigTable GetAllData() {
-        return dbPromo.GetAllDataPromo();
+    public ConfigTable SetModelTable() {
+        model = new ConfigTable();
+        model.addColumn("Discount Code");
+        model.addColumn("Minimum Purchase");
+        model.addColumn("Discount amount");
+        model.addColumn("Status");
+        return model;
+    }
+
+    public void GetAllData(JTable table) {
+        model = (ConfigTable) table.getModel();
+        ArrayList<Object[]> listDataPromo = dbPromo.GetAllDataPromo();
+        for (Object[] data : listDataPromo) {
+            model.addRow(data);
+        }
     }
 
     public ArrayList<String> IsiStringField(JTable table) {
         int row = table.getSelectedRow();
         ArrayList<String> data = new ArrayList<>();
-        String kodePromo = table.getValueAt(row, 0).toString();
-        String status = table.getValueAt(row, 3).toString();
-        data.add(kodePromo);
+        kodeDiskon = table.getValueAt(row, 0).toString();
+        status = table.getValueAt(row, 3).toString();
+        data.add(kodeDiskon);
         data.add(status);
         return data;
     }
@@ -117,17 +129,17 @@ public class PromoContoler {
     public ArrayList<Integer> IsiIntField(JTable table) {
         int row = table.getSelectedRow();
         ArrayList<Integer> data = new ArrayList<>();
-        int minimumPurchase = (Integer) table.getValueAt(row, 1);
-        int amount = (Integer) table.getValueAt(row, 2);
-        data.add(minimumPurchase);
-        data.add(amount);
+        minimum = (Integer) table.getValueAt(row, 1);
+        nilai = (Integer) table.getValueAt(row, 2);
+        data.add(minimum);
+        data.add(nilai);
         return data;
     }
 
     public boolean InsertDiskon() {
         if (ValidateStatus() && minimum != 0 && nilai != 0) {
             GenerateKodeDiskon();
-            boolean confirm = exceptionHandler.confirmSave("Save Discount?");
+            boolean confirm = exceptionHandler.ConfirmSave("Save Discount?");
             if (confirm) {
                 dbPromo.InsertDiskon(kodeDiskon, minimum, nilai, status);
                 return true;
@@ -138,7 +150,7 @@ public class PromoContoler {
 
     public boolean ChangeDiskon() {
         if (ValidateStatus() && minimum != 0 && nilai != 0) {
-            boolean confirm = exceptionHandler.confirmSave("Save changes?");
+            boolean confirm = exceptionHandler.ConfirmSave("Save changes?");
             if (confirm) {
                 dbPromo.ChangeDiskon(kodeDiskon, minimum, nilai, status);
                 return true;
@@ -149,7 +161,7 @@ public class PromoContoler {
 
     public boolean DeleteDiskon(JTable table) {
         int row = table.getSelectedRow();
-        boolean confirm = exceptionHandler.confirmDeleteData("Delete Discount?");
+        boolean confirm = exceptionHandler.ConfirmDeleteData("Delete Discount?");
         if (row != -1) {
             this.kodeDiskon = table.getValueAt(row, 0).toString();
             if (confirm) {
@@ -157,7 +169,7 @@ public class PromoContoler {
                 return true;
             }
         } else {
-            exceptionHandler.getErrorKesalahan("Select the discount data you want to delete!");
+            exceptionHandler.Kesalahan("Select the discount data you want to delete!");
         }
         return false;
     }

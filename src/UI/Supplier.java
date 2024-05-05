@@ -32,8 +32,9 @@ public class Supplier extends javax.swing.JInternalFrame implements UpdateTable 
 
     public void ViewTable() {
         SupplierControler controler = new SupplierControler(null, null, null, null);
-        ConfigTable Tabel = controler.GetAllData();
+        ConfigTable Tabel = controler.SetModelData();
         table.setModel(Tabel);
+        controler.GetAllData(table);
     }
 
     @SuppressWarnings("unchecked")
@@ -57,7 +58,7 @@ public class Supplier extends javax.swing.JInternalFrame implements UpdateTable 
 
         txtSearch.setBackground(new java.awt.Color(249, 250, 251));
         txtSearch.setForeground(new java.awt.Color(153, 153, 153));
-        txtSearch.setText("Search Supplier here...");
+        txtSearch.setText("Enter ID or name or telephone supplier here");
         txtSearch.setBorder(null);
         txtSearch.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -236,6 +237,8 @@ public class Supplier extends javax.swing.JInternalFrame implements UpdateTable 
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Icon-Search-Click.png")));
+        SupplierControler controler = new SupplierControler(null, null, null, null);
+        controler.SearchSupplier(table, txtSearch);
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void btnSearchMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSearchMouseEntered
@@ -326,7 +329,7 @@ public class Supplier extends javax.swing.JInternalFrame implements UpdateTable 
     }//GEN-LAST:event_btnDeleteMousePressed
 
     private void txtSearchFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearchFocusGained
-        if (txtSearch.getText().equals("Search Supplier here...")) {
+        if (txtSearch.getText().equals("Enter ID or name or telephone supplier here")) {
             txtSearch.setText("");
             txtSearch.setForeground(Color.BLACK);
         }
@@ -334,7 +337,7 @@ public class Supplier extends javax.swing.JInternalFrame implements UpdateTable 
 
     private void txtSearchFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearchFocusLost
         if (txtSearch.getText().trim().equals("") || txtSearch.getText().length() == 0) {
-            txtSearch.setText("Search Supplier here...");
+            txtSearch.setText("Enter ID or name or telephone supplier here");
             txtSearch.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtSearchFocusLost

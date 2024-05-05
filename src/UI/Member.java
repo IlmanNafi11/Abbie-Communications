@@ -9,6 +9,7 @@ public class Member extends javax.swing.JInternalFrame implements UpdateTable {
 
     private String username;
     private String role;
+    private ConfigTable model;
 
     public Member() {
         initComponents();
@@ -34,14 +35,16 @@ public class Member extends javax.swing.JInternalFrame implements UpdateTable {
 
     public void ViewTableMember() {
         MemberControler controler = new MemberControler(null, null, null, null);
-        ConfigTable Tabel = controler.GetAllData();
+        ConfigTable Tabel = controler.SetModelTable();
         tableMember.setModel(Tabel);
+        controler.GetAllData(tableMember);
     }
 
     public void ViewTableDiskon() {
-        PromoContoler controler = new PromoContoler(null, 0, 0, null);
-        ConfigTable Tabel = controler.GetAllData();
-        tableDiskon.setModel(Tabel);
+        PromoContoler controler = new PromoContoler(null, null);
+        model = controler.SetModelTable();
+        tableDiskon.setModel(model);
+        controler.GetAllData(tableDiskon);
     }
 
     public void OpenAddMember() {
@@ -81,7 +84,7 @@ public class Member extends javax.swing.JInternalFrame implements UpdateTable {
 
         txtSearch.setBackground(new java.awt.Color(249, 250, 251));
         txtSearch.setForeground(new java.awt.Color(153, 153, 153));
-        txtSearch.setText("Search Member here...");
+        txtSearch.setText("Enter the member's telephone number here");
         txtSearch.setBorder(null);
         txtSearch.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -356,6 +359,8 @@ public class Member extends javax.swing.JInternalFrame implements UpdateTable {
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Icon-Search-Click.png")));
+        MemberControler controler = new MemberControler(null, null, null, null);
+        controler.SearchData(tableMember, txtSearch);
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void btnSearchMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSearchMouseEntered
@@ -397,10 +402,7 @@ public class Member extends javax.swing.JInternalFrame implements UpdateTable {
     private void btnEditPromoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditPromoActionPerformed
         btnEditPromo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Edit-Click.png")));
         ChangeDiscount changeDiscount = new ChangeDiscount(this, true);
-        PromoContoler controler = new PromoContoler(null, 0, 0, null);
-        ArrayList<String> dataString = new ArrayList<>();
-        ArrayList<Integer> dataInteger = new ArrayList<>();
-        int row = tableDiskon.getSelectedRow();
+        PromoContoler controler = new PromoContoler(null, null);
         boolean validasi = controler.ValidateRow(tableDiskon);
         if (validasi) {
             changeDiscount.setDiskon(new UpdateTable() {
@@ -409,8 +411,8 @@ public class Member extends javax.swing.JInternalFrame implements UpdateTable {
                     ViewTableDiskon();
                 }
             });
-            dataString = controler.IsiStringField(tableDiskon);
-            dataInteger = controler.IsiIntField(tableDiskon);
+            ArrayList<String> dataString = controler.IsiStringField(tableDiskon);
+            ArrayList<Integer> dataInteger = controler.IsiIntField(tableDiskon);
             changeDiscount.setField(dataString.get(0), dataInteger.get(0), dataInteger.get(1), dataString.get(1));
             changeDiscount.setVisible(true);
         }
@@ -431,7 +433,7 @@ public class Member extends javax.swing.JInternalFrame implements UpdateTable {
 
     private void btnHapusPromoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusPromoActionPerformed
         btnHapusPromo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Delete-Click.png")));
-        PromoContoler contoler = new PromoContoler(null, 0, 0, null);
+        PromoContoler contoler = new PromoContoler(null, null);
         boolean succes = contoler.DeleteDiskon(tableDiskon);
         if (succes) {
             ViewTableDiskon();
@@ -526,7 +528,7 @@ public class Member extends javax.swing.JInternalFrame implements UpdateTable {
     }//GEN-LAST:event_btnHapusMemberMousePressed
 
     private void txtSearchFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearchFocusGained
-        if (txtSearch.getText().equals("Search Member here...")) {
+        if (txtSearch.getText().equals("Enter the member's telephone number here")) {
             txtSearch.setText("");
             txtSearch.setForeground(Color.BLACK);
         }
@@ -534,7 +536,7 @@ public class Member extends javax.swing.JInternalFrame implements UpdateTable {
 
     private void txtSearchFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearchFocusLost
         if (txtSearch.getText().trim().equals("") || txtSearch.getText().length() == 0) {
-            txtSearch.setText("Search Member here...");
+            txtSearch.setText("Enter the member's telephone number here");
             txtSearch.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtSearchFocusLost

@@ -1,9 +1,11 @@
 package Logic;
 
 import Data_Acces.DbMember;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 
 public class MemberControler {
 
@@ -14,6 +16,7 @@ public class MemberControler {
     private String noHpLama;
     private ExceptionHandler exceptionHandler;
     private DbMember dbMember;
+    private ConfigTable model;
 
     public MemberControler(String idMember, String noHp, String namaMember, String alamatMember) {
         this.idMember = idMember;
@@ -26,6 +29,11 @@ public class MemberControler {
 
     public void SetNoHpLama(String noHp) {
         this.noHpLama = noHp;
+    }
+    
+    public ArrayList<String> GetDataMember(){
+        ArrayList<String> dataMember = dbMember.GetMember(noHp);
+        return dataMember;
     }
 
     private String GenerateRandom(int angka) {
@@ -46,7 +54,7 @@ public class MemberControler {
         if (row != -1) {
             return true;
         } else {
-            exceptionHandler.getErrorKesalahan("Select the data you want to change!");
+            exceptionHandler.Kesalahan("Select the data you want to change!");
         }
         return false;
     }
@@ -56,10 +64,10 @@ public class MemberControler {
             if (namaMember.length() <= 25) {
                 return true;
             } else {
-                exceptionHandler.getErrorKesalahan("Member names must not exceed 25 characters !");
+                exceptionHandler.Kesalahan("Member names must not exceed 25 characters!");
             }
         } else {
-            exceptionHandler.getErrorKesalahan("Invalid member name !");
+            exceptionHandler.Kesalahan("Invalid member name !");
         }
         return false;
     }
@@ -70,10 +78,10 @@ public class MemberControler {
             if (!cekNoHp) {
                 return true;
             } else {
-                exceptionHandler.getErrorKesalahan("Telephone number has been used !");
+                exceptionHandler.Kesalahan("Telephone number has been used !");
             }
         } else {
-            exceptionHandler.getErrorKesalahan("Invalid cellphone number !");
+            exceptionHandler.Kesalahan("Invalid cellphone number !");
         }
         return false;
     }
@@ -93,7 +101,7 @@ public class MemberControler {
         if (alamatMember.length() <= 50) {
             return true;
         } else {
-            exceptionHandler.getErrorKesalahan("The address must not exceed 50 characters !");
+            exceptionHandler.Kesalahan("The address must not exceed 50 characters !");
         }
         return false;
     }
@@ -103,13 +111,59 @@ public class MemberControler {
                 && !alamatMember.equalsIgnoreCase("Address") && !namaMember.equals("")) {
             return true;
         } else {
-            exceptionHandler.getErrorKesalahan("The field cannot be empty !");
+            exceptionHandler.Kesalahan("The field cannot be empty !");
         }
         return false;
     }
 
-    public ConfigTable GetAllData() {
-        return dbMember.GetAllDataMember();
+    public ConfigTable SetModelTable() {
+        model = new ConfigTable();
+        model.addColumn("Member ID");
+        model.addColumn("Member Name");
+        model.addColumn("Telephone");
+        model.addColumn("Address");
+        return model;
+    }
+
+    public void GetAllData(JTable table) {
+        model = (ConfigTable) table.getModel();
+        ArrayList<Object[]> DataMember = dbMember.GetAllDataMember();
+        for (Object[] data : DataMember) {
+            model.addRow(data);
+        }
+    }
+
+    public void SearchData(JTable table, JTextField txtSearch) {
+        String teksSearch = txtSearch.getText();
+        model = (ConfigTable) table.getModel();
+        model.setRowCount(0);
+        boolean found = false;
+        ArrayList<Object[]> dataMember;
+        if (!teksSearch.equalsIgnoreCase("Enter the member's telephone number here")) {
+            dataMember = dbMember.GetAllDataMember();
+            for (Object[] data : dataMember) {
+                if (data[2].toString().equalsIgnoreCase(teksSearch)) {
+                    model.addRow(data);
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                exceptionHandler.Kesalahan("Member not found!");
+                dataMember = dbMember.GetAllDataMember();
+                for (Object[] member : dataMember) {
+                    model.addRow(member);
+                }
+            }
+            txtSearch.setText("Enter the member's telephone number here");
+            txtSearch.setForeground(new Color(153, 153, 153));
+        } else {
+            exceptionHandler.Kesalahan("Please enter the telephone number of the member you want to search for!");
+            dataMember = dbMember.GetAllDataMember();
+            for (Object[] data : dataMember) {
+                model.addRow(data);
+            }
+        }
     }
 
     public ArrayList<String> IsiField(JTable table) {
@@ -129,7 +183,7 @@ public class MemberControler {
     public boolean InsertMember() {
         GenerateIdMember();
         if (ValidateField() && ValidateName() && ValidateNoHp() && ValidateAddress()) {
-            boolean confirm = exceptionHandler.confirmSaveDataPerson("Save Member Data?");
+            boolean confirm = exceptionHandler.ConfirmSaveDataPerson("Save Member Data?");
             if (confirm) {
                 dbMember.InsertMember(idMember, namaMember, noHp, alamatMember);
                 return true;
@@ -140,7 +194,7 @@ public class MemberControler {
 
     public boolean ChangeMember() {
         if (ValidateName() && ValidateNoHpBaru() && ValidateAddress()) {
-            boolean confirm = exceptionHandler.confirmChangePerson("Change Member Data?");
+            boolean confirm = exceptionHandler.ConfirmChangePerson("Change Member Data?");
             if (confirm) {
                 dbMember.ChangeMember(namaMember, noHp, alamatMember, idMember);
                 return true;
@@ -153,13 +207,13 @@ public class MemberControler {
         int row = table.getSelectedRow();
         if (row != -1) {
             this.idMember = table.getValueAt(row, 0).toString();
-            boolean confirm = exceptionHandler.confirmDeleteData("Are you sure you deleted member data?");
+            boolean confirm = exceptionHandler.ConfirmDeleteData("Are you sure you deleted member data?");
             if (confirm) {
                 dbMember.DeleteMember(idMember);
                 return true;
             }
         } else {
-            exceptionHandler.getErrorKesalahan("Select the data you want to delete!");
+            exceptionHandler.Kesalahan("Select the data you want to delete!");
         }
         return false;
     }

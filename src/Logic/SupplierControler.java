@@ -1,9 +1,11 @@
 package Logic;
 
 import Data_Acces.DbSupplier;
+import java.awt.Color;
 import java.util.Random;
 import javax.swing.JTable;
 import java.util.ArrayList;
+import javax.swing.JTextField;
 
 public class SupplierControler {
 
@@ -13,6 +15,7 @@ public class SupplierControler {
     private String kategori;
     private ExceptionHandler exceptionHandler;
     private DbSupplier dbSupplier;
+    private ConfigTable model;
 
     public SupplierControler(String idSupplier, String namaSupplier, String noHp, String kategori) {
         this.idSupplier = idSupplier;
@@ -48,15 +51,11 @@ public class SupplierControler {
 
     // get id supplier berdasakan kategori untuk combo box
     public ArrayList<String> GetIdSupplier() {
-        ArrayList<String> idSupplier = new ArrayList<>();
+        ArrayList<String> supplierId = new ArrayList<>();
         if (kategori != null) {
-            try {
-                idSupplier = dbSupplier.GetIdSupplier(kategori);
-            } catch (Exception e) {
-                e.getMessage();
-            }
+                supplierId = dbSupplier.GetIdSupplier(kategori);
         }
-        return idSupplier;
+        return supplierId;
     }
 
     // get nama supplier berdasarkan id supplier di ComboBox
@@ -75,7 +74,7 @@ public class SupplierControler {
         if (row != -1) {
             return true;
         } else {
-            exceptionHandler.getErrorKesalahan("Select one of the data you want to change !");
+            exceptionHandler.Kesalahan("Select one of the data you want to change !");
         }
         return false;
     }
@@ -84,7 +83,7 @@ public class SupplierControler {
         if (!kategori.equalsIgnoreCase("Category")) {
             return true;
         } else {
-            exceptionHandler.getErrorKesalahan("Select an available category");
+            exceptionHandler.Kesalahan("Select an available category");
         }
         return false;
     }
@@ -95,7 +94,7 @@ public class SupplierControler {
                 return true;
             }
         } else {
-            exceptionHandler.getErrorKesalahan("All columns is must be filled in");
+            exceptionHandler.Kesalahan("All columns is must be filled in");
         }
         return false;
     }
@@ -105,10 +104,10 @@ public class SupplierControler {
             if (namaSupplier.length() <= 25) {
                 return true;
             } else {
-                exceptionHandler.getErrorKesalahan("The Supplier Name must not exceed 25 digits");
+                exceptionHandler.Kesalahan("The Supplier Name must not exceed 25 digits");
             }
         } else {
-            exceptionHandler.getErrorKesalahan("Supplier Name is invalid !");
+            exceptionHandler.Kesalahan("Supplier Name is invalid !");
         }
         return false;
     }
@@ -117,21 +116,62 @@ public class SupplierControler {
         if (noHp.matches("\\d+") && noHp.length() < 14 && noHp.length() > 11) {
             return true;
         } else {
-            exceptionHandler.getErrorKesalahan("Telephone Number is invalid");
+            exceptionHandler.Kesalahan("Telephone Number is invalid");
         }
         return false;
     }
 
-    public ConfigTable GetAllData() {
-        return dbSupplier.GetAllDataSupplier();
+    public ConfigTable SetModelData() {
+        model = new ConfigTable();
+        model.addColumn("Supplier ID");
+        model.addColumn("Supplier Name");
+        model.addColumn("Telephone Number");
+        model.addColumn("Category");
+        return model;
+    }
+
+    public void GetAllData(JTable table) {
+        model = (ConfigTable) table.getModel();
+        ArrayList<Object[]> DataSupplier = dbSupplier.GetAllDataSupplier();
+        for (Object[] data : DataSupplier) {
+            model.addRow(data);
+        }
+    }
+
+    public void SearchSupplier(JTable table, JTextField txtSearch) {
+        String teksSearch = txtSearch.getText();
+        model = (ConfigTable) table.getModel();
+        model.setRowCount(0);
+        ArrayList<Object[]> DataSupplier;
+        if (!teksSearch.equalsIgnoreCase("Enter ID or name or telephone supplier here")) {
+            DataSupplier = dbSupplier.SearchSupplier(teksSearch);
+            if (DataSupplier.isEmpty()) {
+                DataSupplier = dbSupplier.GetAllDataSupplier();
+                for (Object[] data : DataSupplier) {
+                    model.addRow(data);
+                }
+            } else {
+                for (Object[] data : DataSupplier) {
+                    model.addRow(data);
+                }
+            }
+            txtSearch.setText("Enter ID or name or telephone supplier here");
+            txtSearch.setForeground(new Color(153, 153, 153));
+        } else {
+            exceptionHandler.Kesalahan("Please enter the ID or name or telephone number of the supplier you want to search for!");
+            DataSupplier = dbSupplier.GetAllDataSupplier();
+            for (Object[] data : DataSupplier) {
+                model.addRow(data);
+            }
+        }
     }
 
     public ArrayList<String> IsiField(JTable table) {
         int row = table.getSelectedRow();
         ArrayList<String> data = new ArrayList<>();
         String supplierId = table.getValueAt(row, 0).toString();
-        String namaSupplier = table.getValueAt(row, 1).toString();
-        String noHp = table.getValueAt(row, 2).toString();
+        namaSupplier = table.getValueAt(row, 1).toString();
+        noHp = table.getValueAt(row, 2).toString();
         String getKategori = table.getValueAt(row, 3).toString();
         data.add(supplierId);
         data.add(namaSupplier);
@@ -142,7 +182,7 @@ public class SupplierControler {
 
     public boolean InsertSupplierData() {
         if (ValueValidation()) {
-            boolean confirm = exceptionHandler.confirmSaveDataPerson("Save Supplier Data?");
+            boolean confirm = exceptionHandler.ConfirmSaveDataPerson("Save Supplier Data?");
             if (confirm) {
                 dbSupplier.InsertSupplierData(idSupplier, namaSupplier, noHp, kategori);
                 return true;
@@ -153,7 +193,7 @@ public class SupplierControler {
 
     public boolean ChangeSupplierData() {
         if (ValueValidation()) {
-            boolean confirm = exceptionHandler.confirmChangePerson("Change Supplier data?");
+            boolean confirm = exceptionHandler.ConfirmChangePerson("Change Supplier data?");
             if (confirm) {
                 dbSupplier.ChangeSupplierData(idSupplier, namaSupplier, noHp, kategori);
                 return true;
@@ -166,13 +206,13 @@ public class SupplierControler {
         int getRow = tabel.getSelectedRow();
         if (getRow != -1) {
             idSupplier = tabel.getValueAt(getRow, 0).toString();
-            boolean confirm = exceptionHandler.confirmDeleteData("Delete Supplier Data?");
+            boolean confirm = exceptionHandler.ConfirmDeleteData("Delete Supplier Data?");
             if (confirm) {
                 dbSupplier.DeleteDataSupplier(idSupplier);
                 return true;
             }
         } else {
-            exceptionHandler.getErrorKesalahan("Select one of the data you want to delete !");
+            exceptionHandler.Kesalahan("Select one of the data you want to delete !");
         }
         return false;
     }

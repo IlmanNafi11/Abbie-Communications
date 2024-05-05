@@ -27,13 +27,13 @@ public class DbUserManager {
                 return rs.getInt(1) > 0;
             }
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("Failed when checking ID");
+            exceptionHandler.Kesalahan("Failed when checking ID");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection!" + e.getMessage());
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
                 }
             }
         }
@@ -54,13 +54,13 @@ public class DbUserManager {
                 return rs.getInt(1) > 0;
             }
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("Failed while checking username");
+            exceptionHandler.Kesalahan("Failed while checking username");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection! " + e.getMessage());
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection! ");
                 }
             }
         }
@@ -80,13 +80,13 @@ public class DbUserManager {
                 return rs.getInt(1) > 0;
             }
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("Failed to check phone number");
+            exceptionHandler.Kesalahan("Failed to check phone number");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection! " + e.getMessage());
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
                 }
             }
         }
@@ -114,16 +114,16 @@ public class DbUserManager {
                     return rsGetRole.getString("posisi");
                 }
             } else {
-                exceptionHandler.getErrorKesalahan("Incorrect username or password or id akun not registered!");
+                exceptionHandler.Kesalahan("Incorrect username or password or id akun not registered!");
             }
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("A failure occurred during authentication " + e.getMessage());
+            exceptionHandler.Kesalahan("A failure occurred during authentication");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection! " + e.getMessage());
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
                 }
             }
         }
@@ -144,7 +144,7 @@ public class DbUserManager {
                     return rs.getString("username");
                 }
             } catch (Exception e) {
-                exceptionHandler.getErrorKesalahan("There was a failure while trying to retrieve the user's username!");
+                exceptionHandler.Kesalahan("There was a failure while trying to retrieve the user's username!");
             }
         }
         return null;
@@ -163,16 +163,16 @@ public class DbUserManager {
                 String getName = rs.getString("nama");
                 return getName;
             } else {
-                exceptionHandler.getErrorKesalahan("NIK tidak ditemukan");
+                exceptionHandler.Kesalahan("NIK not found!");
             }
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("Gagal saat mencoba mencari nik");
+            exceptionHandler.Kesalahan("A failure occurred while searching for NIK data!");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection! " + e.getMessage());
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
                 }
             }
         }
@@ -180,45 +180,78 @@ public class DbUserManager {
     }
 
     // get all data user untuk insert ke table
-    public ConfigTable GetAllDataPengguna() {
+    public ArrayList<Object[]> GetAllDataPengguna() {
         exceptionHandler = new ExceptionHandler();
-        ConfigTable dataTable = new ConfigTable();
+        ArrayList<Object[]> listDataPengguna = new ArrayList<>();
         String queryGetData = "SELECT dp.*, akun.id_akun FROM data_pengguna dp INNER JOIN akun ON dp.id_user = akun.id_user";
-        dataTable.addColumn("User ID");
-        dataTable.addColumn("NIK");
-        dataTable.addColumn("Name");
-        dataTable.addColumn("Phone Number");
-        dataTable.addColumn("Address");
-        dataTable.addColumn("Position");
-        dataTable.addColumn("Account ID");
         Connection koneksi = null;
         try {
             koneksi = ClassKoneksi.GetConnection();
             PreparedStatement stGetData = koneksi.prepareStatement(queryGetData);
             ResultSet rs = stGetData.executeQuery();
             while (rs.next()) {
-                dataTable.addRow(new Object[]{
-                        rs.getString("id_user"),
-                        rs.getString("nik"),
-                        rs.getString("nama"),
-                        rs.getString("noHp"),
-                        rs.getString("alamat"),
-                        rs.getString("posisi"),
-                        rs.getString("id_akun")
-                });
+                String idUser = rs.getString("id_user");
+                String nik = rs.getString("nik");
+                String nama = rs.getString("nama");
+                String noHp = rs.getString("noHp");
+                String alamat = rs.getString("alamat");
+                String posisi = rs.getString("posisi");
+                String idAkun = rs.getString("id_akun");
+                Object[] data = new Object[]{idUser, nik, nama, noHp, alamat, posisi, idAkun};
+                listDataPengguna.add(data);
             }
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("Failed when trying to get data " + e.getMessage());
+            exceptionHandler.Kesalahan("Failed when trying to get data ");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection!" + e.getMessage());
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
                 }
             }
         }
-        return dataTable;
+        return listDataPengguna;
+    }
+
+    public ArrayList<Object[]> SearchDataPengguna(String inputSearch) {
+        ArrayList<Object[]> listDataPengguna = new ArrayList<>();
+        exceptionHandler = new ExceptionHandler();
+        Connection koneksi = null;
+        String querySerach = "SELECT dp.*, akun.id_akun FROM data_pengguna dp INNER JOIN akun ON dp.id_user = akun.id_user WHERE akun.id_akun LIKE ? OR dp.noHp LIKE ?";
+        try {
+            koneksi = ClassKoneksi.GetConnection();
+            PreparedStatement stSearch = koneksi.prepareStatement(querySerach);
+            stSearch.setString(1, "%" + inputSearch + "%");
+            stSearch.setString(2, "%" + inputSearch + "%");
+            ResultSet rs = stSearch.executeQuery();
+            while (rs.next()) {
+                String idUser = rs.getString("id_user");
+                String nik = rs.getString("nik");
+                String nama = rs.getString("nama");
+                String noHp = rs.getString("noHp");
+                String alamat = rs.getString("alamat");
+                String posisi = rs.getString("posisi");
+                String idAkun = rs.getString("id_akun");
+                Object[] data = new Object[]{idUser, nik, nama, noHp, alamat, posisi, idAkun};
+                listDataPengguna.add(data);
+            }
+            if (listDataPengguna.isEmpty()) {
+                exceptionHandler.Kesalahan("User data not found!");
+            }
+        } catch (Exception e) {
+            exceptionHandler.Kesalahan("A failure occurred when trying to search for user data!");
+            e.printStackTrace();
+        } finally {
+            if (koneksi != null) {
+                try {
+                    koneksi.close();
+                } catch (Exception e) {
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
+                }
+            }
+        }
+        return listDataPengguna;
     }
 
     // get data user untuk field menu profile
@@ -241,13 +274,13 @@ public class DbUserManager {
                 data.add(rs.getString("posisi"));
             }
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("A failure occurred when trying to retrieve user data! " + e.getMessage());
+            exceptionHandler.Kesalahan("A failure occurred when trying to retrieve user data!");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection! " + e.getMessage());
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
                 }
             }
         }
@@ -277,13 +310,13 @@ public class DbUserManager {
             stAkun.setString(4, id_user);
             stAkun.executeUpdate();
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("An error occurred during the registration process!" + e.getMessage());
+            exceptionHandler.Kesalahan("An error occurred during the registration process!");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection! " + e.getMessage());
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
                 }
             }
         }
@@ -305,19 +338,19 @@ public class DbUserManager {
                 stReset.setString(1, password);
                 stReset.setString(2, getId);
                 stReset.executeUpdate();
-                exceptionHandler.getSucces("Password updated successfully");
+                exceptionHandler.SuccesSavePersonData("Password updated successfully");
                 return true;
             } else {
-                exceptionHandler.getErrorKesalahan("A failure occurred while trying to fetch in user !");
+                exceptionHandler.GagalTersimpan("A failure occurred while trying to fetch in user !");
             }
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("A failure occurred while trying to update the password! " + e.getMessage());
+            exceptionHandler.Kesalahan("A failure occurred while trying to update the password!");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection! " + e.getMessage());
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
                 }
             }
         }
@@ -340,15 +373,15 @@ public class DbUserManager {
             stUpdate.setString(5, posisi);
             stUpdate.setString(6, userId);
             stUpdate.executeUpdate();
-            exceptionHandler.getSucces("User data updated successfully!");
+            exceptionHandler.SuccesSavePersonData("User data updated successfully!");
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("Failed when trying to update user data! " + e.getMessage());
+            exceptionHandler.GagalTersimpan("Failed when trying to update user data!");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection! " + e.getMessage());
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
                 }
             }
         }
@@ -364,15 +397,15 @@ public class DbUserManager {
             PreparedStatement stDelete = koneksi.prepareStatement(queryDelete);
             stDelete.setString(1, idUser);
             stDelete.executeUpdate();
-            exceptionHandler.succesDeleteData("User data deleted successfully!");
+            exceptionHandler.SuccesDeleteData("User data deleted successfully!");
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("Failed when trying to delete user data! " + e.getMessage());
+            exceptionHandler.FailedDelete("Failed when trying to delete user data!");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection! " + e.getMessage());
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
                 }
             }
         }
@@ -398,15 +431,15 @@ public class DbUserManager {
             stUpdateAkun.setString(2, idUser);
             stUpdateUser.executeUpdate();
             stUpdateAkun.executeUpdate();
-            exceptionHandler.getSucces("Profile data updated successfully!");
+            exceptionHandler.SuccesSavePersonData("Profile data updated successfully!");
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("Failed when trying to update profile! " + e.getMessage());
+            exceptionHandler.GagalTersimpan("Failed when trying to update profile!");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection! " + e.getMessage());
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
                 }
             }
         }

@@ -18,6 +18,8 @@ public class Register2 extends javax.swing.JInternalFrame {
         BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
         bui.setNorthPane(null);
         Pane.setFocusable(true);
+        btnHidePassword.setVisible(false);
+        btnHidePassword2.setVisible(false);
     }
 
     public void getBio(String nik, String nama, String noHp, String alamat) {
@@ -35,7 +37,11 @@ public class Register2 extends javax.swing.JInternalFrame {
         Pane = new javax.swing.JPanel();
         lblBack = new javax.swing.JLabel();
         txtUsername = new javax.swing.JTextField();
+        btnShowPassword = new javax.swing.JButton();
+        btnHidePassword = new javax.swing.JButton();
         txtPassword = new javax.swing.JPasswordField();
+        btnShowPassword2 = new javax.swing.JButton();
+        btnHidePassword2 = new javax.swing.JButton();
         txtRepassword = new javax.swing.JPasswordField();
         txtRfid = new javax.swing.JTextField();
         rdOwner = new javax.swing.JRadioButton();
@@ -80,6 +86,52 @@ public class Register2 extends javax.swing.JInternalFrame {
         Pane.add(txtUsername);
         txtUsername.setBounds(933, 371, 298, 44);
 
+        btnShowPassword.setBackground(new java.awt.Color(242, 242, 242));
+        btnShowPassword.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/show-password-default.png"))); // NOI18N
+        btnShowPassword.setBorder(null);
+        btnShowPassword.setContentAreaFilled(false);
+        btnShowPassword.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnShowPasswordMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnShowPasswordMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnShowPasswordMousePressed(evt);
+            }
+        });
+        btnShowPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnShowPasswordActionPerformed(evt);
+            }
+        });
+        Pane.add(btnShowPassword);
+        btnShowPassword.setBounds(1195, 455, 40, 30);
+
+        btnHidePassword.setBackground(new java.awt.Color(242, 242, 242));
+        btnHidePassword.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/hide-password-default.png"))); // NOI18N
+        btnHidePassword.setBorder(null);
+        btnHidePassword.setContentAreaFilled(false);
+        btnHidePassword.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnHidePasswordMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnHidePasswordMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnHidePasswordMousePressed(evt);
+            }
+        });
+        btnHidePassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHidePasswordActionPerformed(evt);
+            }
+        });
+        Pane.add(btnHidePassword);
+        btnHidePassword.setBounds(1195, 455, 40, 30);
+
         txtPassword.setBackground(new java.awt.Color(242, 242, 242));
         txtPassword.setForeground(new java.awt.Color(153, 153, 153));
         txtPassword.setText("Password");
@@ -94,7 +146,53 @@ public class Register2 extends javax.swing.JInternalFrame {
             }
         });
         Pane.add(txtPassword);
-        txtPassword.setBounds(933, 447, 298, 44);
+        txtPassword.setBounds(933, 447, 260, 44);
+
+        btnShowPassword2.setBackground(new java.awt.Color(242, 242, 242));
+        btnShowPassword2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/show-password-default.png"))); // NOI18N
+        btnShowPassword2.setBorder(null);
+        btnShowPassword2.setContentAreaFilled(false);
+        btnShowPassword2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnShowPassword2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnShowPassword2MouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnShowPassword2MousePressed(evt);
+            }
+        });
+        btnShowPassword2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnShowPassword2ActionPerformed(evt);
+            }
+        });
+        Pane.add(btnShowPassword2);
+        btnShowPassword2.setBounds(1195, 530, 40, 30);
+
+        btnHidePassword2.setBackground(new java.awt.Color(242, 242, 242));
+        btnHidePassword2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/hide-password-default.png"))); // NOI18N
+        btnHidePassword2.setBorder(null);
+        btnHidePassword2.setContentAreaFilled(false);
+        btnHidePassword2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnHidePassword2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnHidePassword2MouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnHidePassword2MousePressed(evt);
+            }
+        });
+        btnHidePassword2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHidePassword2ActionPerformed(evt);
+            }
+        });
+        Pane.add(btnHidePassword2);
+        btnHidePassword2.setBounds(1195, 530, 40, 30);
 
         txtRepassword.setBackground(new java.awt.Color(242, 242, 242));
         txtRepassword.setForeground(new java.awt.Color(153, 153, 153));
@@ -366,12 +464,108 @@ public class Register2 extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_txtRfidFocusLost
 
+    private void btnShowPasswordMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnShowPasswordMouseEntered
+        btnShowPassword.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/show-password-hover.png")));
+        btnShowPassword.setBackground(new Color(242,242,242));
+    }//GEN-LAST:event_btnShowPasswordMouseEntered
+
+    private void btnShowPasswordMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnShowPasswordMouseExited
+        btnShowPassword.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/show-password-default.png")));
+        btnShowPassword.setBackground(new Color(242,242,242));
+    }//GEN-LAST:event_btnShowPasswordMouseExited
+
+    private void btnShowPasswordMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnShowPasswordMousePressed
+        btnShowPassword.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/show-password-click.png")));
+        btnShowPassword.setBackground(new Color(242,242,242));
+    }//GEN-LAST:event_btnShowPasswordMousePressed
+
+    private void btnShowPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowPasswordActionPerformed
+        if (!txtPassword.getText().trim().equalsIgnoreCase("Password")) {
+            txtPassword.setEchoChar((char)0);
+            btnHidePassword.setVisible(true);
+            btnShowPassword.setVisible(false);
+        }
+    }//GEN-LAST:event_btnShowPasswordActionPerformed
+
+    private void btnHidePasswordMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHidePasswordMouseEntered
+        btnHidePassword.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/hide-password-hover.png")));
+        btnHidePassword.setBackground(new Color(242,242,242));
+    }//GEN-LAST:event_btnHidePasswordMouseEntered
+
+    private void btnHidePasswordMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHidePasswordMouseExited
+        btnHidePassword.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/hide-password-default.png")));
+        btnHidePassword.setBackground(new Color(242,242,242));
+    }//GEN-LAST:event_btnHidePasswordMouseExited
+
+    private void btnHidePasswordMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHidePasswordMousePressed
+        btnHidePassword.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/hide-password-click.png")));
+        btnHidePassword.setBackground(new Color(242,242,242));
+    }//GEN-LAST:event_btnHidePasswordMousePressed
+
+    private void btnHidePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHidePasswordActionPerformed
+        if (!txtPassword.getText().trim().equalsIgnoreCase("Password")) {
+            txtPassword.setEchoChar('*');
+            btnHidePassword.setVisible(false);
+            btnShowPassword.setVisible(true);
+        }
+    }//GEN-LAST:event_btnHidePasswordActionPerformed
+
+    private void btnHidePassword2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHidePassword2MouseEntered
+        btnHidePassword2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/hide-password-hover.png")));
+        btnHidePassword2.setBackground(new Color(242,242,242));
+    }//GEN-LAST:event_btnHidePassword2MouseEntered
+
+    private void btnHidePassword2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHidePassword2MouseExited
+        btnHidePassword2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/hide-password-default.png")));
+        btnHidePassword2.setBackground(new Color(242,242,242));
+    }//GEN-LAST:event_btnHidePassword2MouseExited
+
+    private void btnHidePassword2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHidePassword2MousePressed
+        btnHidePassword2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/hide-password-click.png")));
+        btnHidePassword2.setBackground(new Color(242,242,242));
+    }//GEN-LAST:event_btnHidePassword2MousePressed
+
+    private void btnHidePassword2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHidePassword2ActionPerformed
+        if (!txtRepassword.getText().trim().equalsIgnoreCase("Re-Enter Password")) {
+            txtRepassword.setEchoChar('*');
+            btnHidePassword2.setVisible(false);
+            btnShowPassword2.setVisible(true);
+        }
+    }//GEN-LAST:event_btnHidePassword2ActionPerformed
+
+    private void btnShowPassword2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnShowPassword2MouseEntered
+        btnShowPassword2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/show-password-hover.png")));
+        btnShowPassword2.setBackground(new Color(242,242,242));
+    }//GEN-LAST:event_btnShowPassword2MouseEntered
+
+    private void btnShowPassword2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnShowPassword2MouseExited
+        btnShowPassword2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/show-password-default.png")));
+        btnShowPassword2.setBackground(new Color(242,242,242));
+    }//GEN-LAST:event_btnShowPassword2MouseExited
+
+    private void btnShowPassword2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnShowPassword2MousePressed
+        btnShowPassword2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/show-password-click.png")));
+        btnShowPassword2.setBackground(new Color(242,242,242));
+    }//GEN-LAST:event_btnShowPassword2MousePressed
+
+    private void btnShowPassword2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowPassword2ActionPerformed
+        if (!txtRepassword.getText().trim().equalsIgnoreCase("Re-Enter Password")) {
+            txtRepassword.setEchoChar((char)0);
+            btnHidePassword2.setVisible(true);
+            btnShowPassword2.setVisible(false);
+        }
+    }//GEN-LAST:event_btnShowPassword2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Pane;
     private javax.swing.ButtonGroup Role;
     private javax.swing.JLabel bg;
+    private javax.swing.JButton btnHidePassword;
+    private javax.swing.JButton btnHidePassword2;
     private javax.swing.JButton btnRegister;
+    private javax.swing.JButton btnShowPassword;
+    private javax.swing.JButton btnShowPassword2;
     private javax.swing.JLabel lblBack;
     private javax.swing.JLabel lblLogin;
     private javax.swing.JRadioButton rdAdmin;

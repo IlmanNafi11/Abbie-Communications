@@ -18,11 +18,20 @@ public class MenuOwner extends javax.swing.JInternalFrame {
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
         bui.setNorthPane(null);
+//        UpdateLaporan();
     }
 
     public void SetUser(String username, String role) {
         this.username = username;
         this.role = role;
+    }
+    
+    private void UpdateLaporan() {
+        LoginControler loginControler = new LoginControler(username, null, null);
+        ArrayList<String> IdUser = loginControler.DataProfile();
+        LaporanControler laporanControler = new LaporanControler();
+        laporanControler.setIdUser(IdUser.get(0));
+        laporanControler.InsertLaporan();
     }
 
     @SuppressWarnings("unchecked")
@@ -248,6 +257,7 @@ public class MenuOwner extends javax.swing.JInternalFrame {
         ds.SetProfile(username, role);
         MainFrame main = (MainFrame) SwingUtilities.getWindowAncestor(this);
         main.gantiKonten(ds);
+        UpdateLaporan();
     }//GEN-LAST:event_btnDashboardActionPerformed
 
     private void btnDashboardMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDashboardMouseEntered
@@ -376,15 +386,12 @@ public class MenuOwner extends javax.swing.JInternalFrame {
         report.SetProfile(username, role);
         MainFrame main = (MainFrame) SwingUtilities.getWindowAncestor(this);
         main.gantiKonten(report);
-        LoginControler loginControler = new LoginControler(username, null, null);
-        ArrayList<String> IdUser = loginControler.DataProfile();
-        LaporanControler laporanControler = new LaporanControler();
-        laporanControler.setIdUser(IdUser.get(0));
-        laporanControler.InsertLaporan();
+        UpdateLaporan();
     }//GEN-LAST:event_btnReportActionPerformed
 
     private void btnReportMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReportMouseEntered
         btnReport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Menu-Report-Hover.png")));
+        UpdateLaporan();
     }//GEN-LAST:event_btnReportMouseEntered
 
     private void btnReportMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReportMouseExited

@@ -67,10 +67,10 @@ public class AuthRegister {
             if (password.trim().length() >= 8) {
                 return true;
             } else {
-                exceptionHandler.getErrorKesalahan("The password must consist of at least 8 characters!");
+                exceptionHandler.Kesalahan("The password must consist of at least 8 characters!");
             }
         } else {
-            exceptionHandler.getErrorKesalahan("Password and password confirmation must have the same value");
+            exceptionHandler.Kesalahan("Password and password confirmation must have the same value");
         }
         return false;
     }
@@ -80,10 +80,10 @@ public class AuthRegister {
                 if (!dbUserManager.CekNik(nik)) {
                     return true;
                 } else {
-                    exceptionHandler.getErrorKesalahan("Nik has registered!");
+                    exceptionHandler.Kesalahan("Nik has registered!");
                 }
         } else {
-            exceptionHandler.getErrorKesalahan("Nik is invalid!");
+            exceptionHandler.Kesalahan("Nik is invalid!");
         }
         return false;
     }
@@ -93,10 +93,10 @@ public class AuthRegister {
             if (nama.length() <= 25) {
                 return true;
             } else {
-                exceptionHandler.getErrorKesalahan("The maximum name must be 25 characters!");
+                exceptionHandler.Kesalahan("The maximum name must be 25 characters!");
             }
         } else {
-            exceptionHandler.getErrorKesalahan("Invalid name!");
+            exceptionHandler.Kesalahan("Invalid name!");
         }
         return false;
     }
@@ -105,7 +105,7 @@ public class AuthRegister {
         if (alamat.length() <= 50) {
             return true;
         } else {
-            exceptionHandler.getErrorKesalahan("The maximum address consists of 50 characters!");
+            exceptionHandler.Kesalahan("The maximum address consists of 50 characters!");
         }
         return false;
     }
@@ -117,7 +117,7 @@ public class AuthRegister {
                 return true;
             }
         } else {
-            exceptionHandler.getErrorKesalahan("Invalid phone number!");
+            exceptionHandler.Kesalahan("Invalid phone number!");
         }
         return false;
     }
@@ -127,7 +127,7 @@ public class AuthRegister {
         if (cekUsername) {
             return true;
         } else {
-            exceptionHandler.getErrorKesalahan("Username has been used!");
+            exceptionHandler.Kesalahan("Username has been used!");
         }
         return false;
     }
@@ -139,7 +139,7 @@ public class AuthRegister {
                 return true;
             }
         } else {
-            exceptionHandler.getErrorKesalahan("All fields must be filled in!");
+            exceptionHandler.Kesalahan("All fields must be filled in!");
         }
         return false;
     }
@@ -151,7 +151,7 @@ public class AuthRegister {
                         && !role.trim().equals("")) {
                     return true;
                 } else {
-                    exceptionHandler.getErrorKesalahan("All fields must be filled in!");
+                    exceptionHandler.Kesalahan("All fields must be filled in!");
                 }
             }
         }

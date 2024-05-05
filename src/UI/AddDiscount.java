@@ -142,7 +142,7 @@ public class AddDiscount extends javax.swing.JDialog {
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Add-Click.png")));
         String status = (String) cmbStatus.getSelectedItem();
-        PromoContoler controler = new PromoContoler(null, 0, 0, status);
+        PromoContoler controler = new PromoContoler(null, status);
         controler.ValidateMinPurchase(txtMinimum);
         controler.ValidateValue(txtAmount);
         boolean succes = controler.InsertDiskon();

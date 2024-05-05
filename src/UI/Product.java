@@ -32,9 +32,10 @@ public class Product extends javax.swing.JInternalFrame implements UpdateTable {
     }
         
     public void ViewTable() {
-        ProductControler controler = new ProductControler(null, null, null, null, 0, 0);
-        ConfigTable Tabel = controler.GetAllData();
+        ProductControler controler = new ProductControler(null, null);
+        ConfigTable Tabel = controler.SetModelTable();
         table.setModel(Tabel);
+        controler.GetAllData(table);
     }
 
     @SuppressWarnings("unchecked")
@@ -68,7 +69,7 @@ public class Product extends javax.swing.JInternalFrame implements UpdateTable {
 
         txtSearch.setBackground(new java.awt.Color(249, 250, 251));
         txtSearch.setForeground(new java.awt.Color(153, 153, 153));
-        txtSearch.setText("Input ID Product or Product Name");
+        txtSearch.setText("Enter the ID or product name here");
         txtSearch.setBorder(null);
         txtSearch.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -307,7 +308,7 @@ public class Product extends javax.swing.JInternalFrame implements UpdateTable {
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Edit-Click.png")));
         ChangeProduk changeProduct = new ChangeProduk(this, true);
-        ProductControler controler = new ProductControler(null, null, null, null, 0, 0);
+        ProductControler controler = new ProductControler(null, null);
         boolean validasiBaris = controler.ValidateRow(table);
         if (validasiBaris) {
             changeProduct.setProduk(new UpdateTable() {
@@ -340,20 +341,22 @@ public class Product extends javax.swing.JInternalFrame implements UpdateTable {
     }//GEN-LAST:event_btnEditMousePressed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Icon-Search-Click")));
+        btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Icon-Search-Click.png")));
+        ProductControler controler = new ProductControler(null, null);
+        controler.SearchData(table, txtSearch);
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void btnSearchMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSearchMouseEntered
-        btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Icon-Search-Hover")));
+        btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Icon-Search-Hover.png")));
     }//GEN-LAST:event_btnSearchMouseEntered
 
     private void btnSearchMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSearchMouseExited
-        btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Icon-Search")));
+        btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Icon-Search.png")));
     }//GEN-LAST:event_btnSearchMouseExited
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Delete-Click.png")));
-        ProductControler controler = new ProductControler(null, null, null, null, 0, 0);
+        ProductControler controler = new ProductControler(null, null);
         boolean succes = controler.DeleteDataProduk(table);
         if (succes) {
             ViewTable();
@@ -373,7 +376,7 @@ public class Product extends javax.swing.JInternalFrame implements UpdateTable {
     }//GEN-LAST:event_btnDeleteMouseEntered
 
     private void txtSearchFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearchFocusGained
-        if (txtSearch.getText().equals("Input ID Product or Product Name")) {
+        if (txtSearch.getText().equals("Enter the ID or product name here")) {
             txtSearch.setText("");
             txtSearch.setForeground(Color.BLACK);
         }
@@ -381,7 +384,7 @@ public class Product extends javax.swing.JInternalFrame implements UpdateTable {
 
     private void txtSearchFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearchFocusLost
         if (txtSearch.getText().trim().equals("") || txtSearch.getText().length() == 0) {
-            txtSearch.setText("Input ID Product or Product Name");
+            txtSearch.setText("Enter the ID or product name here");
             txtSearch.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtSearchFocusLost
@@ -429,7 +432,7 @@ public class Product extends javax.swing.JInternalFrame implements UpdateTable {
     }//GEN-LAST:event_lblNamaUserMousePressed
 
     private void JComboSortByPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JComboSortByPriceActionPerformed
-        ProductControler controler = new ProductControler(null, null, null, null, 0, 0);
+        ProductControler controler = new ProductControler(null, null);
         controler.SelectionSort(table, 4, JComboSortByPrice);
     }//GEN-LAST:event_JComboSortByPriceActionPerformed
     

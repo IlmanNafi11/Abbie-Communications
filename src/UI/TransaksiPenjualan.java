@@ -572,9 +572,7 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Icon-Search-Click.png")));
-        String noHp = txtNoHpMember.getText();
-        String kodeDiskon = (String) cmbKodeDiskon.getSelectedItem();
-        TransaksiPenjualanControler controler = new TransaksiPenjualanControler( null, noHp, 0, kodeDiskon);
+        TransaksiPenjualanControler controler = new TransaksiPenjualanControler( null, null, 0, null);
         controler.SetTxtNamaMember(txtNoHpMember, txtMemberName, cmbKodeDiskon);
         controler.GetDiskon(txtMemberName, txtTotal, cmbKodeDiskon);
     }//GEN-LAST:event_btnSearchActionPerformed

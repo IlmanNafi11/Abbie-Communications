@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import Logic.*;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class DbRestock {
@@ -27,15 +28,15 @@ public class DbRestock {
             stInsert.setFloat(7, total);
             stInsert.setDate(8, new java.sql.Date(tanggal.getTime()));
             stInsert.executeUpdate();
-            exceptionHandler.getSucces("Restock transaction successfully saved");
+            exceptionHandler.SuccesSaveData("Restock transaction successfully saved");
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("Failed to save Restock Transaction" + e.getMessage());
+            exceptionHandler.Kesalahan("Failed to save Restock Transaction");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection!" + e.getMessage());
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
                 }
             }
         }
@@ -57,15 +58,15 @@ public class DbRestock {
             stChange.setDate(7, new java.sql.Date(tanggal.getTime()));
             stChange.setString(8, idTransaksi);
             stChange.executeUpdate();
-            exceptionHandler.getSucces("Restock transaction successfully changed");
+            exceptionHandler.SuccesSaveData("Restock transaction successfully changed");
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("Failed to change Restock Transaction" + e);
+            exceptionHandler.Kesalahan("Failed to change Restock Transaction");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection!" + e.getMessage());
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
                 }
             }
         }
@@ -80,60 +81,93 @@ public class DbRestock {
             PreparedStatement stDelete = koneksi.prepareStatement(queryDelete);
             stDelete.setString(1, idTransaksi);
             stDelete.executeUpdate();
-            exceptionHandler.succesDeleteData("Data deleted successfully!");
+            exceptionHandler.SuccesDeleteData("Data deleted successfully!");
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("Failed when trying to delete data" + e.getMessage());
+            exceptionHandler.Kesalahan("Failed when trying to delete data");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection!" + e.getMessage());
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
                 }
             }
         }
     }
 
-    public ConfigTable GetAllDataRestock() {
-        ConfigTable dataTable = new ConfigTable();
-        String sqlGetData = "SELECT r.id_transaksi, r.nama_produk, r.jumlah, r.harga, r.id_supplier, r.total, r.tanggal, p.kategori FROM restock r JOIN produk p ON r.id_produk = p.id_produk";
-        dataTable.addColumn("Transaction ID");
-        dataTable.addColumn("Category");
-        dataTable.addColumn("Product Name");
-        dataTable.addColumn("Quantity");
-        dataTable.addColumn("Price");
-        dataTable.addColumn("Supplier ID");
-        dataTable.addColumn("Total");
-        dataTable.addColumn("Date");
+    public ArrayList<Object[]> GetAllDataRestock() {
+        exceptionHandler = new ExceptionHandler();
+        ArrayList<Object[]> listData = new ArrayList<>();
+        String sqlGetData = "SELECT r.id_transaksi, r.nama_produk, r.jumlah, r.harga, r.id_supplier, r.total, r.tanggal, p.kategori FROM restock r JOIN produk p ON r.id_produk = p.id_produk";      
         Connection koneksi = null;
         try {
             koneksi = ClassKoneksi.GetConnection();
             PreparedStatement stGetData = koneksi.prepareStatement(sqlGetData);
             ResultSet rs = stGetData.executeQuery();
             while (rs.next()) {
-                dataTable.addRow(new Object[]{
-                    rs.getString("id_transaksi"),
-                    rs.getString("kategori"),
-                    rs.getString("nama_produk"),
-                    rs.getInt("jumlah"),
-                    rs.getInt("harga"),
-                    rs.getString("id_supplier"),
-                    rs.getInt("total"),
-                    rs.getDate("tanggal")
-                });
+                    String idTransaksi = rs.getString("id_transaksi");
+                    String kategori = rs.getString("kategori");
+                    String namaProduk = rs.getString("nama_produk");
+                    int quantity = rs.getInt("jumlah");
+                    double harga = rs.getDouble("harga");
+                    String idSupplier = rs.getString("id_supplier");
+                    double total =rs.getDouble("total");
+                    Date tanggal = rs.getDate("tanggal");
+                    Object[] data = new Object[]{idTransaksi, kategori, namaProduk, quantity, harga, idSupplier, total, tanggal};
+                    listData.add(data);
             }
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("Failed when trying to get data" + e.getMessage());
+            exceptionHandler.Kesalahan("Failed when trying to get data");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection!" + e.getMessage());
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
                 }
             }
         }
-        return dataTable;
+        return listData;
+    }
+    
+    public ArrayList<Object[]> SearchTransactionRestock(String inputSearch) {
+        ArrayList<Object[]> listData = new ArrayList<>();
+        exceptionHandler = new ExceptionHandler();
+        Connection koneksi = null;
+        String querySerach = "SELECT r.id_transaksi, r.nama_produk, r.jumlah, r.harga, r.id_supplier, r.total, r.tanggal, p.kategori FROM restock r JOIN produk p ON r.id_produk = p.id_produk WHERE r.id_transaksi LIKE ? OR r.tanggal LIKE ?";
+        try {
+            koneksi = ClassKoneksi.GetConnection();
+            PreparedStatement stSearch = koneksi.prepareStatement(querySerach);
+            stSearch.setString(1, "%" + inputSearch + "%");
+            stSearch.setString(2, "%" + inputSearch + "%");
+            ResultSet rs = stSearch.executeQuery();
+            while (rs.next()) {
+                String idTransaksi = rs.getString("id_transaksi");
+                    String kategori = rs.getString("kategori");
+                    String namaProduk = rs.getString("nama_produk");
+                    int quantity = rs.getInt("jumlah");
+                    double harga = rs.getDouble("harga");
+                    String idSupplier = rs.getString("id_supplier");
+                    double total =rs.getDouble("total");
+                    Date tanggal = rs.getDate("tanggal");
+                    Object[] data = new Object[]{idTransaksi, kategori, namaProduk, quantity, harga, idSupplier, total, tanggal};
+                    listData.add(data);
+            }
+            if (listData.isEmpty()) {
+                exceptionHandler.Kesalahan("Transaction not found!");
+            }
+        } catch (Exception e) {
+            exceptionHandler.Kesalahan("A failure occurred when trying to search for transaction data!" + e.getMessage());
+        } finally {
+            if (koneksi != null) {
+                try {
+                    koneksi.close();
+                } catch (Exception e) {
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
+                }
+            }
+        }
+        return listData;
     }
 
     // get id produk by id transaksi
@@ -150,13 +184,13 @@ public class DbRestock {
                 return rs.getString("id_produk");
             }
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("Failed when trying to get Produk ID" + e.getMessage());
+            exceptionHandler.Kesalahan("Failed when trying to get Produk ID");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection!" + e.getMessage());
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
                 }
             }
         }

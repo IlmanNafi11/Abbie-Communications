@@ -24,8 +24,11 @@ public class forgotPassword_1 extends javax.swing.JInternalFrame {
         txtNik = new javax.swing.JTextField();
         btnNext = new javax.swing.JButton();
         lblBack = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         bg = new javax.swing.JLabel();
 
+        setRequestFocusEnabled(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         panel.setPreferredSize(new java.awt.Dimension(1440, 1024));
@@ -82,6 +85,18 @@ public class forgotPassword_1 extends javax.swing.JInternalFrame {
         });
         panel.add(lblBack);
         lblBack.setBounds(779, 208, 60, 25);
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Don't worry! Enter your population registration number");
+        panel.add(jLabel1);
+        jLabel1.setBounds(880, 327, 360, 30);
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("below and we will help you reset your password");
+        panel.add(jLabel2);
+        jLabel2.setBounds(880, 350, 360, 30);
 
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Forgot Password.png"))); // NOI18N
         panel.add(bg);
@@ -156,6 +171,8 @@ public class forgotPassword_1 extends javax.swing.JInternalFrame {
     private javax.swing.JLabel bg;
     private javax.swing.JButton btnNext;
     private javax.swing.JDesktopPane desktopPane;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel lblBack;
     private javax.swing.JPanel panel;
     private javax.swing.JTextField txtNik;

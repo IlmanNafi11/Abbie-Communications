@@ -35,7 +35,7 @@ public class LoginControler {
             }
             return sb.toString();
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("A failure occurred while trying to encrypt the password! " + e.getMessage());
+            exceptionHandler.Kesalahan("A failure occurred while trying to encrypt the password!");
         }
         return null;
     }
@@ -45,7 +45,7 @@ public class LoginControler {
                 && !password.trim().equalsIgnoreCase("Password") && !password.trim().equalsIgnoreCase("")) {
             return true;
         } else {
-            exceptionHandler.getErrorKesalahan("All fields must be filled in!");
+            exceptionHandler.Kesalahan("All fields must be filled in!");
         }
         return false;
     }

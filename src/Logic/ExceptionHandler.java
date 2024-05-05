@@ -18,46 +18,54 @@ public class ExceptionHandler {
     ImageIcon confirmSaveDataPerson = new ImageIcon(getClass().getResource("/images/IconError/Confirm-Save-Person-Data.png"));
     ImageIcon confirmChangeDataPerson = new ImageIcon(getClass().getResource("/images/IconError/Confirm-Change-Data-Person.png"));
     ImageIcon confirmDiscount = new ImageIcon(getClass().getResource("/images/IconError/Icon-Discount.png"));
+    ImageIcon failedDelete = new ImageIcon(getClass().getResource("/images/IconError/Icon-Failed-Delete.png"));
 
     // pesan error
-    public void getErrorKesalahan(String pesanError) {
+    public void Kesalahan(String pesanError) {
         JOptionPane.showMessageDialog(null, pesanError, "Error", JOptionPane.ERROR_MESSAGE, error);
+    }
+    
+    public void FailedDelete(String pesanError) {
+        JOptionPane.showMessageDialog(null, pesanError, "Failed", JOptionPane.ERROR_MESSAGE, failedDelete);
     }
 
     // pesan informasi berhasil tersimpan
-    public void getSucces(String pesan) {
+    public void SuccesSaveData(String pesan) {
         JOptionPane.showMessageDialog(null, pesan, "Succes", JOptionPane.INFORMATION_MESSAGE, succesSave);
     }
 
     // pesan gagal tersimpan
-    public void getErrorGagal(String pesan) {
+    public void GagalTersimpan(String pesan) {
         JOptionPane.showMessageDialog(null, pesan, "Failed", JOptionPane.ERROR_MESSAGE, failedSave);
     }
 
     // pesan konfirmasi edit
-    public void getEdit(String pesan) {
-        JOptionPane.showMessageDialog(null, pesan, "Edit", JOptionPane.QUESTION_MESSAGE, confirmEditData);
+    public boolean ConfirmEditData(String pesan) {
+        if (JOptionPane.showConfirmDialog(null, pesan, "Confirm", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE, confirmEditData) == JOptionPane.YES_OPTION) {
+            return true;
+        }
+        return false;
     }
 
     // pesan berhasil cetak
-    public void succesPrint(String pesan) {
+    public void SuccesPrint(String pesan) {
         JOptionPane.showMessageDialog(null, pesan, "Succes", JOptionPane.INFORMATION_MESSAGE, succesPrint);
     }
 
     // pesan berhasil register
-    public void succesRegister(String pesan) {
+    public void SuccesRegister(String pesan) {
         JOptionPane.showMessageDialog(null, pesan, "Succes", JOptionPane.INFORMATION_MESSAGE, berhasilRegister);
     }
 
     // pesan konfirmasi simpan
-    public boolean confirmSave(String pesan) {
+    public boolean ConfirmSave(String pesan) {
         if (JOptionPane.showConfirmDialog(null, pesan, "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, confirmSave) == JOptionPane.YES_OPTION) {
             return true;
         }
         return false;
     }
     
-    public boolean confirmSaveDataPerson(String pesan) {
+    public boolean ConfirmSaveDataPerson(String pesan) {
         if (JOptionPane.showConfirmDialog(null, pesan, "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, confirmSaveDataPerson) == JOptionPane.YES_OPTION) {
             return true;
         }
@@ -65,7 +73,7 @@ public class ExceptionHandler {
     }
 
     // pesan konfirmasi delete
-    public boolean confirmDeleteData(String pesan) {
+    public boolean ConfirmDeleteData(String pesan) {
         if (JOptionPane.showConfirmDialog(null, pesan, "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, confirmDelete) == JOptionPane.YES_OPTION) {
             return true;
         }
@@ -73,17 +81,17 @@ public class ExceptionHandler {
     }
     
     // sukses hapus data
-    public void succesDeleteData(String pesan) {
-        JOptionPane.showMessageDialog(null, pesan, "Failed !", JOptionPane.INFORMATION_MESSAGE, succesDelete);
+    public void SuccesDeleteData(String pesan) {
+        JOptionPane.showMessageDialog(null, pesan, "Succes", JOptionPane.INFORMATION_MESSAGE, succesDelete);
     }
     
     // sukses simpan perubahan/data person baru 
-    public void succesSavePersonData(String pesan) {
-        JOptionPane.showMessageDialog(null, pesan, "Failed !", JOptionPane.INFORMATION_MESSAGE, succesAddPersonData);
+    public void SuccesSavePersonData(String pesan) {
+        JOptionPane.showMessageDialog(null, pesan, "Succes", JOptionPane.INFORMATION_MESSAGE, succesAddPersonData);
     }
     
     // konfirmasi ubah data person
-    public boolean confirmChangePerson(String pesan) {
+    public boolean ConfirmChangePerson(String pesan) {
         if (JOptionPane.showConfirmDialog(null, pesan, "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, confirmChangeDataPerson) == JOptionPane.YES_OPTION) {
             return true;
         }

@@ -27,15 +27,15 @@ public class DbProduct {
             stInsert.setString(6, idSupplier);
             stInsert.setBytes(7, barcode);
             stInsert.executeUpdate();
-            exceptionHandler.getSucces("New product data saved successfully!");
+            exceptionHandler.SuccesSaveData("New product data saved successfully!");
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("Failed to save product data" + e.getMessage());
+            exceptionHandler.GagalTersimpan("Failed to save product data!");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection!" + e.getMessage());
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
                 }
             }
         }
@@ -56,15 +56,15 @@ public class DbProduct {
             stInsert.setString(5, idSupplier);
             stInsert.setString(6, idProduk);
             stInsert.executeUpdate();
-            exceptionHandler.getSucces("Product data updated successfully!");
+            exceptionHandler.SuccesSaveData("Product data updated successfully!");
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("Failed to change product data" + e.getMessage());
+            exceptionHandler.GagalTersimpan("Failed to change product data!");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection! " + e.getMessage());
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
                 }
             }
         }
@@ -79,18 +79,55 @@ public class DbProduct {
             PreparedStatement stDelete = koneksi.prepareStatement(queryDelete);
             stDelete.setString(1, idProduk);
             stDelete.executeUpdate();
-            exceptionHandler.succesDeleteData("Product successfully removed!");
+            exceptionHandler.SuccesDeleteData("Product successfully removed!");
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("Failed when trying to remove product!" + e.getMessage());
+            exceptionHandler.FailedDelete("Failed when trying to remove product!");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection!");
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
                 }
             }
         }
+    }
+    
+    public ArrayList<Object[]> SearchProduct(String inputSearch) {
+        ArrayList<Object[]> listDataProduk = new ArrayList<>();
+        exceptionHandler = new ExceptionHandler();
+        Connection koneksi = null;
+        String querySerach = "SELECT * FROM produk WHERE id_produk LIKE ? OR nama_produk LIKE ?";
+        try {
+            koneksi = ClassKoneksi.GetConnection();
+            PreparedStatement stSearch = koneksi.prepareStatement(querySerach);
+            stSearch.setString(1, "%" + inputSearch + "%");
+            stSearch.setString(2, "%" + inputSearch + "%");
+            ResultSet rs = stSearch.executeQuery();
+            while (rs.next()) {
+                String idProduk = rs.getString("id_produk");
+                String namaProduk = rs.getString("nama_produk");
+                String kategori = rs.getString("kategori");
+                int quantity = rs.getInt("jumlah");
+                int price = rs.getInt("harga");
+                Object[] data = new Object[]{idProduk, namaProduk, kategori, quantity, price};
+                listDataProduk.add(data);
+            }
+            if (listDataProduk.isEmpty()) {
+                exceptionHandler.Kesalahan("Product not found!");
+            }
+        } catch (Exception e) {
+            exceptionHandler.Kesalahan("A failure occurred when trying to search for product data!");
+        } finally {
+            if (koneksi != null) {
+                try {
+                    koneksi.close();
+                } catch (Exception e) {
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
+                }
+            }
+        }
+        return listDataProduk;
     }
     
     public byte[] GetBarcode(String idProduct){
@@ -107,13 +144,13 @@ public class DbProduct {
                  barcode = rs.getBytes("barcode");
             }
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("Failed to get barcode");
+            exceptionHandler.Kesalahan("Failed to get barcode!");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection!" + e.getMessage());
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
                 }
             }
         }
@@ -134,13 +171,13 @@ public class DbProduct {
                 return rs.getInt(1) > 0;
             }
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("Failed to check product data");
+            exceptionHandler.Kesalahan("Failed to check product data");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection!" + e.getMessage());
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
                 }
             }
         }
@@ -161,54 +198,49 @@ public class DbProduct {
                 return rsGet.getString("id_supplier");
             }
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("Failed when trying to retrieve supplier ID!" + e.getMessage());
+            exceptionHandler.Kesalahan("Failed when trying to retrieve supplier ID!");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection! " + e.getMessage());
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
                 }
             }
         }
         return null;
     }
 
-    public ConfigTable GetAllDataProduk() {
+    public ArrayList<Object[]> GetAllDataProduk() {
         exceptionHandler = new ExceptionHandler();
-        ConfigTable dataTable = new ConfigTable();
         String queryGetData = "SELECT * FROM produk";
-        dataTable.addColumn("Product ID");
-        dataTable.addColumn("Product Name");
-        dataTable.addColumn("Category");
-        dataTable.addColumn("Quantity");
-        dataTable.addColumn("Price");
         Connection koneksi = null;
+        ArrayList<Object[]> listDataProduct = new ArrayList<>();
         try {
             koneksi = ClassKoneksi.GetConnection();
             PreparedStatement stGetData = koneksi.prepareStatement(queryGetData);
             ResultSet rs = stGetData.executeQuery();
             while (rs.next()) {
-                dataTable.addRow(new Object[]{
-                    rs.getString("id_produk"),
-                    rs.getString("nama_produk"),
-                    rs.getString("kategori"),
-                    rs.getInt("jumlah"),
-                    rs.getInt("harga")
-                });
+                    String idProduk = rs.getString("id_produk");
+                    String namaProduk = rs.getString("nama_produk");
+                    String kategori = rs.getString("kategori");
+                    int quantity = rs.getInt("jumlah");
+                    int price = rs.getInt("harga");
+                    Object[] data = new Object[]{idProduk, namaProduk, kategori, quantity, price}; 
+                    listDataProduct.add(data);
             }
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("Failed when trying to get data " + e.getMessage());
+            exceptionHandler.Kesalahan("Failed when trying to get data ");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection!" + e.getMessage());
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
                 }
             }
         }
-        return dataTable;
+        return listDataProduct;
     }
 
     // get idProduk berdasarkan kategori untuk kelas Restok controler
@@ -226,13 +258,13 @@ public class DbProduct {
                 idProduk.add(rs.getString("id_produk"));
             }
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("gagal saat mencoba mengambil Produk ID" + e.getMessage());
+            exceptionHandler.Kesalahan("Failed when trying to retrieve the Product ID");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection! " + e.getMessage());
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection! ");
                 }
             }
         }
@@ -253,13 +285,13 @@ public class DbProduct {
                 return rs.getString("nama_produk");
             }
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("gagal saat mencoba mengambil nama produk" + e.getMessage());
+            exceptionHandler.Kesalahan("A failure occurred when trying to retrieve the product name");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection! " + e.getMessage());
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection! ");
                 }
             }
         }
@@ -280,13 +312,13 @@ public class DbProduct {
                 return rs.getInt("harga");
             }
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("A Failure occurred while retrieving product prices! ");
+            exceptionHandler.Kesalahan("A Failure occurred while retrieving product prices!");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection! " + e.getMessage());
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection! ");
                 }
             }
         }
@@ -307,19 +339,20 @@ public class DbProduct {
                 return rs.getInt("jumlah");
             }
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("A failure occurred when trying to retrieve the product stock quantity " + e.getMessage());
+            exceptionHandler.Kesalahan("A failure occurred when trying to retrieve the product stock quantity");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection! " + e.getMessage());
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
                 }
             }
         }
         return 0;
     }
 
+    // belum implementasi
     public ConfigTable SearchProduct(String namaProduk, String idProduct, String kategori){
         ConfigTable dataProduct = new ConfigTable();
         String sqlGetProduct = "SELECT * FROM produk WHERE idProduct = ?";

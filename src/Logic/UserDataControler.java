@@ -1,11 +1,13 @@
 package Logic;
 
 import Data_Acces.DbUserManager;
+import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 
 public class UserDataControler {
-    
+
     private String username;
     private String password;
     private String idUser;
@@ -19,6 +21,7 @@ public class UserDataControler {
     private String usernameLama;
     private ExceptionHandler exceptionHandler;
     private DbUserManager dbUserManager;
+    private ConfigTable model;
 
     public UserDataControler(String username, String password, String idUser, String nama, String noHp, String alamat, String nik, String role) {
         this.username = username;
@@ -53,10 +56,10 @@ public class UserDataControler {
             if (!dbUserManager.CekNik(nik)) {
                 return true;
             } else {
-                exceptionHandler.getErrorKesalahan("Nik has registered!");
+                exceptionHandler.Kesalahan("Nik has registered!");
             }
         } else {
-            exceptionHandler.getErrorKesalahan("Nik is invalid!");
+            exceptionHandler.Kesalahan("Nik is invalid!");
         }
         return false;
     }
@@ -67,20 +70,20 @@ public class UserDataControler {
             if (!dbUserManager.CekNoHp(noHp)) {
                 return true;
             } else {
-                exceptionHandler.getErrorKesalahan("The phone number is already in use!");
+                exceptionHandler.Kesalahan("The phone number is already in use!");
             }
         } else {
-            exceptionHandler.getErrorKesalahan("Invalid phone number!");
+            exceptionHandler.Kesalahan("Invalid phone number!");
         }
         return false;
     }
-    
-    private boolean CekUsername(){
+
+    private boolean CekUsername() {
         boolean cekUsername = dbUserManager.CekUsername(username);
         if (!cekUsername) {
             return true;
         } else {
-            exceptionHandler.getErrorKesalahan("Username has been used!");
+            exceptionHandler.Kesalahan("Username has been used!");
         }
         return false;
     }
@@ -105,18 +108,18 @@ public class UserDataControler {
             return false;
         }
     }
-    
+
     private boolean ValidasiUsernameBaru() {
         if (!username.equalsIgnoreCase("Username") && !username.equals("")) {
             if (username.equalsIgnoreCase(usernameLama)) {
-            return true;
-        } else if (CekUsername()) {
-            return true;
+                return true;
+            } else if (CekUsername()) {
+                return true;
+            } else {
+                return false;
+            }
         } else {
-            return false;
-        }
-        } else {
-            exceptionHandler.getErrorKesalahan("All fields must be filled in!");
+            exceptionHandler.Kesalahan("All fields must be filled in!");
         }
         return false;
     }
@@ -127,10 +130,10 @@ public class UserDataControler {
             if (nama.length() <= 25) {
                 return true;
             } else {
-                exceptionHandler.getErrorKesalahan("The maximum name must be 25 characters!");
+                exceptionHandler.Kesalahan("The maximum name must be 25 characters!");
             }
         } else {
-            exceptionHandler.getErrorKesalahan("Invalid name!");
+            exceptionHandler.Kesalahan("Invalid name!");
         }
         return false;
     }
@@ -140,16 +143,16 @@ public class UserDataControler {
         if (alamat.length() <= 50) {
             return true;
         } else {
-            exceptionHandler.getErrorKesalahan("The maximum address consists of 50 characters!");
+            exceptionHandler.Kesalahan("The maximum address consists of 50 characters!");
         }
         return false;
     }
-    
-    private boolean ValidasiRole(){
+
+    private boolean ValidasiRole() {
         if (!role.equalsIgnoreCase("Position")) {
             return true;
         } else {
-            exceptionHandler.getErrorKesalahan("Please, Select a user position!");
+            exceptionHandler.Kesalahan("Please, Select a user position!");
         }
         return false;
     }
@@ -159,7 +162,7 @@ public class UserDataControler {
                 && !noHp.trim().equalsIgnoreCase("Phone Number") && !noHp.equals("") && !alamat.trim().equalsIgnoreCase("Address") && !alamat.equals("")) {
             return true;
         } else {
-            exceptionHandler.getErrorKesalahan("All fields must be filled in!");
+            exceptionHandler.Kesalahan("All fields must be filled in!");
         }
         return false;
     }
@@ -169,25 +172,69 @@ public class UserDataControler {
         if (row != -1) {
             return true;
         } else {
-            exceptionHandler.getErrorKesalahan("Select one of the product data you want to change");
+            exceptionHandler.Kesalahan("Select one of the product data you want to change");
         }
         return false;
     }
 
     // get all data pengguna
-    public ConfigTable GetAllData() {
-        return dbUserManager.GetAllDataPengguna();
+    public ConfigTable SetModelTable() {
+        model = new ConfigTable();
+        model.addColumn("User ID");
+        model.addColumn("NIK");
+        model.addColumn("Name");
+        model.addColumn("Phone Number");
+        model.addColumn("Address");
+        model.addColumn("Position");
+        model.addColumn("Account ID");
+        return model;
+    }
+
+    public void GetAllData(JTable table) {
+        model = (ConfigTable) table.getModel();
+        ArrayList<Object[]> listDataPengguna = dbUserManager.GetAllDataPengguna();
+        for (Object[] data : listDataPengguna) {
+            model.addRow(data);
+        }
+    }
+
+    public void SearchDataPengguna(JTable table, JTextField txtSearch) {
+        String teksSearch = txtSearch.getText();
+        model = (ConfigTable) table.getModel();
+        model.setRowCount(0);
+        ArrayList<Object[]> DataPengguna;
+        if (!teksSearch.equalsIgnoreCase("Enter account ID or telephone number here")) {
+            DataPengguna = dbUserManager.SearchDataPengguna(teksSearch);
+            if (DataPengguna.isEmpty()) {
+                DataPengguna = dbUserManager.GetAllDataPengguna();
+                for (Object[] data : DataPengguna) {
+                    model.addRow(data);
+                }
+            } else {
+                for (Object[] data : DataPengguna) {
+                    model.addRow(data);
+                }
+            }
+            txtSearch.setText("Enter account ID or telephone number here");
+            txtSearch.setForeground(new Color(153, 153, 153));
+        } else {
+            exceptionHandler.Kesalahan("Please enter the account ID or telephone number of the user you want to search for!");
+            DataPengguna = dbUserManager.GetAllDataPengguna();
+            for (Object[] data : DataPengguna) {
+                model.addRow(data);
+            }
+        }
     }
 
     // isi field change user data di kelas change user data(previlage owner)
     public ArrayList<String> IsiStringField(JTable table) {
         int row = table.getSelectedRow();
         ArrayList<String> data = new ArrayList<>();
-        String idUser = table.getValueAt(row, 0).toString();
-        String nik = table.getValueAt(row, 1).toString();
-        String nama = table.getValueAt(row, 2).toString();
-        String noHp = table.getValueAt(row, 3).toString();
-        String alamat = table.getValueAt(row, 4).toString();
+        idUser = table.getValueAt(row, 0).toString();
+        nik = table.getValueAt(row, 1).toString();
+        nama = table.getValueAt(row, 2).toString();
+        noHp = table.getValueAt(row, 3).toString();
+        alamat = table.getValueAt(row, 4).toString();
         String posisi = table.getValueAt(row, 5).toString();
         data.add(idUser);
         data.add(nik);
@@ -201,7 +248,7 @@ public class UserDataControler {
     // change data user di kelas user data
     public boolean ChangeUserData() {
         if (ValidateNikBaru() && ValidasiNoHpBaru() && ValidasiNama() && ValidasiAlamat() && ValidasiField() && ValidasiRole()) {
-            boolean confirm = exceptionHandler.confirmChangePerson("Update user data?");
+            boolean confirm = exceptionHandler.ConfirmChangePerson("Update user data?");
             if (confirm) {
                 dbUserManager.ChangeUserData(idUser, nik, nama, noHp, alamat, role);
                 return true;
@@ -214,20 +261,20 @@ public class UserDataControler {
         int getRow = table.getSelectedRow();
         if (getRow != -1) {
             idUser = table.getValueAt(getRow, 0).toString();
-            boolean confirm = exceptionHandler.confirmDeleteData("Warning! Are you sure you want to delete user data?" + "\nThis activity can cause the user's account to be deleted!");
+            boolean confirm = exceptionHandler.ConfirmDeleteData("Warning! Are you sure you want to delete user data?" + "\nThis activity can cause the user's account to be deleted!");
             if (confirm) {
                 dbUserManager.DeleteUserData(idUser);
                 return true;
             }
         } else {
-            exceptionHandler.getErrorKesalahan("Select one of the data you want to delete !");
+            exceptionHandler.Kesalahan("Select one of the data you want to delete !");
         }
         return false;
     }
-    
-    public boolean UpdateProfile(){
+
+    public boolean UpdateProfile() {
         if (ValidateNikBaru() && ValidasiUsernameBaru() && ValidasiNoHpBaru() && ValidasiField() && ValidasiNama() && ValidasiAlamat()) {
-            boolean confirm = exceptionHandler.confirmChangePerson("Update profile?");
+            boolean confirm = exceptionHandler.ConfirmChangePerson("Update profile?");
             if (confirm) {
                 dbUserManager.UpdateProfile(idUser, username, nama, nik, noHp, alamat);
                 return true;

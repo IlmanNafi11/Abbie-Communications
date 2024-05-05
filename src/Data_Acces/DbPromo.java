@@ -23,15 +23,15 @@ public class DbPromo {
             stInsert.setInt(3, jumlahDiskon);
             stInsert.setString(4, status);
             stInsert.executeUpdate();
-            exceptionHandler.getSucces("Discount successfully saved");
+            exceptionHandler.SuccesSaveData("Discount successfully saved");
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("Failed when trying to save discount" + e.getMessage());
+            exceptionHandler.Kesalahan("Failed when trying to save discount");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection!");
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
                 }
             }
         }
@@ -49,15 +49,15 @@ public class DbPromo {
             stInsert.setString(3, status);
             stInsert.setString(4, kodeDiskon);
             stInsert.executeUpdate();
-            exceptionHandler.getSucces("Discount successfully changed");
+            exceptionHandler.SuccesSaveData("Discount successfully changed");
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("Failed when trying to update discount data!" + e.getMessage());
+            exceptionHandler.Kesalahan("Failed when trying to update discount data!");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection!");
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
                 }
             }
         }
@@ -72,60 +72,56 @@ public class DbPromo {
             PreparedStatement stDelete = koneksi.prepareStatement(queryDelete);
             stDelete.setString(1, kodeDiskon);
             stDelete.executeUpdate();
-            exceptionHandler.succesDeleteData("Discount successfully removed!");
+            exceptionHandler.SuccesDeleteData("Discount successfully removed!");
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("Failed when trying to remove discount!" + e.getMessage());
+            exceptionHandler.Kesalahan("Failed when trying to remove discount!");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection!");
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
                 }
             }
         }
     }
 
     // get all data utk insert ke table
-    public ConfigTable GetAllDataPromo() {
-        ConfigTable dataTable = new ConfigTable();
+    public ArrayList<Object[]> GetAllDataPromo() {
         exceptionHandler = new ExceptionHandler();
+        ArrayList<Object[]> listDataPromo = new ArrayList<>();
         String queryGetData = "SELECT * FROM promo";
-        dataTable.addColumn("Discount Code");
-        dataTable.addColumn("Minimum Purchase");
-        dataTable.addColumn("Discount amount");
-        dataTable.addColumn("Status");
         Connection koneksi = null;
         try {
             koneksi = ClassKoneksi.GetConnection();
             PreparedStatement stGetData = koneksi.prepareStatement(queryGetData);
             ResultSet rs = stGetData.executeQuery();
             while (rs.next()) {
-                dataTable.addRow(new Object[]{
-                    rs.getString("kode_diskon"),
-                    rs.getInt("minimum"),
-                    rs.getInt("diskon"),
-                    rs.getString("status")
-                });
+                    String kodeDiskon = rs.getString("kode_diskon");
+                    int minimum = rs.getInt("minimum");
+                    int diskon = rs.getInt("diskon");
+                    String status = rs.getString("status");
+                    Object[] data = new Object[]{kodeDiskon, minimum, diskon, status};
+                    listDataPromo.add(data);
             }
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("Failed when trying to get data " + e.getMessage());
+            exceptionHandler.Kesalahan("Failed when trying to get data ");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection!");
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
                 }
             }
         }
-        return dataTable;
+        return listDataPromo;
     }
 
     public ArrayList<String> GetKodeDiskon(int total) {
         ArrayList<String> kodeDiskon = new ArrayList<>();
         exceptionHandler = new ExceptionHandler();
-        String queryGet = "SELECT kode_diskon FROM promo WHERE ? > minimum";
+        String queryGet = "SELECT kode_diskon FROM promo WHERE ? > minimum AND status = 'Active'";
         Connection koneksi = null;
         try {
             koneksi = ClassKoneksi.GetConnection();
@@ -136,13 +132,13 @@ public class DbPromo {
                 kodeDiskon.add(rs.getString("kode_diskon"));
             }
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("A failure occurred while trying to retrieve the promo code!" + e.getMessage());
+            exceptionHandler.Kesalahan("A failure occurred while trying to retrieve the promo code!");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection!");
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
                 }
             }
         }
@@ -162,13 +158,13 @@ public class DbPromo {
                 return rs.getInt("diskon");
             }
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("A failure occurred while retrieving the discount amount!");
+            exceptionHandler.Kesalahan("A failure occurred while retrieving the discount amount!");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection!");
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
                 }
             }
         }

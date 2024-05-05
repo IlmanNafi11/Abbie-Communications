@@ -9,6 +9,7 @@ public class Restock extends javax.swing.JInternalFrame implements UpdateTable{
 
     private String username;
     private String role;
+    private ConfigTable model;
     
     public Restock() {
         initComponents();
@@ -29,11 +30,12 @@ public class Restock extends javax.swing.JInternalFrame implements UpdateTable{
     public void perbarui() {
         ViewTable();
     }
-    // blm disset
+    
     public void ViewTable() {
         RestockControler controler = new RestockControler(null, null, null, null, 0, null, null, 0);
-        ConfigTable Tabel = controler.GetAllData();
-        table.setModel(Tabel);
+        model = controler.SetModelTable();
+        table.setModel(model);
+        controler.GetAllData(table);
     }
 
     @SuppressWarnings("unchecked")
@@ -56,7 +58,7 @@ public class Restock extends javax.swing.JInternalFrame implements UpdateTable{
 
         txtSearch.setBackground(new java.awt.Color(249, 250, 251));
         txtSearch.setForeground(new java.awt.Color(153, 153, 153));
-        txtSearch.setText("Search Transaction here...");
+        txtSearch.setText("Enter the restock transaction ID or date here");
         txtSearch.setBorder(null);
         txtSearch.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -237,7 +239,7 @@ public class Restock extends javax.swing.JInternalFrame implements UpdateTable{
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtSearchFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearchFocusGained
-        if (txtSearch.getText().equals("Search Transaction here...")) {
+        if (txtSearch.getText().equals("Enter the restock transaction ID or date here")) {
             txtSearch.setText("");
             txtSearch.setForeground(Color.BLACK);
         }
@@ -245,7 +247,7 @@ public class Restock extends javax.swing.JInternalFrame implements UpdateTable{
 
     private void txtSearchFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearchFocusLost
         if (txtSearch.getText().trim().equals("")|| txtSearch.getText().length() == 0) {
-            txtSearch.setText("Search Transaction here...");
+            txtSearch.setText("Enter the restock transaction ID or date here");
             txtSearch.setForeground(new Color(153,153,153));
         }
     }//GEN-LAST:event_txtSearchFocusLost
@@ -264,6 +266,8 @@ public class Restock extends javax.swing.JInternalFrame implements UpdateTable{
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Icon-Search-Click.png")));
+        RestockControler controler = new RestockControler(null, null, null, null, 0, null, null, 0);
+        controler.SearchTransaksi(table, txtSearch);
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void btnAddMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMouseEntered

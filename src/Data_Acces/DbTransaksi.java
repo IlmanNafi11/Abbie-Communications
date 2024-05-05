@@ -13,8 +13,9 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.JasperViewer;
 
 public class DbTransaksi {
-    private ExceptionHandler exceptionHandler;
 
+    private ExceptionHandler exceptionHandler;
+    
     public void InsertTransaksi(String idTransaksi, Date tanggal, float total) {
         exceptionHandler = new ExceptionHandler();
         String queryInsert = "INSERT INTO transaksi (id_transaksi, tanggal, total) VALUES (?, ?, ?)";
@@ -26,21 +27,21 @@ public class DbTransaksi {
             stInsert.setDate(2, new java.sql.Date(tanggal.getTime()));
             stInsert.setFloat(3, total);
             stInsert.executeUpdate();
-            exceptionHandler.getSucces("Transaction successful!");
+            exceptionHandler.SuccesSaveData("Transaction successful!");
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            exceptionHandler.getErrorKesalahan("A failure occurred while trying to save the transaction!" + e.getMessage());
+            exceptionHandler.GagalTersimpan("A failure occurred while trying to save the transaction!");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection! " + e.getMessage());
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection! ");
                 }
             }
         }
     }
-
+    
     public void InsertDetailTransaksi(String idTransaksi, String idProduct, int jumlah, float subTotal, Date tanggal) {
         exceptionHandler = new ExceptionHandler();
         String queryInsert = "INSERT INTO transaksi_detail (id_transaksi, product_id, quantity, subtotal, tanggal) VALUES (?, ?, ?, ?, ?)";
@@ -54,21 +55,19 @@ public class DbTransaksi {
             stInsert.setFloat(4, subTotal);
             stInsert.setDate(5, new java.sql.Date(tanggal.getTime()));
             stInsert.executeUpdate();
-            // konfirmasi
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("A failure occurred while trying to save transaction details!" + e.getMessage());
-            System.out.println(e.getMessage());
+            exceptionHandler.GagalTersimpan("A failure occurred while trying to save transaction details!");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection! " + e.getMessage());
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
                 }
             }
         }
     }
-
+    
     public void InsertTransaksiMember(String idTransaksi, String id_member) {
         exceptionHandler = new ExceptionHandler();
         String queryInsert = "INSERT INTO transaksi_member (id_transaksi, id_member) VALUES (?,?)";
@@ -79,20 +78,19 @@ public class DbTransaksi {
             stInsert.setString(1, idTransaksi);
             stInsert.setString(2, id_member);
             stInsert.executeUpdate();
-            // konfirmasi
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("A failure occurred while trying to save member transactions!");
+            exceptionHandler.GagalTersimpan("A failure occurred while trying to save member transactions!");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection! " + e.getMessage());
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
                 }
             }
         }
     }
-
+    
     public void InsertDetailTransaksiDiskon(String idTransaksi, String kodeDiskon, float totalDiskon) {
         exceptionHandler = new ExceptionHandler();
         String queryInsert = "INSERT INTO detail_transaksi_diskon (id_transaksi, kode_diskon, total_diskon) VALUES (?,?,?)";
@@ -104,20 +102,19 @@ public class DbTransaksi {
             stInsert.setString(2, kodeDiskon);
             stInsert.setFloat(3, totalDiskon);
             stInsert.executeUpdate();
-            // konfirmasi
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("A failure occurred while trying to save discount transaction details!");
+            exceptionHandler.GagalTersimpan("A failure occurred while trying to save discount transaction details!");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection! " + e.getMessage());
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
                 }
             }
         }
     }
-
+    
     public void InsertTransaksiService(String idTransaksi, String keterangan, String namaCustomer, String noHp, String alamat, int biaya, Date tanggal) {
         exceptionHandler = new ExceptionHandler();
         String queryInsert = "INSERT INTO transaksi_servis (id_transaksi, keterangan, nama_customer, tlp_customer, alamat_customer, biaya, tanggal) VALUES(?, ?, ?, ?, ?, ?, ?)";
@@ -133,24 +130,59 @@ public class DbTransaksi {
             stInsert.setInt(6, biaya);
             stInsert.setDate(7, new java.sql.Date(tanggal.getTime()));
             stInsert.executeUpdate();
-            exceptionHandler.getSucces("Transaction successful!");
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("Gagal insert data " + e.getMessage());
+            exceptionHandler.GagalTersimpan("A failure occurred while trying to save service transaction data!");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection! \" + e.getMessage()");
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
                 }
             }
         }
     }
     
-    public void PrintStruk(String idTransaksi, String namaTeknisi, int total, int tunai, int kembalian){
-    exceptionHandler = new ExceptionHandler();
-    String id = idTransaksi;
-    Connection koneksi = null;
+    public void PrintStrukPenjualan(String idTransaksi, String namaKasir, String namaMember, int total, int diskon, int tunai, int kembalian, String kodePromo) {
+        Connection koneksi = null;
+        String member = "Not a member";
+        int jumlahDiskon = 0;
+        if (!namaMember.equalsIgnoreCase("Member Name")) {
+            member = namaMember;
+            if (!kodePromo.equalsIgnoreCase("Discount ID")) {
+                jumlahDiskon = diskon;
+            }
+        }
+        try {
+            koneksi = ClassKoneksi.GetConnection();
+            InputStream path = getClass().getResourceAsStream("/report/StrukPenjualan.jasper");
+            Map<String, Object> parameter = new HashMap<>();
+            parameter.put("idTransaksi", idTransaksi);
+            parameter.put("kasir", namaKasir);
+            parameter.put("member", member);
+            parameter.put("total", total);
+            parameter.put("diskon", jumlahDiskon);
+            parameter.put("tunai", tunai);
+            parameter.put("kembalian", kembalian);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(path, parameter, koneksi);
+            JasperViewer.viewReport(jasperPrint, false);
+        } catch (Exception e) {
+            exceptionHandler.Kesalahan("A failure occurred when printing the transaction receipt");
+        } finally {
+            if (koneksi != null) {
+                try {
+                    koneksi.close();
+                } catch (Exception e) {
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
+                }
+            }
+        }
+    }
+    
+    public void PrintStrukService(String idTransaksi, String namaTeknisi, int total, int tunai, int kembalian) {
+        exceptionHandler = new ExceptionHandler();
+        String id = idTransaksi;
+        Connection koneksi = null;
         try {
             koneksi = ClassKoneksi.GetConnection();
             InputStream path = getClass().getResourceAsStream("/report/StrukService.jasper");
@@ -163,13 +195,13 @@ public class DbTransaksi {
             JasperPrint jasperPrint = JasperFillManager.fillReport(path, parameter, koneksi);
             JasperViewer.viewReport(jasperPrint, false);
         } catch (Exception e) {
-            e.getMessage();
+            exceptionHandler.Kesalahan("A failure occurred while trying to print a transaction receipt!");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection! \" + e.getMessage()");
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
                 }
             }
         }

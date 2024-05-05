@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 public class UserData extends javax.swing.JInternalFrame implements UpdateTable {
-
+    
     private String username;
     private String role;
     
@@ -18,24 +18,25 @@ public class UserData extends javax.swing.JInternalFrame implements UpdateTable 
         ViewTable();
     }
     
-    public void SetProfile(String nama, String role){
+    public void SetProfile(String nama, String role) {
         lblNamaUser.setText(nama);
         lblPosisiUser.setText(role);
         this.username = nama;
         this.role = role;
     }
-
+    
     @Override
     public void perbarui() {
         ViewTable();
     }
-
+    
     public void ViewTable() {
         UserDataControler controler = new UserDataControler(null, null, null, null, null, null, null, null);
-        ConfigTable Tabel = controler.GetAllData();
+        ConfigTable Tabel = controler.SetModelTable();
         table.setModel(Tabel);
+        controler.GetAllData(table);
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -55,7 +56,7 @@ public class UserData extends javax.swing.JInternalFrame implements UpdateTable 
 
         txtSearch.setBackground(new java.awt.Color(249, 250, 251));
         txtSearch.setForeground(new java.awt.Color(153, 153, 153));
-        txtSearch.setText("Search User here...");
+        txtSearch.setText("Enter account ID or telephone number here");
         txtSearch.setBorder(null);
         txtSearch.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -212,7 +213,7 @@ public class UserData extends javax.swing.JInternalFrame implements UpdateTable 
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtSearchFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearchFocusGained
-        if (txtSearch.getText().equals("Search User here...")) {
+        if (txtSearch.getText().equals("Enter account ID or telephone number here")) {
             txtSearch.setText("");
             txtSearch.setForeground(Color.BLACK);
         }
@@ -220,7 +221,7 @@ public class UserData extends javax.swing.JInternalFrame implements UpdateTable 
 
     private void txtSearchFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearchFocusLost
         if (txtSearch.getText().trim().equals("") || txtSearch.getText().length() == 0) {
-            txtSearch.setText("Search User here...");
+            txtSearch.setText("Enter account ID or telephone number here");
             txtSearch.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtSearchFocusLost
@@ -239,6 +240,8 @@ public class UserData extends javax.swing.JInternalFrame implements UpdateTable 
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Icon-Search-Click.png")));
+        UserDataControler controler = new UserDataControler(null, null, null, null, null, null, null, null);
+        controler.SearchDataPengguna(table, txtSearch);
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void btnEditMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseEntered

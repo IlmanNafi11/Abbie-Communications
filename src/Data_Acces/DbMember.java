@@ -24,13 +24,13 @@ public class DbMember {
                 return rs.getInt(1) > 0;
             }
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("Failed to check member data " + e);
+            exceptionHandler.Kesalahan("Failed to check member data ");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection!");
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
                 }
             }
         }
@@ -53,13 +53,13 @@ public class DbMember {
                 dataMember.add(rs.getString("nama_member"));
             }
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("A failure occurred while trying to retrieve member data!" + e);
+            exceptionHandler.Kesalahan("A failure occurred while trying to retrieve member data!");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection!" + e.getMessage());
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
                 }
             }
         }
@@ -78,15 +78,15 @@ public class DbMember {
             stInsert.setString(3, noHp);
             stInsert.setString(4, alamatMember);
             stInsert.executeUpdate();
-            exceptionHandler.succesSavePersonData("Member data has been successfully saved");
+            exceptionHandler.SuccesSavePersonData("Member data has been successfully saved!");
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("Failed when trying to save member data " + e);
+            exceptionHandler.GagalTersimpan("Failed when trying to save member data! ");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection!");
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
                 }
             }
         }
@@ -104,15 +104,15 @@ public class DbMember {
             stChange.setString(3, alamatMember);
             stChange.setString(4, idMember);
             stChange.executeUpdate();
-            exceptionHandler.succesSavePersonData("Member data has been successfully Changed");
+            exceptionHandler.SuccesSavePersonData("Member data has been successfully Changed!");
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("Failed when trying to change member data " + e.getMessage());
+            exceptionHandler.GagalTersimpan("Failed when trying to change member data!");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection!");
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
                 }
             }
         }
@@ -127,53 +127,49 @@ public class DbMember {
             PreparedStatement stDelete = koneksi.prepareStatement(queryDelete);
             stDelete.setString(1, idMember);
             stDelete.executeUpdate();
-            exceptionHandler.succesDeleteData("Member data has been successfully deleted");
+            exceptionHandler.SuccesDeleteData("Member data has been successfully deleted!");
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("Failed when trying to delete member data " + e);
+            exceptionHandler.FailedDelete("Failed when trying to delete member data ");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection!");
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
                 }
             }
         }
     }
 
     // get data member utk insert ke table
-    public ConfigTable GetAllDataMember() {
-        ConfigTable dataTable = new ConfigTable();
+    public ArrayList<Object[]> GetAllDataMember() {
         Connection koneksi = null;
         exceptionHandler = new ExceptionHandler();
-        String queryGetData = "SELECT * FROM member";
-        dataTable.addColumn("Member ID");
-        dataTable.addColumn("Member Name");
-        dataTable.addColumn("Telephone");
-        dataTable.addColumn("Address");
+        ArrayList<Object[]> listDataMember = new ArrayList<>();
+        String queryGetData = "SELECT * FROM member";       
         try {
             koneksi = ClassKoneksi.GetConnection();
             PreparedStatement stGetData = koneksi.prepareStatement(queryGetData);
             ResultSet rs = stGetData.executeQuery();
             while (rs.next()) {
-                dataTable.addRow(new Object[]{
-                    rs.getString("id_member"),
-                    rs.getString("nama_member"),
-                    rs.getString("tlp_member"),
-                    rs.getString("alamat_member"),});
+                String idMember = rs.getString("id_member");
+                String namaMember = rs.getString("nama_member");
+                String noHpMember = rs.getString("tlp_member");
+                String alamatMember = rs.getString("alamat_member");
+                Object[] data = new Object[]{idMember, namaMember, noHpMember, alamatMember};
+                listDataMember.add(data);
             }
         } catch (Exception e) {
-            exceptionHandler.getErrorKesalahan("Failed when trying to get data " + e);
+            exceptionHandler.Kesalahan("Failed when trying to get member data!");
         } finally {
             if (koneksi != null) {
                 try {
                     koneksi.close();
                 } catch (Exception e) {
-                    exceptionHandler.getErrorKesalahan("A failure occurred while disconnecting the database connection!");
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
                 }
             }
         }
-        return dataTable;
+        return listDataMember;
     }
-
 }

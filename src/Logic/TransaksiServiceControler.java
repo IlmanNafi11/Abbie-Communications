@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.Random;
 
 public class TransaksiServiceControler {
+
     private String idTransaksi;
     private String idProduct;
     private String namaProduk;
@@ -64,7 +65,7 @@ public class TransaksiServiceControler {
         if (!information.equalsIgnoreCase("Information") && !information.equalsIgnoreCase("")) {
             return true;
         }
-        exceptionHandler.getErrorKesalahan("The information column cannot be empty");
+        exceptionHandler.Kesalahan("The information column cannot be empty");
         return false;
     }
 
@@ -74,10 +75,10 @@ public class TransaksiServiceControler {
             if (biaya != 0) {
                 return biaya;
             } else {
-                exceptionHandler.getErrorKesalahan("The total service fee must be more than 0!");
+                exceptionHandler.Kesalahan("The total service fee must be more than 0!");
             }
         } catch (NumberFormatException e) {
-            exceptionHandler.getErrorKesalahan("Service fee amount is invalid!");
+            exceptionHandler.Kesalahan("Service fee amount is invalid!");
         }
         return 0;
     }
@@ -88,10 +89,10 @@ public class TransaksiServiceControler {
             if (kuantitas != 0) {
                 return kuantitas;
             } else {
-                exceptionHandler.getErrorKesalahan("The quantity value must be greater than 0!");
+                exceptionHandler.Kesalahan("The quantity value must be greater than 0!");
             }
         } catch (NumberFormatException e) {
-            exceptionHandler.getErrorKesalahan("Invalid quantity value!");
+            exceptionHandler.Kesalahan("Invalid quantity value!");
         }
         return 0;
     }
@@ -100,7 +101,7 @@ public class TransaksiServiceControler {
         if (!namaCustomer.equalsIgnoreCase("Customer Name")) {
             return true;
         } else {
-            exceptionHandler.getErrorKesalahan("Invalid customer name!");
+            exceptionHandler.Kesalahan("Invalid customer name!");
         }
         return false;
     }
@@ -109,7 +110,7 @@ public class TransaksiServiceControler {
         if (!alamatCustomer.equalsIgnoreCase("Customer Address")) {
             return true;
         } else {
-            exceptionHandler.getErrorKesalahan("Invalid customer address!");
+            exceptionHandler.Kesalahan("Invalid customer address!");
         }
         return false;
     }
@@ -118,7 +119,7 @@ public class TransaksiServiceControler {
         if (!noHpCustomer.equalsIgnoreCase("Customer Telephone Number")) {
             return true;
         } else {
-            exceptionHandler.getErrorKesalahan("Customer phone number is invalid!");
+            exceptionHandler.Kesalahan("Customer phone number is invalid!");
         }
         return false;
     }
@@ -129,10 +130,10 @@ public class TransaksiServiceControler {
             if (jumlahBayar != 0 && jumlahBayar >= total) {
                 return jumlahBayar;
             } else {
-                exceptionHandler.getErrorKesalahan("The payment amount must be greater than 0 and the total purchase!");
+                exceptionHandler.Kesalahan("The payment amount must be greater than 0 and the total purchase!");
             }
         } catch (NumberFormatException e) {
-            exceptionHandler.getErrorKesalahan("Invalid payment amount!");
+            exceptionHandler.Kesalahan("Invalid payment amount!");
         }
         return jumlahBayar = 0;
     }
@@ -160,7 +161,7 @@ public class TransaksiServiceControler {
     // isi field tambah part berdasarkan id product
     public void SetDataPart(JTextField txtIdProduct, JTextField txtNamaProduct, JTextField txtHarga, JTextField txtQuantity) {
         idProduct = txtIdProduct.getText();
-        ProductControler productControler = new ProductControler(null, null, idProduct, null, 0, 0);
+        ProductControler productControler = new ProductControler(null, idProduct);
         namaProduk = productControler.getNamaProduct();
         hargaProduct = productControler.getHarga();
         if (namaProduk != null) {
@@ -169,7 +170,7 @@ public class TransaksiServiceControler {
             txtHarga.setForeground(Color.BLACK);
             txtNamaProduct.setForeground(Color.BLACK);
         } else {
-            exceptionHandler.getErrorKesalahan("Product not found!");
+            exceptionHandler.Kesalahan("Product not found!");
             txtNamaProduct.setText("Product Name");
             txtHarga.setText("Price");
             txtQuantity.setText("Quantity");
@@ -205,7 +206,7 @@ public class TransaksiServiceControler {
         int kembalian = 0;
         if (total > jumlahBayar) {
             kembalian = total - jumlahBayar;
-            exceptionHandler.getErrorKesalahan("The payment amount is less than Rp. " + kembalian);
+            exceptionHandler.Kesalahan("The payment amount is less than Rp. " + kembalian);
             txtBayar.setForeground(Color.red);
             txtKembalian.setText("Refund");
         } else {
@@ -228,14 +229,14 @@ public class TransaksiServiceControler {
     public void DeleteDataTransakssi(JTable tabel, JTextField txtTotal) {
         int getRow = tabel.getSelectedRow();
         if (getRow != -1) {
-            boolean confirm = exceptionHandler.confirmDeleteData("Remove a product from your purchase list?");
+            boolean confirm = exceptionHandler.ConfirmDeleteData("Remove a product from your purchase list?");
             if (confirm) {
                 ConfigTable modelTable = (ConfigTable) tabel.getModel();
                 modelTable.removeRow(getRow);
                 UpdateTotal(tabel, txtTotal);
             }
         } else {
-            exceptionHandler.getErrorKesalahan("Please select a row to delete");
+            exceptionHandler.Kesalahan("Please select a row to delete");
         }
     }
 
@@ -245,7 +246,7 @@ public class TransaksiServiceControler {
         ConfigTable modelTable = (ConfigTable) tabel.getModel();
         if (ValidateNamaCustomer() && ValidateNoHpCustomer() && ValidateAlamatCustomer()) {
             if (jumlahBayar != 0) {
-                boolean confirm = exceptionHandler.confirmSave("Save Transactions?");
+                boolean confirm = exceptionHandler.ConfirmSave("Save Transactions?");
                 if (confirm) {
                     try {
                         dbTransaksi.InsertTransaksi(idTransaksi, tanggal, total);
@@ -261,14 +262,14 @@ public class TransaksiServiceControler {
                                 dbTransaksi.InsertDetailTransaksi(idTransaksi, idProduct, kuantitas, subTotal, tanggal);
                             }
                         }
-                        dbTransaksi.PrintStruk(idTransaksi, namaTeknisi, total, pay, kembalian);
+                        dbTransaksi.PrintStrukService(idTransaksi, namaTeknisi, total, pay, kembalian);
                     } catch (Exception e) {
                         e.getMessage();
                     }
                 }
             }
         } else {
-            exceptionHandler.getErrorKesalahan("Invalid payment amount!");
+            exceptionHandler.Kesalahan("Invalid payment amount!");
         }
     }
 }
