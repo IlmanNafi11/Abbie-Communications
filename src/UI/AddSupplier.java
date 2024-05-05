@@ -63,6 +63,7 @@ public class AddSupplier extends javax.swing.JDialog {
         btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Cancel-Primary-Default.png"))); // NOI18N
         btnCancel.setBorder(null);
         btnCancel.setContentAreaFilled(false);
+        btnCancel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCancel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnCancelMouseEntered(evt);
@@ -85,6 +86,7 @@ public class AddSupplier extends javax.swing.JDialog {
         btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Add-Default.png"))); // NOI18N
         btnAdd.setBorder(null);
         btnAdd.setContentAreaFilled(false);
+        btnAdd.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAdd.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnAddMouseEntered(evt);
@@ -105,6 +107,7 @@ public class AddSupplier extends javax.swing.JDialog {
         btnAdd.setBounds(613, 309, 100, 60);
 
         cmbCategory.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Category", "Accessories", "Phone credit/Internet credit", "Electronic", "Part" }));
+        cmbCategory.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cmbCategory.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbCategoryActionPerformed(evt);

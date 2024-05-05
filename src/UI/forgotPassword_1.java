@@ -52,6 +52,7 @@ public class forgotPassword_1 extends javax.swing.JInternalFrame {
         btnNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Next-Primary-Default.png"))); // NOI18N
         btnNext.setBorder(null);
         btnNext.setContentAreaFilled(false);
+        btnNext.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnNext.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnNextMouseEntered(evt);
@@ -72,6 +73,7 @@ public class forgotPassword_1 extends javax.swing.JInternalFrame {
         btnNext.setBounds(879, 470, 364, 52);
 
         lblBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Label-Back-Default.png"))); // NOI18N
+        lblBack.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblBack.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblBackMouseClicked(evt);

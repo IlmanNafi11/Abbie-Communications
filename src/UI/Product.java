@@ -60,6 +60,7 @@ public class Product extends javax.swing.JInternalFrame implements UpdateTable {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         JComboSortByPrice.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sort by price:", "Sort by price: lowest", "Sort by price: highest" }));
+        JComboSortByPrice.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         JComboSortByPrice.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JComboSortByPriceActionPerformed(evt);
@@ -84,6 +85,7 @@ public class Product extends javax.swing.JInternalFrame implements UpdateTable {
         btnPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Print-Default.png"))); // NOI18N
         btnPrint.setBorder(null);
         btnPrint.setContentAreaFilled(false);
+        btnPrint.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnPrint.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnPrintMouseEntered(evt);
@@ -105,6 +107,7 @@ public class Product extends javax.swing.JInternalFrame implements UpdateTable {
         btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Add-Plus-Default.png"))); // NOI18N
         btnAdd.setBorder(null);
         btnAdd.setContentAreaFilled(false);
+        btnAdd.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAdd.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnAddMouseEntered(evt);
@@ -126,6 +129,7 @@ public class Product extends javax.swing.JInternalFrame implements UpdateTable {
         btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Edit-Default.png"))); // NOI18N
         btnEdit.setBorder(null);
         btnEdit.setContentAreaFilled(false);
+        btnEdit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEdit.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnEditMouseEntered(evt);
@@ -147,6 +151,7 @@ public class Product extends javax.swing.JInternalFrame implements UpdateTable {
         btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Delete-Default.png"))); // NOI18N
         btnDelete.setBorder(null);
         btnDelete.setContentAreaFilled(false);
+        btnDelete.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnDelete.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnDeleteMouseEntered(evt);
@@ -168,6 +173,7 @@ public class Product extends javax.swing.JInternalFrame implements UpdateTable {
         btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Icon-Search.png"))); // NOI18N
         btnSearch.setBorder(null);
         btnSearch.setContentAreaFilled(false);
+        btnSearch.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnSearch.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnSearchMouseEntered(evt);
@@ -202,6 +208,9 @@ public class Product extends javax.swing.JInternalFrame implements UpdateTable {
                 return canEdit [columnIndex];
             }
         });
+        table.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        table.setShowGrid(false);
+        table.setShowVerticalLines(true);
         table.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(table);
         if (table.getColumnModel().getColumnCount() > 0) {

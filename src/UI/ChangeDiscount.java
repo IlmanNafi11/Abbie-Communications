@@ -77,6 +77,7 @@ public class ChangeDiscount extends javax.swing.JDialog {
         btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Cancel-Primary-Default.png"))); // NOI18N
         btnCancel.setBorder(null);
         btnCancel.setContentAreaFilled(false);
+        btnCancel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCancel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnCancelMouseEntered(evt);
@@ -99,6 +100,7 @@ public class ChangeDiscount extends javax.swing.JDialog {
         btnChange.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Change-Default.png"))); // NOI18N
         btnChange.setBorder(null);
         btnChange.setContentAreaFilled(false);
+        btnChange.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnChange.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnChangeMouseEntered(evt);
@@ -119,6 +121,7 @@ public class ChangeDiscount extends javax.swing.JDialog {
         btnChange.setBounds(270, 390, 95, 50);
 
         cmbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Status", "Active", "Non Active" }));
+        cmbStatus.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         getContentPane().add(cmbStatus);
         cmbStatus.setBounds(40, 307, 320, 50);
 

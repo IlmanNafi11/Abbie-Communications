@@ -198,14 +198,14 @@ public class RestockControler {
 
     //set item combo box id supplier berdasarkan kategori produk
     public void SetComboIdSupplier(JComboBox<String> comboBox) {
-//        if (!category.equalsIgnoreCase("Category")) {
+        if (!category.equalsIgnoreCase("Category")) {
             supplierControler = new SupplierControler(null, null, null, category);
             ArrayList<String> getIdSupplier = supplierControler.GetIdSupplier();
             comboBox.removeAllItems();
             for (String idSupplier : getIdSupplier) {
                 comboBox.addItem(idSupplier);
             }
-//        }    
+        }    
     }
 
     public void setTxtSupplierName(String idSupplier, JTextField txtSupplierName) {

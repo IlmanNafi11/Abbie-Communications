@@ -57,6 +57,7 @@ public class Register2 extends javax.swing.JInternalFrame {
         Pane.setLayout(null);
 
         lblBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Label-Back-Default.png"))); // NOI18N
+        lblBack.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblBack.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblBackMouseClicked(evt);
@@ -90,6 +91,7 @@ public class Register2 extends javax.swing.JInternalFrame {
         btnShowPassword.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/show-password-default.png"))); // NOI18N
         btnShowPassword.setBorder(null);
         btnShowPassword.setContentAreaFilled(false);
+        btnShowPassword.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnShowPassword.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnShowPasswordMouseEntered(evt);
@@ -113,6 +115,7 @@ public class Register2 extends javax.swing.JInternalFrame {
         btnHidePassword.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/hide-password-default.png"))); // NOI18N
         btnHidePassword.setBorder(null);
         btnHidePassword.setContentAreaFilled(false);
+        btnHidePassword.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnHidePassword.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnHidePasswordMouseEntered(evt);
@@ -152,6 +155,7 @@ public class Register2 extends javax.swing.JInternalFrame {
         btnShowPassword2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/show-password-default.png"))); // NOI18N
         btnShowPassword2.setBorder(null);
         btnShowPassword2.setContentAreaFilled(false);
+        btnShowPassword2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnShowPassword2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnShowPassword2MouseEntered(evt);
@@ -175,6 +179,7 @@ public class Register2 extends javax.swing.JInternalFrame {
         btnHidePassword2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/hide-password-default.png"))); // NOI18N
         btnHidePassword2.setBorder(null);
         btnHidePassword2.setContentAreaFilled(false);
+        btnHidePassword2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnHidePassword2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnHidePassword2MouseEntered(evt);
@@ -226,6 +231,7 @@ public class Register2 extends javax.swing.JInternalFrame {
         txtRfid.setBounds(933, 599, 298, 44);
 
         Role.add(rdOwner);
+        rdOwner.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         rdOwner.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Radio-Button-Default.png"))); // NOI18N
         rdOwner.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Radio-Button-Hover.png"))); // NOI18N
         rdOwner.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -240,6 +246,7 @@ public class Register2 extends javax.swing.JInternalFrame {
         rdOwner.setBounds(967, 658, 24, 25);
 
         Role.add(rdAdmin);
+        rdAdmin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         rdAdmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Radio-Button-Default.png"))); // NOI18N
         rdAdmin.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Radio-Button-Hover.png"))); // NOI18N
         rdAdmin.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -254,6 +261,7 @@ public class Register2 extends javax.swing.JInternalFrame {
         rdAdmin.setBounds(1047, 658, 24, 25);
 
         Role.add(rdTeknisi);
+        rdTeknisi.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         rdTeknisi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Radio-Button-Default.png"))); // NOI18N
         rdTeknisi.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Radio-Button-Hover.png"))); // NOI18N
         rdTeknisi.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -270,6 +278,7 @@ public class Register2 extends javax.swing.JInternalFrame {
         btnRegister.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Register-Primary-Default.png"))); // NOI18N
         btnRegister.setBorder(null);
         btnRegister.setContentAreaFilled(false);
+        btnRegister.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnRegister.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnRegisterMouseEntered(evt);
@@ -290,6 +299,7 @@ public class Register2 extends javax.swing.JInternalFrame {
         btnRegister.setBounds(880, 705, 364, 52);
 
         lblLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Label-Login-Default.png"))); // NOI18N
+        lblLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblLogin.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblLoginMouseClicked(evt);

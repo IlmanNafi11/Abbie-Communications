@@ -41,6 +41,8 @@ public class AddRestock extends javax.swing.JDialog {
         setResizable(false);
         getContentPane().setLayout(null);
 
+        txtNamaProduk.setEditable(false);
+        txtNamaProduk.setBackground(new java.awt.Color(255, 255, 255));
         txtNamaProduk.setForeground(new java.awt.Color(153, 153, 153));
         txtNamaProduk.setText("Product Name");
         txtNamaProduk.setBorder(null);
@@ -69,6 +71,8 @@ public class AddRestock extends javax.swing.JDialog {
         getContentPane().add(txtQuantity);
         txtQuantity.setBounds(50, 373, 488, 50);
 
+        txtNamaSupplier.setEditable(false);
+        txtNamaSupplier.setBackground(new java.awt.Color(255, 255, 255));
         txtNamaSupplier.setForeground(new java.awt.Color(153, 153, 153));
         txtNamaSupplier.setText("Supplier Name");
         txtNamaSupplier.setBorder(null);
@@ -100,6 +104,7 @@ public class AddRestock extends javax.swing.JDialog {
         btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Cancel-Primary-Default.png"))); // NOI18N
         btnCancel.setBorder(null);
         btnCancel.setContentAreaFilled(false);
+        btnCancel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCancel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnCancelMouseEntered(evt);
@@ -122,6 +127,7 @@ public class AddRestock extends javax.swing.JDialog {
         btnRestock.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Restock-Default.png"))); // NOI18N
         btnRestock.setBorder(null);
         btnRestock.setContentAreaFilled(false);
+        btnRestock.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnRestock.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnRestockMouseEntered(evt);
@@ -142,6 +148,7 @@ public class AddRestock extends javax.swing.JDialog {
         btnRestock.setBounds(966, 454, 96, 55);
 
         cmbKategori.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Category", "Accessories", "Phone credit/Internet credit", "Electronic", "Part" }));
+        cmbKategori.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cmbKategori.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbKategoriActionPerformed(evt);
@@ -151,6 +158,7 @@ public class AddRestock extends javax.swing.JDialog {
         cmbKategori.setBounds(40, 145, 506, 50);
 
         cmbIdSupplier.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Supplier ID" }));
+        cmbIdSupplier.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cmbIdSupplier.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbIdSupplierActionPerformed(evt);
@@ -160,6 +168,7 @@ public class AddRestock extends javax.swing.JDialog {
         cmbIdSupplier.setBounds(570, 145, 506, 50);
 
         cmbProductId.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Product ID" }));
+        cmbProductId.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cmbProductId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbProductIdActionPerformed(evt);
@@ -284,14 +293,12 @@ public class AddRestock extends javax.swing.JDialog {
         String kategori = (String) cmbKategori.getSelectedItem();
         // get id supplier berdasarkan kategori
         RestockControler controler = new RestockControler(null, kategori, null, null, 0, null, null, 0);
-        if (kategori != null) {
-            controler.SetComboProdukId(cmbProductId);
-            controler.SetComboIdSupplier(cmbIdSupplier);
-            cmbProductId.addItem("Product ID");
-            cmbProductId.setSelectedItem("Product ID");
-            cmbIdSupplier.addItem("Supplier ID");
-            cmbIdSupplier.setSelectedItem("Supplier ID");
-        }
+        controler.SetComboProdukId(cmbProductId);
+        controler.SetComboIdSupplier(cmbIdSupplier);
+        cmbProductId.addItem("Product ID");
+        cmbProductId.setSelectedItem("Product ID");
+        cmbIdSupplier.addItem("Supplier ID");
+        cmbIdSupplier.setSelectedItem("Supplier ID");
     }//GEN-LAST:event_cmbKategoriActionPerformed
 
     private void cmbProductIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbProductIdActionPerformed

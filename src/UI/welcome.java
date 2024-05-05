@@ -39,6 +39,7 @@ public class welcome extends javax.swing.JFrame{
         btnStarted.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Started-Default.png"))); // NOI18N
         btnStarted.setBorder(null);
         btnStarted.setContentAreaFilled(false);
+        btnStarted.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnStarted.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnStartedMouseClicked(evt);
@@ -64,6 +65,7 @@ public class welcome extends javax.swing.JFrame{
         btnSignUp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Sign-Up-Default.png"))); // NOI18N
         btnSignUp.setBorder(null);
         btnSignUp.setContentAreaFilled(false);
+        btnSignUp.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnSignUp.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnSignUpMouseClicked(evt);
@@ -89,6 +91,7 @@ public class welcome extends javax.swing.JFrame{
         btnLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Login-Default.png"))); // NOI18N
         btnLogin.setBorder(null);
         btnLogin.setContentAreaFilled(false);
+        btnLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnLogin.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnLoginMouseClicked(evt);

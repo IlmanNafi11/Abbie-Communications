@@ -39,6 +39,7 @@ public class MenuTeknisi extends javax.swing.JInternalFrame {
         btnDashboard.setBackground(new java.awt.Color(255, 51, 255));
         btnDashboard.setBorder(null);
         btnDashboard.setContentAreaFilled(false);
+        btnDashboard.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnDashboard.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnDashboardMouseEntered(evt);
@@ -58,6 +59,7 @@ public class MenuTeknisi extends javax.swing.JInternalFrame {
         btnProduct.setBackground(new java.awt.Color(255, 51, 255));
         btnProduct.setBorder(null);
         btnProduct.setContentAreaFilled(false);
+        btnProduct.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnProduct.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnProductMouseEntered(evt);
@@ -77,6 +79,7 @@ public class MenuTeknisi extends javax.swing.JInternalFrame {
         btnService.setBackground(new java.awt.Color(255, 51, 255));
         btnService.setBorder(null);
         btnService.setContentAreaFilled(false);
+        btnService.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnService.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnServiceMouseEntered(evt);

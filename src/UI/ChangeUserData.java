@@ -55,6 +55,7 @@ public class ChangeUserData extends javax.swing.JDialog {
         btnChange.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Change-Default.png"))); // NOI18N
         btnChange.setBorder(null);
         btnChange.setContentAreaFilled(false);
+        btnChange.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnChange.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnChangeMouseEntered(evt);
@@ -77,6 +78,7 @@ public class ChangeUserData extends javax.swing.JDialog {
         btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Cancel-Primary-Default.png"))); // NOI18N
         btnCancel.setBorder(null);
         btnCancel.setContentAreaFilled(false);
+        btnCancel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCancel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnCancelMouseEntered(evt);
@@ -170,6 +172,7 @@ public class ChangeUserData extends javax.swing.JDialog {
         txtAlamat.setBounds(583, 222, 490, 45);
 
         cmbPosisi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Position", "admin", "teknisi", "owner" }));
+        cmbPosisi.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         getContentPane().add(cmbPosisi);
         cmbPosisi.setBounds(575, 296, 506, 50);
 

@@ -109,9 +109,9 @@ public class DbRestock {
                     String kategori = rs.getString("kategori");
                     String namaProduk = rs.getString("nama_produk");
                     int quantity = rs.getInt("jumlah");
-                    double harga = rs.getDouble("harga");
+                    int harga = rs.getInt("harga");
                     String idSupplier = rs.getString("id_supplier");
-                    double total =rs.getDouble("total");
+                    int total = rs.getInt("total");
                     Date tanggal = rs.getDate("tanggal");
                     Object[] data = new Object[]{idTransaksi, kategori, namaProduk, quantity, harga, idSupplier, total, tanggal};
                     listData.add(data);

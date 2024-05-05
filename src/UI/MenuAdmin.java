@@ -42,6 +42,7 @@ public class MenuAdmin extends javax.swing.JInternalFrame {
         btnDashboard.setBackground(new java.awt.Color(255, 51, 255));
         btnDashboard.setBorder(null);
         btnDashboard.setContentAreaFilled(false);
+        btnDashboard.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnDashboard.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnDashboardMouseEntered(evt);
@@ -61,6 +62,7 @@ public class MenuAdmin extends javax.swing.JInternalFrame {
         btnProduct.setBackground(new java.awt.Color(255, 51, 255));
         btnProduct.setBorder(null);
         btnProduct.setContentAreaFilled(false);
+        btnProduct.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnProduct.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnProductMouseEntered(evt);
@@ -80,6 +82,7 @@ public class MenuAdmin extends javax.swing.JInternalFrame {
         btnPenjualan.setBackground(new java.awt.Color(255, 51, 255));
         btnPenjualan.setBorder(null);
         btnPenjualan.setContentAreaFilled(false);
+        btnPenjualan.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnPenjualan.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnPenjualanMouseEntered(evt);
@@ -99,6 +102,7 @@ public class MenuAdmin extends javax.swing.JInternalFrame {
         btnMember.setBackground(new java.awt.Color(255, 51, 255));
         btnMember.setBorder(null);
         btnMember.setContentAreaFilled(false);
+        btnMember.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnMember.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnMemberMouseEntered(evt);
@@ -118,6 +122,7 @@ public class MenuAdmin extends javax.swing.JInternalFrame {
         btnSupplier.setBackground(new java.awt.Color(255, 51, 255));
         btnSupplier.setBorder(null);
         btnSupplier.setContentAreaFilled(false);
+        btnSupplier.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnSupplier.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnSupplierMouseEntered(evt);
@@ -137,6 +142,7 @@ public class MenuAdmin extends javax.swing.JInternalFrame {
         btnRestock.setBackground(new java.awt.Color(255, 51, 255));
         btnRestock.setBorder(null);
         btnRestock.setContentAreaFilled(false);
+        btnRestock.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnRestock.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnRestockMouseEntered(evt);
@@ -156,6 +162,7 @@ public class MenuAdmin extends javax.swing.JInternalFrame {
         btnSignOut.setBackground(new java.awt.Color(255, 51, 255));
         btnSignOut.setBorder(null);
         btnSignOut.setContentAreaFilled(false);
+        btnSignOut.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnSignOut.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnSignOutMouseEntered(evt);

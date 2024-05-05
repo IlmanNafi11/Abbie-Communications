@@ -72,6 +72,7 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
         btnPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Button-Print-Primary-Default.png"))); // NOI18N
         btnPrint.setBorder(null);
         btnPrint.setContentAreaFilled(false);
+        btnPrint.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnPrint.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnPrintMouseEntered(evt);
@@ -93,6 +94,7 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
         btnCount.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Button-Count-Primary-Default.png"))); // NOI18N
         btnCount.setBorder(null);
         btnCount.setContentAreaFilled(false);
+        btnCount.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCount.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnCountMouseEntered(evt);
@@ -114,6 +116,7 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
         btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Button-Delete-Primary-Default.png"))); // NOI18N
         btnDelete.setBorder(null);
         btnDelete.setContentAreaFilled(false);
+        btnDelete.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnDelete.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnDeleteMouseEntered(evt);
@@ -135,6 +138,7 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
         btnAddMember.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Button-Add-Member-Primary-Default.png"))); // NOI18N
         btnAddMember.setBorder(null);
         btnAddMember.setContentAreaFilled(false);
+        btnAddMember.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAddMember.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnAddMemberMouseEntered(evt);
@@ -181,6 +185,7 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
         btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Icon-Search.png"))); // NOI18N
         btnSearch.setBorder(null);
         btnSearch.setContentAreaFilled(false);
+        btnSearch.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnSearch.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnSearchMouseEntered(evt);

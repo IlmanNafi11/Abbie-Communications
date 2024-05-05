@@ -57,6 +57,7 @@ private JFrame parentFrame;
         btnLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Login-Primary-Default.png"))); // NOI18N
         btnLogin.setBorder(null);
         btnLogin.setContentAreaFilled(false);
+        btnLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnLogin.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnLoginMouseClicked(evt);
@@ -113,6 +114,7 @@ private JFrame parentFrame;
         btnRfid.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-RFID-Primary-Default.png"))); // NOI18N
         btnRfid.setBorder(null);
         btnRfid.setContentAreaFilled(false);
+        btnRfid.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnRfid.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnRfidMouseEntered(evt);
@@ -133,6 +135,7 @@ private JFrame parentFrame;
         btnRfid.setBounds(196, 692, 364, 52);
 
         lblBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Label-Back-Default.png"))); // NOI18N
+        lblBack.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblBack.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblBackMouseClicked(evt);
@@ -148,6 +151,7 @@ private JFrame parentFrame;
         lblBack.setBounds(73, 165, 60, 40);
 
         lblRegister.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Label-Register-Default.png"))); // NOI18N
+        lblRegister.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblRegister.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblRegisterMouseClicked(evt);
@@ -163,6 +167,7 @@ private JFrame parentFrame;
         lblRegister.setBounds(438, 775, 115, 20);
 
         lblForgot.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Label-Forgot-Default.png"))); // NOI18N
+        lblForgot.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblForgot.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblForgotMouseClicked(evt);
@@ -184,6 +189,7 @@ private JFrame parentFrame;
         btnShowPassword.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/show-password-default.png"))); // NOI18N
         btnShowPassword.setBorder(null);
         btnShowPassword.setContentAreaFilled(false);
+        btnShowPassword.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnShowPassword.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnShowPasswordMouseEntered(evt);
@@ -207,6 +213,7 @@ private JFrame parentFrame;
         btnHidePassword.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/hide-password-default.png"))); // NOI18N
         btnHidePassword.setBorder(null);
         btnHidePassword.setContentAreaFilled(false);
+        btnHidePassword.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnHidePassword.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnHidePasswordMouseEntered(evt);

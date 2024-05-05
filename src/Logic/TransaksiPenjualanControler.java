@@ -249,7 +249,7 @@ public class TransaksiPenjualanControler {
                 dbTransaksi.InsertDetailTransaksi(idTransaksi, idProduk, jumlah, subTotal, tanggal);
             }
         } catch (Exception e) {
-            e.getMessage();
+            e.printStackTrace();
         }
     }
 

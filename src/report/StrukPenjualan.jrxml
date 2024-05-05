@@ -40,13 +40,10 @@ WHERE
 	<field name="quantity" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="subtotal" class="java.math.BigDecimal">
+	<field name="subtotal" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="tanggal" class="java.sql.Date">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="last_updated" class="java.sql.Timestamp">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="nama_produk" class="java.lang.String">
@@ -190,11 +187,11 @@ WHERE
 	<summary>
 		<band height="101" splitType="Stretch">
 			<staticText>
-				<reportElement x="33" y="77" width="59" height="10" uuid="b508994e-2a4f-4895-9c26-d6ccd57e6eab"/>
+				<reportElement x="4" y="77" width="115" height="10" uuid="b508994e-2a4f-4895-9c26-d6ccd57e6eab"/>
 				<textElement textAlignment="Center">
 					<font size="6"/>
 				</textElement>
-				<text><![CDATA[Kritik dan Saran]]></text>
+				<text><![CDATA[Criticism and Suggestions]]></text>
 			</staticText>
 			<textField pattern="Rp #,##0.00">
 				<reportElement x="73" y="32" width="46" height="10" uuid="201a62a1-5ece-46db-94c7-44a089cfbbbd"/>
@@ -204,7 +201,7 @@ WHERE
 				<textFieldExpression><![CDATA[$P{kembalian}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="33" y="86" width="59" height="10" uuid="d2104159-3b66-4c50-a856-09b521b24291"/>
+				<reportElement x="4" y="86" width="115" height="10" uuid="d2104159-3b66-4c50-a856-09b521b24291"/>
 				<textElement textAlignment="Center">
 					<font size="6"/>
 				</textElement>
@@ -283,7 +280,7 @@ WHERE
 				<textElement textAlignment="Center">
 					<font size="6"/>
 				</textElement>
-				<text><![CDATA[Terimakasih. Selamat Belanja Kembali !]]></text>
+				<text><![CDATA[Thank you. Happy shopping again!]]></text>
 			</staticText>
 			<textField pattern="Rp #,##0.00">
 				<reportElement x="73" y="5" width="46" height="10" uuid="71699cee-6d4f-46e5-b0b3-3c7dabf07d01"/>

@@ -46,6 +46,7 @@ public class AddProduct extends javax.swing.JDialog {
         btnGenerateId.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Generate-Default.png"))); // NOI18N
         btnGenerateId.setBorder(null);
         btnGenerateId.setContentAreaFilled(false);
+        btnGenerateId.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnGenerateId.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnGenerateIdMouseEntered(evt);
@@ -132,6 +133,7 @@ public class AddProduct extends javax.swing.JDialog {
         btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Cancel-Primary-Default.png"))); // NOI18N
         btnCancel.setBorder(null);
         btnCancel.setContentAreaFilled(false);
+        btnCancel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCancel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnCancelMouseEntered(evt);
@@ -154,6 +156,7 @@ public class AddProduct extends javax.swing.JDialog {
         btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Save-Primary-Default.png"))); // NOI18N
         btnSave.setBorder(null);
         btnSave.setContentAreaFilled(false);
+        btnSave.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnSave.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnSaveMouseEntered(evt);
@@ -174,6 +177,7 @@ public class AddProduct extends javax.swing.JDialog {
         btnSave.setBounds(982, 503, 96, 55);
 
         cmbKategori.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Category", "Accessories", "Phone credit/Internet credit", "Electronic", "Part" }));
+        cmbKategori.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cmbKategori.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbKategoriActionPerformed(evt);
@@ -183,6 +187,7 @@ public class AddProduct extends javax.swing.JDialog {
         cmbKategori.setBounds(38, 221, 506, 50);
 
         cmbIdSupplier.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Supplier ID" }));
+        cmbIdSupplier.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cmbIdSupplier.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbIdSupplierActionPerformed(evt);

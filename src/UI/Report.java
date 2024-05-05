@@ -68,6 +68,7 @@ public class Report extends javax.swing.JInternalFrame {
         btnPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Button-Print-Primary-Default.png"))); // NOI18N
         btnPrint.setBorder(null);
         btnPrint.setContentAreaFilled(false);
+        btnPrint.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnPrint.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnPrintMouseEntered(evt);

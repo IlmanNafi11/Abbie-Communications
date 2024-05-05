@@ -32,6 +32,7 @@ public class Rfid extends javax.swing.JDialog {
         btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Back-Primary-Default.png"))); // NOI18N
         btnBack.setBorder(null);
         btnBack.setContentAreaFilled(false);
+        btnBack.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnBack.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnBackMouseEntered(evt);

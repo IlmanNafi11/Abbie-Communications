@@ -15,8 +15,8 @@ import net.sf.jasperreports.view.JasperViewer;
 public class DbTransaksi {
 
     private ExceptionHandler exceptionHandler;
-    
-    public void InsertTransaksi(String idTransaksi, Date tanggal, float total) {
+
+    public void InsertTransaksi(String idTransaksi, Date tanggal, int total) {
         exceptionHandler = new ExceptionHandler();
         String queryInsert = "INSERT INTO transaksi (id_transaksi, tanggal, total) VALUES (?, ?, ?)";
         Connection koneksi = null;
@@ -25,11 +25,10 @@ public class DbTransaksi {
             PreparedStatement stInsert = koneksi.prepareStatement(queryInsert);
             stInsert.setString(1, idTransaksi);
             stInsert.setDate(2, new java.sql.Date(tanggal.getTime()));
-            stInsert.setFloat(3, total);
+            stInsert.setInt(3, total);
             stInsert.executeUpdate();
             exceptionHandler.SuccesSaveData("Transaction successful!");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             exceptionHandler.GagalTersimpan("A failure occurred while trying to save the transaction!");
         } finally {
             if (koneksi != null) {
@@ -41,8 +40,8 @@ public class DbTransaksi {
             }
         }
     }
-    
-    public void InsertDetailTransaksi(String idTransaksi, String idProduct, int jumlah, float subTotal, Date tanggal) {
+
+    public void InsertDetailTransaksi(String idTransaksi, String idProduct, int jumlah, int subTotal, Date tanggal) {
         exceptionHandler = new ExceptionHandler();
         String queryInsert = "INSERT INTO transaksi_detail (id_transaksi, product_id, quantity, subtotal, tanggal) VALUES (?, ?, ?, ?, ?)";
         Connection koneksi = null;
@@ -52,7 +51,7 @@ public class DbTransaksi {
             stInsert.setString(1, idTransaksi);
             stInsert.setString(2, idProduct);
             stInsert.setInt(3, jumlah);
-            stInsert.setFloat(4, subTotal);
+            stInsert.setInt(4, subTotal);
             stInsert.setDate(5, new java.sql.Date(tanggal.getTime()));
             stInsert.executeUpdate();
         } catch (Exception e) {
@@ -67,7 +66,7 @@ public class DbTransaksi {
             }
         }
     }
-    
+
     public void InsertTransaksiMember(String idTransaksi, String id_member) {
         exceptionHandler = new ExceptionHandler();
         String queryInsert = "INSERT INTO transaksi_member (id_transaksi, id_member) VALUES (?,?)";
@@ -90,7 +89,7 @@ public class DbTransaksi {
             }
         }
     }
-    
+
     public void InsertDetailTransaksiDiskon(String idTransaksi, String kodeDiskon, float totalDiskon) {
         exceptionHandler = new ExceptionHandler();
         String queryInsert = "INSERT INTO detail_transaksi_diskon (id_transaksi, kode_diskon, total_diskon) VALUES (?,?,?)";
@@ -114,7 +113,7 @@ public class DbTransaksi {
             }
         }
     }
-    
+
     public void InsertTransaksiService(String idTransaksi, String keterangan, String namaCustomer, String noHp, String alamat, int biaya, Date tanggal) {
         exceptionHandler = new ExceptionHandler();
         String queryInsert = "INSERT INTO transaksi_servis (id_transaksi, keterangan, nama_customer, tlp_customer, alamat_customer, biaya, tanggal) VALUES(?, ?, ?, ?, ?, ?, ?)";
@@ -142,7 +141,7 @@ public class DbTransaksi {
             }
         }
     }
-    
+
     public void PrintStrukPenjualan(String idTransaksi, String namaKasir, String namaMember, int total, int diskon, int tunai, int kembalian, String kodePromo) {
         Connection koneksi = null;
         String member = "Not a member";
@@ -168,6 +167,7 @@ public class DbTransaksi {
             JasperViewer.viewReport(jasperPrint, false);
         } catch (Exception e) {
             exceptionHandler.Kesalahan("A failure occurred when printing the transaction receipt");
+            e.printStackTrace();
         } finally {
             if (koneksi != null) {
                 try {
@@ -178,7 +178,7 @@ public class DbTransaksi {
             }
         }
     }
-    
+
     public void PrintStrukService(String idTransaksi, String namaTeknisi, int total, int tunai, int kembalian) {
         exceptionHandler = new ExceptionHandler();
         String id = idTransaksi;

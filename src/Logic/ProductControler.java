@@ -173,8 +173,9 @@ public class ProductControler {
             } else {
                 exception.Kesalahan("The Product Name must not exceed 25 characters!");
             }
+        } else {
+            exception.Kesalahan("All columns must be filled in");
         }
-        exception.Kesalahan("All columns must be filled in");
         return false;
     }
 

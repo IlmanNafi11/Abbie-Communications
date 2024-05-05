@@ -51,7 +51,6 @@ public class AddPart extends javax.swing.JDialog {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtProductIdFocusGained(evt);
             }
-
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtProductIdFocusLost(evt);
             }
@@ -73,7 +72,6 @@ public class AddPart extends javax.swing.JDialog {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtNamaProductFocusGained(evt);
             }
-
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtNamaProductFocusLost(evt);
             }
@@ -88,7 +86,6 @@ public class AddPart extends javax.swing.JDialog {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtQuantityFocusGained(evt);
             }
-
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtQuantityFocusLost(evt);
             }
@@ -107,15 +104,14 @@ public class AddPart extends javax.swing.JDialog {
         btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Cancel-Primary-Default.png"))); // NOI18N
         btnCancel.setBorder(null);
         btnCancel.setContentAreaFilled(false);
+        btnCancel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCancel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnCancelMouseEntered(evt);
             }
-
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnCancelMouseExited(evt);
             }
-
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btnCancelMousePressed(evt);
             }
@@ -131,15 +127,14 @@ public class AddPart extends javax.swing.JDialog {
         btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Add-Default.png"))); // NOI18N
         btnAdd.setBorder(null);
         btnAdd.setContentAreaFilled(false);
+        btnAdd.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAdd.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnAddMouseEntered(evt);
             }
-
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnAddMouseExited(evt);
             }
-
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 btnAddMouseReleased(evt);
             }

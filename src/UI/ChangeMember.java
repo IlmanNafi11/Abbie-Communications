@@ -59,7 +59,7 @@ public class ChangeMember extends javax.swing.JDialog {
             }
         });
         getContentPane().add(txtName);
-        txtName.setBounds(46, 155, 310, 50);
+        txtName.setBounds(46, 166, 310, 50);
 
         txtNoHp.setText("Telephone Number");
         txtNoHp.setBorder(null);
@@ -72,7 +72,7 @@ public class ChangeMember extends javax.swing.JDialog {
             }
         });
         getContentPane().add(txtNoHp);
-        txtNoHp.setBounds(46, 231, 310, 50);
+        txtNoHp.setBounds(46, 242, 310, 50);
 
         txtAddress.setText("Address");
         txtAddress.setBorder(null);
@@ -85,11 +85,12 @@ public class ChangeMember extends javax.swing.JDialog {
             }
         });
         getContentPane().add(txtAddress);
-        txtAddress.setBounds(46, 307, 310, 50);
+        txtAddress.setBounds(46, 318, 310, 50);
 
         btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Cancel-Primary-Default.png"))); // NOI18N
         btnCancel.setBorder(null);
         btnCancel.setContentAreaFilled(false);
+        btnCancel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCancel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnCancelMouseEntered(evt);
@@ -112,6 +113,7 @@ public class ChangeMember extends javax.swing.JDialog {
         btnChange.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Change-Default.png"))); // NOI18N
         btnChange.setBorder(null);
         btnChange.setContentAreaFilled(false);
+        btnChange.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnChange.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnChangeMouseEntered(evt);

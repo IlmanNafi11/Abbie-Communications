@@ -99,6 +99,7 @@ public class Member extends javax.swing.JInternalFrame implements UpdateTable {
         btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Icon-Search.png"))); // NOI18N
         btnSearch.setBorder(null);
         btnSearch.setContentAreaFilled(false);
+        btnSearch.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnSearch.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnSearchMouseEntered(evt);
@@ -120,6 +121,7 @@ public class Member extends javax.swing.JInternalFrame implements UpdateTable {
         btnAddPromo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Add-Plus-Default.png"))); // NOI18N
         btnAddPromo.setBorder(null);
         btnAddPromo.setContentAreaFilled(false);
+        btnAddPromo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAddPromo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnAddPromoMouseEntered(evt);
@@ -141,6 +143,7 @@ public class Member extends javax.swing.JInternalFrame implements UpdateTable {
         btnEditPromo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Edit-Default.png"))); // NOI18N
         btnEditPromo.setBorder(null);
         btnEditPromo.setContentAreaFilled(false);
+        btnEditPromo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEditPromo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnEditPromoMouseEntered(evt);
@@ -162,6 +165,7 @@ public class Member extends javax.swing.JInternalFrame implements UpdateTable {
         btnHapusPromo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Delete-Default.png"))); // NOI18N
         btnHapusPromo.setBorder(null);
         btnHapusPromo.setContentAreaFilled(false);
+        btnHapusPromo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnHapusPromo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnHapusPromoMouseEntered(evt);
@@ -183,6 +187,7 @@ public class Member extends javax.swing.JInternalFrame implements UpdateTable {
         btnAddMember.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Add-Plus-Default.png"))); // NOI18N
         btnAddMember.setBorder(null);
         btnAddMember.setContentAreaFilled(false);
+        btnAddMember.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAddMember.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnAddMemberMouseEntered(evt);
@@ -204,6 +209,7 @@ public class Member extends javax.swing.JInternalFrame implements UpdateTable {
         btnEditMember.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Edit-Default.png"))); // NOI18N
         btnEditMember.setBorder(null);
         btnEditMember.setContentAreaFilled(false);
+        btnEditMember.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEditMember.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnEditMemberMouseEntered(evt);
@@ -225,6 +231,7 @@ public class Member extends javax.swing.JInternalFrame implements UpdateTable {
         btnHapusMember.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Delete-Default.png"))); // NOI18N
         btnHapusMember.setBorder(null);
         btnHapusMember.setContentAreaFilled(false);
+        btnHapusMember.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnHapusMember.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnHapusMemberMouseEntered(evt);

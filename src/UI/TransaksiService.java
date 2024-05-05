@@ -70,7 +70,6 @@ public class TransaksiService extends javax.swing.JInternalFrame {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtInformasiFocusGained(evt);
             }
-
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtInformasiFocusLost(evt);
             }
@@ -84,7 +83,6 @@ public class TransaksiService extends javax.swing.JInternalFrame {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtBiayaFocusGained(evt);
             }
-
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtBiayaFocusLost(evt);
             }
@@ -103,7 +101,6 @@ public class TransaksiService extends javax.swing.JInternalFrame {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtCustomerNameFocusGained(evt);
             }
-
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtCustomerNameFocusLost(evt);
             }
@@ -117,7 +114,6 @@ public class TransaksiService extends javax.swing.JInternalFrame {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtNoHpCustomerFocusGained(evt);
             }
-
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtNoHpCustomerFocusLost(evt);
             }
@@ -131,7 +127,6 @@ public class TransaksiService extends javax.swing.JInternalFrame {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtCustomerAddressFocusGained(evt);
             }
-
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtCustomerAddressFocusLost(evt);
             }
@@ -139,15 +134,15 @@ public class TransaksiService extends javax.swing.JInternalFrame {
         getContentPane().add(txtCustomerAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(578, 433, 430, 50));
 
         table.setModel(new javax.swing.table.DefaultTableModel(
-                new Object[][]{
-                        {null, null, null},
-                        {null, null, null},
-                        {null, null, null},
-                        {null, null, null}
-                },
-                new String[]{
-                        "Product Name/Information", "Quantity", "Price"
-                }
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Product Name/Information", "Quantity", "Price"
+            }
         ));
         JScrollPane.setViewportView(table);
 
@@ -160,7 +155,6 @@ public class TransaksiService extends javax.swing.JInternalFrame {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtTotalFocusGained(evt);
             }
-
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtTotalFocusLost(evt);
             }
@@ -174,7 +168,6 @@ public class TransaksiService extends javax.swing.JInternalFrame {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtPayFocusGained(evt);
             }
-
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtPayFocusLost(evt);
             }
@@ -188,7 +181,6 @@ public class TransaksiService extends javax.swing.JInternalFrame {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtRefundFocusGained(evt);
             }
-
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtRefundFocusLost(evt);
             }
@@ -198,15 +190,14 @@ public class TransaksiService extends javax.swing.JInternalFrame {
         btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Button-Delete-Primary-Default.png"))); // NOI18N
         btnDelete.setBorder(null);
         btnDelete.setContentAreaFilled(false);
+        btnDelete.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnDelete.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnDeleteMouseEntered(evt);
             }
-
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnDeleteMouseExited(evt);
             }
-
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btnDeleteMousePressed(evt);
             }
@@ -221,15 +212,14 @@ public class TransaksiService extends javax.swing.JInternalFrame {
         btnCount.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Button-Count-Primary-Default.png"))); // NOI18N
         btnCount.setBorder(null);
         btnCount.setContentAreaFilled(false);
+        btnCount.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCount.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnCountMouseEntered(evt);
             }
-
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnCountMouseExited(evt);
             }
-
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btnCountMousePressed(evt);
             }
@@ -244,15 +234,14 @@ public class TransaksiService extends javax.swing.JInternalFrame {
         btnPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Button-Print-Primary-Default.png"))); // NOI18N
         btnPrint.setBorder(null);
         btnPrint.setContentAreaFilled(false);
+        btnPrint.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnPrint.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnPrintMouseEntered(evt);
             }
-
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnPrintMouseExited(evt);
             }
-
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btnPrintMousePressed(evt);
             }
@@ -271,15 +260,12 @@ public class TransaksiService extends javax.swing.JInternalFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblPosisiUserMouseClicked(evt);
             }
-
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 lblPosisiUserMouseEntered(evt);
             }
-
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 lblPosisiUserMouseExited(evt);
             }
-
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 lblPosisiUserMousePressed(evt);
             }
@@ -298,15 +284,12 @@ public class TransaksiService extends javax.swing.JInternalFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblNamaUserMouseClicked(evt);
             }
-
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 lblNamaUserMouseEntered(evt);
             }
-
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 lblNamaUserMouseExited(evt);
             }
-
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 lblNamaUserMousePressed(evt);
             }
@@ -316,15 +299,14 @@ public class TransaksiService extends javax.swing.JInternalFrame {
         btnAddPart.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-AddPart-Default.png"))); // NOI18N
         btnAddPart.setBorder(null);
         btnAddPart.setContentAreaFilled(false);
+        btnAddPart.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAddPart.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnAddPartMouseEntered(evt);
             }
-
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnAddPartMouseExited(evt);
             }
-
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btnAddPartMousePressed(evt);
             }
