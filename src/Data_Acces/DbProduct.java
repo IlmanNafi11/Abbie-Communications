@@ -5,7 +5,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import Logic.*;
+import java.io.InputStream;
 import java.util.ArrayList;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 public class DbProduct {
 
@@ -374,5 +378,26 @@ public class DbProduct {
 
         }
         return dataProduct;
+    }
+    
+    public void PrintAllProduct() {
+        exceptionHandler = new ExceptionHandler();
+        Connection koneksi = null;
+        try {
+            koneksi = ClassKoneksi.GetConnection();
+            InputStream path = getClass().getResourceAsStream("/report/PrintBarcode.jasper");
+            JasperPrint jasperPrint = JasperFillManager.fillReport(path, null, koneksi);
+            JasperViewer.viewReport(jasperPrint, false);
+        } catch (Exception e) {
+            exceptionHandler.Kesalahan("A failure occurred while trying to print a transaction receipt!");
+        } finally {
+            if (koneksi != null) {
+                try {
+                    koneksi.close();
+                } catch (Exception e) {
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
+                }
+            }
+        }
     }
 }

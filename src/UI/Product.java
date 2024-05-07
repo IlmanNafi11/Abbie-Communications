@@ -274,8 +274,8 @@ public class Product extends javax.swing.JInternalFrame implements UpdateTable {
 
     private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
         btnPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Print-Click.png")));
-        PrintProduct printProduct = new PrintProduct(this, true);
-        printProduct.setVisible(true);
+        ProductControler controler = new ProductControler(null, null);
+        controler.PrintAllProduct();
     }//GEN-LAST:event_btnPrintActionPerformed
 
     private void btnPrintMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPrintMouseEntered

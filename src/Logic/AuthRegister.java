@@ -62,7 +62,7 @@ public class AuthRegister {
         return idAkun;
     }
 
-    public boolean VerifPassword() {
+    private boolean VerifPassword() {
         if (password.trim().equalsIgnoreCase(Repas.trim())) {
             if (password.trim().length() >= 8) {
                 return true;
@@ -74,8 +74,15 @@ public class AuthRegister {
         }
         return false;
     }
+    
+    private boolean VerifIdRfid(){
+        if (!idAkun.trim().equalsIgnoreCase("RfidD ID, paste your Rfid ID card into the scanner") && idAkun.length() > 8 && idAkun.length() < 12) {
+            return true;
+        }
+        return false;
+    }
 
-    public boolean VerifNik() {
+    private boolean VerifNik() {
         if (nik.matches("\\d+") && nik.length() == 16) {
                 if (!dbUserManager.CekNik(nik)) {
                     return true;
@@ -88,7 +95,7 @@ public class AuthRegister {
         return false;
     }
 
-    public boolean VerifNama() {
+    private boolean VerifNama() {
         if (nama.matches("[a-zA-Z .]+")) {
             if (nama.length() <= 25) {
                 return true;
@@ -101,7 +108,7 @@ public class AuthRegister {
         return false;
     }
 
-    public boolean VerifAlamat() {
+    private boolean VerifAlamat() {
         if (alamat.length() <= 50) {
             return true;
         } else {
@@ -110,8 +117,8 @@ public class AuthRegister {
         return false;
     }
 
-    public boolean VerifNoHp() {
-        if (noHp.matches("\\d+") && noHp.length() > 11 && noHp.length() < 14) {
+    private boolean VerifNoHp() {
+        if (noHp.matches("\\d+") && noHp.length() > 11 && noHp.length() < 14 && noHp.startsWith("08")) {
             boolean cekNoHp = !dbUserManager.CekNoHp(noHp);
             if (cekNoHp) {
                 return true;
@@ -146,13 +153,13 @@ public class AuthRegister {
 
     public boolean VerifFieldAkun() {
         if (CekUsername()) {
-            if (VerifPassword()) {
-                if (!username.trim().equalsIgnoreCase("Username") && !username.equals("") && !password.trim().equalsIgnoreCase("Password") && !password.equals("")
-                        && !role.trim().equals("")) {
+            if (!username.trim().equalsIgnoreCase("Username") && !username.equals("") && !password.trim().equalsIgnoreCase("Password") && !Repas.trim().equalsIgnoreCase("Re-Enter Password")
+                    && role != null && VerifIdRfid()) {
+                if (VerifPassword()) {
                     return true;
-                } else {
-                    exceptionHandler.Kesalahan("All fields must be filled in!");
                 }
+            } else {
+                exceptionHandler.Kesalahan("All fields must be filled in!");
             }
         }
         return false;

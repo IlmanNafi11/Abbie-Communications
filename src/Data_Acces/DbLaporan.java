@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import Logic.*;
+import java.util.ArrayList;
+import java.util.Date;
 
 public class DbLaporan {
     private ExceptionHandler exceptionHandler;
@@ -36,28 +38,25 @@ public class DbLaporan {
         }
     }
     
-    public ConfigTable GetDataLaporan(){
-    exceptionHandler = new ExceptionHandler();
-    ConfigTable dataTable = new ConfigTable();
-    String queryGetData = "SELECT * FROM laporan";
-    dataTable.addColumn("REPORT ID");
-    dataTable.addColumn("DATE");
-    dataTable.addColumn("Sales income");
-    dataTable.addColumn("Service revenue");
-    dataTable.addColumn("Expenditure");
-    Connection koneksi = null;
+    public ArrayList<Object[]> GetDataLaporan(int bulan, int tahun) {
+        ArrayList<Object[]> listLaporan = new ArrayList<>();
+        exceptionHandler = new ExceptionHandler();
+        String queryGetData = "SELECT * FROM laporan WHERE MONTH(tanggal) = ? AND  YEAR(tanggal) = ?;";
+        Connection koneksi = null;
         try {
             koneksi = ClassKoneksi.GetConnection();
             PreparedStatement stGet = koneksi.prepareStatement(queryGetData);
+            stGet.setInt(1, bulan);
+            stGet.setInt(2, tahun);
             ResultSet rs = stGet.executeQuery();
-            while(rs.next()){
-                dataTable.addRow(new Object[]{
-                    rs.getInt("id_laporan"),
-                    rs.getDate("tanggal"),
-                    rs.getInt("pemasukan_penjualan"),
-                    rs.getInt("pemasukan_service"),
-                    rs.getInt("jumlah_pengeluaran")
-                });
+            while (rs.next()) {
+                int idLaporan = rs.getInt("id_laporan");
+                Date tanggal = rs.getDate("tanggal");
+                int incomePenjualan = rs.getInt("pemasukan_penjualan");
+                int incomeServis = rs.getInt("pemasukan_service");
+                int pengeluaran = rs.getInt("jumlah_pengeluaran");
+                Object[] data = new Object[]{idLaporan, tanggal, incomePenjualan, incomeServis, pengeluaran};
+                listLaporan.add(data);
             }
         } catch (Exception e) {
             exceptionHandler.Kesalahan("A failure occurred when trying to retrieve report data");
@@ -70,6 +69,6 @@ public class DbLaporan {
                 }
             }
         }
-        return dataTable;
+        return listLaporan;
     }
 }

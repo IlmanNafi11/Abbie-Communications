@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
+
 public class ProductControler {
 
     private String namaProduct;
@@ -364,6 +365,10 @@ public class ProductControler {
             model.setValueAt(model.getValueAt(j, k), i, k);
             model.setValueAt(temp[k], j, k);
         }
+    }
+    
+    public void PrintAllProduct(){
+        dbProduct.PrintAllProduct();
     }
 
     // insert data produk

@@ -44,7 +44,6 @@ public class Register2 extends javax.swing.JInternalFrame {
         btnHidePassword2 = new javax.swing.JButton();
         txtRepassword = new javax.swing.JPasswordField();
         txtRfid = new javax.swing.JTextField();
-        rdOwner = new javax.swing.JRadioButton();
         rdAdmin = new javax.swing.JRadioButton();
         rdTeknisi = new javax.swing.JRadioButton();
         btnRegister = new javax.swing.JButton();
@@ -230,21 +229,6 @@ public class Register2 extends javax.swing.JInternalFrame {
         Pane.add(txtRfid);
         txtRfid.setBounds(933, 599, 298, 44);
 
-        Role.add(rdOwner);
-        rdOwner.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        rdOwner.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Radio-Button-Default.png"))); // NOI18N
-        rdOwner.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Radio-Button-Hover.png"))); // NOI18N
-        rdOwner.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                rdOwnerMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                rdOwnerMouseExited(evt);
-            }
-        });
-        Pane.add(rdOwner);
-        rdOwner.setBounds(967, 658, 24, 25);
-
         Role.add(rdAdmin);
         rdAdmin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         rdAdmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Radio-Button-Default.png"))); // NOI18N
@@ -258,7 +242,7 @@ public class Register2 extends javax.swing.JInternalFrame {
             }
         });
         Pane.add(rdAdmin);
-        rdAdmin.setBounds(1047, 658, 24, 25);
+        rdAdmin.setBounds(967, 658, 24, 25);
 
         Role.add(rdTeknisi);
         rdTeknisi.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -273,7 +257,7 @@ public class Register2 extends javax.swing.JInternalFrame {
             }
         });
         Pane.add(rdTeknisi);
-        rdTeknisi.setBounds(1123, 658, 24, 25);
+        rdTeknisi.setBounds(1047, 658, 24, 25);
 
         btnRegister.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Register-Primary-Default.png"))); // NOI18N
         btnRegister.setBorder(null);
@@ -336,10 +320,6 @@ public class Register2 extends javax.swing.JInternalFrame {
         lblBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Label-Back-Default.png")));
     }//GEN-LAST:event_lblBackMouseExited
 
-    private void rdOwnerMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rdOwnerMouseEntered
-        rdOwner.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Radio-Button-Hover.png")));
-    }//GEN-LAST:event_rdOwnerMouseEntered
-
     private void rdAdminMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rdAdminMouseEntered
         rdAdmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Radio-Button-Hover.png")));
     }//GEN-LAST:event_rdAdminMouseEntered
@@ -347,10 +327,6 @@ public class Register2 extends javax.swing.JInternalFrame {
     private void rdTeknisiMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rdTeknisiMouseEntered
         rdTeknisi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Radio-Button-Hover.png")));
     }//GEN-LAST:event_rdTeknisiMouseEntered
-
-    private void rdOwnerMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rdOwnerMouseExited
-        rdOwner.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Radio-Button-Default.png")));
-    }//GEN-LAST:event_rdOwnerMouseExited
 
     private void rdAdminMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rdAdminMouseExited
         rdAdmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Radio-Button-Default.png")));
@@ -362,16 +338,12 @@ public class Register2 extends javax.swing.JInternalFrame {
 
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
         btnRegister.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Register-Primary-Click.png")));
-        String status;
-        String password = txtPassword.getText();
-        String repas = txtRepassword.getText();
+        String status = null;
         String idAkun = txtRfid.getText();
         if (rdAdmin.isSelected()) {
             status = "admin";
         } else if (rdTeknisi.isSelected()) {
             status = "teknisi";
-        } else {
-            status = "owner";
         }
         verifikasi = new AuthRegister(nik, nama, noHp, alamat, txtUsername.getText(), txtPassword.getText(), txtRepassword.getText(), status, idAkun);
         boolean verif = verifikasi.VerifFieldAkun();
@@ -579,7 +551,6 @@ public class Register2 extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblBack;
     private javax.swing.JLabel lblLogin;
     private javax.swing.JRadioButton rdAdmin;
-    private javax.swing.JRadioButton rdOwner;
     private javax.swing.JRadioButton rdTeknisi;
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JPasswordField txtRepassword;

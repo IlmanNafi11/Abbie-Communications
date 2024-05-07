@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import Logic.*;
+import javax.swing.SwingUtilities;
 
 public class Report extends javax.swing.JInternalFrame {
 
@@ -18,7 +19,8 @@ public class Report extends javax.swing.JInternalFrame {
         BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
         bui.setNorthPane(null);
         bg.setFocusable(true);
-        ViewTable();
+        SetTanggal();
+        ViewTable();  
     }
     
     public void SetProfile(String nama, String role){
@@ -30,8 +32,19 @@ public class Report extends javax.swing.JInternalFrame {
     
     private void ViewTable(){
         LaporanControler laporanControler = new LaporanControler();
-        ConfigTable model = laporanControler.GetLaporan();
+        ConfigTable model = laporanControler.SetModelTable();
         tabel.setModel(model);
+        laporanControler.GetLaporan(tabel, JMoonChooser, JYearChooser);
+    }
+    
+    private void SetTanggal(){
+        LaporanControler laporanControler = new LaporanControler();
+        laporanControler.SetMonthAndYear(JMoonChooser, JYearChooser);
+    }
+    
+    private void GetLaporanBySelect(){
+        LaporanControler laporanControler = new LaporanControler();
+        laporanControler.GetLaporan(tabel, JMoonChooser, JYearChooser);
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -62,7 +75,21 @@ public class Report extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(tabel);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(67, 207, 962, 680));
-        getContentPane().add(JMoonChooser, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 160, -1, 30));
+
+        JMoonChooser.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(242, 242, 242), 1, true));
+        JMoonChooser.setYearChooser(JYearChooser);
+        JMoonChooser.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                JMoonChooserPropertyChange(evt);
+            }
+        });
+        getContentPane().add(JMoonChooser, new org.netbeans.lib.awtextra.AbsoluteConstraints(822, 160, -1, 30));
+
+        JYearChooser.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                JYearChooserPropertyChange(evt);
+            }
+        });
         getContentPane().add(JYearChooser, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 160, 70, 30));
 
         btnPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Button-Print-Primary-Default.png"))); // NOI18N
@@ -195,6 +222,14 @@ public class Report extends javax.swing.JInternalFrame {
     private void lblNamaUserMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNamaUserMousePressed
         lblNamaUser.setForeground(new Color(28,119,255));
     }//GEN-LAST:event_lblNamaUserMousePressed
+
+    private void JMoonChooserPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_JMoonChooserPropertyChange
+        GetLaporanBySelect();
+    }//GEN-LAST:event_JMoonChooserPropertyChange
+
+    private void JYearChooserPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_JYearChooserPropertyChange
+        GetLaporanBySelect();
+    }//GEN-LAST:event_JYearChooserPropertyChange
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -90,7 +90,6 @@ public class Rfid extends javax.swing.JDialog {
     private void txtRfidKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRfidKeyReleased
         if (evt.getKeyCode() == KeyEvent.VK_ENTER){
             String idAkun = txtRfid.getText();
-            login kelasLogin = new login(parentFrame);
             LoginControler login = new LoginControler(null, null, idAkun);
             String role = login.AuthLoginRfid();
             if (role != null) {
