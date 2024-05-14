@@ -33,7 +33,7 @@ Aplikasi kasir dan manajemen stok untuk konter Abbie Communications. Aplikasi in
 ### Kontribusi
 Silahkan fork repositori ini dan ajukan pull request untuk kontribusi. Harap sertakan deskripsi yang jelas tentang perubahan yang anda buat.
 ### Lisensi
-Lisensi dapat dilihat [Disini](lisensi.txt)
+Lisensi dapat dilihat [Disini](license.txt)
 
 ---
 Untuk pertanyaan lebih lanjut, silahkan hubungi [ilmannafi@gmail.com](mailto:ilmannafi04@gmail.com)
