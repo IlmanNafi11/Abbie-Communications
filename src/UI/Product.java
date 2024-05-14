@@ -274,8 +274,8 @@ public class Product extends javax.swing.JInternalFrame implements UpdateTable {
 
     private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
         btnPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Print-Click.png")));
-        ProductControler controler = new ProductControler(null, null);
-        controler.PrintAllProduct();
+        PrintProduct printProduct = new PrintProduct(this, true);
+        printProduct.setVisible(true);
     }//GEN-LAST:event_btnPrintActionPerformed
 
     private void btnPrintMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPrintMouseEntered
@@ -329,8 +329,9 @@ public class Product extends javax.swing.JInternalFrame implements UpdateTable {
             ArrayList<String> dataString = controler.IsiStringField(table);
             ArrayList<Integer> dataInteger = controler.IsiIntField(table);
             String idProduk = dataString.get(0);
-            String IdSupplier = controler.SetSupplierId(idProduk);
-            String namaSupplier = controler.GetSupplierName(IdSupplier);
+            String IdSupplier = controler.GetSupplierIdByIdProduct(idProduk);
+            SupplierControler supplierControler = new SupplierControler(IdSupplier, null, null, null);
+            String namaSupplier = supplierControler.GetSupplierName();
             ImageIcon iconBarcode = controler.GetBarcode(idProduk);
             changeProduct.SetField(dataString.get(2), dataString.get(0), dataString.get(1), dataInteger.get(1), dataInteger.get(0), IdSupplier, namaSupplier, iconBarcode);
             changeProduct.setVisible(true);

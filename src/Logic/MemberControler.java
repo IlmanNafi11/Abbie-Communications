@@ -73,7 +73,7 @@ public class MemberControler {
     }
 
     private boolean ValidateNoHp() {
-        if (noHp.matches("\\d+") && noHp.length() > 11 && noHp.length() < 14) {
+        if (noHp.matches("\\d+") && noHp.length() > 11 && noHp.length() < 14 && noHp.startsWith("08")) {
             boolean cekNoHp = dbMember.cekMember(noHp);
             if (!cekNoHp) {
                 return true;
@@ -90,9 +90,10 @@ public class MemberControler {
         boolean cekNoHp = dbMember.cekMember(noHp);
         if (noHp.equalsIgnoreCase(noHpLama)) {
             return true;
-        } else if (!cekNoHp) {
+        } else if (!cekNoHp && noHp.startsWith("08")) {
             return true;
         } else {
+            exceptionHandler.Kesalahan("Invalid cellphone number!");
             return false;
         }
     }

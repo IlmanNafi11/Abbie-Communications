@@ -68,14 +68,6 @@ public class AddPart extends javax.swing.JDialog {
         txtNamaProduct.setForeground(new java.awt.Color(153, 153, 153));
         txtNamaProduct.setText("Product Name");
         txtNamaProduct.setBorder(null);
-        txtNamaProduct.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtNamaProductFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtNamaProductFocusLost(evt);
-            }
-        });
         getContentPane().add(txtNamaProduct);
         txtNamaProduct.setBounds(46, 231, 310, 50);
 
@@ -169,20 +161,6 @@ public class AddPart extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_txtProductIdFocusLost
 
-    private void txtNamaProductFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNamaProductFocusGained
-        if (txtNamaProduct.getText().equals("Product Name")) {
-            txtNamaProduct.setText("");
-            txtNamaProduct.setForeground(Color.BLACK);
-        }
-    }//GEN-LAST:event_txtNamaProductFocusGained
-
-    private void txtNamaProductFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNamaProductFocusLost
-        if (txtNamaProduct.getText().trim().equals("") || txtNamaProduct.getText().length() == 0) {
-            txtNamaProduct.setText("Product Name");
-            txtNamaProduct.setForeground(new Color(153, 153, 153));
-        }
-    }//GEN-LAST:event_txtNamaProductFocusLost
-
     private void txtQuantityFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtQuantityFocusGained
         if (txtQuantity.getText().equals("Quantity")) {
             txtQuantity.setText("");
@@ -218,12 +196,13 @@ public class AddPart extends javax.swing.JDialog {
         btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Add-Click.png")));
         String idProduct = txtProductId.getText();
         String namaProduct = txtNamaProduct.getText();
-        int kuantitas = Integer.parseInt(txtQuantity.getText());
         int harga = Integer.parseInt(txtPrice.getText());
-        TransaksiServiceControler transaksiServiceControler = new TransaksiServiceControler(null, idProduct, namaProduct, kuantitas, harga, 0, null, null, null);
-        transaksiServiceControler.AddDataPart(modelTabel, txtQuantity);
-        transaksiServiceControler.UpdateTotal(table, txtTotal);
-        this.dispose();
+        TransaksiServiceControler transaksiServiceControler = new TransaksiServiceControler(null, idProduct, namaProduct, 0, harga, 0, null, null, null);
+        boolean succes = transaksiServiceControler.AddDataPart(table, txtQuantity);
+        if (succes) {
+            transaksiServiceControler.UpdateTotal(table, txtTotal);
+            this.dispose();
+        }
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnAddMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMouseEntered

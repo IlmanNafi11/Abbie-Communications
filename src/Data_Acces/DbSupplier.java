@@ -210,4 +210,30 @@ public class DbSupplier {
         }
         return namaSupplier;
     }
+    
+    public boolean CekNoHp(String noHp) {
+        exceptionHandler = new ExceptionHandler();
+        String sqlCekNoHp = "SELECT COUNT(*) FROM supplier WHERE tlp_supplier=?";
+        Connection koneksi = null;
+        try {
+            koneksi = ClassKoneksi.GetConnection();
+            PreparedStatement stCek = koneksi.prepareStatement(sqlCekNoHp);
+            stCek.setString(1, noHp);
+            ResultSet rs = stCek.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (Exception e) {
+            exceptionHandler.Kesalahan("Failed when checking Phone Number");
+        } finally {
+            if (koneksi != null) {
+                try {
+                    koneksi.close();
+                } catch (Exception e) {
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
+                }
+            }
+        }
+        return false;
+    }
 }

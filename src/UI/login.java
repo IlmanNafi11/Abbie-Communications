@@ -259,7 +259,7 @@ private JFrame parentFrame;
         String username = txtUsername.getText();
         String password = txtPassword.getText();
         LoginControler login = new LoginControler(username, password, null);
-        String role = login.AuthLogin();
+        String role = login.AuthLoginWithUsername();
         if (role != null) {
             tutupFrame(username,role);
         }

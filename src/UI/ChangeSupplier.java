@@ -9,6 +9,7 @@ import javax.swing.JInternalFrame;
 public class ChangeSupplier extends javax.swing.JDialog {
 
     private UpdateTable update;
+    private String noHpLama;
 
     public ChangeSupplier(JInternalFrame parent, boolean modal) {
         super((JFrame) parent.getTopLevelAncestor(), modal);
@@ -27,6 +28,7 @@ public class ChangeSupplier extends javax.swing.JDialog {
         this.txtName.setText(namaSupplier);
         this.txtNoHp.setText(noHp);
         this.cmbCategory.setSelectedItem(kategori);
+        this.noHpLama = noHp;
     }
 
     @SuppressWarnings("unchecked")
@@ -74,6 +76,7 @@ public class ChangeSupplier extends javax.swing.JDialog {
 
         txtIdSupplier.setEditable(false);
         txtIdSupplier.setBackground(new java.awt.Color(255, 255, 255));
+        txtIdSupplier.setForeground(new java.awt.Color(153, 153, 153));
         txtIdSupplier.setText("Supplier ID");
         txtIdSupplier.setBorder(null);
         getContentPane().add(txtIdSupplier);
@@ -162,7 +165,7 @@ public class ChangeSupplier extends javax.swing.JDialog {
         String namaSupplier = txtName.getText();
         String noHp = txtNoHp.getText();
         SupplierControler controler = new SupplierControler(idSupplier, namaSupplier, noHp, kategori);
-        boolean succes = controler.ChangeSupplierData();
+        boolean succes = controler.ChangeSupplierData(noHpLama);
         if (succes) {
             update.perbarui();
             dispose();

@@ -222,14 +222,6 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
         txtMemberName.setForeground(new java.awt.Color(153, 153, 153));
         txtMemberName.setText("Member Name");
         txtMemberName.setBorder(null);
-        txtMemberName.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtMemberNameFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtMemberNameFocusLost(evt);
-            }
-        });
         getContentPane().add(txtMemberName, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 357, 430, 50));
 
         table.setModel(new javax.swing.table.DefaultTableModel(
@@ -270,14 +262,6 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
         txtTotal.setForeground(new java.awt.Color(153, 153, 153));
         txtTotal.setText("Total");
         txtTotal.setBorder(null);
-        txtTotal.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtTotalFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtTotalFocusLost(evt);
-            }
-        });
         getContentPane().add(txtTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 713, 198, 50));
 
         txtPay.setForeground(new java.awt.Color(153, 153, 153));
@@ -436,7 +420,11 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
         String kodeDiskon = (String) cmbKodeDiskon.getSelectedItem();
         int total = Integer.parseInt(txtTotal.getText());
         TransaksiPenjualanControler controler = new TransaksiPenjualanControler(username, noHpMember, total, kodeDiskon);
-        controler.InsertTransaksiPenjualan(table, jumlahDiskon, namaMember, txtPay, txtRefund);
+        boolean succes = controler.InsertTransaksiPenjualan(table, jumlahDiskon, namaMember, txtPay, txtRefund);
+        if (succes) {
+            controler.ClearDataTransaksi(table, txtMemberName, txtNoHpMember, txtTotal, txtPay, txtRefund, cmbKodeDiskon);
+        }
+
     }//GEN-LAST:event_btnPrintActionPerformed
 
     private void btnPrintMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPrintMouseEntered
@@ -478,34 +466,6 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
             txtNoHpMember.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtNoHpMemberFocusLost
-
-    private void txtMemberNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtMemberNameFocusGained
-        if (txtMemberName.getText().equals("Member Name")) {
-            txtMemberName.setText("");
-            txtMemberName.setForeground(Color.BLACK);
-        }
-    }//GEN-LAST:event_txtMemberNameFocusGained
-
-    private void txtMemberNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtMemberNameFocusLost
-        if (txtMemberName.getText().trim().equals("") || txtMemberName.getText().length() == 0) {
-            txtMemberName.setText("Member Name");
-            txtMemberName.setForeground(new Color(153, 153, 153));
-        }
-    }//GEN-LAST:event_txtMemberNameFocusLost
-
-    private void txtTotalFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTotalFocusGained
-        if (txtTotal.getText().equals("Total")) {
-            txtTotal.setText("");
-            txtTotal.setForeground(Color.BLACK);
-        }
-    }//GEN-LAST:event_txtTotalFocusGained
-
-    private void txtTotalFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTotalFocusLost
-        if (txtTotal.getText().trim().equals("") || txtTotal.getText().length() == 0) {
-            txtTotal.setText("Total");
-            txtTotal.setForeground(new Color(153, 153, 153));
-        }
-    }//GEN-LAST:event_txtTotalFocusLost
 
     private void txtPayFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPayFocusGained
         if (txtPay.getText().equals("Pay")) {
@@ -606,10 +566,10 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
     private void txtQuantityKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtQuantityKeyReleased
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             TransaksiPenjualanControler controler = new TransaksiPenjualanControler(null, null, 0, null);
-            Object[] data = controler.AddToTable(txtProductId, txtProductName, txtQuantity, bg);
-            model.addRow(data);
-            controler.UpdateTotal(table, txtTotal);
-            controler.GetDiskon(txtMemberName, txtTotal, cmbKodeDiskon);
+            controler.AddToTable(txtProductId, txtProductName, txtQuantity, bg, txtMemberName, txtTotal, cmbKodeDiskon, table);
+//            model.addRow(data);
+//            controler.UpdateTotal(table, txtTotal);
+//            controler.GetDiskon(txtMemberName, txtTotal, cmbKodeDiskon);
         }
     }//GEN-LAST:event_txtQuantityKeyReleased
 

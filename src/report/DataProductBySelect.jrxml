@@ -1,0 +1,696 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="575" leftMargin="0" rightMargin="20" topMargin="0" bottomMargin="0" uuid="f987f41b-2dd9-48d3-af2a-c6cd0796f2e0">
+	<property name="ireport.zoom" value="1.000000000000004"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Data" uuid="eecbdbfc-1fd5-47bd-99a8-5faf67ef7426">
+		<parameter name="idProd" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT * FROM produk WHERE id_produk = $P{idProd}]]>
+		</queryString>
+		<field name="id_produk" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="nama_produk" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="kategori" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="jumlah" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="harga" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="id_supplier" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="barcode" class="java.lang.Object">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<filterExpression><![CDATA[$P{idProd}]]></filterExpression>
+	</subDataset>
+	<parameter name="id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT  * FROM produk where id_produk = $P{id}]]>
+	</queryString>
+	<field name="id_produk" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nama_produk" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="kategori" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="jumlah" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="harga" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="id_supplier" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="barcode" class="java.lang.Object">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="56" splitType="Stretch">
+			<rectangle>
+				<reportElement x="1" y="0" width="85" height="56" backcolor="#FFFFFF" uuid="0c5fd984-3380-4436-ae5f-cd019198bae6"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="86" y="0" width="122" height="56" backcolor="#FFFFFF" uuid="5d693d02-6155-449f-a68b-50eb56c5394a"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="208" y="0" width="94" height="56" backcolor="#FFFFFF" uuid="43e6ef85-df3f-4a5a-a33c-8a4a90f3087d"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="302" y="0" width="40" height="56" backcolor="#FFFFFF" uuid="018ecf96-0ca0-4566-a1d1-853a5a0fe1b7"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="342" y="0" width="90" height="56" backcolor="#FFFFFF" uuid="21bee008-0c79-484d-ac89-4feb10782979"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="432" y="0" width="108" height="56" backcolor="#FFFFFF" uuid="3e14fbf8-e428-4c2d-ad2e-b2aab79a6d6d"/>
+			</rectangle>
+			<textField>
+				<reportElement x="86" y="0" width="122" height="55" uuid="a815662e-b447-45b3-9038-4d34740e1149"/>
+				<box leftPadding="5"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nama_produk}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="208" y="0" width="94" height="55" uuid="41d27303-a2d8-404e-b074-3bd42874d3ff"/>
+				<box leftPadding="5" rightPadding="5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{kategori}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="302" y="0" width="40" height="55" uuid="18fe77ab-967a-458a-8fb9-5153da078d6d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{jumlah}]]></textFieldExpression>
+			</textField>
+			<textField pattern="Rp #,##0.00">
+				<reportElement x="342" y="0" width="90" height="55" uuid="7fa0402a-9f5d-4f3d-b921-b996a10324c8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{harga}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="434" y="2" width="104" height="52" uuid="9e28feaf-f359-422a-9301-b5f6e92ff0fd"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code39 (Extended)" drawText="true" checksumRequired="false" barWidth="0" barHeight="0">
+					<jr:codeExpression><![CDATA[$F{id_produk}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<textField>
+				<reportElement x="1" y="2" width="85" height="52" uuid="09c2aeda-b45a-4b0c-9c72-609be8a94b20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{id}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="56">
+			<rectangle>
+				<reportElement x="208" y="0" width="94" height="56" backcolor="#FFFFFF" uuid="24e4f5ed-57bb-42d1-976b-fbc4c34de8a1"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="86" y="0" width="122" height="56" backcolor="#FFFFFF" uuid="b2c68ab1-3add-4c0d-a8f7-3297f6b03dea"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="1" y="0" width="85" height="56" backcolor="#FFFFFF" uuid="d7f34ba1-d065-403c-9346-42713d373aaf"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="432" y="0" width="108" height="56" backcolor="#FFFFFF" uuid="33eb9264-5af6-4377-9e8e-a6e4309a924c"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="302" y="0" width="40" height="56" backcolor="#FFFFFF" uuid="0c062535-0ce6-45aa-b72b-2cc810a6f783"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="342" y="0" width="90" height="56" backcolor="#FFFFFF" uuid="859b84f4-2077-472d-9ad7-bbb4bd3b0cb1"/>
+			</rectangle>
+			<textField pattern="Rp #,##0.00">
+				<reportElement x="341" y="-1" width="90" height="55" uuid="6e52e2ad-a266-4fbd-bbdf-c1006588af42"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{harga}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="86" y="0" width="122" height="55" uuid="cd0b6a7f-51c0-4d7a-8f6a-27842e40b5a1"/>
+				<box leftPadding="5"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nama_produk}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="208" y="0" width="94" height="55" uuid="807e9dd2-3250-429e-b541-2177c4d9bbce"/>
+				<box leftPadding="5" rightPadding="5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{kategori}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="2" width="85" height="52" uuid="4d331419-0f8e-4ad3-9cbb-8ec10af8ec6f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{id}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="434" y="2" width="104" height="52" uuid="0f9b38f4-87a0-449d-8360-007eb309c893"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code39 (Extended)" drawText="true" checksumRequired="false" barWidth="0" barHeight="0">
+					<jr:codeExpression><![CDATA[$F{id_produk}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<textField>
+				<reportElement x="302" y="0" width="40" height="55" uuid="198c9014-51ac-489d-a55f-29618ae23ccc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{jumlah}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="56">
+			<rectangle>
+				<reportElement x="302" y="0" width="40" height="56" backcolor="#FFFFFF" uuid="20ac4da4-9cfb-4627-808f-b6e96ddeb7e9"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="432" y="0" width="108" height="56" backcolor="#FFFFFF" uuid="25a18383-d54e-4fd7-ba88-94c409a85f44"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="1" y="0" width="85" height="56" backcolor="#FFFFFF" uuid="4d87dd5e-ac9e-4985-9ca3-b34f38333b17"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="86" y="0" width="122" height="56" backcolor="#FFFFFF" uuid="3b9eeed7-9e36-4ae8-bbfe-6eeba470a8ec"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="208" y="0" width="94" height="56" backcolor="#FFFFFF" uuid="ddc929ad-a91b-4e58-abe8-1b070d7973f1"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="342" y="0" width="90" height="56" backcolor="#FFFFFF" uuid="d4ebfd23-da77-4e3c-acca-ad9c3f04c9cc"/>
+			</rectangle>
+			<textField>
+				<reportElement x="302" y="0" width="40" height="55" uuid="a4404770-95c2-498a-97ec-4884aed1acca"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{jumlah}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="434" y="2" width="104" height="52" uuid="25ba8194-4d4a-4932-9b80-420c4ae514c7"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code39 (Extended)" drawText="true" checksumRequired="false" barWidth="0" barHeight="0">
+					<jr:codeExpression><![CDATA[$F{id_produk}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<textField>
+				<reportElement x="208" y="0" width="94" height="55" uuid="f744d966-95aa-4724-8975-d3400889c8d8"/>
+				<box leftPadding="5" rightPadding="5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{kategori}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="2" width="85" height="52" uuid="338e8e00-5bac-47ea-a8df-4caa93a1e3ab"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="86" y="0" width="122" height="55" uuid="52180fb9-ef5f-42d5-9933-cc1a86b4f0ec"/>
+				<box leftPadding="5"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nama_produk}]]></textFieldExpression>
+			</textField>
+			<textField pattern="Rp #,##0.00">
+				<reportElement x="342" y="-1" width="90" height="55" uuid="00cc4c4d-fb75-4286-b49b-081065d13853"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{harga}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="56">
+			<rectangle>
+				<reportElement x="302" y="0" width="40" height="56" backcolor="#FFFFFF" uuid="e5f66f25-85df-4150-a239-6283ba5e2e0a"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="432" y="0" width="108" height="56" backcolor="#FFFFFF" uuid="c90f52b3-2634-43b2-acd8-cf12fe0034bf"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="1" y="0" width="85" height="56" backcolor="#FFFFFF" uuid="ab9a3fe9-fa43-40c7-b989-70717e26722f"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="342" y="0" width="90" height="56" backcolor="#FFFFFF" uuid="492570fb-a65e-45e9-abaf-9c318fc366c0"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="86" y="0" width="122" height="56" backcolor="#FFFFFF" uuid="dec26784-e6d5-4edb-98f1-c650d122929c"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="208" y="0" width="94" height="56" backcolor="#FFFFFF" uuid="1350271d-4704-4fc8-954b-df609d30ce37"/>
+			</rectangle>
+			<textField>
+				<reportElement x="302" y="0" width="40" height="55" uuid="ed7f7100-692b-4de8-986f-f0490fa7c357"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{jumlah}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="86" y="0" width="122" height="55" uuid="a0a32fb3-b4af-448a-bf05-08a548f906d0"/>
+				<box leftPadding="5"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nama_produk}]]></textFieldExpression>
+			</textField>
+			<textField pattern="Rp #,##0.00">
+				<reportElement x="342" y="-1" width="90" height="55" uuid="1e512d96-1e98-444b-bdb2-2ef2453eb722"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{harga}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="434" y="2" width="104" height="52" uuid="5d4d3029-ab0d-40a5-8036-ab91644314c6"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code39 (Extended)" drawText="true" checksumRequired="false" barWidth="0" barHeight="0">
+					<jr:codeExpression><![CDATA[$F{id_produk}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<textField>
+				<reportElement x="208" y="0" width="94" height="55" uuid="4b00081b-32c6-422f-9144-f1d0fc61f252"/>
+				<box leftPadding="5" rightPadding="5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{kategori}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="2" width="85" height="52" uuid="42362412-5b01-47cb-b1bb-d295a4c5c109"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{id}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="56">
+			<rectangle>
+				<reportElement x="1" y="0" width="85" height="56" backcolor="#FFFFFF" uuid="e861b867-1b66-4879-8705-bd524bfce04c"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="302" y="0" width="40" height="56" backcolor="#FFFFFF" uuid="c46f6f00-438f-4fef-a444-4f8ee0df0683"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="432" y="0" width="108" height="56" backcolor="#FFFFFF" uuid="065ff190-fc11-4a7d-befc-de943bcc96d3"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="86" y="0" width="122" height="56" backcolor="#FFFFFF" uuid="e6938a09-315e-4487-b213-98b534e4445f"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="342" y="0" width="90" height="56" backcolor="#FFFFFF" uuid="2e8ab222-f0f0-494d-8420-86460dbabdc8"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="208" y="0" width="94" height="56" backcolor="#FFFFFF" uuid="c0a4ddd7-330f-4676-85d0-b223ee371c0b"/>
+			</rectangle>
+			<textField>
+				<reportElement x="86" y="0" width="122" height="55" uuid="22c393d2-497a-40d9-b5b9-71d807ea9495"/>
+				<box leftPadding="5"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nama_produk}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="2" width="85" height="52" uuid="7ce79787-7935-457b-aa78-15e0fa65e93a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{id}]]></textFieldExpression>
+			</textField>
+			<textField pattern="Rp #,##0.00">
+				<reportElement x="342" y="-1" width="90" height="55" uuid="47fc63e6-ccb4-4872-91e6-2548ba842589"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{harga}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="208" y="0" width="94" height="55" uuid="06f1349d-7b6d-4f5a-8c16-ce1a0200a5c2"/>
+				<box leftPadding="5" rightPadding="5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{kategori}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="434" y="2" width="104" height="52" uuid="664a94b6-b660-454e-9f2d-efd59d2a7b2a"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code39 (Extended)" drawText="true" checksumRequired="false" barWidth="0" barHeight="0">
+					<jr:codeExpression><![CDATA[$F{id_produk}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<textField>
+				<reportElement x="302" y="0" width="40" height="55" uuid="23856fea-442d-4be9-a19e-a40223d5be84"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{jumlah}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="56">
+			<rectangle>
+				<reportElement x="208" y="0" width="94" height="56" backcolor="#FFFFFF" uuid="4235cd7f-713c-4bfe-9d56-45c87e0955d6"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="342" y="0" width="90" height="56" backcolor="#FFFFFF" uuid="6f724be2-4b5b-43bd-b8ae-94fed2ed9668"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="86" y="0" width="122" height="56" backcolor="#FFFFFF" uuid="c5b12d3d-4f60-4e50-8537-9ed0b3712fc2"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="1" y="0" width="85" height="56" backcolor="#FFFFFF" uuid="ca01494d-8d6f-4c50-999b-4ec7d2ed9c66"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="302" y="0" width="40" height="56" backcolor="#FFFFFF" uuid="0484d789-1ac3-4f94-b5ac-e16c26edad94"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="432" y="0" width="108" height="56" backcolor="#FFFFFF" uuid="f6f4cac5-a588-453b-9e1e-426f90b279cd"/>
+			</rectangle>
+			<textField>
+				<reportElement x="208" y="0" width="94" height="55" uuid="b7748265-7217-4927-a1f3-63c886bdf661"/>
+				<box leftPadding="5" rightPadding="5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{kategori}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="2" width="85" height="52" uuid="219bad05-ca29-4df0-817b-a771222d05dc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{id}]]></textFieldExpression>
+			</textField>
+			<textField pattern="Rp #,##0.00">
+				<reportElement x="342" y="-1" width="90" height="55" uuid="e50dadf8-5ede-465c-b6eb-194569867b8d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{harga}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="302" y="0" width="40" height="55" uuid="29b10516-a0d0-47e5-bd4e-27dc1febb104"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{jumlah}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="434" y="2" width="104" height="52" uuid="ef926c61-1df2-4df4-bfdd-5d16b1e72c35"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code39 (Extended)" drawText="true" checksumRequired="false" barWidth="0" barHeight="0">
+					<jr:codeExpression><![CDATA[$F{id_produk}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<textField>
+				<reportElement x="86" y="0" width="122" height="55" uuid="4077cd9e-efe0-48e6-935d-e305582b1e4f"/>
+				<box leftPadding="5"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nama_produk}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="56">
+			<rectangle>
+				<reportElement x="208" y="0" width="94" height="56" backcolor="#FFFFFF" uuid="8ca2d0d0-62d3-450c-9592-7231e54a367e"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="342" y="0" width="90" height="56" backcolor="#FFFFFF" uuid="824af699-31c5-47c8-9d45-ecc12dea83a1"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="302" y="0" width="40" height="56" backcolor="#FFFFFF" uuid="39cdebc2-f068-405c-a962-46d6c533de60"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="432" y="0" width="108" height="56" backcolor="#FFFFFF" uuid="94f8acc0-4d80-42e9-a1b5-aa5364a66e91"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="1" y="0" width="85" height="56" backcolor="#FFFFFF" uuid="41f68f06-daf5-4b3a-9ca4-b8343817be5f"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="86" y="0" width="122" height="56" backcolor="#FFFFFF" uuid="0f38c13e-ee47-411e-a002-f6f297736822"/>
+			</rectangle>
+			<componentElement>
+				<reportElement x="434" y="2" width="104" height="52" uuid="a695e44d-c9c8-48c3-8ffa-53248dada14f"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code39 (Extended)" drawText="true" checksumRequired="false" barWidth="0" barHeight="0">
+					<jr:codeExpression><![CDATA[$F{id_produk}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<textField>
+				<reportElement x="1" y="2" width="85" height="52" uuid="ab603ea8-4e83-4cf1-a60b-a49c33ce8f14"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="208" y="0" width="94" height="55" uuid="02a33f22-94e5-4f75-ad9b-0c68849f9119"/>
+				<box leftPadding="5" rightPadding="5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{kategori}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="86" y="0" width="122" height="55" uuid="226ddd85-ec63-44dc-8562-01ddc7c6d197"/>
+				<box leftPadding="5"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nama_produk}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="302" y="0" width="40" height="55" uuid="8dae2775-898e-42bb-972d-2b53b6e05891"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{jumlah}]]></textFieldExpression>
+			</textField>
+			<textField pattern="Rp #,##0.00">
+				<reportElement x="342" y="0" width="90" height="55" uuid="c6baf748-e535-4902-9474-45f1c0dcb44d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{harga}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="56">
+			<rectangle>
+				<reportElement x="208" y="0" width="94" height="56" backcolor="#FFFFFF" uuid="e1dd42f6-683b-42ad-b2ff-abc1f0e6e39d"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="1" y="0" width="85" height="56" backcolor="#FFFFFF" uuid="c87d4936-8a64-41f3-85d8-85ce35715dbf"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="342" y="0" width="90" height="56" backcolor="#FFFFFF" uuid="2fa5a2c1-ed78-434e-9645-46f7f9c5a7a9"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="86" y="0" width="122" height="56" backcolor="#FFFFFF" uuid="7bcb939c-0a0d-43f2-adc9-af6118967a9e"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="432" y="0" width="108" height="56" backcolor="#FFFFFF" uuid="7b14a2ae-d4e6-4f6c-ad21-a23a6ac9e540"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="302" y="0" width="40" height="56" backcolor="#FFFFFF" uuid="54202ed3-4ef4-4264-8a3b-34d2f4d40cbc"/>
+			</rectangle>
+			<componentElement>
+				<reportElement x="434" y="2" width="104" height="52" uuid="a9f55c6d-60c2-4ddb-b885-7c3a8d86d4b6"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code39 (Extended)" drawText="true" checksumRequired="false" barWidth="0" barHeight="0">
+					<jr:codeExpression><![CDATA[$F{id_produk}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<textField>
+				<reportElement x="1" y="2" width="85" height="52" uuid="eaff6f5a-42fa-4e4d-aa86-f801d56401d5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="86" y="0" width="122" height="55" uuid="dd349ea9-6806-4d5c-bc11-8d565e1b5960"/>
+				<box leftPadding="5"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nama_produk}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="302" y="0" width="40" height="55" uuid="681fd18b-6de5-43f3-985a-c71b4dd0793a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{jumlah}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="208" y="0" width="94" height="55" uuid="b91b852b-7453-402c-950b-bee0111afbe8"/>
+				<box leftPadding="5" rightPadding="5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{kategori}]]></textFieldExpression>
+			</textField>
+			<textField pattern="Rp #,##0.00">
+				<reportElement x="342" y="-1" width="90" height="55" uuid="b59c48ff-9426-4ef3-90f7-4414fcc57076"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{harga}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="56">
+			<rectangle>
+				<reportElement x="432" y="0" width="108" height="56" backcolor="#FFFFFF" uuid="bd62c674-b5ea-483b-aa8f-a8eeb9e069ad"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="1" y="0" width="85" height="56" backcolor="#FFFFFF" uuid="6f26c7d1-068d-4f60-ab22-91dea2064501"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="302" y="0" width="40" height="56" backcolor="#FFFFFF" uuid="c4e707ee-c602-4a1c-bbf2-3a290e6dc465"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="208" y="0" width="94" height="56" backcolor="#FFFFFF" uuid="5d1dbb4d-b8f2-4d4a-b147-eca97ad0087b"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="342" y="0" width="90" height="56" backcolor="#FFFFFF" uuid="a76c23df-b311-4add-8933-3878ddf9a285"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="86" y="0" width="122" height="56" backcolor="#FFFFFF" uuid="5acf67a2-fdad-4d86-abb6-55187d0b8651"/>
+			</rectangle>
+			<textField>
+				<reportElement x="208" y="0" width="94" height="55" uuid="26b4641a-50fc-444a-830f-84a9393bfb1c"/>
+				<box leftPadding="5" rightPadding="5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{kategori}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="86" y="0" width="122" height="55" uuid="cb0553b4-0f24-4ef1-a633-481ada12e3de"/>
+				<box leftPadding="5"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nama_produk}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="302" y="0" width="40" height="55" uuid="aea574b7-2a01-4649-a909-0e484280b329"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{jumlah}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="2" width="85" height="52" uuid="a53e880d-d290-48ab-bd2c-26cb3f3489b2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{id}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="434" y="2" width="104" height="52" uuid="578d92ea-6add-440a-87a1-98434758c71c"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code39 (Extended)" drawText="true" checksumRequired="false" barWidth="0" barHeight="0">
+					<jr:codeExpression><![CDATA[$F{id_produk}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<textField pattern="Rp #,##0.00">
+				<reportElement x="342" y="-1" width="90" height="55" uuid="5b100868-05eb-4828-bbcf-c2c4c3d4a68f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{harga}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="56">
+			<rectangle>
+				<reportElement x="432" y="0" width="108" height="56" backcolor="#FFFFFF" uuid="312bcab9-3f8b-4769-81b7-baae697bc1a4"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="1" y="0" width="85" height="56" backcolor="#FFFFFF" uuid="9553ef1b-91cc-49fa-ae8c-dc5eb33aabfa"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="302" y="0" width="40" height="56" backcolor="#FFFFFF" uuid="89629e8f-b884-4a7f-928b-cf771f51fb7b"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="208" y="0" width="94" height="56" backcolor="#FFFFFF" uuid="053972e6-3b1f-4e6e-a67a-fe8159f7ed70"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="342" y="0" width="90" height="56" backcolor="#FFFFFF" uuid="f27f6245-3485-4b07-b3ee-2b0111595b7f"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="86" y="0" width="122" height="56" backcolor="#FFFFFF" uuid="6bafb1cb-e220-47db-a575-5addb805dcf5"/>
+			</rectangle>
+			<textField>
+				<reportElement x="208" y="0" width="94" height="55" uuid="a9de9755-3e53-4d02-a916-9471f4741447"/>
+				<box leftPadding="5" rightPadding="5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{kategori}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="86" y="0" width="122" height="55" uuid="8a10d10e-4e5b-427f-a61d-75ff55898121"/>
+				<box leftPadding="5"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nama_produk}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="302" y="0" width="40" height="55" uuid="06a7d095-b968-45c5-8eb7-dc14f53bd716"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{jumlah}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="2" width="85" height="52" uuid="9a396fd5-c73f-492d-89ba-c6d68928d10b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{id}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="434" y="2" width="104" height="52" uuid="76a56fac-f452-4fe9-95c5-60fedf7723ca"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code39 (Extended)" drawText="true" checksumRequired="false" barWidth="0" barHeight="0">
+					<jr:codeExpression><![CDATA[$F{id_produk}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<textField pattern="Rp #,##0.00">
+				<reportElement x="342" y="-1" width="90" height="55" uuid="5b9ff741-47af-4e21-ba90-83df9360bd4c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{harga}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -30,8 +30,8 @@ public class PromoContoler {
     }
     
     // get jumlah diskon untuk transaksi
-    public int GetDiscountAmount(){
-        return dbPromo.GetDiskon(kodeDiskon);
+    public int GetDiscountAmount(String disconCode){
+        return dbPromo.GetDiskon(disconCode);
     }
     
     // Men generate angka random

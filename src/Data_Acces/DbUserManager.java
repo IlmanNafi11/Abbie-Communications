@@ -113,8 +113,6 @@ public class DbUserManager {
                 if (rsGetRole.next()) {
                     return rsGetRole.getString("posisi");
                 }
-            } else {
-                exceptionHandler.Kesalahan("Incorrect username or password or id akun not registered!");
             }
         } catch (Exception e) {
             exceptionHandler.Kesalahan("A failure occurred during authentication");

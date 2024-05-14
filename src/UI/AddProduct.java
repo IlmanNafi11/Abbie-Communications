@@ -91,9 +91,16 @@ public class AddProduct extends javax.swing.JDialog {
                 txtNamaProdukFocusLost(evt);
             }
         });
+        txtNamaProduk.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNamaProdukKeyReleased(evt);
+            }
+        });
         getContentPane().add(txtNamaProduk);
         txtNamaProduk.setBounds(47, 297, 488, 50);
 
+        txtQuantity.setEditable(false);
+        txtQuantity.setBackground(new java.awt.Color(255, 255, 255));
         txtQuantity.setForeground(new java.awt.Color(153, 153, 153));
         txtQuantity.setText("Quantity");
         txtQuantity.setBorder(null);
@@ -230,14 +237,12 @@ public class AddProduct extends javax.swing.JDialog {
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Save-Primary-Click.png")));
         ProductControler controler = new ProductControler(null, null);
-        controler.ValidasiStok(txtQuantity);
         controler.ValidasiHarga(txtPrice);
         boolean succes = controler.InsertProduct(txtIdProduct, txtNamaProduk, txtQuantity, cmbIdSupplier, cmbKategori, txtPrice);
-            if (succes) {
+        if (succes) {
             update.perbarui();
             dispose();
-            }
-        
+        }
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnSaveMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSaveMouseEntered
@@ -313,7 +318,7 @@ public class AddProduct extends javax.swing.JDialog {
         String idProduk = txtIdProduct.getText();
         ProductControler controler = new ProductControler(kategori, idProduk);
         controler.DisplayBarcode(cmbKategori, lblBarcode);
-        controler.SetIdSupplier(kategori, cmbIdSupplier);
+        controler.SetIdSupplierByCategory(kategori, cmbIdSupplier);
         cmbIdSupplier.addItem("Supplier ID");
         cmbIdSupplier.setSelectedItem("Supplier ID");
     }//GEN-LAST:event_cmbKategoriActionPerformed
@@ -321,8 +326,7 @@ public class AddProduct extends javax.swing.JDialog {
     private void cmbIdSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbIdSupplierActionPerformed
         ProductControler controler = new ProductControler(null, null);
         String idSupplier = (String) cmbIdSupplier.getSelectedItem();
-        String namaSupplier = controler.GetSupplierName(idSupplier);
-        txtNamaSupplier.setText(namaSupplier);
+        controler.GetSupplierName(idSupplier, txtNamaSupplier);
     }//GEN-LAST:event_cmbIdSupplierActionPerformed
 
     private void btnGenerateIdMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGenerateIdMouseEntered
@@ -343,6 +347,11 @@ public class AddProduct extends javax.swing.JDialog {
         controler.GenerateIdProduct(txtIdProduct);
         controler.DisplayBarcode(cmbKategori, lblBarcode);
     }//GEN-LAST:event_btnGenerateIdActionPerformed
+
+    private void txtNamaProdukKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNamaProdukKeyReleased
+        ProductControler controler = new ProductControler(null, null);
+        controler.setTxtQuantity(txtNamaProduk, txtQuantity);
+    }//GEN-LAST:event_txtNamaProdukKeyReleased
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

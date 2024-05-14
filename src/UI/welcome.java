@@ -4,7 +4,7 @@ import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.Toolkit;
 import javax.swing.UIManager;
 
-public class welcome extends javax.swing.JFrame{
+public class welcome extends javax.swing.JFrame {
 
     public welcome() {
         initComponents();
@@ -12,14 +12,16 @@ public class welcome extends javax.swing.JFrame{
         SetIcon();
     }
 
-    private void SetIcon(){
+    private void SetIcon() {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/logo Abbie Communications.png")));
     }
-    public void bukaLogin(){
+
+    public void bukaLogin() {
         login login = new login(this);
         desktopPane.add(login);
         login.setVisible(true);
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -213,7 +215,7 @@ public class welcome extends javax.swing.JFrame{
 //                    break;
 //                }
 //            }
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 //        } catch (ClassNotFoundException ex) {

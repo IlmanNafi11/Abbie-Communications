@@ -54,16 +54,26 @@ public class LoginControler {
         return dbUserManager.GetUsername(role, idAkun);
     }
 
-    public String AuthLogin() {
+    public String AuthLoginWithUsername() {
         if (VerifField()) {
             String Hashpassword = HashSandi(password);
-            return dbUserManager.AuthLogin(username, Hashpassword, idAkun);
+            String role = dbUserManager.AuthLogin(username, Hashpassword, idAkun);
+            if (role != null) {
+                return role;
+            } else {
+                exceptionHandler.Kesalahan("Incorrect username or password!");
+            }
         }
         return null;
     }
 
     public String AuthLoginRfid(){
         String role = dbUserManager.AuthLogin(username, null, idAkun);
-        return role;
+        if (role != null) {
+            return role;
+        } else {
+            exceptionHandler.Kesalahan("RFID ID not registered!");
+        }
+        return null;
     }
 }

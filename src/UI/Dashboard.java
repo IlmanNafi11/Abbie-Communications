@@ -18,6 +18,7 @@ public class Dashboard extends javax.swing.JInternalFrame {
         BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
         bui.setNorthPane(null);
         SetMainBoard();
+        SetFirstKalender();
         SetModelTable();
     }
 
@@ -41,7 +42,12 @@ public class Dashboard extends javax.swing.JInternalFrame {
         dashboardControler = new DashboardControler();
         model = dashboardControler.ModelTable();
         Table.setModel(model);
-        dashboardControler.GetDataHistory(Table);
+        dashboardControler.GetDataHistory(Table, tanggal);
+    }
+    
+    private void SetFirstKalender() {
+        dashboardControler = new DashboardControler();
+        dashboardControler.SetFirstCalender(tanggal);
     }
 
     @SuppressWarnings("unchecked")
@@ -59,6 +65,7 @@ public class Dashboard extends javax.swing.JInternalFrame {
         lblPosisiUser = new javax.swing.JLabel();
         IconProfil = new javax.swing.JLabel();
         lblNamaUser = new javax.swing.JLabel();
+        tanggal = new com.toedter.calendar.JDateChooser();
         bg = new javax.swing.JLabel();
 
         setBorder(null);
@@ -195,6 +202,14 @@ public class Dashboard extends javax.swing.JInternalFrame {
         getContentPane().add(lblNamaUser);
         lblNamaUser.setBounds(930, 20, 130, 22);
 
+        tanggal.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                tanggalPropertyChange(evt);
+            }
+        });
+        getContentPane().add(tanggal);
+        tanggal.setBounds(900, 481, 130, 30);
+
         bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Dasboard.png"))); // NOI18N
         getContentPane().add(bg);
         bg.setBounds(0, 0, 1095, 1024);
@@ -265,6 +280,10 @@ public class Dashboard extends javax.swing.JInternalFrame {
         btnJoinNow.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Join-Now-Click.png")));
     }//GEN-LAST:event_btnJoinNowMousePressed
 
+    private void tanggalPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tanggalPropertyChange
+        SetModelTable();
+    }//GEN-LAST:event_tanggalPropertyChange
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel IconProfil;
@@ -279,5 +298,6 @@ public class Dashboard extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblNamaUser;
     private javax.swing.JLabel lblPosisiUser;
     private javax.swing.JLabel lblProduct;
+    private com.toedter.calendar.JDateChooser tanggal;
     // End of variables declaration//GEN-END:variables
 }

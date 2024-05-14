@@ -96,9 +96,8 @@ public class ChangeProduk extends javax.swing.JDialog {
             }
         });
         getContentPane().add(txtIdProduct);
-        txtIdProduct.setBounds(47, 145, 488, 50);
+        txtIdProduct.setBounds(47, 145, 380, 50);
 
-        txtNamaProduk.setForeground(new java.awt.Color(153, 153, 153));
         txtNamaProduk.setText("Product Name");
         txtNamaProduk.setBorder(null);
         txtNamaProduk.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -142,7 +141,6 @@ public class ChangeProduk extends javax.swing.JDialog {
         getContentPane().add(txtNamaSupplier);
         txtNamaSupplier.setBounds(577, 221, 488, 50);
 
-        txtPrice.setForeground(new java.awt.Color(153, 153, 153));
         txtPrice.setText("Price");
         txtPrice.setBorder(null);
         txtPrice.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -278,17 +276,17 @@ public class ChangeProduk extends javax.swing.JDialog {
     }//GEN-LAST:event_txtQuantityFocusLost
 
     private void txtNamaSupplierFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNamaSupplierFocusGained
-        if (txtNamaSupplier.getText().equals("Supplier Name")) {
-            txtNamaSupplier.setText("");
-            txtNamaSupplier.setForeground(Color.BLACK);
-        }
+//        if (txtNamaSupplier.getText().equals("Supplier Name")) {
+//            txtNamaSupplier.setText("");
+//            txtNamaSupplier.setForeground(Color.BLACK);
+//        }
     }//GEN-LAST:event_txtNamaSupplierFocusGained
 
     private void txtNamaSupplierFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNamaSupplierFocusLost
-        if (txtNamaSupplier.getText().trim().equals("") || txtNamaSupplier.getText().length() == 0) {
-            txtNamaSupplier.setText("Supplier Name");
-            txtNamaSupplier.setForeground(new Color(153, 153, 153));
-        }
+//        if (txtNamaSupplier.getText().trim().equals("") || txtNamaSupplier.getText().length() == 0) {
+//            txtNamaSupplier.setText("Supplier Name");
+//            txtNamaSupplier.setForeground(new Color(153, 153, 153));
+//        }
     }//GEN-LAST:event_txtNamaSupplierFocusLost
 
     private void txtPriceFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPriceFocusGained
@@ -349,7 +347,7 @@ public class ChangeProduk extends javax.swing.JDialog {
         String idProduk = txtIdProduct.getText();
         ProductControler controler = new ProductControler(kategori, idProduk);
         controler.DisplayBarcode(cmbKategori, lblBarcode);
-        controler.SetIdSupplier(kategori, cmbIdSupplier);
+        controler.SetIdSupplierByCategory(kategori, cmbIdSupplier);
         cmbIdSupplier.addItem("Supplier ID");
     }//GEN-LAST:event_cmbKategoriActionPerformed
 
@@ -357,8 +355,7 @@ public class ChangeProduk extends javax.swing.JDialog {
         String idSupplier = (String) cmbIdSupplier.getSelectedItem();
         String kategori = (String) cmbIdSupplier.getSelectedItem();
         ProductControler controler = new ProductControler(kategori, null);
-        String namaSupplier = controler.GetSupplierName(idSupplier);
-        txtNamaSupplier.setText(namaSupplier);
+        controler.GetSupplierName(idSupplier, txtNamaSupplier);
     }//GEN-LAST:event_cmbIdSupplierActionPerformed
 
     private void btnGenerateIdMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGenerateIdMouseEntered

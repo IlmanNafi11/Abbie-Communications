@@ -30,7 +30,8 @@ public class DbRestock {
             stInsert.executeUpdate();
             exceptionHandler.SuccesSaveData("Restock transaction successfully saved");
         } catch (Exception e) {
-            exceptionHandler.Kesalahan("Failed to save Restock Transaction");
+            exceptionHandler.Kesalahan("Failed to save Restock Transaction" + e.getMessage());
+            e.printStackTrace();
         } finally {
             if (koneksi != null) {
                 try {

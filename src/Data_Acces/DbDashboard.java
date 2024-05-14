@@ -117,14 +117,15 @@ public class DbDashboard {
         return total;
     }
     
-    public ArrayList<Object[]> GetTransaksiDetailData(){
+    public ArrayList<Object[]> GetTransaksiDetailData(Date tgl){
         Object []data = null;
         Connection koneksi = null;
         ArrayList<Object[]> listData = new ArrayList<>();
-        String sqlGetData = "SELECT td.id_transaksi, td.subtotal, td.tanggal, prod.nama_produk FROM transaksi_detail td INNER JOIN produk prod ON td.product_id = prod.id_produk";
+        String sqlGetData = "SELECT td.id_transaksi, td.subtotal, td.tanggal, prod.nama_produk FROM transaksi_detail td INNER JOIN produk prod ON td.product_id = prod.id_produk WHERE DATE(td.tanggal) = ?";
         try {
             koneksi = ClassKoneksi.GetConnection();
             PreparedStatement stGet = koneksi.prepareStatement(sqlGetData);
+            stGet.setDate(1, new java.sql.Date(tgl.getTime()));
             ResultSet rs = stGet.executeQuery();
             while (rs.next()) {
                 String idTransaksi = rs.getString("id_transaksi");
@@ -148,14 +149,15 @@ public class DbDashboard {
         return listData;
     }
     
-    public ArrayList<Object[]> GetTransaksiServisData(){
+    public ArrayList<Object[]> GetTransaksiServisData(Date tgl){
         Object[] data = null;
         Connection koneksi = null;
         ArrayList<Object[]> listData = new ArrayList<>();
-        String sqlGetData = "SELECT id_transaksi, keterangan, biaya, tanggal FROM transaksi_servis";
+        String sqlGetData = "SELECT id_transaksi, keterangan, biaya, tanggal FROM transaksi_servis WHERE DATE(tanggal) = ?";
         try {
             koneksi = ClassKoneksi.GetConnection();
             PreparedStatement stGet = koneksi.prepareStatement(sqlGetData);
+            stGet.setDate(1, new java.sql.Date(tgl.getTime()));
             ResultSet rs = stGet.executeQuery();
             while (rs.next()) {
                 String idTransaksi = rs.getString("id_transaksi");

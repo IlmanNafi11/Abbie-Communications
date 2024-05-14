@@ -5,8 +5,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import Logic.*;
+import java.awt.List;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.JDialog;
+import javax.swing.JInternalFrame;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.JasperViewer;
@@ -387,9 +392,39 @@ public class DbProduct {
             koneksi = ClassKoneksi.GetConnection();
             InputStream path = getClass().getResourceAsStream("/report/PrintBarcode.jasper");
             JasperPrint jasperPrint = JasperFillManager.fillReport(path, null, koneksi);
-            JasperViewer.viewReport(jasperPrint, false);
+            JasperViewer view = new JasperViewer(jasperPrint, false);
+            view.setAlwaysOnTop(true);
+            view.setVisible(true);
         } catch (Exception e) {
             exceptionHandler.Kesalahan("A failure occurred while trying to print a transaction receipt!");
+        } finally {
+            if (koneksi != null) {
+                try {
+                    koneksi.close();
+                } catch (Exception e) {
+                    exceptionHandler.Kesalahan("A failure occurred while disconnecting the database connection!");
+                }
+            }
+        }
+    }
+    
+    public void PrintProductBySelected(String idProduct, int limit) {
+        exceptionHandler = new ExceptionHandler();
+        Connection koneksi = null;
+        InputStream path = getClass().getResourceAsStream("/report/PrintBarcodeBySelected.jasper");
+        Map<String, Object> parameter = new HashMap<>();
+        JasperPrint jasperPrint;
+        try {
+            koneksi = ClassKoneksi.GetConnection();
+            parameter.put("idProduk", idProduct);
+            parameter.put("limit", limit);
+            jasperPrint = JasperFillManager.fillReport(path, parameter, koneksi);
+            JasperViewer view = new JasperViewer(jasperPrint, false);
+            view.setAlwaysOnTop(true);
+            view.setVisible(true);
+        } catch (Exception e) {
+            exceptionHandler.Kesalahan("A failure occurred while trying to print a transaction receipt!");
+            e.printStackTrace();
         } finally {
             if (koneksi != null) {
                 try {

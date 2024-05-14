@@ -25,6 +25,7 @@ public class TransaksiServiceControler {
     private ExceptionHandler exceptionHandler;
     private ConfigTable model;
     private DbTransaksi dbTransaksi;
+    private ProductControler productControler;
 
     public TransaksiServiceControler(String information, String idProduct, String namaProduk, int kuantitas, int biaya, int total, String namaCustomer, String noHpCustomer, String alamatCustomer) {
         this.information = information;
@@ -151,9 +152,21 @@ public class TransaksiServiceControler {
 
     private Object[] GetDataPart() {
         Object[] dataPart = null;
-        if (!namaProduk.trim().equalsIgnoreCase("Product Name") && !namaProduk.trim().equalsIgnoreCase("") && kuantitas != 0) {
-            subTotal = kuantitas * biaya;
-            dataPart = new Object[]{idProduct, namaProduk, kuantitas, biaya, subTotal};
+        productControler = new ProductControler(null, idProduct);
+        int stock = productControler.GetJumlahStock();
+        if (stock != 0) {
+            if (stock >= kuantitas) {
+                if (!namaProduk.trim().equalsIgnoreCase("Product Name") && !namaProduk.trim().equalsIgnoreCase("")) {
+                    subTotal = kuantitas * biaya;
+                    dataPart = new Object[]{idProduct, namaProduk, kuantitas, biaya, subTotal};
+                } else {
+                    exceptionHandler.Kesalahan("All fields must be filled in!");
+                }
+            } else {
+                exceptionHandler.Kesalahan("Sorry, there are only "+stock+" stocks available");
+            }
+        } else {
+            exceptionHandler.Kesalahan("Sorry, the stock of the product you purchased is not available!");
         }
         return dataPart;
     }
@@ -161,14 +174,15 @@ public class TransaksiServiceControler {
     // isi field tambah part berdasarkan id product
     public void SetDataPart(JTextField txtIdProduct, JTextField txtNamaProduct, JTextField txtHarga, JTextField txtQuantity) {
         idProduct = txtIdProduct.getText();
-        ProductControler productControler = new ProductControler(null, idProduct);
-        namaProduk = productControler.getNamaProduct();
+        productControler = new ProductControler(null, idProduct);
+        namaProduk = productControler.getNamaProduct(idProduct);
         hargaProduct = productControler.getHarga();
         if (namaProduk != null) {
             txtNamaProduct.setText(namaProduk);
             txtHarga.setText(String.valueOf(hargaProduct));
-            txtHarga.setForeground(Color.BLACK);
-            txtNamaProduct.setForeground(Color.BLACK);
+            txtQuantity.setText("1");
+            txtQuantity.setForeground(Color.BLACK);
+            txtQuantity.requestFocus();
         } else {
             exceptionHandler.Kesalahan("Product not found!");
             txtNamaProduct.setText("Product Name");
@@ -180,16 +194,24 @@ public class TransaksiServiceControler {
         }
     }
 
-    public void AddDataServiceToTable(ConfigTable modelTable) {
+    public void AddDataServiceToTable(JTable table, JTextField txtInformasi, JTextField txtBiaya) {
+        model = (ConfigTable) table.getModel();
         if (GetDataService() != null) {
-            modelTable.addRow(GetDataService());
+            model.addRow(GetDataService());
+            txtInformasi.setText("Information");
+            txtBiaya.setText("Cost");
+            txtInformasi.setForeground(new Color(153, 153, 153));
+            txtBiaya.setForeground(new Color(153, 153, 153));
         }
     }
 
-    public void AddDataPart(ConfigTable modelTable, JTextField txtQuantity) {
-        if (GetDataPart() != null && ValidateQuantity(txtQuantity) != 0) {
-            modelTable.addRow(GetDataPart());
+    public boolean AddDataPart(JTable table, JTextField txtQuantity) {
+        model = (ConfigTable) table.getModel();
+        if (ValidateQuantity(txtQuantity) != 0 && GetDataPart() != null) {
+            model.addRow(GetDataPart());
+            return true;
         }
+        return false;
     }
 
     public void UpdateTotal(JTable tabel, JTextField txttotal) {
@@ -198,11 +220,31 @@ public class TransaksiServiceControler {
             total += Double.parseDouble(tabel.getValueAt(i, 4).toString());
         }
         txttotal.setText(String.valueOf(total));
-        txttotal.setForeground(Color.BLACK);
+    }
+
+    public void ClearDataTransaksi(JTextField txtInformasi, JTextField txtBiaya, JTextField txtNamaCustomer, JTextField txtNoHpCustomer, JTextField txtAlamat, JTextField txtTotal, JTextField txtPay, JTextField txtRefund, JTable table) {
+        txtInformasi.setText("Information");
+        txtBiaya.setText("Cost");
+        txtNamaCustomer.setText("Customer Name");
+        txtNoHpCustomer.setText("Customer Telephone Number");
+        txtAlamat.setText("Customer Address");
+        txtTotal.setText("Total");
+        txtPay.setText("Pay");
+        txtRefund.setText("Refund");
+        model = (ConfigTable) table.getModel();
+        model.setRowCount(0);
+        txtInformasi.setForeground(new Color(153, 153, 153));
+        txtBiaya.setForeground(new Color(153, 153, 153));
+        txtNamaCustomer.setForeground(new Color(153, 153, 153));
+        txtNoHpCustomer.setForeground(new Color(153, 153, 153));
+        txtAlamat.setForeground(new Color(153, 153, 153));
+        txtTotal.setForeground(new Color(153, 153, 153));
+        txtPay.setForeground(new Color(153, 153, 153));
+        txtRefund.setForeground(new Color(153, 153, 153));
     }
 
     public void HitungKembalian(JTextField txtTotal, JTextField txtBayar, JTextField txtKembalian) {
-        int jumlahBayar = Integer.parseInt(txtBayar.getText());
+        jumlahBayar = Integer.parseInt(txtBayar.getText());
         int kembalian = 0;
         if (total > jumlahBayar) {
             kembalian = total - jumlahBayar;
@@ -211,7 +253,6 @@ public class TransaksiServiceControler {
             txtKembalian.setText("Refund");
         } else {
             kembalian = jumlahBayar - total;
-            txtKembalian.setForeground(Color.BLACK);
             txtBayar.setForeground(Color.black);
             txtKembalian.setText(String.valueOf(kembalian));
         }
@@ -240,7 +281,7 @@ public class TransaksiServiceControler {
         }
     }
 
-    public void InsertTransaksi(JTable tabel, String namaTeknisi, int total, int pay, int kembalian) {
+    public boolean InsertTransaksi(JTable tabel, String namaTeknisi, int total, int pay, int kembalian) {
         this.idTransaksi = GenerateIdTransaksi();
         this.tanggal = GetDate();
         ConfigTable modelTable = (ConfigTable) tabel.getModel();
@@ -263,13 +304,13 @@ public class TransaksiServiceControler {
                             }
                         }
                         dbTransaksi.PrintStrukService(idTransaksi, namaTeknisi, total, pay, kembalian);
+                        return true;
                     } catch (Exception e) {
                         e.getMessage();
                     }
                 }
             }
-        } else {
-            exceptionHandler.Kesalahan("Invalid payment amount!");
         }
+        return false;
     }
 }

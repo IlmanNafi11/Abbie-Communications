@@ -11,6 +11,7 @@ public class Profile extends javax.swing.JDialog {
     private String usernameLama;
     private String noHpLama;
     private String nikLama;
+    private boolean counterButton = false;
     
     public Profile(JInternalFrame parent, boolean modal) {
         super((JFrame) parent.getTopLevelAncestor(), modal);
@@ -45,7 +46,6 @@ public class Profile extends javax.swing.JDialog {
         txtAlamat = new javax.swing.JTextField();
         txtUsername = new javax.swing.JTextField();
         btnCancel = new javax.swing.JButton();
-        btnEdit = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
         lblNameUser = new javax.swing.JLabel();
         lblPosisi = new javax.swing.JLabel();
@@ -53,6 +53,7 @@ public class Profile extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Profile");
+        setResizable(false);
         getContentPane().setLayout(null);
 
         txtUserId.setEditable(false);
@@ -71,6 +72,7 @@ public class Profile extends javax.swing.JDialog {
         getContentPane().add(txtUserId);
         txtUserId.setBounds(68, 568, 488, 45);
 
+        txtName.setEditable(false);
         txtName.setBackground(new java.awt.Color(245, 246, 250));
         txtName.setForeground(new java.awt.Color(153, 153, 153));
         txtName.setText("Name");
@@ -86,6 +88,7 @@ public class Profile extends javax.swing.JDialog {
         getContentPane().add(txtName);
         txtName.setBounds(68, 644, 488, 45);
 
+        txtNik.setEditable(false);
         txtNik.setBackground(new java.awt.Color(245, 246, 250));
         txtNik.setForeground(new java.awt.Color(153, 153, 153));
         txtNik.setText("NIK");
@@ -101,6 +104,7 @@ public class Profile extends javax.swing.JDialog {
         getContentPane().add(txtNik);
         txtNik.setBounds(68, 730, 488, 45);
 
+        txtNoHp.setEditable(false);
         txtNoHp.setBackground(new java.awt.Color(245, 246, 250));
         txtNoHp.setForeground(new java.awt.Color(153, 153, 153));
         txtNoHp.setText("Phone Number");
@@ -116,6 +120,7 @@ public class Profile extends javax.swing.JDialog {
         getContentPane().add(txtNoHp);
         txtNoHp.setBounds(598, 568, 488, 45);
 
+        txtAlamat.setEditable(false);
         txtAlamat.setBackground(new java.awt.Color(245, 246, 250));
         txtAlamat.setForeground(new java.awt.Color(153, 153, 153));
         txtAlamat.setText("Address");
@@ -168,32 +173,9 @@ public class Profile extends javax.swing.JDialog {
             }
         });
         getContentPane().add(btnCancel);
-        btnCancel.setBounds(803, 811, 95, 50);
+        btnCancel.setBounds(898, 811, 95, 50);
 
-        btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Edit-Primary-Default.png"))); // NOI18N
-        btnEdit.setBorder(null);
-        btnEdit.setContentAreaFilled(false);
-        btnEdit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnEdit.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnEditMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnEditMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnEditMousePressed(evt);
-            }
-        });
-        btnEdit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnEdit);
-        btnEdit.setBounds(915, 811, 72, 50);
-
-        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Save-Primary-Default.png"))); // NOI18N
+        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Edit-Primary-Default.png"))); // NOI18N
         btnSave.setBorder(null);
         btnSave.setContentAreaFilled(false);
         btnSave.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -252,24 +234,15 @@ public class Profile extends javax.swing.JDialog {
         btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Cancel-Primary-Click.png")));
     }//GEN-LAST:event_btnCancelMousePressed
 
-    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Edit-Primary-Click.png")));
-    }//GEN-LAST:event_btnEditActionPerformed
-
-    private void btnEditMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseEntered
-        btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Edit-Primary-Hover.png")));
-    }//GEN-LAST:event_btnEditMouseEntered
-
-    private void btnEditMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseExited
-        btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Edit-Primary-Default.png")));
-    }//GEN-LAST:event_btnEditMouseExited
-
-    private void btnEditMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMousePressed
-        btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Edit-Primary-Click.png")));
-    }//GEN-LAST:event_btnEditMousePressed
-
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Save-Primary-Click.png")));
+        if (!counterButton) {
+            counterButton = true;
+            btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Save-Primary-Default.png")));
+            UserDataControler controler = new UserDataControler(null, null, null, null, null, null, null, role);
+            controler.SetEditableProfile(txtNik, txtName, txtNoHp, txtAlamat);
+            return;
+        }
+        
         String idUser = txtUserId.getText();
         String nik = txtNik.getText();
         String namaUser = txtName.getText();
@@ -288,15 +261,27 @@ public class Profile extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnSaveMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSaveMouseEntered
-        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Save-Primary-Hover.png")));
+        if (counterButton) {
+            btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Save-Primary-Hover.png")));
+        } else {
+            btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Edit-Primary-Hover.png")));
+        }       
     }//GEN-LAST:event_btnSaveMouseEntered
 
     private void btnSaveMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSaveMouseExited
-        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Save-Primary-Default.png")));
+        if (counterButton) {
+            btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Save-Primary-Default.png")));
+        } else {
+            btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Edit-Primary-Default.png")));
+        }      
     }//GEN-LAST:event_btnSaveMouseExited
 
     private void btnSaveMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSaveMousePressed
-        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Save-Primary-Click.png")));
+        if (counterButton) {
+            btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Save-Primary-Click.png")));
+        } else {
+            btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Edit-Primary-Click.png")));
+        }  
     }//GEN-LAST:event_btnSaveMousePressed
 
     private void txtUserIdFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUserIdFocusGained
@@ -350,7 +335,7 @@ public class Profile extends javax.swing.JDialog {
 
     private void txtNoHpFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNoHpFocusLost
         if (txtNoHp.getText().trim().equals("")|| txtNoHp.getText().length() == 0) {
-            txtNoHp.setText("NIK");
+            txtNoHp.setText("Phone Number");
             txtNoHp.setForeground(new Color(153,153,153));
         }
     }//GEN-LAST:event_txtNoHpFocusLost
@@ -428,7 +413,6 @@ public class Profile extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bg;
     private javax.swing.JButton btnCancel;
-    private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnSave;
     private javax.swing.JLabel lblNameUser;
     private javax.swing.JLabel lblPosisi;

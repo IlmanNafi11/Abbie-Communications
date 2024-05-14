@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b48cdd2d-dd2a-4102-9f70-4b5783c55e46">
+	<property name="ireport.zoom" value="1.6105100000000019"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="48"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<parameter name="idProduk" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\Abbie Communications\\src\\report\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="limit" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT * FROM produk where id_produk = $P{idProduk}]]>
+	</queryString>
+	<field name="id_produk" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nama_produk" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="kategori" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="jumlah" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="harga" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="id_supplier" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="barcode" class="java.lang.Object">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="jumlah" class="java.lang.String">
+		<variableExpression><![CDATA[$V{jumlah} + 1]]></variableExpression>
+		<initialValueExpression><![CDATA[new Integer(1) ]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="81" splitType="Stretch">
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="10" y="1" width="105" height="66" uuid="5a81020f-7f0d-48c4-af95-83416eb9f7d5"/>
+				<imageExpression><![CDATA["D:\\Abbie Communications\\src\\report\\logo-abbie-communications.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="140" y="41" width="307" height="31" uuid="1830a2d8-00e7-4108-9769-c90c770bbe8b"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Jalan Seruni Nomor 9, RT:003 RW:007, Kel/Kec.Sukomoro Kab.Nganjuk]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="167" y="14" width="248" height="27" uuid="a3753db4-e870-4d99-890b-0e4f408dbb7a"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Konter Abbie Communications]]></text>
+			</staticText>
+			<line>
+				<reportElement x="6" y="76" width="542" height="1" uuid="260117a2-1114-485a-8e43-bab93221840b"/>
+				<graphicElement>
+					<pen lineWidth="4.0" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement x="6" y="8" width="542" height="20" uuid="95083131-6ce8-4720-8606-6b4628bf7052"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Product List]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="42" splitType="Stretch">
+			<rectangle>
+				<reportElement x="348" y="12" width="90" height="30" backcolor="#99CCFF" uuid="b454f588-3a05-4c3e-aa52-6fb0df80604d"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="92" y="12" width="122" height="30" backcolor="#99CCFF" uuid="ec7bc209-7c9e-4713-84c0-25a90942d237"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="308" y="12" width="40" height="30" backcolor="#99CCFF" uuid="d0b07fe2-0fea-4684-bdec-87c411beb552"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="214" y="12" width="94" height="30" backcolor="#99CCFF" uuid="94cd6b91-654b-4c93-9525-ac60e3ff44d2"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="438" y="12" width="108" height="30" backcolor="#99CCFF" uuid="501c7dde-ff14-455b-a7cf-20f40032d339"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="7" y="12" width="85" height="30" backcolor="#99CCFF" uuid="07c97540-a552-4426-b75d-25a9c366fdf9"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="92" y="11" width="122" height="30" uuid="d6a5a4a5-5dfd-4b10-b84f-f3d15f9e194a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Product Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="348" y="11" width="90" height="30" uuid="e88419e8-d9f4-4773-947e-6d156e605e83"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Price]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="214" y="11" width="94" height="30" uuid="c06ecf9d-95f6-4748-bfb9-24c11bde1fd0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Category]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="438" y="13" width="108" height="28" uuid="b71dfa7b-645b-4c81-ac9b-075316d8c1d8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Barcode]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="13" width="85" height="28" uuid="fc31bd8c-795b-4f8e-9b7d-382bb2c64fe0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Product ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="308" y="13" width="40" height="28" uuid="959be1d9-b55a-4712-9518-6cc44a058e0a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Stock]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="100" splitType="Stretch">
+			<printWhenExpression><![CDATA[$P{limit} > 0]]></printWhenExpression>
+			<subreport>
+				<reportElement x="6" y="0" width="539" height="100" uuid="0d0388c9-91c3-43e5-af4b-1aae77c5d44f"/>
+				<subreportParameter name="id">
+					<subreportParameterExpression><![CDATA[$P{idProduk}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="counter"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "DataProductBySelect.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="100">
+			<printWhenExpression><![CDATA[$P{limit} > 10]]></printWhenExpression>
+			<subreport>
+				<reportElement x="6" y="0" width="539" height="100" uuid="dc2e9af7-3759-4ecc-bb94-b4bd4d99efb8"/>
+				<subreportParameter name="id">
+					<subreportParameterExpression><![CDATA[$P{idProduk}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="counter"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "DataProductBySelect.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="100">
+			<printWhenExpression><![CDATA[$P{limit} > 20]]></printWhenExpression>
+			<subreport>
+				<reportElement x="6" y="0" width="539" height="100" uuid="642d431c-ba62-478a-8137-a922d718aeee"/>
+				<subreportParameter name="id">
+					<subreportParameterExpression><![CDATA[$P{idProduk}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="counter"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "DataProductBySelect.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="100">
+			<printWhenExpression><![CDATA[$P{limit} > 30]]></printWhenExpression>
+			<subreport>
+				<reportElement x="6" y="0" width="539" height="100" uuid="663d2a08-df12-4022-af87-c96e29db21c0"/>
+				<subreportParameter name="id">
+					<subreportParameterExpression><![CDATA[$P{idProduk}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="counter"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "DataProductBySelect.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="100">
+			<printWhenExpression><![CDATA[$P{limit} > 40]]></printWhenExpression>
+			<subreport>
+				<reportElement x="6" y="0" width="539" height="100" uuid="e3f4c6a8-f772-4e51-838b-89608fe531fb"/>
+				<subreportParameter name="id">
+					<subreportParameterExpression><![CDATA[$P{idProduk}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="counter"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "DataProductBySelect.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="100">
+			<printWhenExpression><![CDATA[$P{limit} > 50]]></printWhenExpression>
+			<subreport>
+				<reportElement x="6" y="0" width="539" height="100" uuid="d32943ae-9dac-47cd-90a6-b449dc4cbe6b"/>
+				<subreportParameter name="id">
+					<subreportParameterExpression><![CDATA[$P{idProduk}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="counter"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "DataProductBySelect.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="100">
+			<printWhenExpression><![CDATA[$P{limit} > 60]]></printWhenExpression>
+			<subreport>
+				<reportElement x="6" y="0" width="539" height="100" uuid="0894fbec-f59a-49cc-92ff-e299426f1487"/>
+				<subreportParameter name="id">
+					<subreportParameterExpression><![CDATA[$P{idProduk}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="counter"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "DataProductBySelect.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="100">
+			<printWhenExpression><![CDATA[$P{limit} > 70]]></printWhenExpression>
+			<subreport>
+				<reportElement x="6" y="0" width="539" height="100" uuid="ab454a88-80ed-4dc7-8f77-13a546656ee9"/>
+				<subreportParameter name="id">
+					<subreportParameterExpression><![CDATA[$P{idProduk}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="counter"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "DataProductBySelect.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="100">
+			<printWhenExpression><![CDATA[$P{limit} > 80]]></printWhenExpression>
+			<subreport>
+				<reportElement x="6" y="0" width="539" height="100" uuid="a7cd9ec5-1797-4bee-98ce-87c9123f98f5"/>
+				<subreportParameter name="id">
+					<subreportParameterExpression><![CDATA[$P{idProduk}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="counter"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "DataProductBySelect.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="100">
+			<printWhenExpression><![CDATA[$P{limit} > 90]]></printWhenExpression>
+			<subreport>
+				<reportElement x="6" y="0" width="539" height="100" uuid="04065a60-d741-479f-928b-e9128b820f05"/>
+				<subreportParameter name="id">
+					<subreportParameterExpression><![CDATA[$P{idProduk}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="counter"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "DataProductBySelect.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -10,7 +10,10 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT * FROM laporan WHERE MONTH(tanggal) = $P{bulan} AND  YEAR(tanggal) = $P{tahun};]]>
+		<![CDATA[SELECT id_laporan, tanggal, MONTHNAME(tanggal) AS nama_bulan, pemasukan_penjualan, pemasukan_service, jumlah_pengeluaran
+FROM laporan
+WHERE MONTH(tanggal) = $P{bulan} AND YEAR(tanggal) = $P{tahun};
+]]>
 	</queryString>
 	<field name="id_laporan" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -18,16 +21,14 @@
 	<field name="tanggal" class="java.sql.Date">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="pemasukan_penjualan" class="java.lang.Float">
+	<field name="nama_bulan" class="java.lang.String"/>
+	<field name="pemasukan_penjualan" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="pemasukan_service" class="java.lang.Float">
+	<field name="pemasukan_service" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="jumlah_pengeluaran" class="java.lang.Float">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="id_user" class="java.lang.String">
+	<field name="jumlah_pengeluaran" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<background>
@@ -72,12 +73,12 @@
 				<text><![CDATA[Year   :]]></text>
 			</staticText>
 			<textField pattern="">
-				<reportElement x="62" y="6" width="100" height="20" uuid="5ca4ac42-034a-48ef-92f4-90466262538e"/>
-				<textFieldExpression><![CDATA[$P{bulan}]]></textFieldExpression>
-			</textField>
-			<textField pattern="">
 				<reportElement x="62" y="26" width="100" height="20" uuid="7f9783b1-d450-457e-83a6-5261753da0fb"/>
 				<textFieldExpression><![CDATA[$P{tahun}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="62" y="6" width="100" height="20" uuid="07b67e57-1f22-46a3-89e5-ed2178436bf6"/>
+				<textFieldExpression><![CDATA[$F{nama_bulan}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>

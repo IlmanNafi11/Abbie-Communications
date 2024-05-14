@@ -19,6 +19,7 @@ public class ExceptionHandler {
     ImageIcon confirmChangeDataPerson = new ImageIcon(getClass().getResource("/images/IconError/Confirm-Change-Data-Person.png"));
     ImageIcon confirmDiscount = new ImageIcon(getClass().getResource("/images/IconError/Icon-Discount.png"));
     ImageIcon failedDelete = new ImageIcon(getClass().getResource("/images/IconError/Icon-Failed-Delete.png"));
+    ImageIcon confirmLogout = new ImageIcon(getClass().getResource("/images/IconError/icon-LogOut.png"));
 
     // pesan error
     public void Kesalahan(String pesanError) {
@@ -100,6 +101,13 @@ public class ExceptionHandler {
 
     public boolean ConfirmDiscount(String pesan){
         if (JOptionPane.showConfirmDialog(null, pesan, "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, confirmDiscount) == JOptionPane.YES_OPTION) {
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean ConfirmLogOut(String pesan){
+        if (JOptionPane.showConfirmDialog(null, pesan, "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, confirmLogout) == JOptionPane.YES_OPTION) {
             return true;
         }
         return false;

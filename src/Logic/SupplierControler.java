@@ -87,6 +87,16 @@ public class SupplierControler {
         }
         return false;
     }
+    
+    private boolean ValidationNoHpWhenChange(String noHpBaru, String noHpLama){
+        if (noHpBaru.equalsIgnoreCase(noHpLama)) {
+            return true;
+        } else if (PhoneNumberValidation()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     private boolean ValueValidation() {
         if (!namaSupplier.equalsIgnoreCase("Supplier Name") && !namaSupplier.equals("") && !noHp.equalsIgnoreCase("Telephone Number") && !noHp.equals("")) {
@@ -113,8 +123,13 @@ public class SupplierControler {
     }
 
     private boolean PhoneNumberValidation() {
-        if (noHp.matches("\\d+") && noHp.length() < 14 && noHp.length() > 11) {
-            return true;
+        if (noHp.matches("\\d+") && noHp.length() < 14 && noHp.length() > 11 && noHp.startsWith("08")) {
+            boolean cekNoHp = dbSupplier.CekNoHp(noHp);
+            if (!cekNoHp) {
+                return true;
+            } else {
+                exceptionHandler.Kesalahan("Telephone number has been used!");
+            }  
         } else {
             exceptionHandler.Kesalahan("Telephone Number is invalid");
         }
@@ -191,12 +206,14 @@ public class SupplierControler {
         return false;
     }
 
-    public boolean ChangeSupplierData() {
+    public boolean ChangeSupplierData(String nomorLama) {
         if (ValueValidation()) {
-            boolean confirm = exceptionHandler.ConfirmChangePerson("Change Supplier data?");
-            if (confirm) {
-                dbSupplier.ChangeSupplierData(idSupplier, namaSupplier, noHp, kategori);
-                return true;
+            if (ValidationNoHpWhenChange(noHp, nomorLama)) {
+                boolean confirm = exceptionHandler.ConfirmChangePerson("Change Supplier data?");
+                if (confirm) {
+                    dbSupplier.ChangeSupplierData(idSupplier, namaSupplier, noHp, kategori);
+                    return true;
+                }
             }
         }
         return false;

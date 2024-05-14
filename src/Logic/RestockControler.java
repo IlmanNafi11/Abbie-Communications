@@ -173,48 +173,55 @@ public class RestockControler {
     }
 
     // set comboBox id produk berdasarkan kategorinya
-    public void SetComboProdukId(JComboBox<String> comboBox) {
-        try {
-            productControler = new ProductControler(category, null);
-            ArrayList<String> getIdProduk = productControler.getIdProduct();
-            comboBox.removeAllItems();
-            for (String idProduk : getIdProduk) {
-                comboBox.addItem(idProduk);               
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }       
+    public void SetComboProdukId(JComboBox<String> cmbKategori, JComboBox<String> comboBoxIdProduk) {
+        category = (String) cmbKategori.getSelectedItem();
+        if (!category.equalsIgnoreCase("Category")) {
+            try {
+                productControler = new ProductControler(category, null);
+                ArrayList<String> getIdProduk = productControler.getIdProduct();
+                comboBoxIdProduk.removeAllItems();
+                for (String idProduk : getIdProduk) {
+                    productName = productControler.getNamaProduct(idProduk);
+                    comboBoxIdProduk.addItem(idProduk + " - " + productName);                    
+                }
+                comboBoxIdProduk.addItem("Product ID");
+                comboBoxIdProduk.setSelectedItem("Product ID");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }            
+        } else {
+            comboBoxIdProduk.removeAllItems();
+            comboBoxIdProduk.addItem("Product ID");
+            comboBoxIdProduk.setSelectedItem("Product ID");
+        }
+        
     }
 
     public void SetTxtProdukName(String idProduct, JTextField txtProdukName) {
-        if (idProduct != "Product ID") {
-            productControler = new ProductControler(category, idProduct);
-            productName = productControler.getNamaProduct();
+        if (idProduct != null && idProduct != "Product ID") {
+            String produkId = idProduct.split("-")[0];
+            productControler = new ProductControler(category, produkId);
+            productName = productControler.getNamaProduct(produkId);
             txtProdukName.setText(productName);
         } else {
             txtProdukName.setText("Product Name");
         }
     }
-
-    //set item combo box id supplier berdasarkan kategori produk
-    public void SetComboIdSupplier(JComboBox<String> comboBox) {
-        if (!category.equalsIgnoreCase("Category")) {
-            supplierControler = new SupplierControler(null, null, null, category);
-            ArrayList<String> getIdSupplier = supplierControler.GetIdSupplier();
-            comboBox.removeAllItems();
-            for (String idSupplier : getIdSupplier) {
-                comboBox.addItem(idSupplier);
+    
+    public void SettxtIdAndNameSupplier(String productId, JTextField txtIdSupplier, JTextField txtNamaSupplier) {
+        if (productId != null) {
+            productId = productId.split("-")[0];
+            if (productId != "Product ID") {
+                productControler = new ProductControler(category, productId);
+                supplierId = productControler.GetSupplierIdByIdProduct(productId);
+                supplierControler = new SupplierControler(supplierId, null, null, category);
+                supplierName = supplierControler.GetSupplierName();
+                txtIdSupplier.setText(supplierId);
+                txtNamaSupplier.setText(supplierName);
+            } else {
+                txtIdSupplier.setText("Supplier ID");
+                txtNamaSupplier.setText("Supplier Name");
             }
-        }    
-    }
-
-    public void setTxtSupplierName(String idSupplier, JTextField txtSupplierName) {
-        if (supplierId != "Supplier ID") {
-            supplierControler = new SupplierControler(supplierId, null, null, null);
-            supplierName = supplierControler.GetSupplierName();
-            txtSupplierName.setText(supplierName);
-        } else {
-            txtSupplierName.setText("Supplier Name");
         }
     }
 
@@ -252,9 +259,10 @@ public class RestockControler {
             GenerateIdTransaksi();
             this.tanggal = GetDate();
             this.total = CalculateTotal();
+            String idProduct = productId.split("-")[0];
             boolean confirm = exceptionHandler.ConfirmSave("Save Transaction?");
             if (confirm) {
-                dbRestock.InsertData(transactionId, productName, quantity, price, supplierId, productId, total, tanggal);
+                dbRestock.InsertData(transactionId, productName, quantity, price, supplierId, idProduct, total, tanggal);
                 return true;
             }
         }
@@ -265,9 +273,10 @@ public class RestockControler {
         if (ValidateKategori() && ValidateProductId() && quantity != 0 && ValidateSupplierId() && price != 0) {
             this.tanggal = GetDate();
             this.total = CalculateTotal();
+            String idProduct = productId.split("-")[0];
             boolean confirm = exceptionHandler.ConfirmSave("Save data changes restock?");
             if (confirm) {
-                dbRestock.ChangeRestockData(transactionId, productName, quantity, price, supplierId, productId, total, tanggal);
+                dbRestock.ChangeRestockData(transactionId, productName, quantity, price, supplierId, idProduct, total, tanggal);
                 return true;
             }
         }

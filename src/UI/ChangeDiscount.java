@@ -28,6 +28,8 @@ public class ChangeDiscount extends javax.swing.JDialog {
         txtMinimum.setText(String.valueOf(minumumPurchase));
         txtAmount.setText(String.valueOf(amount));
         cmbStatus.setSelectedItem(status);
+        txtMinimum.setForeground(Color.BLACK);
+        txtAmount.setForeground(Color.BLACK);
     }
 
     @SuppressWarnings("unchecked")

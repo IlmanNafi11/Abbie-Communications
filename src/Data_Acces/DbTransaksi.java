@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import Logic.*;
 import java.io.InputStream;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,6 +32,7 @@ public class DbTransaksi {
             exceptionHandler.SuccesSaveData("Transaction successful!");
         } catch (Exception e) {
             exceptionHandler.GagalTersimpan("A failure occurred while trying to save the transaction!");
+            e.printStackTrace();
         } finally {
             if (koneksi != null) {
                 try {
@@ -56,6 +59,7 @@ public class DbTransaksi {
             stInsert.executeUpdate();
         } catch (Exception e) {
             exceptionHandler.GagalTersimpan("A failure occurred while trying to save transaction details!");
+            e.printStackTrace();
         } finally {
             if (koneksi != null) {
                 try {
@@ -79,6 +83,7 @@ public class DbTransaksi {
             stInsert.executeUpdate();
         } catch (Exception e) {
             exceptionHandler.GagalTersimpan("A failure occurred while trying to save member transactions!");
+            e.printStackTrace();
         } finally {
             if (koneksi != null) {
                 try {
@@ -103,6 +108,7 @@ public class DbTransaksi {
             stInsert.executeUpdate();
         } catch (Exception e) {
             exceptionHandler.GagalTersimpan("A failure occurred while trying to save discount transaction details!");
+            e.printStackTrace();
         } finally {
             if (koneksi != null) {
                 try {
@@ -187,11 +193,15 @@ public class DbTransaksi {
             koneksi = ClassKoneksi.GetConnection();
             InputStream path = getClass().getResourceAsStream("/report/StrukService.jasper");
             Map<String, Object> parameter = new HashMap<>();
+            NumberFormat pemformat = new DecimalFormat("#,##0.00");
+            String formatTotal = "Rp " + pemformat.format(total);
+            String formatTunai = "Rp " + pemformat.format(tunai);
+            String formatKembalian = "Rp. " + pemformat.format(kembalian);
             parameter.put("idTransaksi", id);
             parameter.put("teknisi", namaTeknisi);
-            parameter.put("total", total);
-            parameter.put("tunai", tunai);
-            parameter.put("kembalian", kembalian);
+            parameter.put("total", formatTotal);
+            parameter.put("tunai", formatTunai);
+            parameter.put("kembalian", formatKembalian);
             JasperPrint jasperPrint = JasperFillManager.fillReport(path, parameter, koneksi);
             JasperViewer.viewReport(jasperPrint, false);
         } catch (Exception e) {

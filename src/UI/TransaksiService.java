@@ -148,17 +148,11 @@ public class TransaksiService extends javax.swing.JInternalFrame {
 
         getContentPane().add(JScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 517, 940, 250));
 
+        txtTotal.setEditable(false);
+        txtTotal.setBackground(new java.awt.Color(255, 255, 255));
         txtTotal.setForeground(new java.awt.Color(153, 153, 153));
         txtTotal.setText("Total");
         txtTotal.setBorder(null);
-        txtTotal.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtTotalFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtTotalFocusLost(evt);
-            }
-        });
         getContentPane().add(txtTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(331, 801, 202, 50));
 
         txtPay.setForeground(new java.awt.Color(153, 153, 153));
@@ -174,17 +168,11 @@ public class TransaksiService extends javax.swing.JInternalFrame {
         });
         getContentPane().add(txtPay, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 801, 202, 50));
 
+        txtRefund.setEditable(false);
+        txtRefund.setBackground(new java.awt.Color(255, 255, 255));
         txtRefund.setForeground(new java.awt.Color(153, 153, 153));
         txtRefund.setText("Refund");
         txtRefund.setBorder(null);
-        txtRefund.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtRefundFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtRefundFocusLost(evt);
-            }
-        });
         getContentPane().add(txtRefund, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 801, 198, 50));
 
         btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Button-Delete-Primary-Default.png"))); // NOI18N
@@ -371,7 +359,10 @@ public class TransaksiService extends javax.swing.JInternalFrame {
         int kembalian = Integer.parseInt(txtRefund.getText());
         TransaksiServiceControler transaksiServiceControler = new TransaksiServiceControler(null, null, null, 0, 0, total, namaCustomer, noHpCustomer, alamat);
         transaksiServiceControler.ValidatePayment(txtPay);
-        transaksiServiceControler.InsertTransaksi(table, username, total, pay, kembalian);
+        boolean succes = transaksiServiceControler.InsertTransaksi(table, username, total, pay, kembalian);
+        if (succes) {
+            transaksiServiceControler.ClearDataTransaksi(txtInformasi, txtBiaya, txtCustomerName, txtNoHpCustomer, txtCustomerAddress, txtTotal, txtPay, txtRefund, table);
+        }
     }//GEN-LAST:event_btnPrintActionPerformed
 
     private void btnPrintMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPrintMouseEntered
@@ -456,20 +447,6 @@ public class TransaksiService extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_txtCustomerAddressFocusLost
 
-    private void txtTotalFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTotalFocusGained
-        if (txtTotal.getText().equals("Total")) {
-            txtTotal.setText("");
-            txtTotal.setForeground(Color.BLACK);
-        }
-    }//GEN-LAST:event_txtTotalFocusGained
-
-    private void txtTotalFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTotalFocusLost
-        if (txtTotal.getText().trim().equals("") || txtTotal.getText().length() == 0) {
-            txtTotal.setText("Total");
-            txtTotal.setForeground(new Color(153, 153, 153));
-        }
-    }//GEN-LAST:event_txtTotalFocusLost
-
     private void txtPayFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPayFocusGained
         if (txtPay.getText().equals("Pay")) {
             txtPay.setText("");
@@ -483,20 +460,6 @@ public class TransaksiService extends javax.swing.JInternalFrame {
             txtPay.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtPayFocusLost
-
-    private void txtRefundFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtRefundFocusGained
-        if (txtRefund.getText().equals("Refund")) {
-            txtRefund.setText("");
-            txtRefund.setForeground(Color.BLACK);
-        }
-    }//GEN-LAST:event_txtRefundFocusGained
-
-    private void txtRefundFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtRefundFocusLost
-        if (txtRefund.getText().trim().equals("") || txtRefund.getText().length() == 0) {
-            txtRefund.setText("Refund");
-            txtRefund.setForeground(new Color(153, 153, 153));
-        }
-    }//GEN-LAST:event_txtRefundFocusLost
 
     private void lblPosisiUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPosisiUserMouseClicked
         lblPosisiUser.setForeground(new Color(28, 119, 255));
@@ -563,7 +526,7 @@ public class TransaksiService extends javax.swing.JInternalFrame {
             String Informasi = txtInformasi.getText().trim();
             TransaksiServiceControler transaksiServiceControler = new TransaksiServiceControler(Informasi, null, null, 0, 0, 0, null, null, null);
             transaksiServiceControler.ValidateBiaya(txtBiaya);
-            transaksiServiceControler.AddDataServiceToTable(model);
+            transaksiServiceControler.AddDataServiceToTable(table, txtInformasi, txtBiaya);
             transaksiServiceControler.UpdateTotal(table, txtTotal);
         }
     }//GEN-LAST:event_txtBiayaKeyReleased

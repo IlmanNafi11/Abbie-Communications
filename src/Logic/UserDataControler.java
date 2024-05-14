@@ -100,11 +100,12 @@ public class UserDataControler {
     }
 
     private boolean ValidasiNoHpBaru() {
-        if (noHp.equalsIgnoreCase(noHpLama)) {
+        if (noHp.equalsIgnoreCase(noHpLama) && noHp.startsWith("08")) {
             return true;
-        } else if (CekNoHp()) {
+        } else if (CekNoHp() && noHp.startsWith("08")) {
             return true;
         } else {
+            exceptionHandler.Kesalahan("Invalid cellphone number!");
             return false;
         }
     }
@@ -175,6 +176,17 @@ public class UserDataControler {
             exceptionHandler.Kesalahan("Select one of the product data you want to change");
         }
         return false;
+    }
+    
+    public void SetEditableProfile(JTextField txtNik, JTextField txtNamaUser, JTextField txtNoHp, JTextField txtAlamat){
+        txtNik.setForeground(Color.BLACK);
+        txtNamaUser.setForeground(Color.BLACK);
+        txtNoHp.setForeground(Color.BLACK);
+        txtAlamat.setForeground(Color.BLACK);
+        txtNik.setEditable(true);
+        txtNamaUser.setEditable(true);
+        txtNoHp.setEditable(true);
+        txtAlamat.setEditable(true);
     }
 
     // get all data pengguna

@@ -1,7 +1,6 @@
 package UI;
 
-import Logic.LaporanControler;
-import Logic.LoginControler;
+import Logic.*;
 import java.awt.Window;
 import java.util.ArrayList;
 import javax.swing.JFrame;
@@ -18,7 +17,6 @@ public class MenuOwner extends javax.swing.JInternalFrame {
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
         bui.setNorthPane(null);
-//        UpdateLaporan();
     }
 
     public void SetUser(String username, String role) {
@@ -272,6 +270,7 @@ public class MenuOwner extends javax.swing.JInternalFrame {
 
     private void btnDashboardMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDashboardMouseEntered
         btnDashboard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Menu-Dashboard-Hover.png")));
+        UpdateLaporan();
     }//GEN-LAST:event_btnDashboardMouseEntered
 
     private void btnDashboardMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDashboardMouseExited
@@ -410,8 +409,12 @@ public class MenuOwner extends javax.swing.JInternalFrame {
 
     private void btnSignOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignOutActionPerformed
         btnSignOut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Label-Sign-Out-Click.png")));
-        tutupMainFrame();
-        bukaWelcomeFrame();
+        ExceptionHandler exceptionHandler = new ExceptionHandler();
+        boolean confirm = exceptionHandler.ConfirmLogOut("Are you sure you want to exit the application?");
+        if (confirm) {
+            tutupMainFrame();
+            bukaWelcomeFrame();
+        }
     }//GEN-LAST:event_btnSignOutActionPerformed
 
     private void btnSignOutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSignOutMouseEntered

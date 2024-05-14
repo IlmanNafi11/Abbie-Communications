@@ -31,9 +31,6 @@ public class LaporanControler {
         tahun.setYear(thnSkrng);
     }
 
-    public void GetLaporanByDate(){
-    
-    }
     public void setIdUser(String idUser) {
         this.idUser = idUser;
     }

@@ -16,7 +16,6 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
-
 public class ProductControler {
 
     private String namaProduct;
@@ -39,8 +38,8 @@ public class ProductControler {
     }
 
     // get nama produk berdasarkan id untuk kelas transaksi dan restok
-    public String getNamaProduct() {
-        namaProduct = dbProduct.GetProdukName(idProduct);
+    public String getNamaProduct(String produkId) {
+        namaProduct = dbProduct.GetProdukName(produkId);
         return namaProduct;
     }
 
@@ -51,7 +50,7 @@ public class ProductControler {
     }
 
     // get jumlah stok produk untuk keperluan validasi sebelum transaksi
-    public int getJumlahStock() {
+    public int GetJumlahStock() {
         jumlahStock = dbProduct.GetStok(idProduct);
         return jumlahStock;
     }
@@ -81,6 +80,7 @@ public class ProductControler {
     public void GenerateIdProduct(JTextField txtIdProduct) {
         idProduct = GenerateRandom(12);
         txtIdProduct.setText(idProduct);
+        txtIdProduct.setForeground(Color.BLACK);
     }
 
     private byte[] GenerateBarcode() {
@@ -106,7 +106,6 @@ public class ProductControler {
                 ByteArrayOutputStream bytes = new ByteArrayOutputStream();
                 ImageIO.write(imgBarcode, "gif", bytes);
                 byteBarcode = bytes.toByteArray();
-//        barcode.drawBarcode("src/images/barcode/" + idProduct + ".gif");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -115,7 +114,7 @@ public class ProductControler {
     }
 
     //set item combo box id supplier berdasarkan kategori produk
-    public void SetIdSupplier(String kategori, JComboBox<String> comboBox) {
+    public void SetIdSupplierByCategory(String kategori, JComboBox<String> comboBox) {
         if (kategori != null) {
             try {
                 supplierControler = new SupplierControler(null, null, null, kategori);
@@ -131,7 +130,7 @@ public class ProductControler {
     }
 
     // set id supplier berdasarkan id produk saat update data
-    public String SetSupplierId(String produkId) {
+    public String GetSupplierIdByIdProduct(String produkId) {
         this.idSupplier = dbProduct.GetSupplierByIdProduk(produkId);
         return idSupplier;
     }
@@ -150,10 +149,16 @@ public class ProductControler {
     }
 
     // get nama supplier berdasarkan id supplier yang dipilih di combo box
-    public String GetSupplierName(String suplierId) {
-        supplierControler = new SupplierControler(suplierId, null, null, null);
-        String namaSupplier = supplierControler.GetSupplierName();
-        return namaSupplier;
+    public void GetSupplierName(String suplierId, JTextField txtNamaSupplier) {
+        if (suplierId != "Supplier ID") {
+            supplierControler = new SupplierControler(suplierId, null, null, null);
+            String namaSupplier = supplierControler.GetSupplierName();
+            txtNamaSupplier.setText(namaSupplier);
+            txtNamaSupplier.setForeground(Color.BLACK);
+        } else {
+            txtNamaSupplier.setText("Supplier Name");
+            txtNamaSupplier.setForeground(new Color(153, 153, 153));
+        }
     }
 
     // cek apakah data produk telah tersedia
@@ -169,10 +174,10 @@ public class ProductControler {
     // validasi nama produk(Insert)
     private boolean ValidasiNama() {
         if (!namaProduct.equalsIgnoreCase("Product Name") && !namaProduct.equals("")) {
-            if (namaProduct.length() <= 25) {
+            if (namaProduct.length() <= 35) {
                 return true;
             } else {
-                exception.Kesalahan("The Product Name must not exceed 25 characters!");
+                exception.Kesalahan("The Product Name must not exceed 35 characters!");
             }
         } else {
             exception.Kesalahan("All columns must be filled in");
@@ -191,21 +196,6 @@ public class ProductControler {
         }
     }
 
-    // validasi stok
-    public int ValidasiStok(JTextField txtStok) {
-        try {
-            this.jumlahStock = Integer.parseInt(txtStok.getText());
-            if (jumlahStock != 0) {
-                return jumlahStock;
-            } else {
-                exception.Kesalahan("The Stock amount must be more than 0");
-            }
-        } catch (NumberFormatException e) {
-            exception.Kesalahan("Invalid stock quantity");
-        }
-        return 0;
-    }
-
     // validasi harga produk
     public int ValidasiHarga(JTextField txtHarga) {
         try {
@@ -219,6 +209,47 @@ public class ProductControler {
             exception.Kesalahan("Price amount is invalid");
         }
         return 0;
+    }
+    
+    // validasi jumlah print
+    private boolean ValidatejmlPrintData(JComboBox<String> cmbJumlah){
+        String jumlahPrint = (String) cmbJumlah.getSelectedItem();
+        if (!jumlahPrint.equalsIgnoreCase("Select print amount")) {
+            return true;
+        } else {
+            exception.Kesalahan("Choose the number of prints available!");
+        }
+        return false;
+    }
+    
+    // Validasi id produk untuk print
+    private boolean ValidateIdProductForPrint(JTextField txtIdProduk){
+        idProduct = txtIdProduk.getText();
+        if (!idProduct.trim().equalsIgnoreCase("Product ID")) {
+            return true;
+        } else {
+            exception.Kesalahan("Enter the Id of the product you want to print!");
+        }
+        return false;
+    }
+
+    public boolean ValidateQuantityWhenChange(JTextField txtkuantitas) {
+        try {
+            jumlahStock = Integer.parseInt(txtkuantitas.getText());
+            return true;
+        } catch (NumberFormatException e) {
+            exception.Kesalahan("Invalid quantity amount!");
+            return false;
+        }
+    }
+
+    public void setTxtQuantity(JTextField txtProductName, JTextField txtquantity) {
+        namaProduct = txtProductName.getText();
+        if (!namaProduct.trim().equalsIgnoreCase("") && !namaProduct.trim().equalsIgnoreCase("Product Name")) {
+            txtquantity.setText("0 - Restock in the restock menu to increase the stock amount");
+        } else {
+            txtquantity.setText("Quantity");
+        }
     }
 
     public ArrayList<String> IsiStringField(JTable table) {
@@ -242,7 +273,7 @@ public class ProductControler {
         data.add(stok);
         return data;
     }
-    
+
     public void DisplayBarcode(JComboBox<String> cmbKategori, JLabel lblBarcode) {
         kategori = (String) cmbKategori.getSelectedItem();
         byte[] iconBarcode = GenerateBarcode();
@@ -279,18 +310,18 @@ public class ProductControler {
         model.addColumn("Product Name");
         model.addColumn("Category");
         model.addColumn("Quantity");
-        model.addColumn("Price");       
+        model.addColumn("Price");
         return model;
     }
-    
-    public void GetAllData(JTable table){
+
+    public void GetAllData(JTable table) {
         model = (ConfigTable) table.getModel();
         ArrayList<Object[]> DataProduct = dbProduct.GetAllDataProduk();
         for (Object[] data : DataProduct) {
             model.addRow(data);
         }
     }
-    
+
     public void SearchData(JTable table, JTextField txtSearch) {
         String teksSearch = txtSearch.getText();
         model = (ConfigTable) table.getModel();
@@ -366,20 +397,39 @@ public class ProductControler {
             model.setValueAt(temp[k], j, k);
         }
     }
-    
-    public void PrintAllProduct(){
+
+    public void PrintAllProduct() {
         dbProduct.PrintAllProduct();
     }
 
+    public boolean PrintDataSelected(JTextField txtIdProduct, JComboBox<String> cmbJumlah) {
+        if (ValidateIdProductForPrint(txtIdProduct) && ValidatejmlPrintData(cmbJumlah)) {
+            idProduct = txtIdProduct.getText();
+            String jumlahPrint = (String) cmbJumlah.getSelectedItem();
+            int limit = Integer.parseInt(jumlahPrint);
+            dbProduct.PrintProductBySelected(idProduct, limit);
+            return true;
+        }
+        return false;
+    }
+
+    public void SetDataToPrint(JTextField txtIdProduct, JTextField txtNamaProduct, JTextField txtHarga) {
+        idProduct = txtIdProduct.getText();
+        namaProduct = getNamaProduct(idProduct);
+        harga = getHarga();
+        txtNamaProduct.setText(namaProduct);
+        txtHarga.setText(String.valueOf(harga));
+    }
+
     // insert data produk
-    public boolean InsertProduct(JTextField txtIdProduk, JTextField txtNamaProduk, JTextField txtJmlStock, JComboBox<String> cmbIdSupplier, JComboBox<String> cmbKategori,JTextField txtHargaProduk) {
+    public boolean InsertProduct(JTextField txtIdProduk, JTextField txtNamaProduk, JTextField txtJmlStock, JComboBox<String> cmbIdSupplier, JComboBox<String> cmbKategori, JTextField txtHargaProduk) {
         kategori = (String) cmbKategori.getSelectedItem();
         idProduct = txtIdProduk.getText();
         namaProduct = txtNamaProduk.getText();
         idSupplier = (String) cmbIdSupplier.getSelectedItem();
-        jumlahStock = ValidasiStok(txtJmlStock);
         harga = ValidasiHarga(txtHargaProduk);
-        if (ValidasiDataProduk() && ValidasiNama() && jumlahStock != 0 && harga != 0) {
+        jumlahStock = Integer.parseInt(txtJmlStock.getText().split(" - ")[0]);
+        if (ValidasiDataProduk() && ValidasiNama() && harga != 0) {
             byte[] barcode = GenerateBarcode();
             boolean confirm = exception.ConfirmSave("Save product data?");
             if (confirm) {
@@ -391,15 +441,15 @@ public class ProductControler {
     }
 
     // update data produk
-    public boolean ChangeProductData(JTextField txtIdProduk, JTextField txtNamaProduk, JTextField txtJmlStock, JComboBox<String> cmbIdSupplier, JComboBox<String> cmbKategori,JTextField txtHargaProduk, String namaLama) {
+    public boolean ChangeProductData(JTextField txtIdProduk, JTextField txtNamaProduk, JTextField txtJmlStock, JComboBox<String> cmbIdSupplier, JComboBox<String> cmbKategori, JTextField txtHargaProduk, String namaLama) {
         kategori = (String) cmbKategori.getSelectedItem();
         idProduct = txtIdProduk.getText();
         namaProduct = txtNamaProduk.getText();
         SetNamaLama(namaLama);
         idSupplier = (String) cmbIdSupplier.getSelectedItem();
-        jumlahStock = ValidasiStok(txtJmlStock);
         harga = ValidasiHarga(txtHargaProduk);
-        if (ValidasiComboBox() && ValidateUpdateName() && ValidasiNama() && jumlahStock != 0 && harga != 0) {
+        if (ValidasiComboBox() && ValidateUpdateName() && ValidasiNama() && ValidateQuantityWhenChange(txtJmlStock) && harga != 0) {
+            jumlahStock = Integer.parseInt(txtJmlStock.getText());
             boolean confirm = exception.ConfirmSave("Save product data changes?");
             if (confirm) {
                 dbProduct.ChangeDataProduct(kategori, idProduct, namaProduct, jumlahStock, idSupplier, harga);

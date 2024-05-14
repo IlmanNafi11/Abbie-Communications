@@ -119,9 +119,11 @@ public class AuthRegister {
 
     private boolean VerifNoHp() {
         if (noHp.matches("\\d+") && noHp.length() > 11 && noHp.length() < 14 && noHp.startsWith("08")) {
-            boolean cekNoHp = !dbUserManager.CekNoHp(noHp);
-            if (cekNoHp) {
+            boolean cekNoHp = dbUserManager.CekNoHp(noHp);
+            if (!cekNoHp) {
                 return true;
+            } else {
+                exceptionHandler.Kesalahan("Telephone number has been used!");
             }
         } else {
             exceptionHandler.Kesalahan("Invalid phone number!");

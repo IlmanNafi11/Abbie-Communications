@@ -1,35 +1,64 @@
 package UI;
 
+import Logic.ProductControler;
 import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 
 public class PrintProduct extends javax.swing.JDialog {
+    
     public PrintProduct(JInternalFrame parent, boolean modal) {
         super((JFrame) parent.getTopLevelAncestor(), modal);
         initComponents();
         this.setUndecorated(false);
         getContentPane().setBackground(new Color(255,255,255,150));
+        setAlwaysOnTop(true);
+        bg.setFocusable(true);
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblPrintAll = new javax.swing.JLabel();
+        cmbJumlah = new javax.swing.JComboBox<>();
+        btnSearch = new javax.swing.JButton();
         txtIdProduct = new javax.swing.JTextField();
         txtNamaProduk = new javax.swing.JTextField();
-        txtQuantity = new javax.swing.JTextField();
-        txtNamaSupplier = new javax.swing.JTextField();
         txtPrice = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextPane1 = new javax.swing.JTextPane();
+        lblBarcode = new javax.swing.JLabel();
         btnCancel = new javax.swing.JButton();
         btnPrint = new javax.swing.JButton();
-        cmbKategori = new javax.swing.JComboBox<>();
-        cmbIdSupplier = new javax.swing.JComboBox<>();
         bg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Print Product");
+        setAlwaysOnTop(true);
         getContentPane().setLayout(null);
+
+        lblPrintAll.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblPrintAll.setText("Print All Product?");
+        lblPrintAll.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblPrintAllMouseClicked(evt);
+            }
+        });
+        getContentPane().add(lblPrintAll);
+        lblPrintAll.setBounds(422, 130, 150, 25);
+
+        cmbJumlah.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select print amount", "10", "20", "30", "40", "50", "60", "70", "80", "90", "100" }));
+        getContentPane().add(cmbJumlah);
+        cmbJumlah.setBounds(302, 237, 258, 50);
+
+        btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Icon-Search.png"))); // NOI18N
+        btnSearch.setBorder(null);
+        btnSearch.setContentAreaFilled(false);
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnSearch);
+        btnSearch.setBounds(234, 178, 40, 32);
 
         txtIdProduct.setForeground(new java.awt.Color(153, 153, 153));
         txtIdProduct.setText("Product ID");
@@ -43,68 +72,25 @@ public class PrintProduct extends javax.swing.JDialog {
             }
         });
         getContentPane().add(txtIdProduct);
-        txtIdProduct.setBounds(47, 221, 488, 50);
+        txtIdProduct.setBounds(40, 169, 190, 50);
 
+        txtNamaProduk.setEditable(false);
+        txtNamaProduk.setBackground(new java.awt.Color(255, 255, 255));
         txtNamaProduk.setForeground(new java.awt.Color(153, 153, 153));
         txtNamaProduk.setText("Product Name");
         txtNamaProduk.setBorder(null);
-        txtNamaProduk.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtNamaProdukFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtNamaProdukFocusLost(evt);
-            }
-        });
         getContentPane().add(txtNamaProduk);
-        txtNamaProduk.setBounds(47, 297, 488, 50);
+        txtNamaProduk.setBounds(315, 169, 234, 50);
 
-        txtQuantity.setForeground(new java.awt.Color(153, 153, 153));
-        txtQuantity.setText("Quantity");
-        txtQuantity.setBorder(null);
-        txtQuantity.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtQuantityFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtQuantityFocusLost(evt);
-            }
-        });
-        getContentPane().add(txtQuantity);
-        txtQuantity.setBounds(47, 373, 488, 50);
-
-        txtNamaSupplier.setForeground(new java.awt.Color(153, 153, 153));
-        txtNamaSupplier.setText("Supplier Name");
-        txtNamaSupplier.setBorder(null);
-        txtNamaSupplier.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtNamaSupplierFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtNamaSupplierFocusLost(evt);
-            }
-        });
-        getContentPane().add(txtNamaSupplier);
-        txtNamaSupplier.setBounds(577, 221, 488, 50);
-
+        txtPrice.setEditable(false);
+        txtPrice.setBackground(new java.awt.Color(255, 255, 255));
         txtPrice.setForeground(new java.awt.Color(153, 153, 153));
         txtPrice.setText("Price");
         txtPrice.setBorder(null);
-        txtPrice.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtPriceFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtPriceFocusLost(evt);
-            }
-        });
         getContentPane().add(txtPrice);
-        txtPrice.setBounds(577, 297, 488, 50);
-
-        jScrollPane1.setViewportView(jTextPane1);
-
-        getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(576, 377, 490, 100);
+        txtPrice.setBounds(40, 236, 230, 50);
+        getContentPane().add(lblBarcode);
+        lblBarcode.setBounds(300, 310, 260, 90);
 
         btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Cancel-Primary-Default.png"))); // NOI18N
         btnCancel.setBorder(null);
@@ -126,7 +112,7 @@ public class PrintProduct extends javax.swing.JDialog {
             }
         });
         getContentPane().add(btnCancel);
-        btnCancel.setBounds(871, 503, 96, 55);
+        btnCancel.setBounds(360, 420, 96, 55);
 
         btnPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Button-Print-Primary-Default.png"))); // NOI18N
         btnPrint.setBorder(null);
@@ -148,21 +134,13 @@ public class PrintProduct extends javax.swing.JDialog {
             }
         });
         getContentPane().add(btnPrint);
-        btnPrint.setBounds(982, 503, 96, 55);
+        btnPrint.setBounds(470, 420, 96, 55);
 
-        cmbKategori.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aksesoris", "Pulsa", "Elektronik", "Suku Cadang" }));
-        getContentPane().add(cmbKategori);
-        cmbKategori.setBounds(38, 145, 506, 50);
-
-        cmbIdSupplier.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(cmbIdSupplier);
-        cmbIdSupplier.setBounds(568, 145, 506, 50);
-
-        bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Product-Detail.png"))); // NOI18N
+        bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Print Product.png"))); // NOI18N
         getContentPane().add(bg);
-        bg.setBounds(0, 0, 1111, 612);
+        bg.setBounds(-10, 0, 600, 510);
 
-        setSize(new java.awt.Dimension(1127, 620));
+        setSize(new java.awt.Dimension(609, 542));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -179,62 +157,6 @@ public class PrintProduct extends javax.swing.JDialog {
             txtIdProduct.setForeground(new Color(153,153,153));
         }
     }//GEN-LAST:event_txtIdProductFocusLost
-
-    private void txtNamaProdukFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNamaProdukFocusGained
-        if (txtNamaProduk.getText().equals("Product Name")) {
-            txtNamaProduk.setText("");
-            txtNamaProduk.setForeground(Color.BLACK);
-        }
-    }//GEN-LAST:event_txtNamaProdukFocusGained
-
-    private void txtNamaProdukFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNamaProdukFocusLost
-        if (txtNamaProduk.getText().trim().equals("")|| txtNamaProduk.getText().length() == 0) {
-            txtNamaProduk.setText("Product Name");
-            txtNamaProduk.setForeground(new Color(153,153,153));
-        }
-    }//GEN-LAST:event_txtNamaProdukFocusLost
-
-    private void txtQuantityFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtQuantityFocusGained
-        if (txtQuantity.getText().equals("Quantity")) {
-            txtQuantity.setText("");
-            txtQuantity.setForeground(Color.BLACK);
-        }
-    }//GEN-LAST:event_txtQuantityFocusGained
-
-    private void txtQuantityFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtQuantityFocusLost
-        if (txtQuantity.getText().trim().equals("")|| txtQuantity.getText().length() == 0) {
-            txtQuantity.setText("Quantity");
-            txtQuantity.setForeground(new Color(153,153,153));
-        }
-    }//GEN-LAST:event_txtQuantityFocusLost
-
-    private void txtNamaSupplierFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNamaSupplierFocusGained
-        if (txtNamaSupplier.getText().equals("Supplier Name")) {
-            txtNamaSupplier.setText("");
-            txtNamaSupplier.setForeground(Color.BLACK);
-        }
-    }//GEN-LAST:event_txtNamaSupplierFocusGained
-
-    private void txtNamaSupplierFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNamaSupplierFocusLost
-        if (txtNamaSupplier.getText().trim().equals("")|| txtNamaSupplier.getText().length() == 0) {
-            txtNamaSupplier.setText("Supplier Name");
-            txtNamaSupplier.setForeground(new Color(153,153,153));
-        }
-    }//GEN-LAST:event_txtNamaSupplierFocusLost
-
-    private void txtPriceFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPriceFocusGained
-        if (txtPrice.getText().equals("Price")) {
-            txtPrice.setText("");
-            txtPrice.setForeground(Color.BLACK);
-        }
-    }//GEN-LAST:event_txtPriceFocusGained
-
-    private void txtPriceFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPriceFocusLost
-        if (txtPrice.getText().trim().equals("")|| txtNamaSupplier.getText().length() == 0) {
-            txtPrice.setText("Price");
-            txtPrice.setForeground(new Color(153,153,153));
-        }
-    }//GEN-LAST:event_txtPriceFocusLost
 
     private void btnCancelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelMouseEntered
         btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Cancel-Primary-Hover.png")));
@@ -267,7 +189,24 @@ public class PrintProduct extends javax.swing.JDialog {
 
     private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
         btnPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Button-Print-Primary-click.png")));
+        setAlwaysOnTop(false);
+        ProductControler controler = new ProductControler(null, null);
+        boolean succes = controler.PrintDataSelected(txtIdProduct, cmbJumlah);
+        if (succes) {
+            dispose();
+        }
     }//GEN-LAST:event_btnPrintActionPerformed
+
+    private void lblPrintAllMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPrintAllMouseClicked
+        ProductControler controler = new ProductControler(null, null);
+        controler.PrintAllProduct();
+        dispose();
+    }//GEN-LAST:event_lblPrintAllMouseClicked
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        ProductControler controler = new ProductControler(null, null);
+        controler.SetDataToPrint(txtIdProduct, txtNamaProduk, txtPrice);
+    }//GEN-LAST:event_btnSearchActionPerformed
 
     /**
      * @param args the command line arguments
@@ -315,14 +254,12 @@ public class PrintProduct extends javax.swing.JDialog {
     private javax.swing.JLabel bg;
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnPrint;
-    private javax.swing.JComboBox<String> cmbIdSupplier;
-    private javax.swing.JComboBox<String> cmbKategori;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextPane jTextPane1;
+    private javax.swing.JButton btnSearch;
+    private javax.swing.JComboBox<String> cmbJumlah;
+    private javax.swing.JLabel lblBarcode;
+    private javax.swing.JLabel lblPrintAll;
     private javax.swing.JTextField txtIdProduct;
     private javax.swing.JTextField txtNamaProduk;
-    private javax.swing.JTextField txtNamaSupplier;
     private javax.swing.JTextField txtPrice;
-    private javax.swing.JTextField txtQuantity;
     // End of variables declaration//GEN-END:variables
 }

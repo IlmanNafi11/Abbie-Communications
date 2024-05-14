@@ -104,18 +104,9 @@ public class ChangeUserData extends javax.swing.JDialog {
         txtUserId.setText("User ID");
         txtUserId.setToolTipText("");
         txtUserId.setBorder(null);
-        txtUserId.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtUserIdFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtUserIdFocusLost(evt);
-            }
-        });
         getContentPane().add(txtUserId);
         txtUserId.setBounds(53, 146, 490, 45);
 
-        txtNik.setForeground(new java.awt.Color(153, 153, 153));
         txtNik.setText("NIK");
         txtNik.setBorder(null);
         txtNik.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -129,7 +120,6 @@ public class ChangeUserData extends javax.swing.JDialog {
         getContentPane().add(txtNik);
         txtNik.setBounds(53, 222, 490, 45);
 
-        txtName.setForeground(new java.awt.Color(153, 153, 153));
         txtName.setText("Name");
         txtName.setBorder(null);
         txtName.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -143,7 +133,6 @@ public class ChangeUserData extends javax.swing.JDialog {
         getContentPane().add(txtName);
         txtName.setBounds(53, 298, 490, 45);
 
-        txtHp.setForeground(new java.awt.Color(153, 153, 153));
         txtHp.setText("Phone Number");
         txtHp.setBorder(null);
         txtHp.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -157,7 +146,6 @@ public class ChangeUserData extends javax.swing.JDialog {
         getContentPane().add(txtHp);
         txtHp.setBounds(583, 146, 490, 45);
 
-        txtAlamat.setForeground(new java.awt.Color(153, 153, 153));
         txtAlamat.setText("Address");
         txtAlamat.setBorder(null);
         txtAlamat.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -171,7 +159,7 @@ public class ChangeUserData extends javax.swing.JDialog {
         getContentPane().add(txtAlamat);
         txtAlamat.setBounds(583, 222, 490, 45);
 
-        cmbPosisi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Position", "admin", "teknisi", "owner" }));
+        cmbPosisi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Position", "admin", "teknisi" }));
         cmbPosisi.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         getContentPane().add(cmbPosisi);
         cmbPosisi.setBounds(575, 296, 506, 50);
@@ -231,31 +219,17 @@ public class ChangeUserData extends javax.swing.JDialog {
         btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Cancel-Primary-Click.png")));
     }//GEN-LAST:event_btnCancelMousePressed
 
-    private void txtUserIdFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUserIdFocusGained
-//        if (txtName.getText().equals("User ID")) {
-//            txtName.setText("");
-//            txtName.setForeground(Color.BLACK);
-//        }
-    }//GEN-LAST:event_txtUserIdFocusGained
-
-    private void txtUserIdFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUserIdFocusLost
-//        if (txtName.getText().trim().equals("")|| txtName.getText().length() == 0) {
-//            txtName.setText("User ID");
-//            txtName.setForeground(new Color(153,153,153));
-//        }
-    }//GEN-LAST:event_txtUserIdFocusLost
-
     private void txtNikFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNikFocusGained
-        if (txtName.getText().equals("NIK")) {
-            txtName.setText("");
-            txtName.setForeground(Color.BLACK);
+        if (txtNik.getText().equals("NIK")) {
+            txtNik.setText("");
+            txtNik.setForeground(Color.BLACK);
         }
     }//GEN-LAST:event_txtNikFocusGained
 
     private void txtNikFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNikFocusLost
-        if (txtName.getText().trim().equals("") || txtName.getText().length() == 0) {
-            txtName.setText("NIK");
-            txtName.setForeground(new Color(153, 153, 153));
+        if (txtNik.getText().trim().equals("") || txtNik.getText().length() == 0) {
+            txtNik.setText("NIK");
+            txtNik.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtNikFocusLost
 
@@ -274,30 +248,30 @@ public class ChangeUserData extends javax.swing.JDialog {
     }//GEN-LAST:event_txtNameFocusLost
 
     private void txtHpFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtHpFocusGained
-        if (txtName.getText().equals("Phone Number")) {
-            txtName.setText("");
-            txtName.setForeground(Color.BLACK);
+        if (txtHp.getText().equals("Phone Number")) {
+            txtHp.setText("");
+            txtHp.setForeground(Color.BLACK);
         }
     }//GEN-LAST:event_txtHpFocusGained
 
     private void txtHpFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtHpFocusLost
-        if (txtName.getText().trim().equals("") || txtName.getText().length() == 0) {
-            txtName.setText("Phone Number");
-            txtName.setForeground(new Color(153, 153, 153));
+        if (txtHp.getText().trim().equals("") || txtHp.getText().length() == 0) {
+            txtHp.setText("Phone Number");
+            txtHp.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtHpFocusLost
 
     private void txtAlamatFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAlamatFocusGained
-        if (txtName.getText().equals("Address")) {
-            txtName.setText("");
-            txtName.setForeground(Color.BLACK);
+        if (txtAlamat.getText().equals("Address")) {
+            txtAlamat.setText("");
+            txtAlamat.setForeground(Color.BLACK);
         }
     }//GEN-LAST:event_txtAlamatFocusGained
 
     private void txtAlamatFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAlamatFocusLost
-        if (txtName.getText().trim().equals("") || txtName.getText().length() == 0) {
-            txtName.setText("Address");
-            txtName.setForeground(new Color(153, 153, 153));
+        if (txtAlamat.getText().trim().equals("") || txtAlamat.getText().length() == 0) {
+            txtAlamat.setText("Address");
+            txtAlamat.setForeground(new Color(153, 153, 153));
         }
     }//GEN-LAST:event_txtAlamatFocusLost
 

@@ -2,8 +2,13 @@
 package Logic;
 
 import Data_Acces.DbDashboard;
+import com.toedter.calendar.JDateChooser;
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 
@@ -23,19 +28,25 @@ public class DashboardControler {
     }
     
     public void GetTotalMember(JLabel lblTotalMember){
-        lblTotalMember.setText(String.valueOf(dbDashboard.GetTotalMember()));
+        lblTotalMember.setText(String.valueOf(dbDashboard.GetTotalMember()) + " People");
     }
     
     public void GetTotalProductSold(JLabel lblProductSold){
-        lblProductSold.setText(String.valueOf(dbDashboard.GetTotalProductSold(tanggalSekarang)));
+        lblProductSold.setText(String.valueOf(dbDashboard.GetTotalProductSold(tanggalSekarang)) + " /Pcs");
     }
     
     public void GetTotalPemasukan(JLabel lblTotalPemasukan){
-        lblTotalPemasukan.setText(String.valueOf(dbDashboard.GetTotalPemasukan(tanggalSekarang)));
+        double totalPemasukan = dbDashboard.GetTotalPemasukan(tanggalSekarang);
+        NumberFormat formatIndo = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
+        String pemasukan = formatIndo.format(totalPemasukan);
+        lblTotalPemasukan.setText(String.valueOf(pemasukan));
     }
     
     public void GetTotalPengeluaran(JLabel lblTotalPengeluaran){
-        lblTotalPengeluaran.setText(String.valueOf(dbDashboard.GetTotalPengeluaran(tanggalSekarang)));
+        double totalPengeluaran = dbDashboard.GetTotalPengeluaran(tanggalSekarang);
+        NumberFormat formatIndo = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
+        String pengeluaran = formatIndo.format(totalPengeluaran);
+        lblTotalPengeluaran.setText(String.valueOf(pengeluaran));
     }
     
     public ConfigTable ModelTable() {
@@ -46,15 +57,21 @@ public class DashboardControler {
         model.addColumn("Date");
         return model;
     }
+    
+    public void SetFirstCalender(JDateChooser kalender){
+        Calendar tglSkrng = Calendar.getInstance();
+        kalender.setDate(tglSkrng.getTime());
+    }
 
-    public void GetDataHistory(JTable table) {
+    public void GetDataHistory(JTable table, JDateChooser tgl) {
         ConfigTable model = (ConfigTable) table.getModel();
-        ArrayList<Object[]> transaksiDetail = dbDashboard.GetTransaksiDetailData();
+        Date tanggal = tgl.getDate();
+        ArrayList<Object[]> transaksiDetail = dbDashboard.GetTransaksiDetailData(tanggal);
         for (Object[] dataTransaksi : transaksiDetail) {
             model.addRow(dataTransaksi);
         }
         
-        ArrayList<Object[]> transaksiServis = dbDashboard.GetTransaksiServisData();
+        ArrayList<Object[]> transaksiServis = dbDashboard.GetTransaksiServisData(tanggal);
         for (Object[] dataTransaksi : transaksiServis) {
             model.addRow(dataTransaksi);
         }
