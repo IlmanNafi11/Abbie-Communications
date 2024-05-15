@@ -14,7 +14,8 @@ public class TransaksiService extends javax.swing.JInternalFrame {
     private ConfigTable model;
     private String username;
     private String role;
-
+    private String idUser;
+    
     public TransaksiService() {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
@@ -24,11 +25,12 @@ public class TransaksiService extends javax.swing.JInternalFrame {
         bg.setFocusable(true);
     }
 
-    public void SetProfile(String nama, String role) {
+    public void SetProfile(String nama, String role, String idUser) {
         lblNamaUser.setText(nama);
         lblPosisiUser.setText(role);
         this.username = nama;
         this.role = role;
+        this.idUser = idUser;
     }
 
     private void SetModel() {
@@ -359,7 +361,7 @@ public class TransaksiService extends javax.swing.JInternalFrame {
         int kembalian = Integer.parseInt(txtRefund.getText());
         TransaksiServiceControler transaksiServiceControler = new TransaksiServiceControler(null, null, null, 0, 0, total, namaCustomer, noHpCustomer, alamat);
         transaksiServiceControler.ValidatePayment(txtPay);
-        boolean succes = transaksiServiceControler.InsertTransaksi(table, username, total, pay, kembalian);
+        boolean succes = transaksiServiceControler.InsertTransaksi(table, username, total, pay, kembalian, idUser);
         if (succes) {
             transaksiServiceControler.ClearDataTransaksi(txtInformasi, txtBiaya, txtCustomerName, txtNoHpCustomer, txtCustomerAddress, txtTotal, txtPay, txtRefund, table);
         }

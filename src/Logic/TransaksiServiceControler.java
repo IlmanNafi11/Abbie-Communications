@@ -281,7 +281,7 @@ public class TransaksiServiceControler {
         }
     }
 
-    public boolean InsertTransaksi(JTable tabel, String namaTeknisi, int total, int pay, int kembalian) {
+    public boolean InsertTransaksi(JTable tabel, String namaTeknisi, int total, int pay, int kembalian, String idUser) {
         this.idTransaksi = GenerateIdTransaksi();
         this.tanggal = GetDate();
         ConfigTable modelTable = (ConfigTable) tabel.getModel();
@@ -290,7 +290,7 @@ public class TransaksiServiceControler {
                 boolean confirm = exceptionHandler.ConfirmSave("Save Transactions?");
                 if (confirm) {
                     try {
-                        dbTransaksi.InsertTransaksi(idTransaksi, tanggal, total);
+                        dbTransaksi.InsertTransaksi(idTransaksi, tanggal, total, idUser);
                         for (int i = 0; i < modelTable.getRowCount(); i++) {
                             idProduct = (String) modelTable.getValueAt(i, 0);
                             namaProduk = (String) modelTable.getValueAt(i, 1);

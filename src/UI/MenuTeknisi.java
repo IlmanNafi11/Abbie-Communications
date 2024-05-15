@@ -13,6 +13,7 @@ public class MenuTeknisi extends javax.swing.JInternalFrame {
 
     private String username;
     private String role;
+    private String userId;
     
     public MenuTeknisi() {
         initComponents();
@@ -24,6 +25,9 @@ public class MenuTeknisi extends javax.swing.JInternalFrame {
     public void SetUser(String username, String role){
         this.username = username;
         this.role = role;
+        LoginControler loginControler = new LoginControler(username, null, null);
+        ArrayList<String> IdUser = loginControler.DataProfile();
+        this.userId = IdUser.get(0);
     }
 
     private void UpdateLaporan() {
@@ -171,7 +175,7 @@ public class MenuTeknisi extends javax.swing.JInternalFrame {
     private void btnServiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnServiceActionPerformed
         btnService.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Menu-Service-Transaction-Click.png")));
         TransaksiService transS = new TransaksiService();
-        transS.SetProfile(username, role);
+        transS.SetProfile(username, role, userId);
         MainFrame main = (MainFrame) SwingUtilities.getWindowAncestor(this);
         main.gantiKonten(transS);
     }//GEN-LAST:event_btnServiceActionPerformed

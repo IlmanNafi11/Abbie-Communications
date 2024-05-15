@@ -18,9 +18,9 @@ public class DbTransaksi {
 
     private ExceptionHandler exceptionHandler;
 
-    public void InsertTransaksi(String idTransaksi, Date tanggal, int total) {
+    public void InsertTransaksi(String idTransaksi, Date tanggal, int total, String idUser) {
         exceptionHandler = new ExceptionHandler();
-        String queryInsert = "INSERT INTO transaksi (id_transaksi, tanggal, total) VALUES (?, ?, ?)";
+        String queryInsert = "INSERT INTO transaksi (id_transaksi, tanggal, total, idUser) VALUES (?, ?, ?, ?)";
         Connection koneksi = null;
         try {
             koneksi = ClassKoneksi.GetConnection();
@@ -28,6 +28,7 @@ public class DbTransaksi {
             stInsert.setString(1, idTransaksi);
             stInsert.setDate(2, new java.sql.Date(tanggal.getTime()));
             stInsert.setInt(3, total);
+            stInsert.setString(4, idUser);
             stInsert.executeUpdate();
             exceptionHandler.SuccesSaveData("Transaction successful!");
         } catch (Exception e) {

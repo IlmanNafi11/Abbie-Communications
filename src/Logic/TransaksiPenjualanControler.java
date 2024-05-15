@@ -307,14 +307,14 @@ public class TransaksiPenjualanControler {
         dbTransaksi.InsertDetailTransaksiDiskon(idTransaksi, kodePromo, jumlahDiskon);
     }
 
-    public boolean InsertTransaksiPenjualan(JTable table, int jumlahDiskon, String namaMember, JTextField txtPay, JTextField txtReturn) {
+    public boolean InsertTransaksiPenjualan(JTable table, int jumlahDiskon, String namaMember, JTextField txtPay, JTextField txtReturn, String idUser) {
         this.tanggal = GetDate();
         this.idTransaksi = GenerateIdTransaksi();
         int pay = Integer.parseInt(txtPay.getText());
         int kembalian = Integer.parseInt(txtReturn.getText());
         boolean confirm = exceptionHandler.ConfirmSave("Save transactions?");
         if (confirm) {
-            dbTransaksi.InsertTransaksi(idTransaksi, tanggal, total);
+            dbTransaksi.InsertTransaksi(idTransaksi, tanggal, total, idUser);
             InsertDetailTransaksi(table, idTransaksi);
             if (!namaMember.equalsIgnoreCase("Member Name")) {
                 InsertTransaksiMember(idTransaksi);
