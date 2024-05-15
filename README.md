@@ -26,7 +26,7 @@ Aplikasi kasir dan manajemen stok untuk konter Abbie Communications. Aplikasi in
 ### Lankah 2: Konfigurasi Database
 1. Buka phpMyAdmin di browser [Disini](http://localhost/phpmyadmin)
 2. Buat database baru dengan nama `abbie_communication`
-3. Import file `abbie_communication.sql` yang terdapat dalam folder [Database](database) pada repositori ini.
+3. Import file `abbie_communication.sql` yang terdapat dalam folder [Database](Database) pada repositori ini.
 ### Langkah 3: Install Aplikasi
 1. Download aplikasi [Disini](https://drive.google.com/file/d/17rGqJ6SWfmGpsQx5sbKD9lqrTftUyOIS/view?usp=sharing)
 2. Ikuti petunjuk instalasi aplikasi sampai selesai dan jalankan aplikasi.
