@@ -11,7 +11,7 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
 
     private String username;
     private String role;
-
+    private String idUser;
     private int jumlahDiskon;
     private ConfigTable model;
 
@@ -24,11 +24,12 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
         ViewTableTransaksi();
     }
 
-    public void SetProfile(String nama, String role) {
+    public void SetProfile(String nama, String role, String idUser) {
         lblNamaUser.setText(nama);
         lblPosisiUser.setText(role);
         this.username = nama;
         this.role = role;
+        this.idUser = idUser;
     }
 
     public void SetJumlahDiskon(int jumlahDiskon) {
@@ -420,7 +421,7 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
         String kodeDiskon = (String) cmbKodeDiskon.getSelectedItem();
         int total = Integer.parseInt(txtTotal.getText());
         TransaksiPenjualanControler controler = new TransaksiPenjualanControler(username, noHpMember, total, kodeDiskon);
-        boolean succes = controler.InsertTransaksiPenjualan(table, jumlahDiskon, namaMember, txtPay, txtRefund);
+        boolean succes = controler.InsertTransaksiPenjualan(table, jumlahDiskon, namaMember, txtPay, txtRefund, idUser);
         if (succes) {
             controler.ClearDataTransaksi(table, txtMemberName, txtNoHpMember, txtTotal, txtPay, txtRefund, cmbKodeDiskon);
         }
@@ -567,9 +568,7 @@ public class TransaksiPenjualan extends javax.swing.JInternalFrame {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             TransaksiPenjualanControler controler = new TransaksiPenjualanControler(null, null, 0, null);
             controler.AddToTable(txtProductId, txtProductName, txtQuantity, bg, txtMemberName, txtTotal, cmbKodeDiskon, table);
-//            model.addRow(data);
-//            controler.UpdateTotal(table, txtTotal);
-//            controler.GetDiskon(txtMemberName, txtTotal, cmbKodeDiskon);
+
         }
     }//GEN-LAST:event_txtQuantityKeyReleased
 

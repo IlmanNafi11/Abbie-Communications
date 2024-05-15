@@ -13,6 +13,7 @@ public class MenuAdmin extends javax.swing.JInternalFrame {
 
     private String username;
     private String role;
+    private String userId;
     
     public MenuAdmin() {
         initComponents();
@@ -24,6 +25,9 @@ public class MenuAdmin extends javax.swing.JInternalFrame {
     public void SetUser(String username, String role){
         this.username = username;
         this.role = role;
+        LoginControler loginControler = new LoginControler(username, null, null);
+        ArrayList<String> IdUser = loginControler.DataProfile();
+        this.userId = IdUser.get(0);
     }
     
     private void UpdateLaporan() {
@@ -235,7 +239,7 @@ public class MenuAdmin extends javax.swing.JInternalFrame {
     private void btnPenjualanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPenjualanActionPerformed
         btnPenjualan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ButtonIcon/Btn-Menu-Sales-Transaction-Click.png")));
         TransaksiPenjualan tranP = new TransaksiPenjualan();
-        tranP.SetProfile(username, role);
+        tranP.SetProfile(username, role, userId);
         MainFrame main = (MainFrame) SwingUtilities.getWindowAncestor(this);
         main.gantiKonten(tranP);
     }//GEN-LAST:event_btnPenjualanActionPerformed
