@@ -28,7 +28,7 @@ Aplikasi kasir dan manajemen stok untuk konter Abbie Communications. Aplikasi in
 2. Buat database baru dengan nama `abbie_communication`
 3. Import file `abbie_communication.sql` yang terdapat dalam folder [Database](Database) pada repositori ini.
 ### Langkah 3: Install Aplikasi
-1. Download aplikasi [Disini](https://drive.google.com/drive/folders/1Wlxg9UgDdxLXGkrTtipW42fGjtbp5W8s)
+1. Download aplikasi [Disini](https://drive.google.com/file/d/11RX3JQw7jKATTUo6xtVVeNZna_1_Ys2H/view?usp=sharing)
 2. Ikuti petunjuk instalasi aplikasi sampai selesai dan jalankan aplikasi.
 ### Kontribusi
 Silahkan fork repositori ini dan ajukan pull request untuk kontribusi. Harap sertakan deskripsi yang jelas tentang perubahan yang anda buat.
